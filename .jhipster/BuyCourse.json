@@ -1,0 +1,62 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "learner",
+            "otherEntityName": "learner",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "course",
+            "otherEntityName": "course",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "coach",
+            "otherEntityName": "coach",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "paymentWay",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "paymentAccount",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "buyTime",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "operator",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "operateContent",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "operateTime",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "remainClass",
+            "fieldType": "Long"
+        }
+    ],
+    "changelogDate": "20170528115802",
+    "entityTableName": "buy_course",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "serviceImpl"
+}

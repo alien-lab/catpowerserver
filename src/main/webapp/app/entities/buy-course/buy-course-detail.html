@@ -1,0 +1,63 @@
+
+<div>
+    <h2><span data-translate="catpowerserverApp.buyCourse.detail.title">Buy Course</span> {{vm.buyCourse.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="catpowerserverApp.buyCourse.paymentWay">Payment Way</span></dt>
+        <dd>
+            <span>{{vm.buyCourse.paymentWay}}</span>
+        </dd>
+        <dt><span data-translate="catpowerserverApp.buyCourse.paymentAccount">Payment Account</span></dt>
+        <dd>
+            <span>{{vm.buyCourse.paymentAccount}}</span>
+        </dd>
+        <dt><span data-translate="catpowerserverApp.buyCourse.buyTime">Buy Time</span></dt>
+        <dd>
+            <span>{{vm.buyCourse.buyTime | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="catpowerserverApp.buyCourse.status">Status</span></dt>
+        <dd>
+            <span>{{vm.buyCourse.status}}</span>
+        </dd>
+        <dt><span data-translate="catpowerserverApp.buyCourse.operator">Operator</span></dt>
+        <dd>
+            <span>{{vm.buyCourse.operator}}</span>
+        </dd>
+        <dt><span data-translate="catpowerserverApp.buyCourse.operateContent">Operate Content</span></dt>
+        <dd>
+            <span>{{vm.buyCourse.operateContent}}</span>
+        </dd>
+        <dt><span data-translate="catpowerserverApp.buyCourse.operateTime">Operate Time</span></dt>
+        <dd>
+            <span>{{vm.buyCourse.operateTime | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="catpowerserverApp.buyCourse.remainClass">Remain Class</span></dt>
+        <dd>
+            <span>{{vm.buyCourse.remainClass}}</span>
+        </dd>
+        <dt><span data-translate="catpowerserverApp.buyCourse.learner">Learner</span></dt>
+        <dd>
+            <a ui-sref="learner-detail({id:vm.buyCourse.learner.id})">{{vm.buyCourse.learner.id}}</a>
+        </dd>
+        <dt><span data-translate="catpowerserverApp.buyCourse.course">Course</span></dt>
+        <dd>
+            <a ui-sref="course-detail({id:vm.buyCourse.course.id})">{{vm.buyCourse.course.id}}</a>
+        </dd>
+        <dt><span data-translate="catpowerserverApp.buyCourse.coach">Coach</span></dt>
+        <dd>
+            <a ui-sref="coach-detail({id:vm.buyCourse.coach.id})">{{vm.buyCourse.coach.id}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="buy-course-detail.edit({id:vm.buyCourse.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

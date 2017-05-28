@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <!--
+        Added the constraints for entity CoachEvaluate.
+    -->
+    <changeSet id="20170528115758-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="learner_id"
+                                 baseTableName="coach_evaluate"
+                                 constraintName="fk_coach_evaluate_learner_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="learner"/>
+
+        <addForeignKeyConstraint baseColumnNames="course_id"
+                                 baseTableName="coach_evaluate"
+                                 constraintName="fk_coach_evaluate_course_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="course"/>
+
+        <addForeignKeyConstraint baseColumnNames="coach_id"
+                                 baseTableName="coach_evaluate"
+                                 constraintName="fk_coach_evaluate_coach_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="coach"/>
+
+        <addForeignKeyConstraint baseColumnNames="learner_charge_id"
+                                 baseTableName="coach_evaluate"
+                                 constraintName="fk_coach_evaluate_learner_charge_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="learner_charge"/>
+
+    </changeSet>
+</databaseChangeLog>

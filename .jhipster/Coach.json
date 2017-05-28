@@ -1,0 +1,39 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "coachName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "coachPhone",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "coachIntroduce",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "coachPicture",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "coachWechatopenid",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "coachWechatname",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "coachWechatpicture",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20170528115804",
+    "entityTableName": "coach",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "serviceImpl"
+}

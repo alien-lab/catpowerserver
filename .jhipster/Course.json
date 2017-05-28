@@ -1,0 +1,50 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "pictures",
+            "otherEntityName": "courseAtlas",
+            "otherEntityRelationshipName": "course"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "courseName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "courseIntroductions",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "totalClassHour",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "coursePrices",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "courseVipprices",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "classNumber",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "courseOtherInfo",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "courseThumbnail",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20170528115805",
+    "entityTableName": "course",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "serviceImpl"
+}

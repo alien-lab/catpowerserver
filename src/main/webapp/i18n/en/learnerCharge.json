@@ -1,0 +1,28 @@
+{
+    "catpowerserverApp": {
+        "learnerCharge" : {
+            "home": {
+                "title": "Learner Charges",
+                "createLabel": "Create a new Learner Charge",
+                "createOrEditLabel": "Create or edit a Learner Charge"
+            },
+            "created": "A new Learner Charge is created with identifier {{ param }}",
+            "updated": "A Learner Charge is updated with identifier {{ param }}",
+            "deleted": "A Learner Charge is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Learner Charge {{ id }}?"
+            },
+            "detail": {
+                "title": "Learner Charge"
+            },
+            "chargeTime": "Charge Time",
+            "buyCourseId": "Buy Course Id",
+            "chargePeople": "Charge People",
+            "remainNumber": "Remain Number",
+            "learner": "Learner",
+            "course": "Course",
+            "coach": "Coach",
+            "courseScheduling": "Course Scheduling"
+        }
+    }
+}

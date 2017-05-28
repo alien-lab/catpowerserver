@@ -1,0 +1,63 @@
+
+<div>
+    <h2><span data-translate="catpowerserverApp.learner.detail.title">Learner</span> {{vm.learner.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="catpowerserverApp.learner.learneName">Learne Name</span></dt>
+        <dd>
+            <span>{{vm.learner.learneName}}</span>
+        </dd>
+        <dt><span data-translate="catpowerserverApp.learner.learnerPhone">Learner Phone</span></dt>
+        <dd>
+            <span>{{vm.learner.learnerPhone}}</span>
+        </dd>
+        <dt><span data-translate="catpowerserverApp.learner.learnerSex">Learner Sex</span></dt>
+        <dd>
+            <span>{{vm.learner.learnerSex}}</span>
+        </dd>
+        <dt><span data-translate="catpowerserverApp.learner.registTime">Regist Time</span></dt>
+        <dd>
+            <span>{{vm.learner.registTime | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="catpowerserverApp.learner.wxOpenId">Wx Open Id</span></dt>
+        <dd>
+            <span>{{vm.learner.wxOpenId}}</span>
+        </dd>
+        <dt><span data-translate="catpowerserverApp.learner.wxNickname">Wx Nickname</span></dt>
+        <dd>
+            <span>{{vm.learner.wxNickname}}</span>
+        </dd>
+        <dt><span data-translate="catpowerserverApp.learner.wxHeader">Wx Header</span></dt>
+        <dd>
+            <span>{{vm.learner.wxHeader}}</span>
+        </dd>
+        <dt><span data-translate="catpowerserverApp.learner.firstTotime">First Totime</span></dt>
+        <dd>
+            <span>{{vm.learner.firstTotime | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="catpowerserverApp.learner.firstBuyclass">First Buyclass</span></dt>
+        <dd>
+            <span>{{vm.learner.firstBuyclass | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="catpowerserverApp.learner.recentlySignin">Recently Signin</span></dt>
+        <dd>
+            <span>{{vm.learner.recentlySignin | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="catpowerserverApp.learner.experience">Experience</span></dt>
+        <dd>
+            <span>{{vm.learner.experience}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="learner-detail.edit({id:vm.learner.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

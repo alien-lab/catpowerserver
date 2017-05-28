@@ -1,0 +1,27 @@
+{
+    "catpowerserverApp": {
+        "coach" : {
+            "home": {
+                "title": "Coaches",
+                "createLabel": "Create a new Coach",
+                "createOrEditLabel": "Create or edit a Coach"
+            },
+            "created": "A new Coach is created with identifier {{ param }}",
+            "updated": "A Coach is updated with identifier {{ param }}",
+            "deleted": "A Coach is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Coach {{ id }}?"
+            },
+            "detail": {
+                "title": "Coach"
+            },
+            "coachName": "Coach Name",
+            "coachPhone": "Coach Phone",
+            "coachIntroduce": "Coach Introduce",
+            "coachPicture": "Coach Picture",
+            "coachWechatopenid": "Coach Wechatopenid",
+            "coachWechatname": "Coach Wechatname",
+            "coachWechatpicture": "Coach Wechatpicture"
+        }
+    }
+}

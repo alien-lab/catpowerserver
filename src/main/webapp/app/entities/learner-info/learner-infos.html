@@ -1,0 +1,70 @@
+<div>
+    <h2 data-translate="catpowerserverApp.learnerInfo.home.title">Learner Infos</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="learner-info.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  data-translate="catpowerserverApp.learnerInfo.home.createLabel">
+                        Create new Learner Info
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                    <th jh-sort-by="id"><span data-translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="time"><span data-translate="catpowerserverApp.learnerInfo.time">Time</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="exerciseData"><span data-translate="catpowerserverApp.learnerInfo.exerciseData">Exercise Data</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="bodytestData"><span data-translate="catpowerserverApp.learnerInfo.bodytestData">Bodytest Data</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="coachAdvice"><span data-translate="catpowerserverApp.learnerInfo.coachAdvice">Coach Advice</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="learner.id"><span data-translate="catpowerserverApp.learnerInfo.learner">Learner</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="learnerInfo in vm.learnerInfos track by learnerInfo.id">
+                    <td><a ui-sref="learner-info-detail({id:learnerInfo.id})">{{learnerInfo.id}}</a></td>
+                    <td>{{learnerInfo.time | date:'medium'}}</td>
+                    <td>{{learnerInfo.exerciseData}}</td>
+                    <td>{{learnerInfo.bodytestData}}</td>
+                    <td>{{learnerInfo.coachAdvice}}</td>
+                    <td>
+                        <a ui-sref="learner-detail({id:learnerInfo.learner.id})">{{learnerInfo.learner.id}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="learner-info-detail({id:learnerInfo.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="learner-info.edit({id:learnerInfo.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="learner-info.delete({id:learnerInfo.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" items-per-page="vm.itemsPerPage" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+    </div>
+</div>

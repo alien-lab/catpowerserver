@@ -1,0 +1,80 @@
+<div>
+    <h2 data-translate="catpowerserverApp.learner.home.title">Learners</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="learner.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  data-translate="catpowerserverApp.learner.home.createLabel">
+                        Create new Learner
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                    <th jh-sort-by="id"><span data-translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="learneName"><span data-translate="catpowerserverApp.learner.learneName">Learne Name</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="learnerPhone"><span data-translate="catpowerserverApp.learner.learnerPhone">Learner Phone</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="learnerSex"><span data-translate="catpowerserverApp.learner.learnerSex">Learner Sex</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="registTime"><span data-translate="catpowerserverApp.learner.registTime">Regist Time</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="wxOpenId"><span data-translate="catpowerserverApp.learner.wxOpenId">Wx Open Id</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="wxNickname"><span data-translate="catpowerserverApp.learner.wxNickname">Wx Nickname</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="wxHeader"><span data-translate="catpowerserverApp.learner.wxHeader">Wx Header</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="firstTotime"><span data-translate="catpowerserverApp.learner.firstTotime">First Totime</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="firstBuyclass"><span data-translate="catpowerserverApp.learner.firstBuyclass">First Buyclass</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="recentlySignin"><span data-translate="catpowerserverApp.learner.recentlySignin">Recently Signin</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="experience"><span data-translate="catpowerserverApp.learner.experience">Experience</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="learner in vm.learners track by learner.id">
+                    <td><a ui-sref="learner-detail({id:learner.id})">{{learner.id}}</a></td>
+                    <td>{{learner.learneName}}</td>
+                    <td>{{learner.learnerPhone}}</td>
+                    <td>{{learner.learnerSex}}</td>
+                    <td>{{learner.registTime | date:'medium'}}</td>
+                    <td>{{learner.wxOpenId}}</td>
+                    <td>{{learner.wxNickname}}</td>
+                    <td>{{learner.wxHeader}}</td>
+                    <td>{{learner.firstTotime | date:'medium'}}</td>
+                    <td>{{learner.firstBuyclass | date:'medium'}}</td>
+                    <td>{{learner.recentlySignin | date:'medium'}}</td>
+                    <td>{{learner.experience}}</td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="learner-detail({id:learner.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="learner.edit({id:learner.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="learner.delete({id:learner.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" items-per-page="vm.itemsPerPage" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+    </div>
+</div>

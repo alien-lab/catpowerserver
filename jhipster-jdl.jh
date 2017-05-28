@@ -1,0 +1,120 @@
+
+entity CoachEvaluate {
+	serviceAttitude Long,
+    speciality Long,
+    like Long,
+    complain String,
+    evaluation Long
+}
+
+entity CourseScheduling {
+	startTime ZonedDateTime,
+    endTime ZonedDateTime,
+    status String,
+    qrCode String,
+    signInCount Long
+}
+
+entity LearnerInfo {
+	time ZonedDateTime,
+	exerciseData String,
+	bodytestData String,
+	coachAdvice String
+}
+
+entity Learner {
+	learneName String,
+    learnerPhone String,
+    learnerSex String,
+    registTime ZonedDateTime,
+    wxOpenId String,
+    wxNickname String,
+    wxHeader String,
+    firstTotime ZonedDateTime,
+    firstBuyclass ZonedDateTime,
+    recentlySignin ZonedDateTime,
+    experience Long
+}
+entity BuyCourse {
+      paymentWay String,
+      paymentAccount Float,
+      buyTime ZonedDateTime,
+      status String,
+      operator String,
+      operateContent String,
+      operateTime ZonedDateTime,
+      remainClass Long
+}
+
+// an ignored comment
+/** not an ignored comment */
+entity LearnerCharge {
+	chargeTime ZonedDateTime,
+	buyCourseId String,
+	chargePeople String,
+	remainNumber Long,
+}
+
+
+entity Coach {
+	coachName String,
+    coachPhone String,
+    coachIntroduce String,
+    coachPicture String,
+    coachWechatopenid String,
+    coachWechatname String,
+    coachWechatpicture String
+}
+
+entity Course {
+	courseName String,
+    courseIntroductions String,
+    totalClassHour Integer,
+    coursePrices Float,
+    courseVipprices Float,
+    classNumber Integer,
+    courseOtherInfo String,
+    courseThumbnail String
+}
+
+entity CourseAtlas {
+	picture String
+}
+
+
+
+// defining multiple OneToMany relationships with comments
+relationship OneToMany {
+	Course{pictures} to CourseAtlas
+}
+
+relationship ManyToOne {
+	BuyCourse{learner} to Learner,
+    BuyCourse{course} to Course,
+    BuyCourse{coach} to Coach,
+
+    LearnerCharge{learner} to Learner,
+    LearnerCharge{course} to Course,
+    LearnerCharge{coach} to Coach,
+    LearnerCharge{courseScheduling} to CourseScheduling,
+
+    LearnerInfo{learner} to Learner,
+
+    CourseScheduling{course} to Course,
+    CourseScheduling{coach} to Coach,
+
+    CoachEvaluate{learner} to Learner,
+    CoachEvaluate{course} to Course,
+    CoachEvaluate{coach} to Coach,
+    CoachEvaluate{learnerCharge} to LearnerCharge
+
+
+}
+
+
+// Set pagination options
+paginate all with pagination
+
+// Set service options to all except few
+service all with serviceImpl
+

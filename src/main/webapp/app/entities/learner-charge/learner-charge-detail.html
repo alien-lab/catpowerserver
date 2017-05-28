@@ -1,0 +1,51 @@
+
+<div>
+    <h2><span data-translate="catpowerserverApp.learnerCharge.detail.title">Learner Charge</span> {{vm.learnerCharge.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="catpowerserverApp.learnerCharge.chargeTime">Charge Time</span></dt>
+        <dd>
+            <span>{{vm.learnerCharge.chargeTime | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="catpowerserverApp.learnerCharge.buyCourseId">Buy Course Id</span></dt>
+        <dd>
+            <span>{{vm.learnerCharge.buyCourseId}}</span>
+        </dd>
+        <dt><span data-translate="catpowerserverApp.learnerCharge.chargePeople">Charge People</span></dt>
+        <dd>
+            <span>{{vm.learnerCharge.chargePeople}}</span>
+        </dd>
+        <dt><span data-translate="catpowerserverApp.learnerCharge.remainNumber">Remain Number</span></dt>
+        <dd>
+            <span>{{vm.learnerCharge.remainNumber}}</span>
+        </dd>
+        <dt><span data-translate="catpowerserverApp.learnerCharge.learner">Learner</span></dt>
+        <dd>
+            <a ui-sref="learner-detail({id:vm.learnerCharge.learner.id})">{{vm.learnerCharge.learner.id}}</a>
+        </dd>
+        <dt><span data-translate="catpowerserverApp.learnerCharge.course">Course</span></dt>
+        <dd>
+            <a ui-sref="course-detail({id:vm.learnerCharge.course.id})">{{vm.learnerCharge.course.id}}</a>
+        </dd>
+        <dt><span data-translate="catpowerserverApp.learnerCharge.coach">Coach</span></dt>
+        <dd>
+            <a ui-sref="coach-detail({id:vm.learnerCharge.coach.id})">{{vm.learnerCharge.coach.id}}</a>
+        </dd>
+        <dt><span data-translate="catpowerserverApp.learnerCharge.courseScheduling">Course Scheduling</span></dt>
+        <dd>
+            <a ui-sref="course-scheduling-detail({id:vm.learnerCharge.courseScheduling.id})">{{vm.learnerCharge.courseScheduling.id}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="learner-charge-detail.edit({id:vm.learnerCharge.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

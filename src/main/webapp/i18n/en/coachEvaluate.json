@@ -1,0 +1,29 @@
+{
+    "catpowerserverApp": {
+        "coachEvaluate" : {
+            "home": {
+                "title": "Coach Evaluates",
+                "createLabel": "Create a new Coach Evaluate",
+                "createOrEditLabel": "Create or edit a Coach Evaluate"
+            },
+            "created": "A new Coach Evaluate is created with identifier {{ param }}",
+            "updated": "A Coach Evaluate is updated with identifier {{ param }}",
+            "deleted": "A Coach Evaluate is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Coach Evaluate {{ id }}?"
+            },
+            "detail": {
+                "title": "Coach Evaluate"
+            },
+            "serviceAttitude": "Service Attitude",
+            "speciality": "Speciality",
+            "like": "Like",
+            "complain": "Complain",
+            "evaluation": "Evaluation",
+            "learner": "Learner",
+            "course": "Course",
+            "coach": "Coach",
+            "learnerCharge": "Learner Charge"
+        }
+    }
+}

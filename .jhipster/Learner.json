@@ -1,0 +1,55 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "learneName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "learnerPhone",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "learnerSex",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "registTime",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "wxOpenId",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "wxNickname",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "wxHeader",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "firstTotime",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "firstBuyclass",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "recentlySignin",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "experience",
+            "fieldType": "Long"
+        }
+    ],
+    "changelogDate": "20170528115801",
+    "entityTableName": "learner",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "serviceImpl"
+}

@@ -1,0 +1,60 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myLearnerInfoLabel" data-translate="catpowerserverApp.learnerInfo.home.createOrEditLabel">Create or edit a Learner Info</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.learnerInfo.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.learnerInfo.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.learnerInfo.time" for="field_time">Time</label>
+                <div class="input-group">
+                    <input id="field_time" type="text" class="form-control" name="time" datetime-picker="{{dateformat}}" ng-model="vm.learnerInfo.time" is-open="vm.datePickerOpenStatus.time"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('time')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.learnerInfo.exerciseData" for="field_exerciseData">Exercise Data</label>
+            <input type="text" class="form-control" name="exerciseData" id="field_exerciseData"
+                    ng-model="vm.learnerInfo.exerciseData"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.learnerInfo.bodytestData" for="field_bodytestData">Bodytest Data</label>
+            <input type="text" class="form-control" name="bodytestData" id="field_bodytestData"
+                    ng-model="vm.learnerInfo.bodytestData"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.learnerInfo.coachAdvice" for="field_coachAdvice">Coach Advice</label>
+            <input type="text" class="form-control" name="coachAdvice" id="field_coachAdvice"
+                    ng-model="vm.learnerInfo.coachAdvice"
+                    />
+        </div>
+
+        <div class="form-group">
+            <label data-translate="catpowerserverApp.learnerInfo.learner" for="field_learner">Learner</label>
+            <select class="form-control" id="field_learner" name="learner" ng-model="vm.learnerInfo.learner" ng-options="learner as learner.id for learner in vm.learners track by learner.id">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

@@ -1,0 +1,53 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "learner",
+            "otherEntityName": "learner",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "course",
+            "otherEntityName": "course",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "coach",
+            "otherEntityName": "coach",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "courseScheduling",
+            "otherEntityName": "courseScheduling",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "chargeTime",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "buyCourseId",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "chargePeople",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "remainNumber",
+            "fieldType": "Long"
+        }
+    ],
+    "changelogDate": "20170528115803",
+    "javadoc": "not an ignored comment",
+    "entityTableName": "learner_charge",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "serviceImpl"
+}

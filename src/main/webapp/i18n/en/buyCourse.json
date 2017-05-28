@@ -1,0 +1,31 @@
+{
+    "catpowerserverApp": {
+        "buyCourse" : {
+            "home": {
+                "title": "Buy Courses",
+                "createLabel": "Create a new Buy Course",
+                "createOrEditLabel": "Create or edit a Buy Course"
+            },
+            "created": "A new Buy Course is created with identifier {{ param }}",
+            "updated": "A Buy Course is updated with identifier {{ param }}",
+            "deleted": "A Buy Course is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Buy Course {{ id }}?"
+            },
+            "detail": {
+                "title": "Buy Course"
+            },
+            "paymentWay": "Payment Way",
+            "paymentAccount": "Payment Account",
+            "buyTime": "Buy Time",
+            "status": "Status",
+            "operator": "Operator",
+            "operateContent": "Operate Content",
+            "operateTime": "Operate Time",
+            "remainClass": "Remain Class",
+            "learner": "Learner",
+            "course": "Course",
+            "coach": "Coach"
+        }
+    }
+}

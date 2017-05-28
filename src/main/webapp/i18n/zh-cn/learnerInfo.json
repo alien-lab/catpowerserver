@@ -1,0 +1,25 @@
+{
+    "catpowerserverApp": {
+        "learnerInfo" : {
+            "home": {
+                "title": "Learner Infos",
+                "createLabel": "Create a new Learner Info",
+                "createOrEditLabel": "Create or edit a Learner Info"
+            },
+            "created": "A new Learner Info is created with identifier {{ param }}",
+            "updated": "A Learner Info is updated with identifier {{ param }}",
+            "deleted": "A Learner Info is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Learner Info {{ id }}?"
+            },
+            "detail": {
+                "title": "Learner Info"
+            },
+            "time": "Time",
+            "exerciseData": "Exercise Data",
+            "bodytestData": "Bodytest Data",
+            "coachAdvice": "Coach Advice",
+            "learner": "Learner"
+        }
+    }
+}

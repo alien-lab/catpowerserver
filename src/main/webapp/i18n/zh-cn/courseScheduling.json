@@ -1,0 +1,27 @@
+{
+    "catpowerserverApp": {
+        "courseScheduling" : {
+            "home": {
+                "title": "Course Schedulings",
+                "createLabel": "Create a new Course Scheduling",
+                "createOrEditLabel": "Create or edit a Course Scheduling"
+            },
+            "created": "A new Course Scheduling is created with identifier {{ param }}",
+            "updated": "A Course Scheduling is updated with identifier {{ param }}",
+            "deleted": "A Course Scheduling is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Course Scheduling {{ id }}?"
+            },
+            "detail": {
+                "title": "Course Scheduling"
+            },
+            "startTime": "Start Time",
+            "endTime": "End Time",
+            "status": "Status",
+            "qrCode": "Qr Code",
+            "signInCount": "Sign In Count",
+            "course": "Course",
+            "coach": "Coach"
+        }
+    }
+}

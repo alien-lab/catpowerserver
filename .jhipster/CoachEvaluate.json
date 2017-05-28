@@ -1,0 +1,56 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "learner",
+            "otherEntityName": "learner",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "course",
+            "otherEntityName": "course",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "coach",
+            "otherEntityName": "coach",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "learnerCharge",
+            "otherEntityName": "learnerCharge",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "serviceAttitude",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "speciality",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "like",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "complain",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "evaluation",
+            "fieldType": "Long"
+        }
+    ],
+    "changelogDate": "20170528115758",
+    "entityTableName": "coach_evaluate",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "serviceImpl"
+}

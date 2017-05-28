@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <!--
+        Added the constraints for entity LearnerCharge.
+    -->
+    <changeSet id="20170528115803-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="learner_id"
+                                 baseTableName="learner_charge"
+                                 constraintName="fk_learner_charge_learner_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="learner"/>
+
+        <addForeignKeyConstraint baseColumnNames="course_id"
+                                 baseTableName="learner_charge"
+                                 constraintName="fk_learner_charge_course_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="course"/>
+
+        <addForeignKeyConstraint baseColumnNames="coach_id"
+                                 baseTableName="learner_charge"
+                                 constraintName="fk_learner_charge_coach_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="coach"/>
+
+        <addForeignKeyConstraint baseColumnNames="course_scheduling_id"
+                                 baseTableName="learner_charge"
+                                 constraintName="fk_learner_charge_course_scheduling_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="course_scheduling"/>
+
+    </changeSet>
+</databaseChangeLog>

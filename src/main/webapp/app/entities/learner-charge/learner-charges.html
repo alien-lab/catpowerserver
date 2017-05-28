@@ -1,0 +1,82 @@
+<div>
+    <h2 data-translate="catpowerserverApp.learnerCharge.home.title">Learner Charges</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="learner-charge.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  data-translate="catpowerserverApp.learnerCharge.home.createLabel">
+                        Create new Learner Charge
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                    <th jh-sort-by="id"><span data-translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="chargeTime"><span data-translate="catpowerserverApp.learnerCharge.chargeTime">Charge Time</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="buyCourseId"><span data-translate="catpowerserverApp.learnerCharge.buyCourseId">Buy Course Id</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="chargePeople"><span data-translate="catpowerserverApp.learnerCharge.chargePeople">Charge People</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="remainNumber"><span data-translate="catpowerserverApp.learnerCharge.remainNumber">Remain Number</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="learner.id"><span data-translate="catpowerserverApp.learnerCharge.learner">Learner</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="course.id"><span data-translate="catpowerserverApp.learnerCharge.course">Course</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="coach.id"><span data-translate="catpowerserverApp.learnerCharge.coach">Coach</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="courseScheduling.id"><span data-translate="catpowerserverApp.learnerCharge.courseScheduling">Course Scheduling</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="learnerCharge in vm.learnerCharges track by learnerCharge.id">
+                    <td><a ui-sref="learner-charge-detail({id:learnerCharge.id})">{{learnerCharge.id}}</a></td>
+                    <td>{{learnerCharge.chargeTime | date:'medium'}}</td>
+                    <td>{{learnerCharge.buyCourseId}}</td>
+                    <td>{{learnerCharge.chargePeople}}</td>
+                    <td>{{learnerCharge.remainNumber}}</td>
+                    <td>
+                        <a ui-sref="learner-detail({id:learnerCharge.learner.id})">{{learnerCharge.learner.id}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="course-detail({id:learnerCharge.course.id})">{{learnerCharge.course.id}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="coach-detail({id:learnerCharge.coach.id})">{{learnerCharge.coach.id}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="course-scheduling-detail({id:learnerCharge.courseScheduling.id})">{{learnerCharge.courseScheduling.id}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="learner-charge-detail({id:learnerCharge.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="learner-charge.edit({id:learnerCharge.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="learner-charge.delete({id:learnerCharge.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" items-per-page="vm.itemsPerPage" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+    </div>
+</div>

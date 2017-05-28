@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <property name="now" value="now()" dbms="h2"/>
+
+    <property name="now" value="now()" dbms="mysql"/>
+    <property name="autoIncrement" value="true"/>
+
+    <property name="floatType" value="float4" dbms="postgresql, h2"/>
+    <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
+
+    <!--
+        Added the entity BuyCourse.
+    -->
+    <changeSet id="20170528115802-1" author="jhipster">
+        <createTable tableName="buy_course">
+            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="payment_way" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="payment_account" type="${floatType}">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="buy_time" type="timestamp">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="status" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="operator" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="operate_content" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="operate_time" type="timestamp">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="remain_class" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="learner_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="course_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="coach_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
+        </createTable>
+        <dropDefaultValue tableName="buy_course" columnName="buy_time" columnDataType="datetime"/>
+        <dropDefaultValue tableName="buy_course" columnName="operate_time" columnDataType="datetime"/>
+        
+    </changeSet>
+</databaseChangeLog>

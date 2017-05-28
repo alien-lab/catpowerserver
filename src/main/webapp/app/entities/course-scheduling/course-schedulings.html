@@ -1,0 +1,76 @@
+<div>
+    <h2 data-translate="catpowerserverApp.courseScheduling.home.title">Course Schedulings</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="course-scheduling.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  data-translate="catpowerserverApp.courseScheduling.home.createLabel">
+                        Create new Course Scheduling
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                    <th jh-sort-by="id"><span data-translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="startTime"><span data-translate="catpowerserverApp.courseScheduling.startTime">Start Time</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="endTime"><span data-translate="catpowerserverApp.courseScheduling.endTime">End Time</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="status"><span data-translate="catpowerserverApp.courseScheduling.status">Status</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="qrCode"><span data-translate="catpowerserverApp.courseScheduling.qrCode">Qr Code</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="signInCount"><span data-translate="catpowerserverApp.courseScheduling.signInCount">Sign In Count</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="course.id"><span data-translate="catpowerserverApp.courseScheduling.course">Course</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="coach.id"><span data-translate="catpowerserverApp.courseScheduling.coach">Coach</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="courseScheduling in vm.courseSchedulings track by courseScheduling.id">
+                    <td><a ui-sref="course-scheduling-detail({id:courseScheduling.id})">{{courseScheduling.id}}</a></td>
+                    <td>{{courseScheduling.startTime | date:'medium'}}</td>
+                    <td>{{courseScheduling.endTime | date:'medium'}}</td>
+                    <td>{{courseScheduling.status}}</td>
+                    <td>{{courseScheduling.qrCode}}</td>
+                    <td>{{courseScheduling.signInCount}}</td>
+                    <td>
+                        <a ui-sref="course-detail({id:courseScheduling.course.id})">{{courseScheduling.course.id}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="coach-detail({id:courseScheduling.coach.id})">{{courseScheduling.coach.id}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="course-scheduling-detail({id:courseScheduling.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="course-scheduling.edit({id:courseScheduling.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="course-scheduling.delete({id:courseScheduling.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" items-per-page="vm.itemsPerPage" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+{
+    "catpowerserverApp": {
+        "learner" : {
+            "home": {
+                "title": "Learners",
+                "createLabel": "Create a new Learner",
+                "createOrEditLabel": "Create or edit a Learner"
+            },
+            "created": "A new Learner is created with identifier {{ param }}",
+            "updated": "A Learner is updated with identifier {{ param }}",
+            "deleted": "A Learner is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Learner {{ id }}?"
+            },
+            "detail": {
+                "title": "Learner"
+            },
+            "learneName": "Learne Name",
+            "learnerPhone": "Learner Phone",
+            "learnerSex": "Learner Sex",
+            "registTime": "Regist Time",
+            "wxOpenId": "Wx Open Id",
+            "wxNickname": "Wx Nickname",
+            "wxHeader": "Wx Header",
+            "firstTotime": "First Totime",
+            "firstBuyclass": "First Buyclass",
+            "recentlySignin": "Recently Signin",
+            "experience": "Experience"
+        }
+    }
+}

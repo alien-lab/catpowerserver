@@ -1,0 +1,55 @@
+
+<div>
+    <h2><span data-translate="catpowerserverApp.coachEvaluate.detail.title">Coach Evaluate</span> {{vm.coachEvaluate.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="catpowerserverApp.coachEvaluate.serviceAttitude">Service Attitude</span></dt>
+        <dd>
+            <span>{{vm.coachEvaluate.serviceAttitude}}</span>
+        </dd>
+        <dt><span data-translate="catpowerserverApp.coachEvaluate.speciality">Speciality</span></dt>
+        <dd>
+            <span>{{vm.coachEvaluate.speciality}}</span>
+        </dd>
+        <dt><span data-translate="catpowerserverApp.coachEvaluate.like">Like</span></dt>
+        <dd>
+            <span>{{vm.coachEvaluate.like}}</span>
+        </dd>
+        <dt><span data-translate="catpowerserverApp.coachEvaluate.complain">Complain</span></dt>
+        <dd>
+            <span>{{vm.coachEvaluate.complain}}</span>
+        </dd>
+        <dt><span data-translate="catpowerserverApp.coachEvaluate.evaluation">Evaluation</span></dt>
+        <dd>
+            <span>{{vm.coachEvaluate.evaluation}}</span>
+        </dd>
+        <dt><span data-translate="catpowerserverApp.coachEvaluate.learner">Learner</span></dt>
+        <dd>
+            <a ui-sref="learner-detail({id:vm.coachEvaluate.learner.id})">{{vm.coachEvaluate.learner.id}}</a>
+        </dd>
+        <dt><span data-translate="catpowerserverApp.coachEvaluate.course">Course</span></dt>
+        <dd>
+            <a ui-sref="course-detail({id:vm.coachEvaluate.course.id})">{{vm.coachEvaluate.course.id}}</a>
+        </dd>
+        <dt><span data-translate="catpowerserverApp.coachEvaluate.coach">Coach</span></dt>
+        <dd>
+            <a ui-sref="coach-detail({id:vm.coachEvaluate.coach.id})">{{vm.coachEvaluate.coach.id}}</a>
+        </dd>
+        <dt><span data-translate="catpowerserverApp.coachEvaluate.learnerCharge">Learner Charge</span></dt>
+        <dd>
+            <a ui-sref="learner-charge-detail({id:vm.coachEvaluate.learnerCharge.id})">{{vm.coachEvaluate.learnerCharge.id}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="coach-evaluate-detail.edit({id:vm.coachEvaluate.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

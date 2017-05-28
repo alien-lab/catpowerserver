@@ -1,0 +1,22 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "course",
+            "otherEntityName": "course",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "picture",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20170528115806",
+    "entityTableName": "course_atlas",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "serviceImpl"
+}

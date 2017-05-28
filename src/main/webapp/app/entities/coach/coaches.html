@@ -1,0 +1,72 @@
+<div>
+    <h2 data-translate="catpowerserverApp.coach.home.title">Coaches</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="coach.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  data-translate="catpowerserverApp.coach.home.createLabel">
+                        Create new Coach
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                    <th jh-sort-by="id"><span data-translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="coachName"><span data-translate="catpowerserverApp.coach.coachName">Coach Name</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="coachPhone"><span data-translate="catpowerserverApp.coach.coachPhone">Coach Phone</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="coachIntroduce"><span data-translate="catpowerserverApp.coach.coachIntroduce">Coach Introduce</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="coachPicture"><span data-translate="catpowerserverApp.coach.coachPicture">Coach Picture</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="coachWechatopenid"><span data-translate="catpowerserverApp.coach.coachWechatopenid">Coach Wechatopenid</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="coachWechatname"><span data-translate="catpowerserverApp.coach.coachWechatname">Coach Wechatname</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="coachWechatpicture"><span data-translate="catpowerserverApp.coach.coachWechatpicture">Coach Wechatpicture</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="coach in vm.coaches track by coach.id">
+                    <td><a ui-sref="coach-detail({id:coach.id})">{{coach.id}}</a></td>
+                    <td>{{coach.coachName}}</td>
+                    <td>{{coach.coachPhone}}</td>
+                    <td>{{coach.coachIntroduce}}</td>
+                    <td>{{coach.coachPicture}}</td>
+                    <td>{{coach.coachWechatopenid}}</td>
+                    <td>{{coach.coachWechatname}}</td>
+                    <td>{{coach.coachWechatpicture}}</td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="coach-detail({id:coach.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="coach.edit({id:coach.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="coach.delete({id:coach.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" items-per-page="vm.itemsPerPage" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+    </div>
+</div>

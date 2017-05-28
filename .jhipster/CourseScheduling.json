@@ -1,0 +1,44 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "course",
+            "otherEntityName": "course",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "coach",
+            "otherEntityName": "coach",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "startTime",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "endTime",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "qrCode",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "signInCount",
+            "fieldType": "Long"
+        }
+    ],
+    "changelogDate": "20170528115759",
+    "entityTableName": "course_scheduling",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "serviceImpl"
+}
