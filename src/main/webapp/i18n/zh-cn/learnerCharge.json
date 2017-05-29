@@ -6,7 +6,7 @@
                 "createLabel": "添加一个新的核销信息",
                 "createOrEditLabel": "添加或者修改核销信息"
             },
-            "created": "您已经成功创建一个编码为 {{ param }}的核销单！",
+            "crm那你慢慢弄eated": "您已经成功创建一个编码为 {{ param }}的核销单！",
             "updated": "您已经成功修改一个编码为 {{ param }}的核销单！",
             "deleted": "您已经成功删除一个编码为 {{ param }}的核销单！",
             "delete": {
