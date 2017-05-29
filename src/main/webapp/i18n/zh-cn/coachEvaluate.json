@@ -2,28 +2,28 @@
     "catpowerserverApp": {
         "coachEvaluate" : {
             "home": {
-                "title": "Coach Evaluates",
-                "createLabel": "Create a new Coach Evaluate",
-                "createOrEditLabel": "Create or edit a Coach Evaluate"
+                "title": "教练评价信息",
+                "createLabel": "对教练进行评价",
+                "createOrEditLabel": "给教练打个分~"
             },
-            "created": "A new Coach Evaluate is created with identifier {{ param }}",
-            "updated": "A Coach Evaluate is updated with identifier {{ param }}",
-            "deleted": "A Coach Evaluate is deleted with identifier {{ param }}",
+            "created": "你已经成功对编号为 {{ param }}的教练进行评价",
+            "updated": "你已经成功修改对编号为 {{ param }}的教练的评价",
+            "deleted": "你已经成功删除对编号为 {{ param }}的教练的评价",
             "delete": {
-                "question": "Are you sure you want to delete Coach Evaluate {{ id }}?"
+                "question": "你确定要删除编号为 {{ id }}的教练评价?"
             },
             "detail": {
-                "title": "Coach Evaluate"
+                "title": "教练评价信息"
             },
-            "serviceAttitude": "Service Attitude",
-            "speciality": "Speciality",
-            "like": "Like",
-            "complain": "Complain",
-            "evaluation": "Evaluation",
-            "learner": "Learner",
-            "course": "Course",
-            "coach": "Coach",
-            "learnerCharge": "Learner Charge"
+            "serviceAttitude": "服务态度",
+            "speciality": "专业程度",
+            "like": "喜欢指数",
+            "complain": "投诉",
+            "evaluation": "评价",
+            "learner": "学员",
+            "course": "课程",
+            "coach": "教练",
+            "learnerCharge": "学员核销"
         }
     }
 }
