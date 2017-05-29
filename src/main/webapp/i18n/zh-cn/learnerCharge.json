@@ -2,27 +2,26 @@
     "catpowerserverApp": {
         "learnerCharge" : {
             "home": {
-                "title": "Learner Charges",
-                "createLabel": "Create a new Learner Charge",
-                "createOrEditLabel": "Create or edit a Learner Charge"
+                "title": "学员核销",
+                "createLabel": "添加一个新的核销信息",
+                "createOrEditLabel": "添加或者修改核销信息"
             },
-            "created": "A new Learner Charge is created with identifier {{ param }}",
-            "updated": "A Learner Charge is updated with identifier {{ param }}",
-            "deleted": "A Learner Charge is deleted with identifier {{ param }}",
+            "created": "您已经成功创建一个编码为 {{ param }}的核销单！",
+            "updated": "您已经成功修改一个编码为 {{ param }}的核销单！",
+            "deleted": "您已经成功删除一个编码为 {{ param }}的核销单！",
             "delete": {
-                "question": "Are you sure you want to delete Learner Charge {{ id }}?"
+                "question": "你确定要删除一个编码为 {{ id }}的核销单么?"
             },
             "detail": {
-                "title": "Learner Charge"
+                "title": "核销单"
             },
-            "chargeTime": "Charge Time",
-            "buyCourseId": "Buy Course Id",
-            "chargePeople": "Charge People",
-            "remainNumber": "Remain Number",
-            "learner": "Learner",
-            "course": "Course",
-            "coach": "Coach",
-            "courseScheduling": "Course Scheduling"
+            "chargeTime": "核销时间：",
+            "chargePeople": "核销人：",
+            "remainNumber": "核销之后的剩余次数：",
+            "learner": "学员：",
+            "course": "请选择课程：",
+            "coach": "请选择教练：",
+            "courseScheduling": "教练排课："
         }
     }
 }
