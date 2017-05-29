@@ -2,30 +2,30 @@
     "catpowerserverApp": {
         "learner" : {
             "home": {
-                "title": "Learners",
-                "createLabel": "Create a new Learner",
-                "createOrEditLabel": "Create or edit a Learner"
+                "title": "学员",
+                "createLabel": "创建一个新的学员",
+                "createOrEditLabel": "创建或者修改学员信息"
             },
-            "created": "A new Learner is created with identifier {{ param }}",
-            "updated": "A Learner is updated with identifier {{ param }}",
-            "deleted": "A Learner is deleted with identifier {{ param }}",
+            "created": "您已经创建成功一个编码为 {{ param }}的学员",
+            "updated": "您已经修改成功一个编码为 {{ param }}的学员",
+            "deleted": "您已经成功删除一个编码为 {{ param }}的学员",
             "delete": {
-                "question": "Are you sure you want to delete Learner {{ id }}?"
+                "question": "你确定要删除这个编码为 {{ id }} 的学员么?"
             },
             "detail": {
-                "title": "Learner"
+                "title": "学员"
             },
-            "learneName": "Learne Name",
-            "learnerPhone": "Learner Phone",
-            "learnerSex": "Learner Sex",
-            "registTime": "Regist Time",
-            "wxOpenId": "Wx Open Id",
-            "wxNickname": "Wx Nickname",
-            "wxHeader": "Wx Header",
-            "firstTotime": "First Totime",
-            "firstBuyclass": "First Buyclass",
-            "recentlySignin": "Recently Signin",
-            "experience": "Experience"
+            "learneName": "学员姓名：",
+            "learnerPhone": "学员手机号：",
+            "learnerSex": "学员性别：",
+            "registTime": "注册时间：",
+            "wxOpenId": "微信的openID：",
+            "wxNickname": "微信的昵称：",
+            "wxHeader": "微信的头像：",
+            "firstTotime": "第一次去店里的时间：",
+            "firstBuyclass": "第一次购买课程的时间：",
+            "recentlySignin": "最近一次签到的时间：",
+            "experience": "经验值："
         }
     }
 }
