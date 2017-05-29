@@ -2,26 +2,26 @@
     "catpowerserverApp": {
         "courseScheduling" : {
             "home": {
-                "title": "Course Schedulings",
-                "createLabel": "Create a new Course Scheduling",
-                "createOrEditLabel": "Create or edit a Course Scheduling"
+                "title": "教练排课信息",
+                "createLabel": "添加教练课程安排",
+                "createOrEditLabel": "添加或修改教练课程安排"
             },
-            "created": "A new Course Scheduling is created with identifier {{ param }}",
-            "updated": "A Course Scheduling is updated with identifier {{ param }}",
-            "deleted": "A Course Scheduling is deleted with identifier {{ param }}",
+            "created": "你已经成功添加了编号为 {{ param }}的课程安排",
+            "updated": "你已经成功修改了编号为 {{ param }}的课程安排",
+            "deleted": "你已经成功删除了编号为 {{ param }}的课程安排",
             "delete": {
-                "question": "Are you sure you want to delete Course Scheduling {{ id }}?"
+                "question": "你确定要删除编码为 {{ id }}的排课信息吗?"
             },
             "detail": {
-                "title": "Course Scheduling"
+                "title": "教练排课信息"
             },
-            "startTime": "Start Time",
-            "endTime": "End Time",
-            "status": "Status",
-            "qrCode": "Qr Code",
-            "signInCount": "Sign In Count",
-            "course": "Course",
-            "coach": "Coach"
+            "startTime": "课程开始时间",
+            "endTime": "课程结束时间",
+            "status": "课程",
+            "qrCode": "微信二维码",
+            "signInCount": "签到人数",
+            "course": "课程",
+            "coach": "教练"
         }
     }
 }
