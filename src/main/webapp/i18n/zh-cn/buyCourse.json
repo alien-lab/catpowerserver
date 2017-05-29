@@ -2,30 +2,30 @@
     "catpowerserverApp": {
         "buyCourse" : {
             "home": {
-                "title": "课程销售",
-                "createLabel": "Create a new Buy Course",
-                "createOrEditLabel": "Create or edit a Buy Course"
+                "title": "购买课程",
+                "createLabel": "创建一个新的课程",
+                "createOrEditLabel": "创建或者修改一个课程"
             },
-            "created": "A new Buy Course is created with identifier {{ param }}",
-            "updated": "A Buy Course is updated with identifier {{ param }}",
-            "deleted": "A Buy Course is deleted with identifier {{ param }}",
+            "created": "一个新的课程已经购买成功，编码为 {{ param }}",
+            "updated": "你已经修改购买课程成功，编码为 {{ param }}",
+            "deleted": "您已经成功删除一个购买过的课程，编码为{{ param }}",
             "delete": {
-                "question": "Are you sure you want to delete Buy Course {{ id }}?"
+                "question": "您确定要删除这个已经购买的编码为 {{ id }}的课程么?"
             },
             "detail": {
-                "title": "Buy Course"
+                "title": "课程销售"
             },
-            "paymentWay": "Payment Way",
-            "paymentAccount": "Payment Account",
-            "buyTime": "Buy Time",
-            "status": "Status",
-            "operator": "Operator",
-            "operateContent": "Operate Content",
-            "operateTime": "Operate Time",
-            "remainClass": "Remain Class",
-            "learner": "Learner",
-            "course": "Course",
-            "coach": "Coach"
+            "paymentWay": "支付方式：",
+            "paymentAccount": "支付金额：",
+            "buyTime": "支付时间：",
+            "status": "状态：",
+            "operator": "操作人：",
+            "operateContent": "操作的内容：",
+            "operateTime": "操作的时间：",
+            "remainClass": "剩余的课次：",
+            "learner": "学员：",
+            "course": "你想选择的课程：",
+            "coach": "你想选择的教练："
         }
     }
 }
