@@ -2,7 +2,7 @@
     "catpowerserverApp": {
         "buyCourse" : {
             "home": {
-                "title": "Buy Courses",
+                "title": "课程销售",
                 "createLabel": "Create a new Buy Course",
                 "createOrEditLabel": "Create or edit a Buy Course"
             },
