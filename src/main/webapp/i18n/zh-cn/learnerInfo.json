@@ -2,24 +2,24 @@
     "catpowerserverApp": {
         "learnerInfo" : {
             "home": {
-                "title": "Learner Infos",
-                "createLabel": "Create a new Learner Info",
-                "createOrEditLabel": "Create or edit a Learner Info"
+                "title": "学员健身资料",
+                "createLabel": "增添学员健身信息",
+                "createOrEditLabel": "增添或修改学员健身信息"
             },
-            "created": "A new Learner Info is created with identifier {{ param }}",
-            "updated": "A Learner Info is updated with identifier {{ param }}",
-            "deleted": "A Learner Info is deleted with identifier {{ param }}",
+            "created": "你已经成功添加一个编号为 {{ param }}的学员健身信息",
+            "updated": "你已经成功修改编号为 {{ param }}的学员健身信息",
+            "deleted": "你已经成功删除编号为 {{ param }}的学员健身信息",
             "delete": {
-                "question": "Are you sure you want to delete Learner Info {{ id }}?"
+                "question": "确定要删除编号为{{ id }}的学员健身信息吗?"
             },
             "detail": {
-                "title": "Learner Info"
+                "title": "学员健身资料"
             },
-            "time": "Time",
-            "exerciseData": "Exercise Data",
-            "bodytestData": "Bodytest Data",
-            "coachAdvice": "Coach Advice",
-            "learner": "Learner"
+            "time": "时间",
+            "exerciseData": "健身数据",
+            "bodytestData": "体测数据",
+            "coachAdvice": "教练建议",
+            "learner": "学员"
         }
     }
 }
