@@ -2,21 +2,21 @@
     "catpowerserverApp": {
         "courseAtlas" : {
             "home": {
-                "title": "Course Atlases",
-                "createLabel": "Create a new Course Atlas",
-                "createOrEditLabel": "Create or edit a Course Atlas"
+                "title": "课程图册表",
+                "createLabel": "创建课程图册表",
+                "createOrEditLabel": "编辑课程图册表"
             },
-            "created": "A new Course Atlas is created with identifier {{ param }}",
-            "updated": "A Course Atlas is updated with identifier {{ param }}",
-            "deleted": "A Course Atlas is deleted with identifier {{ param }}",
+            "created": "你已成功的创建了{{ param }}图册表",
+            "updated": "您已成功的修改了{{ param }}图册表",
+            "deleted": "您已成功的的删除了{{ param }}图册表",
             "delete": {
-                "question": "Are you sure you want to delete Course Atlas {{ id }}?"
+                "question": "你去顶要删除 {{ id }}吗?"
             },
             "detail": {
-                "title": "Course Atlas"
+                "title": "课程图册表"
             },
-            "picture": "Picture",
-            "course": "Course"
+            "picture": "图片",
+            "course": "课程"
         }
     }
 }

@@ -1,21 +1,21 @@
 {
     "global": {
-        "title": "Catpowerserver",
+        "title": "猫力健身",
         "browsehappy": "您目前使用<strong>过于老旧</strong>的浏览器, 建议您<a href=\"http://browsehappy.com/?locale=en\">升级浏览器</a>让您有更佳的上网体验.",
         "menu": {
             "home": "首页",
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
                 "main": "数据",
-                "coachEvaluate": "Coach Evaluate",
-                "courseScheduling": "Course Scheduling",
-                "learnerInfo": "Learner Info",
-                "learner": "Learner",
-                "buyCourse": "Buy Course",
-                "learnerCharge": "Learner Charge",
-                "coach": "Coach",
-                "course": "Course",
-                "courseAtlas": "Course Atlas",
+                "coachEvaluate": "教练评价信息",
+                "courseScheduling": "教练排课信息",
+                "learnerInfo": "学员健身资料",
+                "learner": "学员",
+                "buyCourse": "购买课程",
+                "learnerCharge": "学员核销",
+                "coach": "教练",
+                "course": "课程",
+                "courseAtlas": "课程图册表",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

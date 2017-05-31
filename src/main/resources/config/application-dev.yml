@@ -26,9 +26,10 @@ spring:
         serialization.indent_output: true
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:mysql://localhost:3306/catpowerserver?useUnicode=true&characterEncoding=utf8&useSSL=false
-        username: root
-        password: root123![]
+        url: jdbc:mysql://test.moistmedia.net:3360/catpower
+        username: wechat
+        password: wechat123!
+
         hikari:
             data-source-properties:
                 cachePrepStmts: true

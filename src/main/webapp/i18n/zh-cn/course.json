@@ -2,28 +2,28 @@
     "catpowerserverApp": {
         "course" : {
             "home": {
-                "title": "Courses",
-                "createLabel": "Create a new Course",
-                "createOrEditLabel": "Create or edit a Course"
+                "title": "课程",
+                "createLabel": "创建课程",
+                "createOrEditLabel": "编辑课程"
             },
-            "created": "A new Course is created with identifier {{ param }}",
-            "updated": "A Course is updated with identifier {{ param }}",
-            "deleted": "A Course is deleted with identifier {{ param }}",
+            "created": "您已成功的添加了{{ param }}课程",
+            "updated": "你已成功的修改了{{ param }}课程",
+            "deleted": "你已成功的删除了{{ param }}课程",
             "delete": {
-                "question": "Are you sure you want to delete Course {{ id }}?"
+                "question": "你确定要删除 {{ id }}吗?"
             },
             "detail": {
-                "title": "Course"
+                "title": "课程"
             },
-            "courseName": "Course Name",
-            "courseIntroductions": "Course Introductions",
-            "totalClassHour": "Total Class Hour",
-            "coursePrices": "Course Prices",
-            "courseVipprices": "Course Vipprices",
-            "classNumber": "Class Number",
-            "courseOtherInfo": "Course Other Info",
-            "courseThumbnail": "Course Thumbnail",
-            "pictures": "Pictures"
+            "courseName": "课程名称",
+            "courseIntroductions": "课程说明",
+            "totalClassHour": "总课时",
+            "coursePrices": "课程价格",
+            "courseVipprices": "会员价格",
+            "classNumber": "课程上课人数",
+            "courseOtherInfo": "课程其他信息",
+            "courseThumbnail": "课程缩略图"
+
         }
     }
 }

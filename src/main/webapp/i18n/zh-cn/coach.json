@@ -2,26 +2,26 @@
     "catpowerserverApp": {
         "coach" : {
             "home": {
-                "title": "Coaches",
-                "createLabel": "Create a new Coach",
-                "createOrEditLabel": "Create or edit a Coach"
+                "title": "教练",
+                "createLabel": "添加教练",
+                "createOrEditLabel": "编辑教练信息"
             },
-            "created": "A new Coach is created with identifier {{ param }}",
-            "updated": "A Coach is updated with identifier {{ param }}",
-            "deleted": "A Coach is deleted with identifier {{ param }}",
+            "created": "您已成功的添加了 {{ param }}教练",
+            "updated": "您已成功的更新了{{ param }}教练的信息",
+            "deleted": "您已成功的删除了 {{ param }}教练",
             "delete": {
-                "question": "Are you sure you want to delete Coach {{ id }}?"
+                "question": "你确定要删除{{ id }}吗?"
             },
             "detail": {
-                "title": "Coach"
+                "title": "教练"
             },
-            "coachName": "Coach Name",
-            "coachPhone": "Coach Phone",
-            "coachIntroduce": "Coach Introduce",
-            "coachPicture": "Coach Picture",
-            "coachWechatopenid": "Coach Wechatopenid",
-            "coachWechatname": "Coach Wechatname",
-            "coachWechatpicture": "Coach Wechatpicture"
+            "coachName": "教练姓名",
+            "coachPhone": "教练电话号码",
+            "coachIntroduce": "教练简介",
+            "coachPicture": "教练图片",
+            "coachWechatopenid": "教练微信openid",
+            "coachWechatname": "教练微信昵称",
+            "coachWechatpicture": "教练微信头像"
         }
     }
 }
