@@ -19,7 +19,7 @@ public interface BuyCourseService {
 
     /**
      *  Get all the buyCourses.
-     *  
+     *
      *  @param pageable the pagination information
      *  @return the list of entities
      */
@@ -39,4 +39,6 @@ public interface BuyCourseService {
      *  @param id the id of the entity
      */
     void delete(Long id);
+
+    Page<BuyCourse> getTodayData(Pageable page) throws Exception;
 }
