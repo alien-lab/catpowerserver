@@ -14,14 +14,14 @@
         </div>
         <div class="navbar-collapse" uib-collapse="vm.isNavbarCollapsed" ng-switch="vm.isAuthenticated()">
             <ul class="nav navbar-nav navbar-right">
-                <li ui-sref-active="active">
+                <!--<li ui-sref-active="active">
                     <a ui-sref="home" ng-click="vm.collapseNavbar()">
                         <span class="glyphicon glyphicon-home"></span>
                         <span class="hidden-sm" data-translate="global.menu.home">Home</span>
                     </a>
-                </li>
-
-                <li  ng-switch-when="true" uib-dropdown class="dropdown pointer">
+                </li>-->
+                <!--门店运行-->
+                <li ui-sref-active="active" ng-switch-when="true" uib-dropdown class="dropdown pointer">
                     <a class="dropdown-toggle" uib-dropdown-toggle href="">
                         <span>
                             <span class="glyphicon glyphicon-th-list"></span>
@@ -38,12 +38,63 @@
                                 <span data-translate="global.menu.page.shopop">运行情况</span>
                             </a>
                         </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="coach-arrangement" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                <span data-translate="global.menu.page.coach-arrangement">教练排课</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="student-registration" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                <span data-translate="global.menu.page.student-registration">学员报名</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="student-filing" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                <span data-translate="global.menu.page.student-filing">学院建档</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="student-withdrawal" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                <span data-translate="global.menu.page.student-withdrawal">学院退课</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!--数据维护-->
+                <li ui-sref-active="active" ng-switch-when="true" uib-dropdown class="dropdown pointer">
+                    <a class="dropdown-toggle" uib-dropdown-toggle href="">
+                        <span>
+                            <span class="glyphicon glyphicon-th-list"></span>
+                            <span class="hidden-sm" data-translate="global.menu.data-maintain.title">
+                                数据维护
+                            </span>
+                            <b class="caret"></b>
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu" uib-dropdown-menu>
+                        <li ui-sref-active="active">
+                            <a ui-sref="coach" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                <span data-translate="global.menu.data-maintain.coach">教练维护</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="course" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                <span data-translate="global.menu.data-maintain.course">课程维护</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
 
 
-                <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
-                <li ng-class="{active: vm.$state.includes('entity')}" ng-switch-when="true" uib-dropdown class="dropdown pointer">
+                <!-- 自动生成的数据模块jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
+                <!--<li ng-class="{active: vm.$state.includes('entity')}" ng-switch-when="true" uib-dropdown class="dropdown pointer">
                     <a class="dropdown-toggle" uib-dropdown-toggle href="" id="entity-menu">
                         <span>
                             <span class="glyphicon glyphicon-th-list"></span>
@@ -108,9 +159,10 @@
                                     <span data-translate="global.menu.entities.courseAtlas">Course Atlas</span>
                                 </a>
                             </li>
-                        <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
+                        &lt;!&ndash; jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here &ndash;&gt;
                     </ul>
-                </li>
+                </li>-->
+
                 <li ng-class="{active: vm.$state.includes('account')}" uib-dropdown class="dropdown pointer">
                     <a class="dropdown-toggle" uib-dropdown-toggle href="" id="account-menu">
                         <span>

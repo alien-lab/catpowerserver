@@ -43,7 +43,16 @@
             "language": "语言",
             "page":{
                 "title":"门店运行",
-                "shopop":"运行情况"
+                "shopop":"运行情况",
+                "coach-arrangement":"教练排课",
+                "student-registration":"学员报名",
+                "student-filing":"学院建档",
+                "student-withdrawal":"学员退课"
+            },
+            "data-maintain":{
+                "title":"数据维护",
+                "coach":"教练维护",
+                "course":"课程维护"
             }
         },
         "form": {

@@ -40,7 +40,20 @@
                 "database": "Database",
                 "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)"
             },
-            "language": "Language"
+            "language": "Language",
+            "page":{
+                "title":"Store operation",
+                "shopop":"Run situation",
+                "coach-arrangement":"Coach arrangement",
+                "student-registration":"Student registration",
+                "student-filing":"Student filing",
+                "student-withdrawal":"Student withdrawal"
+            },
+            "data-maintain":{
+                "title":"Data maintain",
+                "coach":"Coach maintain",
+                "course":"Course maintain"
+            }
         },
         "form": {
             "username": "Username",
