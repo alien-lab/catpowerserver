@@ -40,33 +40,25 @@
                             <div class="col-lg-2 col-md-2 col-sm-2"><span>{{arrangement.courseState}}</span></div>
                             <div class="col-lg-3 col-md-3 col-sm-3"><span>上课时间：{{arrangement.time}}</span></div>
 
-                            <div class="col-lg-2 col-md-2 col-sm-2"><span>已签到学员：{{arrangement.traineeCount}}人</span></div>
-                            <div class="col-lg-8 col-md-8 col-sm-8">
-                                <div class="btn-group btn-sm">
-                                    <button type="button" class="btn btn-default btn-sm">{{arrangement.traineeName1}}</button>
-                                    <button type="button" class="btn btn-default btn-sm">
-                                       <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                    </button>
+                            <div class="col-lg-12 col-md-12 col-sm-12" style="margin-bottom: 2%;">
+                                <div class="col-lg-2 col-md-2 col-sm-2"><span>已签到学员：{{arrangement.traineeCount}}人</span></div>
+                                <div class="col-lg-8 col-md-8 col-sm-8">
+                                    <div class="btn-group btn-sm" ng-repeat="trainee in arrangement.traineeName">
+                                        <button type="button" class="btn btn-default btn-sm">{{trainee.name}}</button>
+                                        <button ng-click="removeTrainee(arrangement.id,trainee.traineeId)" type="button" class="btn btn-default btn-sm">
+                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                        </button>
+                                    </div>
                                 </div>
-                                <div class="btn-group btn-sm">
-                                    <button type="button" class="btn btn-default btn-sm">{{arrangement.traineeName2}}</button>
-                                    <button type="button" class="btn btn-default btn-sm">
-                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                    </button>
-                                </div>
-                                <div class="btn-group btn-sm">
-                                    <button type="button" class="btn btn-default btn-sm">{{arrangement.traineeName3}}</button>
-                                    <button type="button" class="btn btn-default btn-sm">
-                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                    </button>
-                                </div>
+                                <div class="col-lg-2 col-md-2 col-sm-2"><button class="btn btn-default btn-sm" type="submit">签到码</button></div>
                             </div>
-                            <div class="col-lg-2 col-md-2 col-sm-2"><button class="btn btn-default btn-sm" type="submit">签到码</button></div>
-                            <div class="col-lg-6 col-md-6 col-sm-6" style="border-top: 1px solid #e3e3e3;border-right: 1px solid #e3e3e3;padding: 0px;margin-top: 2%;">
-                                <button class="btn btn-default col-lg-12 col-md-12 col-sm-12" type="submit" style="border: none;">下课</button>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6" style="border-top: 1px solid #e3e3e3;padding: 0px;margin-top: 2%;">
-                                <button class="btn btn-default col-lg-12 col-md-12 col-sm-12" type="submit" style="border: none;">取消</button>
+                            <div ng-if="arrangement.status==true" class="col-lg-12 col-md-12 col-sm-12" style="margin-top: -2%;padding: 0px;">
+                                <div class="col-lg-6 col-md-6 col-sm-6" style="border-top: 1px solid #e3e3e3;border-right: 1px solid #e3e3e3;padding: 0px;margin-top: 2%;">
+                                    <button ng-click="getOutClass(arrangement.id)" class="btn btn-default col-lg-12 col-md-12 col-sm-12" type="submit" style="border: none;">下课</button>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6" style="border-top: 1px solid #e3e3e3;padding: 0px;margin-top: 2%;">
+                                    <button ng-click="removeCoachArrangement(arrangement.id)" class="btn btn-default col-lg-12 col-md-12 col-sm-12" type="submit" style="border: none;">取消</button>
+                                </div>
                             </div>
                         </div>
                     </div>
