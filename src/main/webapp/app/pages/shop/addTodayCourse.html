@@ -1,130 +1,114 @@
 
-<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+<!--<form name="editForm" role="form" novalidate ng-submit="vm.save()">
 
     <div class="modal-header"><h4>添加课时</h4></div>
     <div class="modal-body">
-        <!--没有理解-->
+        &lt;!&ndash;没有理解&ndash;&gt;
         <jhi-alert-error></jhi-alert-error>
         <div class="form-group" ng-show="vm.coach.id">
             <label for="id" data-translate="global.field.id">ID</label>
             <input type="text" class="form-control" id="id" name="id"
                    ng-model="vm.coach.id" readonly />
         </div>
+
         <div class="form-group">
             <label class="control-label" for="field_coachName">教练姓名</label>
             <input type="text" class="form-control" name="coachName" id="field_coachName"
-                   ng-model="vm.coach.coachName"
+                   ng-model="coachName"
             />
         </div>
         <div class="form-group">
             <label class="control-label" for="field_coachName">课程名称</label>
             <input type="text" class="form-control" name="coachName"
-                   ng-model="vm.coach.coachName"
+                   ng-model="courseName"
             />
         </div>
         <div class="form-group">
             <label class="control-label" for="field_coachName">课程状态</label>
-            <input type="text" class="form-control" name="coachName"
-                   ng-model="vm.coach.coachName"
+            <input type="text" class="form-control"
+                   ng-model="courseState"
             />
         </div>
         <div class="form-group">
             <label class="control-label" for="field_coachName">上课时间</label>
-            <input type="text" class="form-control" name="coachName"
-                   ng-model="vm.coach.coachName"
+            <input type="text" class="form-control"
+                   ng-model="time"
             />
         </div>
         <div class="form-group">
             <label class="control-label" for="field_coachName">学员人数</label>
-            <input type="text" class="form-control" name="coachName"
-                   ng-model="vm.coach.coachName"
+            <input type="text" class="form-control"
+                   ng-model="traineeCount"
             />
         </div>
         <div class="form-group">
             <label class="control-label" for="field_coachName">学员姓名</label>
-            <input type="text" class="form-control" name="coachName"
-                   ng-model="vm.coach.coachName"
-            />
-        </div>
-        <div class="form-group">
-            <label class="control-label" for="field_coachName">签到码</label>
-            <input type="text" class="form-control" name="coachName"
-                   ng-model="vm.coach.coachName"
+            <input type="text" class="form-control"
+                   ng-model="traineeName"
             />
         </div>
 
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
             <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
         </button>
-        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" ng-click="save()" class="btn btn-primary">
             <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
         </button>
     </div>
-    <!--<div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
-                ng-click="vm.clear()">&times;</button>
-        <h4 class="modal-title" id="myCoachLabel" data-translate="catpowerserverApp.coach.home.createOrEditLabel">Create or edit a Coach</h4>
-    </div>
-    <div class="modal-body">
-        <jhi-alert-error></jhi-alert-error>
-        <div class="form-group" ng-show="vm.coach.id">
-            <label for="id" data-translate="global.field.id">ID</label>
-            <input type="text" class="form-control" id="id" name="id"
-                   ng-model="vm.coach.id" readonly />
-        </div>
-        <div class="form-group">
-            <label class="control-label" data-translate="catpowerserverApp.coach.coachName" for="field_coachName">Coach Name</label>
-            <input type="text" class="form-control" name="coachName" id="field_coachName"
-                   ng-model="vm.coach.coachName"
-            />
-        </div>
-        <div class="form-group">
-            <label class="control-label" data-translate="catpowerserverApp.coach.coachPhone" for="field_coachPhone">Coach Phone</label>
-            <input type="text" class="form-control" name="coachPhone" id="field_coachPhone"
-                   ng-model="vm.coach.coachPhone"
-            />
-        </div>
-        <div class="form-group">
-            <label class="control-label" data-translate="catpowerserverApp.coach.coachIntroduce" for="field_coachIntroduce">Coach Introduce</label>
-            <input type="text" class="form-control" name="coachIntroduce" id="field_coachIntroduce"
-                   ng-model="vm.coach.coachIntroduce"
-            />
-        </div>
-        <div class="form-group">
-            <label class="control-label" data-translate="catpowerserverApp.coach.coachPicture" for="field_coachPicture">Coach Picture</label>
-            <input type="text" class="form-control" name="coachPicture" id="field_coachPicture"
-                   ng-model="vm.coach.coachPicture"
-            />
-        </div>
-        <div class="form-group">
-            <label class="control-label" data-translate="catpowerserverApp.coach.coachWechatopenid" for="field_coachWechatopenid">Coach Wechatopenid</label>
-            <input type="text" class="form-control" name="coachWechatopenid" id="field_coachWechatopenid"
-                   ng-model="vm.coach.coachWechatopenid"
-            />
-        </div>
-        <div class="form-group">
-            <label class="control-label" data-translate="catpowerserverApp.coach.coachWechatname" for="field_coachWechatname">Coach Wechatname</label>
-            <input type="text" class="form-control" name="coachWechatname" id="field_coachWechatname"
-                   ng-model="vm.coach.coachWechatname"
-            />
-        </div>
-        <div class="form-group">
-            <label class="control-label" data-translate="catpowerserverApp.coach.coachWechatpicture" for="field_coachWechatpicture">Coach Wechatpicture</label>
-            <input type="text" class="form-control" name="coachWechatpicture" id="field_coachWechatpicture"
-                   ng-model="vm.coach.coachWechatpicture"
-            />
-        </div>
 
+</form>-->
+<div class="modal-header"><h4>{{coachName}}</h4></div>
+<div class="modal-body">
+    <jhi-alert-error></jhi-alert-error>
+    <div class="form-group" ng-show="vm.coach.id">
+        <label for="id" data-translate="global.field.id">ID</label>
+        <input type="text" class="form-control" id="id" name="id"
+               ng-model="vm.coach.id" readonly />
     </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
-            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
-        </button>
-        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
-            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
-        </button>
-    </div>-->
-</form>
-
+    <div class="form-group">
+        <label class="control-label" for="field_coachName">教练姓名</label>
+        <input type="text" class="form-control" name="coachName" id="field_coachName"
+               ng-model="coachName"
+        />
+    </div>
+    <div class="form-group">
+        <label class="control-label" for="field_coachName">课程名称</label>
+        <input type="text" class="form-control" name="coachName"
+               ng-model="courseName"
+        />
+    </div>
+    <div class="form-group">
+        <label class="control-label" for="field_coachName">课程状态</label>
+        <input type="text" class="form-control"
+               ng-model="courseState"
+        />
+    </div>
+    <div class="form-group">
+        <label class="control-label" for="field_coachName">上课时间</label>
+        <input type="text" class="form-control"
+               ng-model="time"
+        />
+    </div>
+    <div class="form-group">
+        <label class="control-label" for="field_coachName">学员人数</label>
+        <input type="text" class="form-control"
+               ng-model="traineeCount"
+        />
+    </div>
+    <div class="form-group">
+        <label class="control-label" for="field_coachName">学员姓名</label>
+        <input type="text" class="form-control"
+               ng-model="traineeName"
+        />
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+        <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+    </button>
+    <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" ng-click="save()" class="btn btn-primary">
+        <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+    </button>
+</div>

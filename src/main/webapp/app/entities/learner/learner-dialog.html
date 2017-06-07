@@ -34,7 +34,8 @@
         <div class="form-group">
             <label class="control-label" data-translate="catpowerserverApp.learner.registTime" for="field_registTime">Regist Time</label>
                 <div class="input-group">
-                    <input id="field_registTime" type="text" class="form-control" name="registTime" datetime-picker="{{dateformat}}" ng-model="vm.learner.registTime" is-open="vm.datePickerOpenStatus.registTime"
+                    <input id="field_registTime" type="text" class="form-control" name="registTime" datetime-picker="{{dateformat}}"
+                           ng-model="vm.learner.registTime" is-open="vm.datePickerOpenStatus.registTime"
                     />
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="vm.openCalendar('registTime')"><i class="glyphicon glyphicon-calendar"></i></button>
