@@ -6,15 +6,27 @@
 <div class="container-fluid row">
     <!--选项卡-->
     <div class="col-lg-12 col-md-12 col-sm-12">
-        <label class="radio-inline">
-            <input type="radio" name="inlineRadioOptions" id="inlineCheckbox1" value="option1" ng-model="myRadio" ng-checked="true"/> 全部
-        </label>
-        <label class="radio-inline">
-            <input type="radio" name="inlineRadioOptions" id="inlineCheckbox2" value="option2" ng-model="myRadio"/>进行中
-        </label>
-        <label class="radio-inline">
-            <input type="radio" name="inlineRadioOptions" id="inlineCheckbox3" value="option3" ng-model="myRadio"/> 已结束
-        </label>
+        <div class="col-lg-6 col-md-6 col-sm-6" style="padding:0px;">
+            <label class="radio-inline">
+                <input type="radio" name="inlineRadioOptions" id="inlineCheckbox1" value="option1" ng-model="myRadio" ng-checked="true"/> 全部
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="inlineRadioOptions" id="inlineCheckbox2" value="option2" ng-model="myRadio"/>进行中
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="inlineRadioOptions" id="inlineCheckbox3" value="option3" ng-model="myRadio"/> 已结束
+            </label>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-3 col-lg-offset-3 col-md-offset-3 col-sm-offset-3">
+            <div class="input-group input-group-sm">
+                <input type="text" class="form-control" placeholder="搜索...">
+                <span class="input-group-btn">
+                <button class="btn btn-default" type="button">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                </button>
+            </span>
+            </div>
+        </div>
     </div>
     <div class="col-lg-12 col-md-12 col-sm-12" style="margin-top:1%;">
             <div ng-switch="myRadio">

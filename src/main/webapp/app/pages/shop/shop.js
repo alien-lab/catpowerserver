@@ -37,7 +37,6 @@
         });
         //下课
         $scope.getOutClass = function (id) {
-
             var index = -1;
             angular.forEach($scope.coachArrangements,function (item,key) {
                 if(item.id == id ){

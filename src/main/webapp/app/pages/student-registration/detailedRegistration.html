@@ -1,0 +1,13 @@
+<div class="modal-header"><h4>我要报名</h4></div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+        <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+    </button>
+    <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" ng-click="save()" class="btn btn-primary">
+        <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+    </button>
+</div>

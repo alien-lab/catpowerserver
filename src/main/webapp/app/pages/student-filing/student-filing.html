@@ -1,1 +1,75 @@
+<style>
+    .table th,.table td{text-align: center; }
+    a{ color: #838383;}
+    a:hover{color: #000000;}
+</style>
 <h2 data-translate="catpowerserverApp.page.student-filing.title">学员建档</h2>
+<div class="container-fluid row">
+    <!--搜索-->
+    <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 0px;margin-top: 2.5%;">
+        <div class="col-lg-4 col-md-4 col-sm-4">
+            <div class="input-group">
+                <input type="text" class="form-control" ng-model="search" placeholder="搜索...">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" style="float: right;">
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    </button>
+                </span>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-lg-offset-4 col-md-offset-4 col-sm-offset-4">
+            <button type="button" ui-sref="student-filing.new" class="btn btn-primary" style="float: right;">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加学员
+            </button>
+        </div>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12" style="margin-top: 2.5%;">
+        <div class="table-responsive" >
+            <table class="jh-table table table-striped" style="background: #ffffff;" >
+                <thead>
+                <tr>
+                    <th>姓名</th>
+                    <th>性别</th>
+                    <th>手机号</th>
+                    <th>注册时间</th>
+                    <th>第一次到店时间</th>
+                    <th>经验值</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="stu in students | filter : search">
+                    <td>{{stu.stuName}}</td>
+                    <td>{{stu.stuSex}}</td>
+                    <td>{{stu.stuPhone}}</td>
+                    <td>{{stu.registrationTime}}</td>
+                    <td>{{stu.firstGoShopTime}}</td>
+                    <td>{{stu.totalEmpiricalValue}}</td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="course-detail({id:course.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="course.edit({id:course.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="course.delete({id:course.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,109 @@
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myLearnerLabel" data-translate="catpowerserverApp.learner.home.createOrEditLabel">Create or edit a Learner</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.learner.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   ng-model="vm.learner.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.learner.learneName" for="field_learneName">Learne Name</label>
+            <input type="text" class="form-control" name="learneName" id="field_learneName"
+                   ng-model="vm.learner.learneName"
+            />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.learner.learnerPhone" for="field_learnerPhone">Learner Phone</label>
+            <input type="text" class="form-control" name="learnerPhone" id="field_learnerPhone"
+                   ng-model="vm.learner.learnerPhone"
+            />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.learner.learnerSex" for="field_learnerSex">Learner Sex</label>
+            <input type="text" class="form-control" name="learnerSex" id="field_learnerSex"
+                   ng-model="vm.learner.learnerSex"
+            />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.learner.registTime" for="field_registTime">Regist Time</label>
+            <div class="input-group">
+                <input id="field_registTime" type="text" class="form-control" name="registTime" datetime-picker="{{dateformat}}"
+                       ng-model="vm.learner.registTime" is-open="vm.datePickerOpenStatus.registTime"
+                />
+                <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('registTime')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.learner.wxOpenId" for="field_wxOpenId">Wx Open Id</label>
+            <input type="text" class="form-control" name="wxOpenId" id="field_wxOpenId"
+                   ng-model="vm.learner.wxOpenId"
+            />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.learner.wxNickname" for="field_wxNickname">Wx Nickname</label>
+            <input type="text" class="form-control" name="wxNickname" id="field_wxNickname"
+                   ng-model="vm.learner.wxNickname"
+            />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.learner.wxHeader" for="field_wxHeader">Wx Header</label>
+            <input type="text" class="form-control" name="wxHeader" id="field_wxHeader"
+                   ng-model="vm.learner.wxHeader"
+            />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.learner.firstTotime" for="field_firstTotime">First Totime</label>
+            <div class="input-group">
+                <input id="field_firstTotime" type="text" class="form-control" name="firstTotime" datetime-picker="{{dateformat}}" ng-model="vm.learner.firstTotime" is-open="vm.datePickerOpenStatus.firstTotime"
+                />
+                <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('firstTotime')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.learner.firstBuyclass" for="field_firstBuyclass">First Buyclass</label>
+            <div class="input-group">
+                <input id="field_firstBuyclass" type="text" class="form-control" name="firstBuyclass" datetime-picker="{{dateformat}}" ng-model="vm.learner.firstBuyclass" is-open="vm.datePickerOpenStatus.firstBuyclass"
+                />
+                <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('firstBuyclass')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.learner.recentlySignin" for="field_recentlySignin">Recently Signin</label>
+            <div class="input-group">
+                <input id="field_recentlySignin" type="text" class="form-control" name="recentlySignin" datetime-picker="{{dateformat}}" ng-model="vm.learner.recentlySignin" is-open="vm.datePickerOpenStatus.recentlySignin"
+                />
+                <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('recentlySignin')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.learner.experience" for="field_experience">Experience</label>
+            <input type="number" class="form-control" name="experience" id="field_experience"
+                   ng-model="vm.learner.experience"
+            />
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>
+
