@@ -24,7 +24,7 @@
                 <li ui-sref-active="active" ng-switch-when="true" uib-dropdown class="dropdown pointer">
                     <a class="dropdown-toggle" uib-dropdown-toggle href="">
                         <span>
-                            <span class="glyphicon glyphicon-th-list"></span>
+                            <span class="glyphicon glyphicon-home"></span>
                             <span class="hidden-sm" data-translate="global.menu.page.title">
                                 门店运行
                             </span>
@@ -64,13 +64,12 @@
                         </li>
                     </ul>
                 </li>
-
                 <!--数据维护-->
-                <li ui-sref-active="active" ng-switch-when="true" uib-dropdown class="dropdown pointer">
-                    <a class="dropdown-toggle" uib-dropdown-toggle href="">
+                <li ng-class="{active: vm.$state.includes('data-maintain')}" ng-switch-when="true" uib-dropdown class="dropdown pointer">
+                    <a class="dropdown-toggle" uib-dropdown-toggle href="" >
                         <span>
                             <span class="glyphicon glyphicon-th-list"></span>
-                            <span class="hidden-sm" data-translate="global.menu.data-maintain.title">
+                            <span class="hidden-sm">
                                 数据维护
                             </span>
                             <b class="caret"></b>
@@ -78,23 +77,65 @@
                     </a>
                     <ul class="dropdown-menu" uib-dropdown-menu>
                         <li ui-sref-active="active">
-                            <a ui-sref="coach" ng-click="vm.collapseNavbar()">
+                            <a ui-sref="coach-maintain" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
-                                <span data-translate="global.menu.data-maintain.coach">教练维护</span>
+                                <span>教练维护</span>
                             </a>
                         </li>
                         <li ui-sref-active="active">
-                            <a ui-sref="course" ng-click="vm.collapseNavbar()">
+                            <a ui-sref="course-maintain" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
-                                <span data-translate="global.menu.data-maintain.course">课程维护</span>
+                                <span >课程维护</span>
                             </a>
                         </li>
                     </ul>
                 </li>
-
-
+                <!--系统设置-->
+                <!--<li ng-switch-when="true" uib-dropdown class="dropdown pointer">
+                    <a class="dropdown-toggle" uib-dropdown-toggle href="" >
+                        <span>
+                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                            <span class="hidden-sm">
+                                系统设置
+                            </span>
+                            <b class="caret"></b>
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu" uib-dropdown-menu>
+                        <li ui-sref-active="active">
+                            <a ui-sref="settings" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-wrench"></span>&nbsp;
+                                <span>用户设置</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="password" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-lock"></span>&nbsp;
+                                <span data-translate="global.menu.account.password">重置密码</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a href="" ng-click="vm.logout()" id="logout">
+                                <span class="glyphicon glyphicon-log-out"></span>&nbsp;
+                                <span data-translate="global.menu.account.logout">退出</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a href="" ng-click="vm.login()" id="login">
+                                <span class="glyphicon glyphicon-log-in"></span>&nbsp;
+                                <span data-translate="global.menu.account.login">登录</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="register" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;
+                                <span data-translate="global.menu.account.register">注册</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>-->
                 <!-- 自动生成的数据模块jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
-               <li ng-class="{active: vm.$state.includes('entity')}" ng-switch-when="true" uib-dropdown class="dropdown pointer">
+                <!--<li ng-class="{active: vm.$state.includes('entity')}" ng-switch-when="true" uib-dropdown class="dropdown pointer">
                     <a class="dropdown-toggle" uib-dropdown-toggle href="" id="entity-menu">
                         <span>
                             <span class="glyphicon glyphicon-th-list"></span>
@@ -159,16 +200,13 @@
                                     <span data-translate="global.menu.entities.courseAtlas">Course Atlas</span>
                                 </a>
                             </li>
-                        &lt;!&ndash; jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here &ndash;&gt;
                     </ul>
-                </li>
-
-
-
+                </li>-->
+                <!--系统设置-->
                 <li ng-class="{active: vm.$state.includes('account')}" uib-dropdown class="dropdown pointer">
                     <a class="dropdown-toggle" uib-dropdown-toggle href="" id="account-menu">
                         <span>
-                            <span class="glyphicon glyphicon-user"></span>
+                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                             <span class="hidden-sm" data-translate="global.menu.account.main">
                                 Account
                             </span>

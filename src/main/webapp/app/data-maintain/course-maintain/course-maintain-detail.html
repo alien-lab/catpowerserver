@@ -1,0 +1,78 @@
+<div>
+    <h2><span>课程详情</span> {{vm.course.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <!--<dl class="dl-horizontal jh-entity-details">
+        <dt><span>课程名称</span></dt>
+        <dd>
+            <span>{{vm.course.courseName}}</span>
+        </dd>
+        <dt><span>课程介绍</span></dt>
+        <dd>
+            <span>{{vm.course.courseIntroductions}}</span>
+        </dd>
+        <dt><span>总课时</span></dt>
+        <dd>
+            <span>{{vm.course.totalClassHour}}</span>
+        </dd>
+        <dt><span >课程价格</span></dt>
+        <dd>
+            <span>{{vm.course.coursePrices}}</span>
+        </dd>
+        <dt><span>会员价格</span></dt>
+        <dd>
+            <span>{{vm.course.courseVipprices}}</span>
+        </dd>
+        <dt><span>在课人数</span></dt>
+        <dd>
+            <span>{{vm.course.classNumber}}</span>
+        </dd>
+        <dt><span>课程其他信息</span></dt>
+        <dd>
+            <span>{{vm.course.courseOtherInfo}}</span>
+        </dd>
+        <dt><span>课程缩略图</span></dt>
+        <dd>
+            <span>{{vm.course.courseThumbnail}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span > Back</span>
+    </button>
+
+    <button type="button" ui-sref="course-detail.edit({id:vm.course.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down"> Edit</span>
+    </button>-->
+</div>
+
+
+<div class="row">
+    <div class="col-sm-offset-3 col-lg-offset-3 col-md-offset-3 col-sm-6 col-lg-6 col-md-6">
+        <div class="thumbnail">
+            <img ng-src="{{vm.course.courseThumbnail}}" style="width: 100%;"/>
+            <div class="caption">
+                <h3>{{vm.course.courseName}}</h3>
+                <p>{{vm.course.courseIntroductions}}</p>
+                <p>{{vm.course.courseOtherInfo}}</p>
+                <p style="color: #969696;font-size: 12px;">在线人数{{vm.course.classNumber}}</p>
+                <p>
+                    <button type="submit"
+                            ui-sref="{{ vm.previousState }}"
+                            class="btn btn-info">
+                        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span > 返回</span>
+                    </button>
+
+                    <button type="button" ui-sref="course-maintain-detail.edit({id:vm.course.id})" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                        <span class="hidden-sm-down"> 编辑</span>
+                    </button>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+

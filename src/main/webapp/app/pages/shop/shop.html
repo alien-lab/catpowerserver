@@ -36,8 +36,21 @@
                         <b>教练排课</b>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12" style="margin: 2.5% auto;">
-                        <button ui-sref="shopop.new" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加课时</button>
-                        <div ng-repeat="arrangement in coachArrangements" class="col-lg-12 col-md-12 col-sm-12" style="border: 1px solid #e3e3e3;margin-top: 2.5%;padding: 0px;background: #ffffff;line-height: 3;">
+                        <!--搜索-->
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="padding: 0px;">
+                            <div class="input-group">
+                                <input type="text" ng-model="search" class="form-control" placeholder="搜索...">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button">
+                                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                    </button>
+                                 </span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-lg-offset-4 col-md-offset-4 col-sm-offset-4" >
+                            <button ui-sref="shopop.new" type="button" class="btn btn-primary" style="float: right;"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加课时</button>
+                        </div>
+                        <div ng-repeat="arrangement in coachArrangements | filter : search" class="col-lg-12 col-md-12 col-sm-12" style="border: 1px solid #e3e3e3;margin-top: 2.5%;padding: 0px;background: #ffffff;line-height: 3;">
                             <div class="col-lg-3 col-md-3 col-sm-3"><span>教练：{{arrangement.coachName}}</span></div>
                             <div class="col-lg-4 col-md-4 col-sm-4"><span>课程：{{arrangement.courseName}}</span></div>
                             <div class="col-lg-2 col-md-2 col-sm-2"><span>{{arrangement.courseState}}</span></div>
@@ -46,7 +59,7 @@
                             <div class="col-lg-12 col-md-12 col-sm-12" style="margin-bottom: 2%;">
                                 <div class="col-lg-2 col-md-2 col-sm-2"><span>已签到学员：{{arrangement.traineeCount}}人</span></div>
                                 <div class="col-lg-8 col-md-8 col-sm-8">
-                                    <div class="btn-group btn-sm" ng-repeat="trainee in arrangement.traineeName">
+                                    <div class="btn-group btn-sm" ng-repeat="trainee in arrangement.traineeName | filter : search">
                                         <button type="button" class="btn btn-default btn-sm">{{trainee.name}}</button>
                                         <button ng-click="removeTrainee(arrangement.id,trainee.traineeId)" type="button" class="btn btn-default btn-sm">
                                             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
@@ -131,7 +144,7 @@
                     <div class="col-lg-2 col-md-2 col-sm-2"></div>
                     <div class="col-lg-3 col-md-3 col-sm-3">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="搜索...">
+                            <input type="text" class="form-control" placeholder="搜索..." ng-model="search">
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button">
                                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
@@ -154,10 +167,10 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr ng-repeat="sellingCourser in sellingCoursers">
+                            <tr ng-repeat="sellingCourser in sellingCoursers | filter:search">
                                 <td>{{sellingCourser.traineeName}}</td>
                                 <td>
-                                    <span ng-repeat="allCourse in sellingCourser.courseName ">{{allCourse.coursesName}}&nbsp;&nbsp;</span>
+                                    <span ng-repeat="allCourse in sellingCourser.courseName | filter : search">{{allCourse.coursesName}}&nbsp;&nbsp;</span>
                                 </td>
                                 <td>{{sellingCourser.coachName}}</td>
                                 <td>{{sellingCourser.courseCount}}</td>
@@ -168,9 +181,6 @@
                         </table>
                     </div>
                 </div>
-            <!--<div class="text-center">
-                <ul uib-pagination total-items="bigTotalItems" ng-model="bigCurrentPage" max-size="maxSize" class="pagination-sm" boundary-link-numbers="true" rotate="false"></ul>
-            </div>-->
                 <div class="text-center">
                     <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
                     <uib-pagination class="pagination-sm" total-items="vm.totalItems" items-per-page="vm.itemsPerPage" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>

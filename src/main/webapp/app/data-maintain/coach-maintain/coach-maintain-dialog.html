@@ -1,0 +1,67 @@
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myCoachLabel">创建课程</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.course.courseId">
+            <label for="id" data-translate="global.field.id">课程ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   ng-model="vm.course.courseId" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_courseName">课程名称</label>
+            <input type="text" class="form-control" name="coachName" id="field_courseName"
+                   ng-model="vm.course.courseName"
+            />
+        </div>
+        <div class="form-group">
+            <label class="control-label"  for="field_courseDescription">课程说明</label>
+            <textarea  class="form-control" name="courseDescription" id="field_courseDescription"
+                       ng-model="vm.course.courseDescription" rows="3"
+            ></textarea>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_studentNumber">在课人数</label>
+            <input type="text" class="form-control" name="studentNumber" id="field_studentNumber"
+                   ng-model="vm.course.studentNumber"
+            />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_totalHour">总课时</label>
+            <input type="text" class="form-control" name="totalHour" id="field_totalHour"
+                   ng-model="vm.course.totalHour"
+            />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_priceCourse">普通价格</label>
+            <input class="form-control" name="priceCourse" id="field_priceCourse"
+                   ng-model="vm.course.priceCourse"
+            />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_coursePicture">课程缩略图</label>
+            <input type="text" class="form-control" name="coursePicture" id="field_coursePicture"
+                   ng-model="vm.course.coursePicture"
+            />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_courseOtherInfo">课程其他信息</label>
+            <textarea type="text" class="form-control" name="courseOtherInfo" id="field_courseOtherInfo"
+                      ng-model="vm.course.courseOtherInfo"
+            ></textarea>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

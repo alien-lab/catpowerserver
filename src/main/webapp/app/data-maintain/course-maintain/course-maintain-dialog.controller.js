@@ -1,28 +1,23 @@
-(function() {
+/**
+ * Created by asus on 2017/6/11.
+ */
+(function () {
     'use strict';
-
-    angular
-        .module('catpowerserverApp')
-        .controller('CourseDialogController', CourseDialogController);
-
-    CourseDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Course', 'CourseAtlas'];
-
-    function CourseDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Course, CourseAtlas) {
+    var app = angular.module('catpowerserverApp');
+    app.controller('courseMaintainDialogController',['$timeout', '$scope', '$uibModalInstance','dataMaintain','Course',function ($timeout, $scope, $uibModalInstance,dataMaintain,Course) {
         var vm = this;
-
-        vm.course = entity;
+        vm.course = dataMaintain;
         vm.clear = clear;
         vm.save = save;
-        vm.courseatlases = CourseAtlas.query();
 
+
+        console.log(vm.courseatlases);
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();
         });
-
         function clear () {
             $uibModalInstance.dismiss('cancel');
         }
-
         function save () {
             vm.isSaving = true;
             if (vm.course.id !== null) {
@@ -41,5 +36,5 @@
         function onSaveError () {
             vm.isSaving = false;
         }
-    }
+    }]);
 })();

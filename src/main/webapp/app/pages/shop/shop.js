@@ -324,7 +324,10 @@
         var resourceUrl =  'api/buy-courses/today';
         return $resource(resourceUrl, {}, {
             'query': { method: 'GET'}
+
+
         });
+
     }]);
 
 
@@ -357,7 +360,7 @@
         })
         .state('shopop.new', {
             parent: 'shopop',
-            url: 'shopop.new',
+            url: '/new',
             data: {
                 authorities: ['ROLE_USER']
             },
@@ -369,16 +372,15 @@
                     backdrop: 'static',
                     size: 'lg',
                     resolve: {
-                        entity: function () {
+                        addArrangement: function () {
                             return {
                                 coachName: null,
-                                coachPhone: null,
-                                coachIntroduce: null,
-                                coachPicture: null,
-                                coachWechatopenid: null,
-                                coachWechatname: null,
-                                coachWechatpicture: null,
-                                id: null
+                                courseName: null,
+                                courseState: null,
+                                time: null,
+                                traineeCount: null,
+                                traineeName: null,
+                                id:null
                             };
                         }
                     }
