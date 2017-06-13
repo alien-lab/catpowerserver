@@ -14,7 +14,7 @@
         this.loadCoach = function () {
             var coaches = [{
                 coachId:'111',
-                coachName:'鞠董',
+                coachName:'教练1',
                 coachPhone:'123456789',
                 coachDescription:'高级教练',
                 coachPicture:'http://wx.qlogo.cn/mmopen/V0mhkIwf3EHrTztoocDbsZu1F8cRvcOGn2PPtywwgEL21Y7EmsXrBWlqxY0fIDKFwSBnmaR53DgSvCACswEQBw/0',
@@ -28,7 +28,7 @@
                 wechatPicture:''
             },{
                 coachId:'111',
-                coachName:'鞠董',
+                coachName:'教练1',
                 coachPhone:'123456789',
                 coachDescription:'高级教练',
                 coachPicture:'http://wx.qlogo.cn/mmopen/V0mhkIwf3EHrTztoocDbsZu1F8cRvcOGn2PPtywwgEL21Y7EmsXrBWlqxY0fIDKFwSBnmaR53DgSvCACswEQBw/0',
@@ -37,7 +37,7 @@
                 wechatPicture:''
             },{
                 coachId:'111',
-                coachName:'鞠董',
+                coachName:'教练1',
                 coachPhone:'123456789',
                 coachDescription:'高级教练',
                 coachPicture:'http://wx.qlogo.cn/mmopen/V0mhkIwf3EHrTztoocDbsZu1F8cRvcOGn2PPtywwgEL21Y7EmsXrBWlqxY0fIDKFwSBnmaR53DgSvCACswEQBw/0',
@@ -46,7 +46,7 @@
                 wechatPicture:''
             },{
                 coachId:'111',
-                coachName:'鞠董',
+                coachName:'教练1',
                 coachPhone:'123456789',
                 coachDescription:'高级教练',
                 coachPicture:'http://wx.qlogo.cn/mmopen/V0mhkIwf3EHrTztoocDbsZu1F8cRvcOGn2PPtywwgEL21Y7EmsXrBWlqxY0fIDKFwSBnmaR53DgSvCACswEQBw/0',
@@ -55,7 +55,7 @@
                 wechatPicture:''
             },{
                 coachId:'111',
-                coachName:'鞠董',
+                coachName:'教练1',
                 coachPhone:'123456789',
                 coachDescription:'高级教练',
                 coachPicture:'http://wx.qlogo.cn/mmopen/V0mhkIwf3EHrTztoocDbsZu1F8cRvcOGn2PPtywwgEL21Y7EmsXrBWlqxY0fIDKFwSBnmaR53DgSvCACswEQBw/0',
@@ -64,7 +64,7 @@
                 wechatPicture:''
             },{
                 coachId:'111',
-                coachName:'鞠董',
+                coachName:'教练1',
                 coachPhone:'123456789',
                 coachDescription:'高级教练',
                 coachPicture:'http://wx.qlogo.cn/mmopen/V0mhkIwf3EHrTztoocDbsZu1F8cRvcOGn2PPtywwgEL21Y7EmsXrBWlqxY0fIDKFwSBnmaR53DgSvCACswEQBw/0',
