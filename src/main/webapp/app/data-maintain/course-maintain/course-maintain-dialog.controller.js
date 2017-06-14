@@ -10,8 +10,6 @@
         vm.clear = clear;
         vm.save = save;
 
-
-        console.log(vm.courseatlases);
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();
         });

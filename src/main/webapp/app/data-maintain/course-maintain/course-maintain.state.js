@@ -47,7 +47,7 @@
                         controller: 'courseMaintainDialogController',
                         controllerAs: 'vm',
                         backdrop: 'static',
-                        size:'lg',
+                        size:'md',
                         resolve:{
                             dataMaintain : function () {
                                 return {
@@ -114,7 +114,7 @@
                         controller: 'courseMaintainDialogController',
                         controllerAs: 'vm',
                         backdrop: 'static',
-                        size: 'lg',
+                        size: 'md',
                         resolve: {
                             dataMaintain: ['Course', function(Course) {
                                 return Course.get({id : $stateParams.id}).$promise;
@@ -140,7 +140,7 @@
                         controller: 'courseMaintainDialogController',
                         controllerAs: 'vm',
                         backdrop: 'static',
-                        size: 'lg',
+                        size: 'md',
                         resolve:{
                             dataMaintain:['Course',function (Course) {
                                 return Course.get({id:$stateParams.id}).$promise;

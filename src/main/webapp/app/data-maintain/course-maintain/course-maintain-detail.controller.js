@@ -13,10 +13,8 @@
 
         vm.course = dataMaintain;
         vm.previousState = previousState.name;
-        console.log('*****************************');
         var unsubscribe = $rootScope.$on('catpowerserverApp:courseUpdate', function(event, result) {
             vm.course = result;
-            console.log(vm.course);
         });
         $scope.$on('$destroy', unsubscribe);
 

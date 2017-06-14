@@ -6,7 +6,7 @@
 
     var app = angular.module('catpowerserverApp');
 
-    app.controller('coachMaintainDialogController',['$timeout', '$scope', '$uibModalInstance','dataMaintain','coachMaintainService',function ($timeout, $scope, $uibModalInstance,dataMaintain,coachMaintainService) {
+    app.controller('coachMaintainDialogController',['$timeout', '$scope', '$uibModalInstance','dataMaintain','Coach',function ($timeout, $scope, $uibModalInstance,dataMaintain,Coach) {
         var vm = this;
         vm.coach = dataMaintain;
         vm.clear = clear;
@@ -20,10 +20,10 @@
         }
         function save () {
             vm.isSaving = true;
-            if (vm.course.courseId !== null) {
-                coachMaintainService.loadCoach(vm.coach,onSaveSuccess, onSaveError)
+            if (vm.coach.id !== null) {
+                Coach.update(vm.coach, onSaveSuccess, onSaveError);
             } else {
-                coachMaintainService.loadCoach(vm.coach, onSaveSuccess, onSaveError);
+                Coach.save(vm.coach, onSaveSuccess, onSaveError);
             }
         }
 

@@ -9,7 +9,6 @@
     app.controller('courseMaintainController',['$scope','Course',function ($scope,Course) {
         var vm = this;
         loadAll();
-        console.log(vm.courses);
         function loadAll() {
             Course.query({
 
