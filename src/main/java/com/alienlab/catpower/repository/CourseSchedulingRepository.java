@@ -5,6 +5,9 @@ import org.springframework.stereotype.Repository;
 
 import org.springframework.data.jpa.repository.*;
 
+import java.time.ZonedDateTime;
+import java.util.List;
+
 
 /**
  * Spring Data JPA repository for the CourseScheduling entity.
@@ -12,5 +15,7 @@ import org.springframework.data.jpa.repository.*;
 @SuppressWarnings("unused")
 @Repository
 public interface CourseSchedulingRepository extends JpaRepository<CourseScheduling,Long> {
+
+    List<CourseScheduling> findCourseSchedulingsByStartTimeBetween(ZonedDateTime startDate,ZonedDateTime endDate);
 
 }

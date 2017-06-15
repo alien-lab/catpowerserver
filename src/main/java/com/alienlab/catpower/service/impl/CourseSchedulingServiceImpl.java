@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 /**
@@ -20,7 +21,7 @@ import java.util.List;
 public class CourseSchedulingServiceImpl implements CourseSchedulingService{
 
     private final Logger log = LoggerFactory.getLogger(CourseSchedulingServiceImpl.class);
-    
+
     private final CourseSchedulingRepository courseSchedulingRepository;
 
     public CourseSchedulingServiceImpl(CourseSchedulingRepository courseSchedulingRepository) {
@@ -42,7 +43,7 @@ public class CourseSchedulingServiceImpl implements CourseSchedulingService{
 
     /**
      *  Get all the courseSchedulings.
-     *  
+     *
      *  @param pageable the pagination information
      *  @return the list of entities
      */
@@ -77,5 +78,10 @@ public class CourseSchedulingServiceImpl implements CourseSchedulingService{
     public void delete(Long id) {
         log.debug("Request to delete CourseScheduling : {}", id);
         courseSchedulingRepository.delete(id);
+    }
+
+    @Override
+    public List<CourseScheduling> getScheByDate(ZonedDateTime startDate, ZonedDateTime endDate) throws Exception {
+        return courseSchedulingRepository.findCourseSchedulingsByStartTimeBetween(startDate,endDate);
     }
 }

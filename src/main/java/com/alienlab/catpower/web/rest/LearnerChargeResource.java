@@ -1,10 +1,15 @@
 package com.alienlab.catpower.web.rest;
 
+import com.alienlab.catpower.web.rest.util.ExecResult;
 import com.codahale.metrics.annotation.Timed;
 import com.alienlab.catpower.domain.LearnerCharge;
 import com.alienlab.catpower.service.LearnerChargeService;
 import com.alienlab.catpower.web.rest.util.HeaderUtil;
 import com.alienlab.catpower.web.rest.util.PaginationUtil;
+import com.sun.org.apache.regexp.internal.RE;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
@@ -32,7 +37,7 @@ public class LearnerChargeResource {
     private final Logger log = LoggerFactory.getLogger(LearnerChargeResource.class);
 
     private static final String ENTITY_NAME = "learnerCharge";
-        
+
     private final LearnerChargeService learnerChargeService;
 
     public LearnerChargeResource(LearnerChargeService learnerChargeService) {
@@ -122,6 +127,22 @@ public class LearnerChargeResource {
         log.debug("REST request to delete LearnerCharge : {}", id);
         learnerChargeService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    @ApiOperation("根据排课获取已签到学员名单")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name="scheId",value="排课编码",paramType = "path")
+    })
+    @GetMapping("/learner-charges/sche/{scheId}")
+    public ResponseEntity getLearnersBySche(@PathVariable Long scheId){
+        try {
+            List<LearnerCharge> result=learnerChargeService.getLeanersBySche(scheId);
+            return ResponseEntity.ok().body(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
     }
 
 }

@@ -1,8 +1,11 @@
 package com.alienlab.catpower.service;
 
+import com.alienlab.catpower.domain.CourseScheduling;
 import com.alienlab.catpower.domain.LearnerCharge;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 /**
  * Service Interface for managing LearnerCharge.
@@ -19,7 +22,7 @@ public interface LearnerChargeService {
 
     /**
      *  Get all the learnerCharges.
-     *  
+     *
      *  @param pageable the pagination information
      *  @return the list of entities
      */
@@ -39,4 +42,8 @@ public interface LearnerChargeService {
      *  @param id the id of the entity
      */
     void delete(Long id);
+
+    List<LearnerCharge> getLeanersBySche(long scheId) throws Exception;
+
+    List<LearnerCharge> getLeanersBySche(CourseScheduling sche) throws Exception;
 }

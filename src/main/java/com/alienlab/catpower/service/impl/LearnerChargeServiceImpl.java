@@ -1,10 +1,13 @@
 package com.alienlab.catpower.service.impl;
 
+import com.alienlab.catpower.domain.CourseScheduling;
+import com.alienlab.catpower.service.CourseSchedulingService;
 import com.alienlab.catpower.service.LearnerChargeService;
 import com.alienlab.catpower.domain.LearnerCharge;
 import com.alienlab.catpower.repository.LearnerChargeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,8 +23,11 @@ import java.util.List;
 public class LearnerChargeServiceImpl implements LearnerChargeService{
 
     private final Logger log = LoggerFactory.getLogger(LearnerChargeServiceImpl.class);
-    
+
     private final LearnerChargeRepository learnerChargeRepository;
+
+    @Autowired
+    CourseSchedulingService courseSchedulingService;
 
     public LearnerChargeServiceImpl(LearnerChargeRepository learnerChargeRepository) {
         this.learnerChargeRepository = learnerChargeRepository;
@@ -42,7 +48,7 @@ public class LearnerChargeServiceImpl implements LearnerChargeService{
 
     /**
      *  Get all the learnerCharges.
-     *  
+     *
      *  @param pageable the pagination information
      *  @return the list of entities
      */
@@ -77,5 +83,24 @@ public class LearnerChargeServiceImpl implements LearnerChargeService{
     public void delete(Long id) {
         log.debug("Request to delete LearnerCharge : {}", id);
         learnerChargeRepository.delete(id);
+    }
+
+    @Override
+    public List<LearnerCharge> getLeanersBySche(long scheId) throws Exception {
+        CourseScheduling sche=courseSchedulingService.findOne(scheId);
+        if(sche==null){
+            throw new Exception("未找到编码为："+scheId+" 的排课信息");
+        }
+        List<LearnerCharge> result=learnerChargeRepository.findLearnerChargesByCourseScheduling(sche);
+        return result;
+    }
+
+    @Override
+    public List<LearnerCharge> getLeanersBySche(CourseScheduling sche) throws Exception {
+        if(sche==null){
+            throw new Exception("未找到排课信息");
+        }
+        List<LearnerCharge> result=learnerChargeRepository.findLearnerChargesByCourseScheduling(sche);
+        return result;
     }
 }
