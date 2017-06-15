@@ -11,8 +11,6 @@
         var vm = this;
 
         vm.course = entity;
-        console.log('--------------------------------------');
-        console.log(vm.course);
         vm.clear = clear;
         vm.save = save;
         vm.courseatlases = CourseAtlas.query();
@@ -43,7 +41,5 @@
         function onSaveError () {
             vm.isSaving = false;
         }
-
-
     }
 })();

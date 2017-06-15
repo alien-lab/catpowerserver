@@ -73,7 +73,7 @@
         this.loadArrangementList = function () {
             var arrangements = [{
                 coachId:'1502340230',
-                coachName:'鞠董',
+                coachName:'教练1',
                 courseCount:[{
                     coachId:'1502340230',
                     courseId:'20171',
@@ -101,7 +101,7 @@
                 }]
             },{
                 coachId:'1502340231',
-                coachName:'教练1',
+                coachName:'教练2',
                 courseCount:[{
                     coachId:'1502340231',
                     courseId:'20174',
@@ -113,7 +113,7 @@
                 }]
             },{
                 coachId:'1502340232',
-                coachName:'教练2',
+                coachName:'教练3',
                 courseCount:[{
                     coachId:'1502340232',
                     courseId:'20175',

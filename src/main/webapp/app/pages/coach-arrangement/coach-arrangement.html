@@ -4,20 +4,22 @@
 </style>
 <h2 data-translate="catpowerserverApp.page.coachArrangement.title">教练排课</h2>
 <div class="container-fluid row">
-    <!--选项卡-->
+
     <div class="col-lg-12 col-md-12 col-sm-12">
-        <div class="col-lg-6 col-md-6 col-sm-6" style="padding:0px;">
-            <label class="radio-inline">
-                <input type="radio" name="inlineRadioOptions" id="inlineCheckbox1" value="option1" ng-model="myRadio" ng-checked="true"/> 全部
-            </label>
-            <label class="radio-inline">
-                <input type="radio" name="inlineRadioOptions" id="inlineCheckbox2" value="option2" ng-model="myRadio"/>进行中
-            </label>
-            <label class="radio-inline">
-                <input type="radio" name="inlineRadioOptions" id="inlineCheckbox3" value="option3" ng-model="myRadio"/> 已结束
-            </label>
+        <!--选项卡-->
+        <div class="col-lg-4 col-md-4 col-sm-4" style="padding:0px;">
+                <label class="radio-inline">
+                    <input type="radio" name="inlineRadioOptions" id="inlineCheckbox1" value="option1" ng-model="myRadio" ng-checked="true"/> 全部
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="inlineRadioOptions" id=" inlineCheckbox2" value="option2" ng-model="myRadio"/>进行中
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="inlineRadioOptions" id="inlineCheckbox3" value="option3" ng-model="myRadio"/> 已结束
+                </label>
         </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-lg-offset-3 col-md-offset-3 col-sm-offset-3">
+        <!--搜索框-->
+        <div class="col-lg-4 col-md-4 col-sm-4">
             <div class="input-group input-group-sm">
                 <input type="text" class="form-control" placeholder="搜索...">
                 <span class="input-group-btn">
@@ -27,122 +29,135 @@
             </span>
             </div>
         </div>
+        <!--添加教练排课-->
+        <div class="col-lg-2 col-md-2 col-sm-2 col-lg-offset-2 col-md-offset-2 col-sm-offset-2">
+            <a ui-sref="coach-arrangement.new" href="" style="color: #969696;">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                <span>添加教练排课</span>
+            </a>
+        </div>
     </div>
     <div class="col-lg-12 col-md-12 col-sm-12" style="margin-top:1%;">
-            <div ng-switch="myRadio">
-                <!--全部教练排课情况-->
-                <div ng-repeat="arrangement in arrangementlist" class="col-lg-12 col-md-12 col-sm-12" style="padding: 0px;" ng-switch-when="option1">
-                    <!--教练-->
-                    <div class="col-lg-12 col-md-12 col-sm-12" style="background: #e5e5e5;font-size: 15px;padding:6px 15px;margin-top: 1.7%;">
-                        <span ng-click="toggleOpen(arrangement.coachId)" style="cursor: pointer;">教练：{{arrangement.coachName}}</span>
-                        <i ng-click="toggleOpen(arrangement.coachId)" class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': openStatus, 'glyphicon-chevron-right': !openStatus}"></i>
-                    </div>
-                    <!--课程详情-->
-                    <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 0px;"  ng-hide="openStatus">
-                        <div ng-repeat="courserInfo in arrangement.courseCount" class="col-lg-12 col-md-12 col-sm-12" style="border-bottom: 1px solid #e3e3e3;margin-top: 1.7%;background: #ffffff;">
-                            <ul class="media-list" style="margin-top: 1.7%;">
-                                <li class="media">
-                                    <div class="media-left">
-                                        <a href="#">
-                                            <img class="media-object" style="width: 80px;height:84px;border-radius: 5px;" ng-src="{{courserInfo.courseImg}}"/>
-                                        </a>
-                                    </div>
-                                    <div class="media-body">
-                                        <p style="float: right;">签到码</p>
-                                        <p><button type="button" class="btn btn-default btn-xs">{{courserInfo.courseState}}</button><span style="margin-left:2%;">{{courserInfo.courseName}}</span></p>
-                                        <p>上课时间：{{courserInfo.startCourseTime}}</p>
-                                        <p>课程人数：{{courserInfo.studentNumber}}</p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
+        <div ng-switch="myRadio">
+            <!--全部教练排课情况-->
+            <div ng-repeat="arrangement in arrangementlist" class="col-lg-12 col-md-12 col-sm-12" style="padding: 0px;" ng-switch-when="option1">
+                <!--教练-->
+                <div class="col-lg-12 col-md-12 col-sm-12" style="background: #e5e5e5;font-size: 15px;padding:6px 15px;margin-top: 1.7%;">
+                    <span ng-click="toggleOpen(arrangement.coachId)" style="cursor: pointer;">教练：{{arrangement.coachName}}</span>
+                    <i ng-click="toggleOpen(arrangement.coachId)" class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': openStatus, 'glyphicon-chevron-right': !openStatus}"></i>
+                </div>
+                <!--课程详情-->
+                <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 0px;"  ng-hide="openStatus">
+                    <div ng-repeat="courserInfo in arrangement.courseCount" class="col-lg-12 col-md-12 col-sm-12" style="border-bottom: 1px solid #e3e3e3;margin-top: 1.7%;background: #ffffff;">
+                        <ul class="media-list" style="margin-top: 1.7%;">
+                            <li class="media">
+                                <div class="media-left">
+                                    <a href="#">
+                                        <img class="media-object" style="width: 80px;height:84px;border-radius: 5px;" ng-src="{{courserInfo.courseImg}}"/>
+                                    </a>
+                                </div>
+                                <div class="media-body">
+                                    <p style="float: right;">签到码</p>
+                                    <p><button type="button" class="btn btn-default btn-xs">{{courserInfo.courseState}}</button><span style="margin-left:2%;">{{courserInfo.courseName}}</span></p>
+                                    <p>上课时间：{{courserInfo.startCourseTime}}</p>
+                                    <p>课程人数：{{courserInfo.studentNumber}}</p>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-                <!--进行中的教练排课情况-->
-                <div ng-repeat="arrangement in arrangementlist" class="col-lg-12 col-md-12 col-sm-12" style="padding: 0px;" ng-switch-when="option2">
-                    <!--教练-->
-                    <div class="col-lg-12 col-md-12 col-sm-12" style="background: #e5e5e5;font-size: 15px;padding:6px 15px;margin-top: 1.7%;">
-                        <span ng-click="toggleOpen(arrangement.coachId)" style="cursor: pointer;">教练：{{arrangement.coachName}}</span>
-                        <i ng-click="toggleOpen(arrangement.coachId)" class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': openStatus, 'glyphicon-chevron-right': !openStatus}"></i>
-                    </div>
-                    <!--课程详情-->
-                    <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 0px;"  ng-hide="openStatus">
-                        <div ng-repeat="courserInfo in arrangement.courseCount | filter : {'courseState':'进行中'}" class="col-lg-12 col-md-12 col-sm-12" style="border-bottom: 1px solid #e3e3e3;margin-top: 1.7%;background: #ffffff;">
-                            <ul class="media-list" style="margin-top: 1.7%;">
-                                <li class="media">
-                                    <div class="media-left">
-                                        <a href="#">
-                                            <img class="media-object" style="width: 80px;height:84px;border-radius: 5px;" ng-src="{{courserInfo.courseImg}}"/>
-                                        </a>
-                                    </div>
-                                    <div class="media-body">
-                                        <p style="float: right;">签到码</p>
-                                        <p><button type="button" class="btn btn-default btn-xs">{{courserInfo.courseState}}</button><span style="margin-left:2%;">{{courserInfo.courseName}}</span></p>
-                                        <p>上课时间：{{courserInfo.startCourseTime}}</p>
-                                        <p>课程人数：{{courserInfo.studentNumber}}</p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
+            </div>
+            <!--进行中的教练排课情况-->
+            <div ng-repeat="arrangement in arrangementlist" class="col-lg-12 col-md-12 col-sm-12" style="padding: 0px;" ng-switch-when="option2">
+                <!--教练-->
+                <div class="col-lg-12 col-md-12 col-sm-12" style="background: #e5e5e5;font-size: 15px;padding:6px 15px;margin-top: 1.7%;">
+                    <span ng-click="toggleOpen(arrangement.coachId)" style="cursor: pointer;">教练：{{arrangement.coachName}}</span>
+                    <i ng-click="toggleOpen(arrangement.coachId)" class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': openStatus, 'glyphicon-chevron-right': !openStatus}"></i>
+                </div>
+                <!--课程详情-->
+                <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 0px;"  ng-hide="openStatus">
+                    <div ng-repeat="courserInfo in arrangement.courseCount | filter : {'courseState':'进行中'}" class="col-lg-12 col-md-12 col-sm-12" style="border-bottom: 1px solid #e3e3e3;margin-top: 1.7%;background: #ffffff;">
+                        <ul class="media-list" style="margin-top: 1.7%;">
+                            <li class="media">
+                                <div class="media-left">
+                                    <a href="#">
+                                        <img class="media-object" style="width: 80px;height:84px;border-radius: 5px;" ng-src="{{courserInfo.courseImg}}"/>
+                                    </a>
+                                </div>
+                                <div class="media-body">
+                                    <p style="float: right;">签到码</p>
+                                    <p><button type="button" class="btn btn-default btn-xs">{{courserInfo.courseState}}</button><span style="margin-left:2%;">{{courserInfo.courseName}}</span></p>
+                                    <p>上课时间：{{courserInfo.startCourseTime}}</p>
+                                    <p>课程人数：{{courserInfo.studentNumber}}</p>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-                <!--已结束的教练排课情况-->
-                <div ng-repeat="arrangement in arrangementlist" class="col-lg-12 col-md-12 col-sm-12" style="padding: 0px;" ng-switch-when="option3">
-                    <!--教练-->
-                    <div class="col-lg-12 col-md-12 col-sm-12" style="background: #e5e5e5;font-size: 15px;padding:6px 15px;margin-top: 1.7%;">
-                        <span ng-click="toggleOpen(arrangement.coachId)" style="cursor: pointer;">教练：{{arrangement.coachName}}</span>
-                        <i ng-click="toggleOpen(arrangement.coachId)" class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': openStatus, 'glyphicon-chevron-right': !openStatus}"></i>
-                    </div>
-                    <!--课程详情-->
-                    <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 0px;"  ng-hide="openStatus">
-                        <div ng-repeat="courserInfo in arrangement.courseCount | filter : {'courseState':'已结束'}" class="col-lg-12 col-md-12 col-sm-12" style="border-bottom: 1px solid #e3e3e3;margin-top: 1.7%;background: #ffffff;">
-                            <ul class="media-list" style="margin-top: 1.7%;">
-                                <li class="media">
-                                    <div class="media-left">
-                                        <a href="#">
-                                            <img class="media-object" style="width: 80px;height:84px;border-radius: 5px;" ng-src="{{courserInfo.courseImg}}"/>
-                                        </a>
-                                    </div>
-                                    <div class="media-body">
-                                        <p style="float: right;">签到码</p>
-                                        <p><button type="button" class="btn btn-default btn-xs">{{courserInfo.courseState}}</button><span style="margin-left:2%;">{{courserInfo.courseName}}</span></p>
-                                        <p>上课时间：{{courserInfo.startCourseTime}}</p>
-                                        <p>课程人数：{{courserInfo.studentNumber}}</p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
+            </div>
+            <!--已结束的教练排课情况-->
+            <div ng-repeat="arrangement in arrangementlist" class="col-lg-12 col-md-12 col-sm-12" style="padding: 0px;" ng-switch-when="option3">
+                <!--教练-->
+                <div class="col-lg-12 col-md-12 col-sm-12" style="background: #e5e5e5;font-size: 15px;padding:6px 15px;margin-top: 1.7%;">
+                    <span ng-click="toggleOpen(arrangement.coachId)" style="cursor: pointer;">教练：{{arrangement.coachName}}</span>
+                    <i ng-click="toggleOpen(arrangement.coachId)" class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': openStatus, 'glyphicon-chevron-right': !openStatus}"></i>
+                </div>
+                <!--课程详情-->
+                <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 0px;"  ng-hide="openStatus">
+                    <div ng-repeat="courserInfo in arrangement.courseCount | filter : {'courseState':'已结束'}" class="col-lg-12 col-md-12 col-sm-12" style="border-bottom: 1px solid #e3e3e3;margin-top: 1.7%;background: #ffffff;">
+                        <ul class="media-list" style="margin-top: 1.7%;">
+                            <li class="media">
+                                <div class="media-left">
+                                    <a href="#">
+                                        <img class="media-object" style="width: 80px;height:84px;border-radius: 5px;" ng-src="{{courserInfo.courseImg}}"/>
+                                    </a>
+                                </div>
+                                <div class="media-body">
+                                    <p style="float: right;">签到码</p>
+                                    <p><button type="button" class="btn btn-default btn-xs">{{courserInfo.courseState}}</button><span style="margin-left:2%;">{{courserInfo.courseName}}</span></p>
+                                    <p>上课时间：{{courserInfo.startCourseTime}}</p>
+                                    <p>课程人数：{{courserInfo.studentNumber}}</p>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-                <!--默认打开的教练排课情况也是全部情况-->
-                <div ng-repeat="arrangement in arrangementlist" class="col-lg-12 col-md-12 col-sm-12" style="padding: 0px;" ng-switch-default>
-                    <!--教练-->
-                    <div class="col-lg-12 col-md-12 col-sm-12" style="background: #e5e5e5;font-size: 15px;padding:6px 15px;margin-top: 1.7%;">
-                        <span ng-click="toggleOpen(arrangement.coachId)" style="cursor: pointer;">教练：{{arrangement.coachName}}</span>
-                        <i ng-click="toggleOpen(arrangement.coachId)" class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': openStatus, 'glyphicon-chevron-right': !openStatus}"></i>
-                    </div>
-                    <!--课程详情-->
-                    <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 0px;"  ng-hide="openStatus">
-                        <div ng-repeat="courserInfo in arrangement.courseCount" class="col-lg-12 col-md-12 col-sm-12" style="border-bottom: 1px solid #e3e3e3;margin-top: 1.7%;background: #ffffff;">
-                            <ul class="media-list" style="margin-top: 1.7%;">
-                                <li class="media">
-                                    <div class="media-left">
-                                        <a href="#">
-                                            <img class="media-object" style="width: 80px;height:84px;border-radius: 5px;" ng-src="{{courserInfo.courseImg}}"/>
-                                        </a>
-                                    </div>
-                                    <div class="media-body">
-                                        <p style="float: right;">签到码</p>
-                                        <p><button type="button" class="btn btn-default btn-xs">{{courserInfo.courseState}}</button><span style="margin-left:2%;">{{courserInfo.courseName}}</span></p>
-                                        <p>上课时间：{{courserInfo.startCourseTime}}</p>
-                                        <p>课程人数：{{courserInfo.studentNumber}}</p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
+            </div>
+            <!--默认打开的教练排课情况也是全部情况-->
+            <div ng-repeat="arrangement in arrangementlist" class="col-lg-12 col-md-12 col-sm-12" style="padding: 0px;" ng-switch-default>
+                <!--教练-->
+                <div class="col-lg-12 col-md-12 col-sm-12" style="background: #e5e5e5;font-size: 15px;padding:6px 15px;margin-top: 1.7%;">
+                    <span ng-click="toggleOpen(arrangement.coachId)" style="cursor: pointer;">教练：{{arrangement.coachName}}</span>
+                    <i ng-click="toggleOpen(arrangement.coachId)" class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': openStatus, 'glyphicon-chevron-right': !openStatus}"></i>
+                </div>
+                <!--课程详情-->
+                <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 0px;"  ng-hide="openStatus">
+                    <div ng-repeat="courserInfo in arrangement.courseCount" class="col-lg-12 col-md-12 col-sm-12" style="border-bottom: 1px solid #e3e3e3;margin-top: 1.7%;background: #ffffff;">
+                        <ul class="media-list" style="margin-top: 1.7%;">
+                            <li class="media">
+                                <div class="media-left">
+                                    <a href="#">
+                                        <img class="media-object" style="width: 80px;height:84px;border-radius: 5px;" ng-src="{{courserInfo.courseImg}}"/>
+                                    </a>
+                                </div>
+                                <div class="media-body">
+                                    <p style="float: right;">签到码</p>
+                                    <p><button type="button" class="btn btn-default btn-xs">{{courserInfo.courseState}}</button><span style="margin-left:2%;">{{courserInfo.courseName}}</span></p>
+                                    <p>上课时间：{{courserInfo.startCourseTime}}</p>
+                                    <p>课程人数：{{courserInfo.studentNumber}}</p>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12" style="margin-top:1.5%;">
+        <div class="text-center">
+            <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+            <uib-pagination class="pagination-sm" total-items="vm.totalItems" items-per-page="vm.itemsPerPage" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+        </div>
+    </div>
 
 </div>

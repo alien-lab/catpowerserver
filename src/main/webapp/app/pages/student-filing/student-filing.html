@@ -38,13 +38,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="stu in students | filter : search">
-                    <td>{{stu.stuName}}</td>
-                    <td>{{stu.stuSex}}</td>
-                    <td>{{stu.stuPhone}}</td>
-                    <td>{{stu.registrationTime}}</td>
-                    <td>{{stu.firstGoShopTime}}</td>
-                    <td>{{stu.totalEmpiricalValue}}</td>
+                <tr ng-repeat="stu in learners | filter : search">
+                    <td>{{stu.learneName}}</td>
+                    <td>{{stu.learnerSex}}</td>
+                    <td>{{stu.learnerPhone}}</td>
+                    <td>{{stu.registTime | date:'medium'}}</td>
+                    <td>{{stu.firstTotime | date:'medium'}}</td>
+                    <td>{{stu.experience}}</td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"

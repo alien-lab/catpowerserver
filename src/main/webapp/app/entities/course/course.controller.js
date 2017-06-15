@@ -17,6 +17,8 @@
         vm.transition = transition;
         vm.itemsPerPage = paginationConstants.itemsPerPage;
 
+        console.log(Course.query);
+        console.log(Course);
         loadAll();
 
         function loadAll () {
@@ -38,6 +40,8 @@
                 vm.queryCount = vm.totalItems;
                 vm.courses = data;
                 vm.page = pagingParams.page;
+
+                console.log(vm.courses);
             }
             function onError(error) {
                 AlertService.error(error.data.message);

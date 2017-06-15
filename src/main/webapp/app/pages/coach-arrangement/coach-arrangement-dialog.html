@@ -32,13 +32,14 @@
         </div>
         <div class="form-group">
             <label class="control-label">课程状态</label>
-            <select class="form-control" name="course" ng-model="vm.coach.courseState" value="上课中 ">
-                <option value="1" selected="selected">上课中</option>
+            <select class="form-control" name="course" ng-model="vm.coach.courseState" value="未开始 ">
+                <option value="1" selected="selected">未开始</option>
+                <option value="2">进行中</option>
                 <option value="2">已结束</option>
             </select>
         </div>
         <div class="form-group">
-            <label class="control-label" for="field_coachName">上课时间</label>
+            <label class="control-label">上课时间</label>
             <p class="input-group">
                 <input type="text" class="form-control" uib-datepicker-popup ng-model="startDate" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
                 <span class="input-group-btn">
@@ -47,15 +48,9 @@
             </p>
         </div>
         <div class="form-group">
-            <label class="control-label" for="field_coachName">学员人数</label>
+            <label class="control-label">课程人数</label>
             <input type="text" class="form-control"
-                   ng-model="vm.coach.traineeCount"
-            />
-        </div>
-        <div class="form-group">
-            <label class="control-label" for="field_coachName">学员姓名</label>
-            <input type="text" class="form-control"
-                   ng-model="vm.coach.traineeName"
+                   ng-model="vm.coach.studentNumber"
             />
         </div>
     </div>
@@ -70,58 +65,5 @@
 
 
 </form>
-<!--
-<div class="modal-header"><h4>{{coachName}}</h4></div>
-<div class="modal-body">
-    <jhi-alert-error></jhi-alert-error>
-    <div class="form-group" ng-show="vm.coach.id">
-        <label for="id" data-translate="global.field.id">ID</label>
-        <input type="text" class="form-control" id="id" name="id"
-               ng-model="vm.coach.id" readonly />
-    </div>
-    <div class="form-group">
-        <label class="control-label" for="field_coachName">教练姓名</label>
-        <input type="text" class="form-control" name="coachName" id="field_coachName"
-               ng-model="coachName"
-        />
-    </div>
-    <div class="form-group">
-        <label class="control-label" for="field_coachName">课程名称</label>
-        <input type="text" class="form-control" name="coachName"
-               ng-model="courseName"
-        />
-    </div>
-    <div class="form-group">
-        <label class="control-label" for="field_coachName">课程状态</label>
-        <input type="text" class="form-control"
-               ng-model="courseState"
-        />
-    </div>
-    <div class="form-group">
-        <label class="control-label" for="field_coachName">上课时间</label>
-        <input type="text" class="form-control"
-               ng-model="time"
-        />
-    </div>
-    <div class="form-group">
-        <label class="control-label" for="field_coachName">学员人数</label>
-        <input type="text" class="form-control"
-               ng-model="traineeCount"
-        />
-    </div>
-    <div class="form-group">
-        <label class="control-label" for="field_coachName">学员姓名</label>
-        <input type="text" class="form-control"
-               ng-model="traineeName"
-        />
-    </div>
-</div>
-<div class="modal-footer">
-    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
-        <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
-    </button>
-    <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" ng-click="save()" class="btn btn-primary">
-        <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
-    </button>
-</div>
--->
+
+

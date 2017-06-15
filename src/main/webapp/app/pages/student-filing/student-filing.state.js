@@ -27,14 +27,15 @@
                 }
             })
             .state('student-filing.new',{
+                parent:'student-filing',
                 url:'/new',
                 data:{
                     authorities:['ROLE_USER']
                 },
                 onEnter:['$stateParams','$state','$uibModal',function ($stateParams,$state,$uibModal) {
                     $uibModal.open({
-                        templateUrl:'app/pages/student-filing/student-dialog.html',
-                        controller:'studentDialogController',
+                        templateUrl:'app/pages/student-filing/student-filing-dialog.html',
+                        controller:'studentFilingDialogController',
                         controllerAs:'vm',
                         backdrop:'static',
                         size:'lg',
@@ -46,17 +47,15 @@
                                     stuPhone:null,
                                     registrationTime:null,
                                     firstGoShopTime:null,
-                                    totalEmpiricalValue:80
-
+                                    totalEmpiricalValue:null
                                 }
                             }
                         }
-
                     }).result.then(function () {
                         $state.go('student-filing',null,{reload:'student-filing'});
-                    }),function () {
+                    },function () {
                         $state.go('student-filing');
-                    }
+                    });
                 }]
             })
     }]);

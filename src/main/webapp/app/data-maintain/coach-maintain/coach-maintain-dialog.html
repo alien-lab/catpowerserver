@@ -1,0 +1,67 @@
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myCoachLabel">添加教练</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.coach.id">
+            <label for="id">课程ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   ng-model="vm.coach.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_coachName">教练姓名</label>
+            <input type="text" class="form-control" name="coachName" id="field_coachName"
+                   ng-model="vm.coach.coachName"
+            />
+        </div>
+        <div class="form-group">
+            <label class="control-label"  for="field_coachIntroduce">教练介绍</label>
+            <textarea  class="form-control" name="coachIntroduce" id="field_coachIntroduce"
+                       ng-model="vm.coach.coachIntroduce" rows="3"
+            ></textarea>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_coachPhone">教练电话号码</label>
+            <input type="text" class="form-control" name="coachPhone" id="field_coachPhone"
+                   ng-model="vm.coach.coachPhone"
+            />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_coachPicture">教练照片</label>
+            <input type="text" class="form-control" name="coachPicture" id="field_coachPicture"
+                   ng-model="vm.coach.coachPicture"
+            />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_coachWechatopenid">教练微信openID</label>
+            <input class="form-control" name="coachWechatopenid" id="field_coachWechatopenid"
+                   ng-model="vm.coach.coachWechatopenid"
+            />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_coachWechatname">教练微信昵称</label>
+            <input type="text" class="form-control" name="coachWechatname" id="field_coachWechatname"
+                   ng-model="vm.coach.coachWechatname"
+            />
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="field_coachWechatpicture">教练微信头像</label>
+            <textarea type="text" class="form-control" name="coachWechatpicture" id="field_coachWechatpicture"
+                      ng-model="vm.coach.coachWechatpicture"
+            ></textarea>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

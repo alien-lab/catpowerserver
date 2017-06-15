@@ -4,7 +4,9 @@
 (function(){
     'use strict';
     var app=angular.module('catpowerserverApp');
-    app.controller("shopOpController",["$scope","$filter","shopopService","coachArrangementService","classesTodayService","CourseArrangementService",function($scope,$filter,shopopService,coachArrangementService,classesTodayService,CourseArrangementService){
+    app.controller("shopOpController",["$scope","$filter","shopopService","coachArrangementService","classesTodayService","CourseArrangementService","AlertService","BuyCourse",function($scope,$filter,shopopService,coachArrangementService,classesTodayService,CourseArrangementService,AlertService,BuyCourse){
+        var vm = this;
+
         //今日教练排课
         $scope.coachArrangements = coachArrangementService.loadCoachArrangement();
         console.log($scope.coachArrangements);
@@ -148,13 +150,28 @@
         $scope.maxSize = 5;
         $scope.bigTotalItems = $scope.sellingCoursers.length;
         $scope.bigCurrentPage = 1;*/
+        /**
+         * 售课情况
+         */
+        loadAll();
+        function loadAll(){
+            BuyCourse.query({},onSuccess,onError);
+        }
+        function onSuccess(data) {
+            $scope.BuyCourses = data;
+            console.log($scope.BuyCourses)
+        }
+        function onError(error) {
+            AlertService.error(error.data.message);
+        }
+
     }]);
 
     app.service("coachArrangementService",[function () {
         this.loadCoachArrangement = function () {
             var coachArrangements = [{
                 id:1,
-                coachName:'鞠董',
+                coachName:'教练1',
                 courseName:'瑜伽',
                 courseState:'上课中',
                 time:'2017-6-2 18:00',
@@ -163,7 +180,7 @@
                 status:''
             },{
                 id:2,
-                coachName:'鞠董',
+                coachName:'教练2',
                 courseName:'瑜伽',
                 courseState:'已结束',
                 time:'2017-6-2 18:00',
@@ -172,7 +189,7 @@
                 status:''
             },{
                 id:3,
-                coachName:'鞠董',
+                coachName:'教练3',
                 courseName:'瑜伽',
                 courseState:'上课中',
                 time:'2017-6-2 20:00',
@@ -181,7 +198,7 @@
                 status:''
             },{
                 id:4,
-                coachName:'鞠董',
+                coachName:'教练4',
                 courseName:'瑜伽',
                 courseState:'已结束',
                 time:'2017-6-2 21:00',
@@ -197,66 +214,24 @@
             var sellingCoursers = [{
                 traineeName:'陈乐乐',
                 courseName:[{coursesName:'基础理论课程'},{coursesName:'健身健美高级课程'}],
-                coachName:'鞠董',
+                coachName:'教练1',
                 courseCount:'2',
                 money:'12000',
-                time:'2017-6-8 11:00'
+                time:'2017-6-13 11:00'
             },{
                 traineeName:'陆丹',
                 courseName:[{coursesName:'基础实践课程'}],
-                coachName:'鞠董',
-                courseCount:'1',
-                money:'5000',
-                time:'2017-6-8 13:00'
-            },{
-                traineeName:'学员1',
-                courseName:[{coursesName:'功能训练课程'}],
-                coachName:'教练1',
-                courseCount:'1',
-                money:'5000',
-                time:'2017-6-5 17:00'
-            },{
-                traineeName:'学员2',
-                courseName:[{coursesName:'运动康复课程'}],
                 coachName:'教练2',
                 courseCount:'1',
                 money:'5000',
-                time:'2017-6-4 17:00'
-            },{
-                traineeName:'学员3',
-                courseName:[{coursesName:'瑜伽'},{coursesName:'体操技能'}],
-                coachName:'教练3',
-                courseCount:'2',
-                money:'12000',
-                time:'2017-6-2 19:00'
-            },{
-                traineeName:'学员4',
-                courseName:[{coursesName:'健身健美高级课程'}],
-                coachName:'教练1',
-                courseCount:'1',
-                money:'5000',
-                time:'2017-6-2 19:00'
-            },{
-                traineeName:'陈乐乐',
-                courseName:[{coursesName:'基础理论课程'},{coursesName:'健身健美高级课程'}],
-                coachName:'鞠董',
-                courseCount:'2',
-                money:'12000',
-                time:'2017-6-5 11:00'
-            },{
-                traineeName:'陆丹',
-                courseName:[{coursesName:'基础实践课程'}],
-                coachName:'鞠董',
-                courseCount:'1',
-                money:'5000',
-                time:'2017-6-5 13:00'
+                time:'2017-6-13 13:00'
             },{
                 traineeName:'学员1',
                 courseName:[{coursesName:'功能训练课程'}],
-                coachName:'教练1',
+                coachName:'教练3',
                 courseCount:'1',
                 money:'5000',
-                time:'2017-6-5 17:00'
+                time:'2017-6-13 17:00'
             },{
                 traineeName:'学员2',
                 courseName:[{coursesName:'运动康复课程'}],
@@ -286,14 +261,14 @@
         this.loadCourseArrangement = function () {
             var courseArrangements = [{
                 arrangementDate:'2017-6-5',
-                coachName:'鞠董',
+                coachName:'教练1',
                 courseName:'基础理论课程',
                 startTime:'2017-6-5 17:00',
                 endTime:'2017-6-5 18:30',
                 attendanceNumber:'5'
             },{
                 arrangementDate:'2017-6-6',
-                coachName:'教练1',
+                coachName:'教练2',
                 courseName:'功能训练课程  ',
                 startTime:'2017-6-6 18:00',
                 endTime:'2017-6-6 19:30',
@@ -320,22 +295,28 @@
             })
         }
     }]);
+
     app.factory("shopopResource",["$resource",function($resource){
         var resourceUrl =  'api/buy-courses/today';
         return $resource(resourceUrl, {}, {
             'query': { method: 'GET'}
+
         });
+
     }]);
 
 
 })();
 
 
+
+
 (function(){
     'use strict';
     var app=angular.module('catpowerserverApp');
     app.config(["$stateProvider",function($stateProvider){
-        $stateProvider.state('shopop', {
+        $stateProvider
+            .state('shopop', {
             parent: 'app',
             url: '/',
             data: {
@@ -355,9 +336,9 @@
                 }]
             }
         })
-        .state('shopop.new', {
+            .state('shopop.new', {
             parent: 'shopop',
-            url: 'shopop.new',
+            url: '/new',
             data: {
                 authorities: ['ROLE_USER']
             },
@@ -369,16 +350,15 @@
                     backdrop: 'static',
                     size: 'lg',
                     resolve: {
-                        entity: function () {
+                        addArrangement: function () {
                             return {
                                 coachName: null,
-                                coachPhone: null,
-                                coachIntroduce: null,
-                                coachPicture: null,
-                                coachWechatopenid: null,
-                                coachWechatname: null,
-                                coachWechatpicture: null,
-                                id: null
+                                courseName: null,
+                                courseState: null,
+                                time: null,
+                                traineeCount: null,
+                                traineeName: null,
+                                id:null
                             };
                         }
                     }
@@ -392,6 +372,4 @@
         })
     }]);
 })();
-(function () {
 
-})();

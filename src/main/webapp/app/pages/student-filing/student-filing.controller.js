@@ -4,8 +4,23 @@
 (function () {
     'use strict';
     var app=angular.module('catpowerserverApp');
-    app.controller('studentFilingController',['$scope','studentsService',function ($scope,studentsService) {
+    app.controller('studentFilingController',['$scope','studentsService','Learner','AlertService',function ($scope,studentsService,Learner,AlertService) {
         $scope.students = studentsService.loadStudents();
+        /**
+         *
+         */
+        loadAll();
+        function loadAll () {
+            Learner.query({}, onSuccess, onError);
+            function onSuccess(data) {
+                $scope.learners = data;
+                console.log($scope.learners);
+            }
+            function onError(error) {
+                AlertService.error(error.data.message);
+            }
+        }
+
     }]);
 
     app.service('studentsService',[function () {
@@ -21,7 +36,7 @@
                 personalCourse:[{courseId:'111',course:'健身健美'},{courseId:'222',course:'普拉提'}],
                 signIn:[{courseId:'111',signState:'已签到'},{courseId:'222',signState:'未签到'}],
                 atTheTimeState:[{courseId:'111',atTheTime:'44'},{courseId:'222',atTheTime:'58'}],
-                coachName:[{courseId:'111',name:'鞠董'},{courseId:'222',signState:'教练1'}],
+                coachName:[{courseId:'111',name:'教练1'},{courseId:'222',signState:'教练2'}],
                 empiricalValue:[{courseId:'111',vaule:30},{courseId:'222',vaule:50}]
             },{
                 studentId:'1',
@@ -34,7 +49,7 @@
                 personalCourse:[{courseId:'333',course:'团体操'},{courseId:'222',course:'普拉提'}],
                 signIn:[{courseId:'333',signState:'已签到'},{courseId:'222',signState:'未签到'}],
                 atTheTimeState:[{courseId:'333',atTheTime:'30'},{courseId:'222',atTheTime:'42'}],
-                coachName:[{courseId:'333',name:'鞠董'},{courseId:'222',signState:'教练1'}],
+                coachName:[{courseId:'333',name:'教练1'},{courseId:'222',signState:'教练2'}],
                 empiricalValue:[{courseId:'333',vaule:30},{courseId:'222',vaule:50}]
             },{
                 studentId:'1',
@@ -47,7 +62,7 @@
                 personalCourse:[{courseId:'444',course:'团体操'}],
                 signIn:[{courseId:'444',signState:'未'}],
                 atTheTimeState:[{courseId:'444',atTheTime:'20'}],
-                coachName:[{courseId:'444',name:'鞠董'}],
+                coachName:[{courseId:'444',name:'教练1'}],
                 empiricalValue:[{courseId:'444',vaule:30}]
             }];
             return students;

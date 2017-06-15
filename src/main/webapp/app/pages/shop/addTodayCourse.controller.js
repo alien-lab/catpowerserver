@@ -6,41 +6,53 @@
 
     var app = angular.module("catpowerserverApp");
 
-    app.controller('addCourseController',['$scope','$uibModalInstance','coachArrangementService',function ($scope,$uibModalInstance,coachArrangementService) {
+    app.controller('addCourseController',['$scope','$timeout','$stateParams','$uibModalInstance','coachArrangementService','addArrangement',
+        function ($scope,$timeout,$stateParams,$uibModalInstance,coachArrangementService,addArrangement) {
         $scope.coachArrangements = coachArrangementService.loadCoachArrangement();
         console.log($scope.coachArrangements);
-        /*vm.save = save;*/
 
-        var now = new Date();
-        var month = now.getMonth()+1;
-        var nowDate = now.getFullYear() + '-' + month + '-' + now.getDate() + ' '+now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds() ;
-        var coachName1 = '';
-        var courseName = '';
-        var courseState = '上课中';
-        var time = nowDate;
-        var traineeCount = '';
-        var traineeName = '';
-        $scope.coachName1 = $scope.coachName;
-        $scope.courseName = courseName;
-        $scope.courseState = courseState;
-        $scope.time = time;
-        $scope.traineeCount = traineeCount;
-        $scope.traineeName = traineeName;
-        //添加今日课时
-        console.log($scope.coachName1);
-        console.log($scope.courseName);
-        console.log($scope.courseState);
-        console.log($scope.time);
-        console.log($scope.traineeCount);
-        console.log($scope.traineeName);
-        $scope.clear = function  () {
+        var vm = this;
+        vm.coach = addArrangement;
+        vm.clear = clear;
+        vm.save = save;
+
+        $timeout(function (){
+            angular.element('.form-group:eq(1)>input').focus();
+        });
+        function  clear() {
             $uibModalInstance.dismiss('cancel');
-        };
-        $scope.coachArrang = [];
-        $scope.save = function () {
-            $scope.coachArrangements.push({'coachName':coachName1,'courseName':courseName,'courseState':courseState,'time':time,'traineeCount':traineeCount,'traineeName':traineeName});
-            console.log($scope.coachArrangements);
-            return $scope.coachArrangements;
-        };
+        }
+        function save() {
+            vm.isSaving = true;
+            if(vm.coach.id !== null){
+                coachArrangementService.update(vm.coach,onSaveSuccess,onSaveError);
+            }else{
+                Coach.save(vm.coach, onSaveSuccess, onSaveError);
+            }
+        }
+        function onSaveSuccess(result){
+            $scope.$emit('catpowerserverApp:coachArrangementService',result);
+            $uibModalInstance.close(result);
+            vm.isSaving = false;
+        }
+        function onSaveError () {
+            vm.isSaving = false;
+        }
+
+        //上课时间
+            $scope.today = function() {
+                $scope.startDate = new Date();
+            };
+            $scope.today();
+            $scope.clear = function() {
+                $scope.startDate = null;
+            };
+            $scope.startTime = function() {
+                $scope.popup1.opened = true;
+            };
+            $scope.popup1 = {
+                opened: false
+            };
+
     }]);
 })();
