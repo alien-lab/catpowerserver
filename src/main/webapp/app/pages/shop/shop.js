@@ -4,7 +4,9 @@
 (function(){
     'use strict';
     var app=angular.module('catpowerserverApp');
-    app.controller("shopOpController",["$scope","$filter","shopopService","coachArrangementService","classesTodayService","CourseArrangementService",function($scope,$filter,shopopService,coachArrangementService,classesTodayService,CourseArrangementService){
+    app.controller("shopOpController",["$scope","$filter","shopopService","coachArrangementService","classesTodayService","CourseArrangementService","AlertService","BuyCourse",function($scope,$filter,shopopService,coachArrangementService,classesTodayService,CourseArrangementService,AlertService,BuyCourse){
+        var vm = this;
+
         //今日教练排课
         $scope.coachArrangements = coachArrangementService.loadCoachArrangement();
         console.log($scope.coachArrangements);
@@ -148,6 +150,21 @@
         $scope.maxSize = 5;
         $scope.bigTotalItems = $scope.sellingCoursers.length;
         $scope.bigCurrentPage = 1;*/
+        /**
+         * 售课情况
+         */
+        loadAll();
+        function loadAll(){
+            BuyCourse.query({},onSuccess,onError);
+        }
+        function onSuccess(data) {
+            $scope.BuyCourses = data;
+            console.log($scope.BuyCourses)
+        }
+        function onError(error) {
+            AlertService.error(error.data.message);
+        }
+
     }]);
 
     app.service("coachArrangementService",[function () {
@@ -278,11 +295,11 @@
             })
         }
     }]);
+
     app.factory("shopopResource",["$resource",function($resource){
         var resourceUrl =  'api/buy-courses/today';
         return $resource(resourceUrl, {}, {
             'query': { method: 'GET'}
-
 
         });
 
@@ -292,11 +309,14 @@
 })();
 
 
+
+
 (function(){
     'use strict';
     var app=angular.module('catpowerserverApp');
     app.config(["$stateProvider",function($stateProvider){
-        $stateProvider.state('shopop', {
+        $stateProvider
+            .state('shopop', {
             parent: 'app',
             url: '/',
             data: {
@@ -316,7 +336,7 @@
                 }]
             }
         })
-        .state('shopop.new', {
+            .state('shopop.new', {
             parent: 'shopop',
             url: '/new',
             data: {
@@ -352,6 +372,4 @@
         })
     }]);
 })();
-(function () {
 
-})();

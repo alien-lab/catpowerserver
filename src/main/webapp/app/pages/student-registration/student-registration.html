@@ -14,15 +14,15 @@
         </div>
     </div>
     <div class="col-lg-12 col-md-12 col-sm-12" style="margin-top:2.5%;">
-        <div class="col-lg-3 col-md-3 col-sm-3" ng-repeat="course in courseList">
+        <div class="col-lg-3 col-md-3 col-sm-3" ng-repeat="course in courses">
             <div class="thumbnail">
-                <img style="width: 242px;height:200px;" ng-src="{{course.courseImg}}"/>
+                <img style="width: 242px;height:200px;" ng-src="{{course.courseThumbnail}}"/>
                 <div class="caption">
                     <h3>{{course.courseName}} <span class="badge">{{course.registrationCount}}</span></h3>
-                    <p>{{course.courseDescription}}</p>
+                    <p>{{course.courseIntroductions}}</p>
                     <p style="font-size: 13px;">
-                        <span>￥{{course.priceCourse}}</span></span><br>
-                        <span style="color: #ff0000;">会员￥{{course.vipPriceCourse}}</span>
+                        <span>￥{{course.coursePrices}}</span></span><br>
+                        <span style="color: #ff0000;">会员￥{{course.courseVipprices}}</span>
                     </p>
                     <p>
                         <button ui-sref="registration-detail({id:courses.courseId})" class="btn btn-primary" role="button">报名</button>

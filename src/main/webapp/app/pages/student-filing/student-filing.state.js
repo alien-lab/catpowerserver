@@ -34,7 +34,7 @@
                 },
                 onEnter:['$stateParams','$state','$uibModal',function ($stateParams,$state,$uibModal) {
                     $uibModal.open({
-                        templateUrl:'app/pages/student-filing/student-dialog.html',
+                        templateUrl:'app/pages/student-filing/student-filing-dialog.html',
                         controller:'studentFilingDialogController',
                         controllerAs:'vm',
                         backdrop:'static',

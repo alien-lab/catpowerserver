@@ -16,6 +16,7 @@
             },onSuccess,onError);
             function onSuccess(data) {
                 vm.coaches = data;
+                console.log(vm.coaches);
             }
             function onError(error) {
                 AlertService.error(error.data.message);

@@ -161,21 +161,17 @@
                                 <th>学员</th>
                                 <th>课程</th>
                                 <th>教练</th>
-                                <th>数量</th>
                                 <th>金额</th>
                                 <th>时间</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr ng-repeat="sellingCourser in sellingCoursers | filter:search">
-                                <td>{{sellingCourser.traineeName}}</td>
-                                <td>
-                                    <span ng-repeat="allCourse in sellingCourser.courseName | filter : search">{{allCourse.coursesName}}&nbsp;&nbsp;</span>
-                                </td>
-                                <td>{{sellingCourser.coachName}}</td>
-                                <td>{{sellingCourser.courseCount}}</td>
-                                <td>{{sellingCourser.money}}</td>
-                                <td>{{sellingCourser.time}}</td>
+                            <tr ng-repeat="buyCourse in BuyCourses" >
+                                <td>{{buyCourse.learner.learneName}}</td>
+                                <td>{{buyCourse.course.courseName}}</td>
+                                <td>{{buyCourse.coach.coachName}}</td>
+                                <td>{{buyCourse.paymentAccount}}</td>
+                                <td>{{buyCourse.buyTime | date:'medium'}}</td>
                             </tr>
                             </tbody>
                         </table>

@@ -10,9 +10,7 @@
         var vm = this;
         loadAll();
         function loadAll() {
-            Course.query({
-
-            },onSuccess,onError);
+            Course.query({},onSuccess,onError);
             function onSuccess(data) {
                 vm.courses = data;
             }

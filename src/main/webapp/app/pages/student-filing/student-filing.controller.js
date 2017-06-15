@@ -4,8 +4,23 @@
 (function () {
     'use strict';
     var app=angular.module('catpowerserverApp');
-    app.controller('studentFilingController',['$scope','studentsService',function ($scope,studentsService) {
+    app.controller('studentFilingController',['$scope','studentsService','Learner','AlertService',function ($scope,studentsService,Learner,AlertService) {
         $scope.students = studentsService.loadStudents();
+        /**
+         *
+         */
+        loadAll();
+        function loadAll () {
+            Learner.query({}, onSuccess, onError);
+            function onSuccess(data) {
+                $scope.learners = data;
+                console.log($scope.learners);
+            }
+            function onError(error) {
+                AlertService.error(error.data.message);
+            }
+        }
+
     }]);
 
     app.service('studentsService',[function () {
