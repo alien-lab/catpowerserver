@@ -5,12 +5,18 @@ import com.alienlab.catpower.domain.LearnerInfo;
 import com.alienlab.catpower.repository.LearnerInfoRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Service Implementation for managing LearnerInfo.
@@ -20,8 +26,10 @@ import java.util.List;
 public class LearnerInfoServiceImpl implements LearnerInfoService{
 
     private final Logger log = LoggerFactory.getLogger(LearnerInfoServiceImpl.class);
-    
+
     private final LearnerInfoRepository learnerInfoRepository;
+
+
 
     public LearnerInfoServiceImpl(LearnerInfoRepository learnerInfoRepository) {
         this.learnerInfoRepository = learnerInfoRepository;
@@ -42,7 +50,7 @@ public class LearnerInfoServiceImpl implements LearnerInfoService{
 
     /**
      *  Get all the learnerInfos.
-     *  
+     *
      *  @param pageable the pagination information
      *  @return the list of entities
      */
@@ -78,4 +86,6 @@ public class LearnerInfoServiceImpl implements LearnerInfoService{
         log.debug("Request to delete LearnerInfo : {}", id);
         learnerInfoRepository.delete(id);
     }
+
+
 }

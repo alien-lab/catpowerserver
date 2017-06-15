@@ -5,12 +5,18 @@ import com.alienlab.catpower.domain.Learner;
 import com.alienlab.catpower.repository.LearnerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Service Implementation for managing Learner.
@@ -20,8 +26,11 @@ import java.util.List;
 public class LearnerServiceImpl implements LearnerService{
 
     private final Logger log = LoggerFactory.getLogger(LearnerServiceImpl.class);
-    
+
     private final LearnerRepository learnerRepository;
+
+    @Autowired
+    JdbcTemplate jdbcTemplate;
 
     public LearnerServiceImpl(LearnerRepository learnerRepository) {
         this.learnerRepository = learnerRepository;
@@ -42,7 +51,7 @@ public class LearnerServiceImpl implements LearnerService{
 
     /**
      *  Get all the learners.
-     *  
+     *
      *  @param pageable the pagination information
      *  @return the list of entities
      */
@@ -77,5 +86,30 @@ public class LearnerServiceImpl implements LearnerService{
     public void delete(Long id) {
         log.debug("Request to delete Learner : {}", id);
         learnerRepository.delete(id);
+    }
+
+
+    @Override
+    public Map learnCountStatiscByDate(Date date) throws ParseException {
+        SimpleDateFormat sf=new SimpleDateFormat("yyyyMMddHHmmss");
+        SimpleDateFormat sf1=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String sd=sf.format(date);
+        sd=sd.substring(0,8)+"000000";
+        Date d1= null,d2=null;
+        d1 = sf.parse(sd);
+        d2=new Date(d1.getTime()+1000*60*60*24);
+        String startDate=sf1.format(d1);
+        String endDate=sf1.format(d2);
+        String sql="SELECT tb1.sigincount,tb2.regcount FROM ( " +
+            "SELECT 1 f, COUNT(DISTINCT learner_id) sigincount FROM `learner_charge` " +
+            "WHERE charge_time>='"+startDate+"' AND charge_time<='"+endDate+"' " +
+            ") tb1,( " +
+            "SELECT 1 f,COUNT(DISTINCT id) regcount FROM `learner`  " +
+            "WHERE regist_time>='"+startDate+"' AND regist_time<='"+endDate+"'  " +
+            ") tb2 " +
+            "WHERE tb1.f=tb2.f";
+
+        return jdbcTemplate.queryForMap(sql);
+
     }
 }

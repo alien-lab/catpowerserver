@@ -4,29 +4,28 @@
 (function(){
     'use strict';
     var app=angular.module('catpowerserverApp');
-    app.controller("shopOpController",["$scope","$filter","shopopService","coachArrangementService","classesTodayService","CourseArrangementService","AlertService","BuyCourse",function($scope,$filter,shopopService,coachArrangementService,classesTodayService,CourseArrangementService,AlertService,BuyCourse){
+    app.controller("shopOpController",["$scope","$filter","shopopService","BuyCourse",function($scope,$filter,shopopService,BuyCourse){
         var vm = this;
 
-        //今日教练排课
-        $scope.coachArrangements = coachArrangementService.loadCoachArrangement();
-        console.log($scope.coachArrangements);
+
+
         //今日售课
-        $scope.sellingCoursers = classesTodayService.loadSellingCoursers();
-        //排课情况
-        $scope.courseArrangements = CourseArrangementService.loadCourseArrangement();
+        function loadSche(date){
+            shopopService.loadCoachArrangement(date,function(data,flag){
+                if(!flag){
+                    alert(data);
+                }
+                $scope.coachArrangements =data;
+                console.log($scope.coachArrangements);
+            });
+        }
+        loadSche();
+        $scope.loadSche=loadSche;
 
         $scope.page={
             index:0,
             size:10
         };
-
-        function loadbuycourse(){
-            shopopService.loadbuycourse($scope.page.index,$scope.page.size,function(data){
-            });
-        }
-
-        $scope.loadbuycourse=loadbuycourse;
-        loadbuycourse();
 
         //上课状态
         angular.forEach($scope.coachArrangements,function (item) {
@@ -167,49 +166,21 @@
 
     }]);
 
-    app.service("coachArrangementService",[function () {
-        this.loadCoachArrangement = function () {
-            var coachArrangements = [{
-                id:1,
-                coachName:'教练1',
-                courseName:'瑜伽',
-                courseState:'上课中',
-                time:'2017-6-2 18:00',
-                traineeCount:[{traineeId:'111',name:'张三'},{traineeId:'222',name:'李四'},{traineeId:'333',name:'王五'}].length,
-                traineeName:[{traineeId:'111',name:'张三'},{traineeId:'222',name:'李四'},{traineeId:'333',name:'王五'}],
-                status:''
-            },{
-                id:2,
-                coachName:'教练2',
-                courseName:'瑜伽',
-                courseState:'已结束',
-                time:'2017-6-2 18:00',
-                traineeCount:[{traineeId:'444',name:'陈乐乐'},{traineeId:'555',name:'陆丹'},{traineeId:'111',name:'张三'},{traineeId:'222',name:'李四'},{traineeId:'333',name:'王五'}].length,
-                traineeName:[{traineeId:'444',name:'陈乐乐'},{traineeId:'555',name:'陆丹'},{traineeId:'111',name:'张三'},{traineeId:'222',name:'李四'},{traineeId:'333',name:'王五'}],
-                status:''
-            },{
-                id:3,
-                coachName:'教练3',
-                courseName:'瑜伽',
-                courseState:'上课中',
-                time:'2017-6-2 20:00',
-                traineeCount:[{traineeId:'111',name:'张三'}].length,
-                traineeName:[{traineeId:'111',name:'张三'}],
-                status:''
-            },{
-                id:4,
-                coachName:'教练4',
-                courseName:'瑜伽',
-                courseState:'已结束',
-                time:'2017-6-2 21:00',
-                traineeCount:[{traineeId:'111',name:'张三'},{traineeId:'222',name:'李四'},{traineeId:'333',name:'王五'}].length,
-                traineeName:[{traineeId:'111',name:'张三'},{traineeId:'222',name:'李四'},{traineeId:'333',name:'王五'}],
-                status:''
-            }];
-            return coachArrangements;
+    app.service("shopopService",["$http",function ($http) {
+        this.loadCoachArrangement = function (date,callback) {
+            $http({
+                url:"api/course-schedulings/today",
+                method:"GET"
+            }).then(function(data){
+                if(callback){
+                    callback(data.data,true);
+                }
+            },function(error){
+                if(callback){
+                    callback(error,false);
+                }
+            })
         }
-    }]);
-    app.service("classesTodayService",[function () {
         this.loadSellingCoursers = function () {
             var sellingCoursers = [{
                 traineeName:'陈乐乐',
@@ -257,6 +228,9 @@
             return sellingCoursers;
         }
     }]);
+    app.service("classesTodayService",[function () {
+
+    }]);
     app.service("CourseArrangementService",[function () {
         this.loadCourseArrangement = function () {
             var courseArrangements = [{
@@ -277,33 +251,8 @@
             return courseArrangements;
         }
     }]);
-    app.service("shopopService",["shopopResource",function(shopopResource){
-        this.loadbuycourse=function(index,size,callback){
-            shopopResource.query({
-                index:index,
-                size:size
-            },function(data){
-                console.log("shopopResource.query()",data);
-                if(callback){
-                    callback(data,true);
-                }
-            },function(error){
-                console.log("shopopResource.query()",error);
-                if(callback){
-                    callback(error,false);
-                }
-            })
-        }
-    }]);
 
-    app.factory("shopopResource",["$resource",function($resource){
-        var resourceUrl =  'api/buy-courses/today';
-        return $resource(resourceUrl, {}, {
-            'query': { method: 'GET'}
 
-        });
-
-    }]);
 
 
 })();

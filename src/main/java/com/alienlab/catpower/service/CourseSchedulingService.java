@@ -44,4 +44,5 @@ public interface CourseSchedulingService {
     void delete(Long id);
 
     List<CourseScheduling> getScheByDate(ZonedDateTime startDate, ZonedDateTime endDate) throws Exception;
+    Page<CourseScheduling> getScheByDate(ZonedDateTime startDate, ZonedDateTime endDate,int index,int size) throws Exception;
 }

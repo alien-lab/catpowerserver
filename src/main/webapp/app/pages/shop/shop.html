@@ -1,5 +1,6 @@
 <style>
     .table th,.table td{text-align: center; }
+
 </style>
 <h2 data-translate="catpowerserverApp.page.shopop.title">运行情况</h2>
 <hr/>
@@ -51,29 +52,29 @@
                             <button ui-sref="shopop.new" type="button" class="btn btn-primary" style="float: right;"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加课时</button>
                         </div>
                         <div ng-repeat="arrangement in coachArrangements | filter : search" class="col-lg-12 col-md-12 col-sm-12" style="border: 1px solid #e3e3e3;margin-top: 2.5%;padding: 0px;background: #ffffff;line-height: 3;">
-                            <div class="col-lg-3 col-md-3 col-sm-3"><span>教练：{{arrangement.coachName}}</span></div>
-                            <div class="col-lg-4 col-md-4 col-sm-4"><span>课程：{{arrangement.courseName}}</span></div>
-                            <div class="col-lg-2 col-md-2 col-sm-2"><span>{{arrangement.courseState}}</span></div>
-                            <div class="col-lg-3 col-md-3 col-sm-3"><span>上课时间：{{arrangement.time}}</span></div>
+                            <div class="col-lg-3 col-md-3 col-sm-3"><span>教练：{{arrangement.sche.coach.coachName}}</span></div>
+                            <div class="col-lg-4 col-md-4 col-sm-4"><span>课程：{{arrangement.sche.course.courseName}}</span></div>
+                            <div class="col-lg-2 col-md-2 col-sm-2"><span>{{arrangement.sche.status}}</span></div>
+                            <div class="col-lg-3 col-md-3 col-sm-3"><span>上课时间：{{arrangement.sche.startTime|date:"yyyy-MM-dd HH:mm"}}</span></div>
 
                             <div class="col-lg-12 col-md-12 col-sm-12" style="margin-bottom: 2%;">
-                                <div class="col-lg-2 col-md-2 col-sm-2"><span>已签到学员：{{arrangement.traineeCount}}人</span></div>
+                                <div class="col-lg-2 col-md-2 col-sm-2"><span>已签到学员：{{arrangement.learners.length}}人</span></div>
                                 <div class="col-lg-8 col-md-8 col-sm-8">
-                                    <div class="btn-group btn-sm" ng-repeat="trainee in arrangement.traineeName | filter : search">
-                                        <button type="button" class="btn btn-default btn-sm">{{trainee.name}}</button>
-                                        <button ng-click="removeTrainee(arrangement.id,trainee.traineeId)" type="button" class="btn btn-default btn-sm">
+                                    <div class="btn-group btn-sm" ng-repeat="trainee in arrangement.learners | filter : search">
+                                        <button type="button" class="btn btn-default btn-sm">{{trainee.learner.learneName}}</button>
+                                        <button ng-click="removeTrainee(trainee.id)" type="button" class="btn btn-default btn-sm">
                                             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                                         </button>
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-md-2 col-sm-2"><button class="btn btn-default btn-sm" type="submit">签到码</button></div>
                             </div>
-                            <div ng-if="arrangement.status==true" class="col-lg-12 col-md-12 col-sm-12" style="margin-top: -2%;padding: 0px;">
+                            <div ng-if="arrangement.sche.status=='进行中'" class="col-lg-12 col-md-12 col-sm-12" style="margin-top: -2%;padding: 0px;">
                                 <div class="col-lg-6 col-md-6 col-sm-6" style="border-top: 1px solid #e3e3e3;border-right: 1px solid #e3e3e3;padding: 0px;margin-top: 2%;">
-                                    <button ng-click="getOutClass(arrangement.id)" class="btn btn-default col-lg-12 col-md-12 col-sm-12" type="submit" style="border: none;">下课</button>
+                                    <button ng-click="getOutClass(arrangement.sche.id)" class="btn btn-default col-lg-12 col-md-12 col-sm-12" type="submit" style="border: none;">下课</button>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6" style="border-top: 1px solid #e3e3e3;padding: 0px;margin-top: 2%;">
-                                    <button ng-click="removeCoachArrangement(arrangement.id)" class="btn btn-default col-lg-12 col-md-12 col-sm-12" type="submit" style="border: none;">取消</button>
+                                    <button ng-click="removeCoachArrangement(arrangement.sche.id)" class="btn btn-default col-lg-12 col-md-12 col-sm-12" type="submit" style="border: none;">取消</button>
                                 </div>
                             </div>
                         </div>

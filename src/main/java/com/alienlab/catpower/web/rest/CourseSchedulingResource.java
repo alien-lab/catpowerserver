@@ -179,4 +179,34 @@ public class CourseSchedulingResource {
 
     }
 
+
+    @ApiOperation("获取今日教练排课分页数据")
+    @GetMapping("/course-schedulings/today/{index}/{size}")
+    public ResponseEntity getScheTodayPage(@PathVariable int index,@PathVariable int size){
+        SimpleDateFormat sf=new SimpleDateFormat("yyyyMMddHHmmss");
+        Date base=new Date();
+        String sd=sf.format(base);
+        sd=sd.substring(0,8)+"000000";
+        Date d1= null,d2=null;
+        try {
+            d1 = sf.parse(sd);
+            d2=new Date(d1.getTime()+1000*60*60*24);
+            ZonedDateTime zd1=ZonedDateTime.ofInstant(d1.toInstant(), ZoneId.systemDefault());
+            ZonedDateTime zd2=ZonedDateTime.ofInstant(d2.toInstant(), ZoneId.systemDefault());
+            Page<CourseScheduling> sches=courseSchedulingService.getScheByDate(zd1,zd2,index,size);
+
+            return ResponseEntity.ok().body(sches);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
+
+
+    }
+
 }

@@ -6,6 +6,7 @@ import com.alienlab.catpower.repository.CourseSchedulingRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
@@ -83,5 +84,10 @@ public class CourseSchedulingServiceImpl implements CourseSchedulingService{
     @Override
     public List<CourseScheduling> getScheByDate(ZonedDateTime startDate, ZonedDateTime endDate) throws Exception {
         return courseSchedulingRepository.findCourseSchedulingsByStartTimeBetween(startDate,endDate);
+    }
+
+    @Override
+    public Page<CourseScheduling> getScheByDate(ZonedDateTime startDate, ZonedDateTime endDate, int index, int size) throws Exception {
+        return courseSchedulingRepository.findCourseSchedulingsByStartTimeBetween(startDate,endDate,new PageRequest(index,size));
     }
 }

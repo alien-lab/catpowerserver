@@ -1,5 +1,6 @@
 package com.alienlab.catpower.web.rest;
 
+import com.alienlab.catpower.web.rest.util.ExecResult;
 import com.codahale.metrics.annotation.Timed;
 import com.alienlab.catpower.domain.Learner;
 import com.alienlab.catpower.service.LearnerService;
@@ -19,7 +20,10 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -32,7 +36,7 @@ public class LearnerResource {
     private final Logger log = LoggerFactory.getLogger(LearnerResource.class);
 
     private static final String ENTITY_NAME = "learner";
-        
+
     private final LearnerService learnerService;
 
     public LearnerResource(LearnerService learnerService) {
@@ -122,6 +126,18 @@ public class LearnerResource {
         log.debug("REST request to delete Learner : {}", id);
         learnerService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    @GetMapping("/learners/count/today")
+    public ResponseEntity getStatiscToday(){
+        try {
+            Map result=learnerService.learnCountStatiscByDate(new Date());
+            return ResponseEntity.ok().body(result);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
     }
 
 }

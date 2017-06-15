@@ -4,6 +4,10 @@ import com.alienlab.catpower.domain.Learner;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.text.ParseException;
+import java.util.Date;
+import java.util.Map;
+
 /**
  * Service Interface for managing Learner.
  */
@@ -19,7 +23,7 @@ public interface LearnerService {
 
     /**
      *  Get all the learners.
-     *  
+     *
      *  @param pageable the pagination information
      *  @return the list of entities
      */
@@ -39,4 +43,6 @@ public interface LearnerService {
      *  @param id the id of the entity
      */
     void delete(Long id);
+    Map learnCountStatiscByDate(Date date) throws ParseException;
+
 }

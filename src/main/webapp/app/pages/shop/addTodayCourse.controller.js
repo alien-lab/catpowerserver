@@ -6,9 +6,9 @@
 
     var app = angular.module("catpowerserverApp");
 
-    app.controller('addCourseController',['$scope','$timeout','$stateParams','$uibModalInstance','coachArrangementService','addArrangement',
-        function ($scope,$timeout,$stateParams,$uibModalInstance,coachArrangementService,addArrangement) {
-        $scope.coachArrangements = coachArrangementService.loadCoachArrangement();
+    app.controller('addCourseController',['$scope','$timeout','$stateParams','$uibModalInstance','shopopService','addArrangement',
+        function ($scope,$timeout,$stateParams,$uibModalInstance,shopopService,addArrangement) {
+        $scope.coachArrangements = shopopService.loadCoachArrangement();
         console.log($scope.coachArrangements);
 
         var vm = this;
@@ -25,13 +25,13 @@
         function save() {
             vm.isSaving = true;
             if(vm.coach.id !== null){
-                coachArrangementService.update(vm.coach,onSaveSuccess,onSaveError);
+                shopopService.update(vm.coach,onSaveSuccess,onSaveError);
             }else{
                 Coach.save(vm.coach, onSaveSuccess, onSaveError);
             }
         }
         function onSaveSuccess(result){
-            $scope.$emit('catpowerserverApp:coachArrangementService',result);
+            //$scope.$emit('catpowerserverApp:shopopService',result);
             $uibModalInstance.close(result);
             vm.isSaving = false;
         }

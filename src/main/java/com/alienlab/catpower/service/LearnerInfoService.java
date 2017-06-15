@@ -4,6 +4,10 @@ import com.alienlab.catpower.domain.LearnerInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.text.ParseException;
+import java.util.Date;
+import java.util.Map;
+
 /**
  * Service Interface for managing LearnerInfo.
  */
@@ -19,7 +23,7 @@ public interface LearnerInfoService {
 
     /**
      *  Get all the learnerInfos.
-     *  
+     *
      *  @param pageable the pagination information
      *  @return the list of entities
      */
@@ -39,4 +43,6 @@ public interface LearnerInfoService {
      *  @param id the id of the entity
      */
     void delete(Long id);
+
+
 }
