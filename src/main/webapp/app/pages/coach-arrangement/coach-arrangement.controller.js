@@ -4,8 +4,25 @@
 (function () {
     'use strict';
     var app=angular.module('catpowerserverApp');
-    app.controller('coachArrangementController',['$scope','coachArrangementResource',function ($scope,coachArrangementResource) {
+    app.controller('coachArrangementController',['$scope','coachArrangementResource','CourseScheduling','AlertService',function ($scope,coachArrangementResource,CourseScheduling,AlertService) {
+
+        loadSchedulingAll();
+        function loadSchedulingAll(){
+            CourseScheduling.query({},onScheSuccess,onScheError);
+        }
+        function onScheSuccess(data) {
+            $scope.courseSchedulings = data;
+            console.log($scope.courseSchedulings);
+
+        }
+        function onScheError(error) {
+            AlertService.error(error.data.message);
+        }
+
+
         $scope.arrangementlist = coachArrangementResource.loadArrangementList();
+
+
         //下拉
         this.openStatus = true;
         $scope.toggleOpen = function (coachId) {
@@ -19,7 +36,6 @@
                 this.openStatus = !this.openStatus;
             }
         };
-
         //分类
         angular.forEach($scope.arrangementlist,function (item) {
             angular.forEach(item.courseCount,function (list) {

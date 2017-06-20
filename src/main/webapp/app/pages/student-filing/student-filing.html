@@ -18,7 +18,7 @@
             </div>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-lg-offset-4 col-md-offset-4 col-sm-offset-4">
-            <button type="button" ui-sref="student-filing.new" class="btn btn-primary" style="float: right;">
+            <button type="button" ui-sref="student-filing.new" data-translate="catpowerserverApp.learner.home.createLabel" class="btn btn-primary" style="float: right;">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加学员
             </button>
         </div>
@@ -48,7 +48,7 @@
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"
-                                    ui-sref="course-detail({id:course.id})"
+                                    ui-sref="student-filing.detail({id:learner.id})"
                                     class="btn btn-info btn-sm">
                                 <span class="glyphicon glyphicon-eye-open"></span>
                                 <span class="hidden-sm-down" data-translate="entity.action.view"></span>
@@ -60,7 +60,7 @@
                                 <span class="hidden-sm-down" data-translate="entity.action.edit"></span>
                             </button>
                             <button type="submit"
-                                    ui-sref="course.delete({id:course.id})"
+                                    ui-sref="student-filing.delete({id:learner.id})"
                                     class="btn btn-danger btn-sm">
                                 <span class="glyphicon glyphicon-remove-circle"></span>
                                 <span class="hidden-sm-down" data-translate="entity.action.delete"></span>

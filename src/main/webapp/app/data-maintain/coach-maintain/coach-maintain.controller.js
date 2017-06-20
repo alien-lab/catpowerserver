@@ -76,4 +76,22 @@
         }
 
     }]);
+
+    //教练详情信息
+    /*app.factory('coachInfoFactory',["$http",function ($http) {
+        this.loadCoachInfo = function (callback) {
+            $http({
+                url:"api/coaches/info/:id",
+                method:"GET"
+            }).then(function(data){
+                if(callback){
+                    callback(data.data,true);
+                }
+            },function(error){
+                if(callback){
+                    callback(error,false);
+                }
+            })
+        };
+    }]);*/
 })();

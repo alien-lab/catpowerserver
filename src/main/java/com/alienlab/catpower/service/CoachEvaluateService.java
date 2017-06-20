@@ -19,7 +19,7 @@ public interface CoachEvaluateService {
 
     /**
      *  Get all the coachEvaluates.
-     *  
+     *
      *  @param pageable the pagination information
      *  @return the list of entities
      */
@@ -39,4 +39,12 @@ public interface CoachEvaluateService {
      *  @param id the id of the entity
      */
     void delete(Long id);
+
+    /**
+     *
+     * @param coachId
+     * @return
+     */
+
+
 }

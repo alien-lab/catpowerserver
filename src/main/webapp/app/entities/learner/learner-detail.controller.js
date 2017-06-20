@@ -11,6 +11,8 @@
         var vm = this;
 
         vm.learner = entity;
+        console.log(vm.learner);
+
         vm.previousState = previousState.name;
 
         var unsubscribe = $rootScope.$on('catpowerserverApp:learnerUpdate', function(event, result) {

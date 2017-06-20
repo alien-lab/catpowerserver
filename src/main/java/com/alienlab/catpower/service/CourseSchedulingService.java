@@ -45,4 +45,9 @@ public interface CourseSchedulingService {
 
     List<CourseScheduling> getScheByDate(ZonedDateTime startDate, ZonedDateTime endDate) throws Exception;
     Page<CourseScheduling> getScheByDate(ZonedDateTime startDate, ZonedDateTime endDate,int index,int size) throws Exception;
+
+    /**
+     * 根据id更新上课的状态
+     */
+    int updateCourseScheduling(Long id,String status) throws  Exception;
 }

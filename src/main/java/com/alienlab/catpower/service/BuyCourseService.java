@@ -4,6 +4,10 @@ import com.alienlab.catpower.domain.BuyCourse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.text.ParseException;
+import java.util.Date;
+import java.util.Map;
+
 /**
  * Service Interface for managing BuyCourse.
  */
@@ -41,4 +45,6 @@ public interface BuyCourseService {
     void delete(Long id);
 
     Page<BuyCourse> getTodayData(Pageable page) throws Exception;
+    //今日售课人数及总金额
+    Map getTodayCountByDate(Date date) throws ParseException;
 }

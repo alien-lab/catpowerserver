@@ -11,10 +11,12 @@
         var vm = this;
 
         vm.courseScheduling = entity;
+
         vm.previousState = previousState.name;
 
         var unsubscribe = $rootScope.$on('catpowerserverApp:courseSchedulingUpdate', function(event, result) {
-            vm.courseScheduling = result;
+
+            console.log(result);
         });
         $scope.$on('$destroy', unsubscribe);
     }

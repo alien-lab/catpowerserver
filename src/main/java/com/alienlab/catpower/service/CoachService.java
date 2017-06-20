@@ -4,6 +4,8 @@ import com.alienlab.catpower.domain.Coach;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 /**
  * Service Interface for managing Coach.
  */
@@ -19,7 +21,7 @@ public interface CoachService {
 
     /**
      *  Get all the coaches.
-     *  
+     *
      *  @param pageable the pagination information
      *  @return the list of entities
      */
@@ -39,4 +41,9 @@ public interface CoachService {
      *  @param id the id of the entity
      */
     void delete(Long id);
+
+    /**
+     *
+     */
+    List<Coach> getCoachByCoachId(Long id) throws Exception;
 }

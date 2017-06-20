@@ -1,16 +1,15 @@
 package com.alienlab.catpower.service.impl;
-
-import com.alienlab.catpower.service.CoachEvaluateService;
 import com.alienlab.catpower.domain.CoachEvaluate;
 import com.alienlab.catpower.repository.CoachEvaluateRepository;
+import com.alienlab.catpower.service.CoachEvaluateService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Service Implementation for managing CoachEvaluate.
@@ -20,8 +19,11 @@ import java.util.List;
 public class CoachEvaluateServiceImpl implements CoachEvaluateService{
 
     private final Logger log = LoggerFactory.getLogger(CoachEvaluateServiceImpl.class);
-    
+
     private final CoachEvaluateRepository coachEvaluateRepository;
+
+    @Autowired
+    JdbcTemplate jdbcTemplate;
 
     public CoachEvaluateServiceImpl(CoachEvaluateRepository coachEvaluateRepository) {
         this.coachEvaluateRepository = coachEvaluateRepository;
@@ -42,7 +44,7 @@ public class CoachEvaluateServiceImpl implements CoachEvaluateService{
 
     /**
      *  Get all the coachEvaluates.
-     *  
+     *
      *  @param pageable the pagination information
      *  @return the list of entities
      */
@@ -78,4 +80,6 @@ public class CoachEvaluateServiceImpl implements CoachEvaluateService{
         log.debug("Request to delete CoachEvaluate : {}", id);
         coachEvaluateRepository.delete(id);
     }
+
+
 }

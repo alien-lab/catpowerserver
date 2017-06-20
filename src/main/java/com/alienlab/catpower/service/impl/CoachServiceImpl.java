@@ -1,14 +1,16 @@
 package com.alienlab.catpower.service.impl;
 
-import com.alienlab.catpower.service.CoachService;
 import com.alienlab.catpower.domain.Coach;
 import com.alienlab.catpower.repository.CoachRepository;
+import com.alienlab.catpower.service.CoachService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,8 +22,13 @@ import java.util.List;
 public class CoachServiceImpl implements CoachService{
 
     private final Logger log = LoggerFactory.getLogger(CoachServiceImpl.class);
-    
+
     private final CoachRepository coachRepository;
+
+    @Autowired
+    JdbcTemplate jdbcTemplate;
+    @Autowired
+    CoachService coachService;
 
     public CoachServiceImpl(CoachRepository coachRepository) {
         this.coachRepository = coachRepository;
@@ -42,7 +49,7 @@ public class CoachServiceImpl implements CoachService{
 
     /**
      *  Get all the coaches.
-     *  
+     *
      *  @param pageable the pagination information
      *  @return the list of entities
      */
@@ -77,5 +84,15 @@ public class CoachServiceImpl implements CoachService{
     public void delete(Long id) {
         log.debug("Request to delete Coach : {}", id);
         coachRepository.delete(id);
+    }
+
+    @Override
+    public List<Coach> getCoachByCoachId(Long id) throws Exception {
+
+        String sql = "SELECT a.complain,a.evaluation,b.coach_name,b.coach_phone,b.coach_introduce,b.coach_picture,c.course_id FROM `coach_evaluate` a,`coach` b, `buy_course` c\n" +
+            "WHERE b.id='"+id+"' AND c.coach_id='"+id+"' AND a.coach_id=b.id AND b.id=c.coach_id ";
+
+        List list = jdbcTemplate.queryForList(sql);
+        return list;
     }
 }

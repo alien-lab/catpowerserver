@@ -11,6 +11,8 @@
         var vm = this;
 
         vm.courseScheduling = entity;
+        console.log("**************************************************");
+        console.log(vm.courseScheduling);
         vm.clear = clear;
         vm.datePickerOpenStatus = {};
         vm.openCalendar = openCalendar;

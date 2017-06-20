@@ -4,55 +4,106 @@
 (function(){
     'use strict';
     var app=angular.module('catpowerserverApp');
-    app.controller("shopOpController",["$scope","$filter","shopopService","BuyCourse",function($scope,$filter,shopopService,BuyCourse){
+    app.controller("shopOpController",["$http","CourseScheduling","$scope","$filter","shopopService","BuyCourse","buyCourseService","AlertService", function($http,CourseScheduling,$scope,$filter,shopopService,BuyCourse,buyCourseService,AlertService){
         var vm = this;
-
-
-
-        //今日售课
+        loadSche();
         function loadSche(date){
+            //今日签到与建档人数
+            shopopService.loadRegisterCount(date,function (data,flag) {
+                if(!flag){
+                    alert(data);
+                }
+                $scope.registerCount =data;
+            });
+            //今日销售的数量及总金额
+            shopopService.loadBuyCourseCountToday(date,function (data,flag) {
+                if(!flag){
+                    alert(data);
+                }
+                $scope.buyCourseCountToday = data;
+            });
+            //今日教练排课
             shopopService.loadCoachArrangement(date,function(data,flag){
                 if(!flag){
                     alert(data);
                 }
                 $scope.coachArrangements =data;
                 console.log($scope.coachArrangements);
+                //下课
+                $scope.getOutClass = function (id) {
+                    var index = -1;
+                    angular.forEach($scope.coachArrangements,function (item,key) {
+                        if(item.sche.id == id ){
+                            index = key;
+                        }
+                    });
+                    if(index != -1){
+                        $scope.coachArrangements[index].sche.status = '已下课';
+                        $http({
+                            url:"api/course-schedulings/courseStatus/"+$scope.coachArrangements[index].sche.id,
+                            method:"PUT",
+                            data:$scope.coachArrangements[index].sche.status
+                        }).success(function (data) {
+                            console.log(data);
+                        });
+                    }
+                };
+                //取消教练排课
+                /*$scope.removeCoachArrangement = function (id) {
+                    var index = -1;
+                    angular.forEach($scope.coachArrangements,function (item,key) {
+                        if(item.id == id ){
+                            index = key;
+                        };
+                    });
+                    if(index != -1){
+                        $scope.coachArrangements.splice(index,1);
+                    }
+                    return $scope.coachArrangements;
+                };*/
+                //教练排课的样式
+                angular.forEach($scope.coachArrangements,function (item) {
+                    console.log("********************0");
+                    console.log(item.sche.status);
+                     if(item.sche.status == '未开始'){
+                         $scope.arrangementStyle={
+                             "border": "1px solid #e3e3e3",
+                             "margin-top": "2.5%",
+                             "padding": "0px",
+                             "background": "#008800",
+                             "line-height": "3"
+                         };
+                     }
+                     if(item.sche.status == '进行中'){
+                         /*$scope.arrangementStyle={
+                         "border": "1px solid #e3e3e3",
+                         "margin-top": "2.5%",
+                         "padding": "0px",
+                         "background": "#FFD700",
+                         "line-height": "3"
+                         };*/
+                     }
+                     if(item.sche.status == '已下课'){
+                         /*$scope.arrangementStyle={
+                         "border": "1px solid #e3e3e3",
+                         "margin-top": "2.5%",
+                         "padding": "0px",
+                         "background": "#F08080",
+                         "line-height": "3"
+                         };*/
+                     }
+
+                 });
+
             });
         }
-        loadSche();
-        $scope.loadSche=loadSche;
+
 
         $scope.page={
             index:0,
             size:10
         };
 
-        //上课状态
-        angular.forEach($scope.coachArrangements,function (item) {
-
-            if( item.courseState == '已结束'){
-                item.status = false;
-            }else{
-                item.status = true;
-            }
-        });
-        //下课
-        $scope.getOutClass = function (id) {
-            var index = -1;
-            angular.forEach($scope.coachArrangements,function (item,key) {
-                if(item.id == id ){
-                    index = key;
-                    item.courseState = '已结束';
-                    if( item.courseState == '已结束'){
-                        item.status = false;
-
-                    }else{
-                        item.status = true;
-                    }
-                };
-            });
-
-        };
         //取消教练排课
         $scope.removeCoachArrangement = function (id) {
             var index = -1;
@@ -134,21 +185,7 @@
         $scope.popupEndArrangementCourse = {
             opened: false
         };
-        //分页
-        /*$scope.totalItems = 5;
-        $scope.currentPage = 1;
 
-        $scope.setPage = function (pageNo) {
-            $scope.currentPage = pageNo;
-        };
-
-        $scope.pageChanged = function() {
-            $log.log('Page changed to: ' + 5);
-        };
-
-        $scope.maxSize = 5;
-        $scope.bigTotalItems = $scope.sellingCoursers.length;
-        $scope.bigCurrentPage = 1;*/
         /**
          * 售课情况
          */
@@ -158,15 +195,44 @@
         }
         function onSuccess(data) {
             $scope.BuyCourses = data;
-            console.log($scope.BuyCourses)
+            console.log($scope.BuyCourses);
+
         }
         function onError(error) {
             AlertService.error(error.data.message);
         }
 
-    }]);
+        /**
+         * 今日售课
+         */
+        buyCourseService.loadBuyCourseToday(0,10,function (data,flag) {
+            if(!flag){
+                alert(data);
+            }
+            $scope.buyCoursesToday =data.content;
+            console.log($scope.buyCoursesToday);
+        });
+        /**
+         * 排课情况
+         */
+        loadSchedulingAll();
+        function loadSchedulingAll(){
+            CourseScheduling.query({},onScheSuccess,onScheError);
+        }
+        function onScheSuccess(data) {
+            $scope.courseSchedulings = data;
+            console.log($scope.courseSchedulings);
 
+        }
+        function onScheError(error) {
+            AlertService.error(error.data.message);
+        }
+    }]);
+    /**
+     * 今日教练排课
+     */
     app.service("shopopService",["$http",function ($http) {
+        //今日教练排课
         this.loadCoachArrangement = function (date,callback) {
             $http({
                 url:"api/course-schedulings/today",
@@ -180,57 +246,66 @@
                     callback(error,false);
                 }
             })
+        };
+        //今日签到与建档人数
+        this.loadRegisterCount = function (date,callback) {
+            $http({
+                url:"api/learners/count/today",
+                method:"GET"
+            }).then(function(data){
+                if(callback){
+                    callback(data.data,true);
+                }
+            },function(error){
+                if(callback){
+                    callback(error,false);
+                }
+            })
+        };
+        //今日销售的数量及总金额
+        this.loadBuyCourseCountToday = function (date,callback) {
+            $http({
+                url:'api/buy-courses/today/count',
+                method:'GET'
+            }).then(function (data) {
+                if(callback){
+                    callback(data.data,true);
+                }
+            },function (error) {
+                if(callback){
+                    callback(error,false);
+                }
+            });
         }
-        this.loadSellingCoursers = function () {
-            var sellingCoursers = [{
-                traineeName:'陈乐乐',
-                courseName:[{coursesName:'基础理论课程'},{coursesName:'健身健美高级课程'}],
-                coachName:'教练1',
-                courseCount:'2',
-                money:'12000',
-                time:'2017-6-13 11:00'
-            },{
-                traineeName:'陆丹',
-                courseName:[{coursesName:'基础实践课程'}],
-                coachName:'教练2',
-                courseCount:'1',
-                money:'5000',
-                time:'2017-6-13 13:00'
-            },{
-                traineeName:'学员1',
-                courseName:[{coursesName:'功能训练课程'}],
-                coachName:'教练3',
-                courseCount:'1',
-                money:'5000',
-                time:'2017-6-13 17:00'
-            },{
-                traineeName:'学员2',
-                courseName:[{coursesName:'运动康复课程'}],
-                coachName:'教练2',
-                courseCount:'1',
-                money:'5000',
-                time:'2017-6-4 17:00'
-            },{
-                traineeName:'学员3',
-                courseName:[{coursesName:'瑜伽'},{coursesName:'体操技能'}],
-                coachName:'教练3',
-                courseCount:'2',
-                money:'12000',
-                time:'2017-6-2 19:00'
-            },{
-                traineeName:'学员4',
-                courseName:[{coursesName:'健身健美高级课程'}],
-                coachName:'教练1',
-                courseCount:'1',
-                money:'5000',
-                time:'2017-6-2 19:00'
-            }];
-            return sellingCoursers;
-        }
-    }]);
-    app.service("classesTodayService",[function () {
 
     }]);
+    //今日售课
+    app.factory("buyCourseResource",["$resource",function($resource){
+        var resourceUrl =  'api/buy-courses/today';
+        return $resource(resourceUrl, {}, {
+            'query': { method: 'GET'}
+        });
+
+    }]);
+    app.service("buyCourseService",["buyCourseResource",function(buyCourseResource){
+        this.loadBuyCourseToday=function(index,size,callback){
+            buyCourseResource.query({
+                index:index,
+                size:size
+            },function(data){
+                console.log("shopopResource.query()",data);
+                if(callback){
+                    callback(data,true);
+                }
+            },function(error){
+                console.log("shopopResource.query()",error);
+                if(callback){
+                    callback(error,false);
+                }
+            })
+        }
+    }]);
+
     app.service("CourseArrangementService",[function () {
         this.loadCourseArrangement = function () {
             var courseArrangements = [{
@@ -253,12 +328,7 @@
     }]);
 
 
-
-
 })();
-
-
-
 
 (function(){
     'use strict';
@@ -286,39 +356,62 @@
             }
         })
             .state('shopop.new', {
-            parent: 'shopop',
-            url: '/new',
-            data: {
-                authorities: ['ROLE_USER']
-            },
-            onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
-                $uibModal.open({
-                    templateUrl: 'app/pages/shop/addTodayCourse.html',
-                    controller: 'addCourseController',
-                    controllerAs: 'vm',
-                    backdrop: 'static',
-                    size: 'lg',
-                    resolve: {
-                        addArrangement: function () {
-                            return {
-                                coachName: null,
-                                courseName: null,
-                                courseState: null,
-                                time: null,
-                                traineeCount: null,
-                                traineeName: null,
-                                id:null
-                            };
+                parent: 'shopop',
+                url: 'new',
+                data: {
+                    authorities: ['ROLE_USER']
+                },
+                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                    $uibModal.open({
+                        templateUrl: 'app/pages/shop/addTodayCourse.html',
+                        controller: 'addCourseController',
+                        controllerAs: 'vm',
+                        backdrop: 'static',
+                        size: 'lg',
+                        resolve: {
+                            addArrangement: function () {
+                                return {
+                                    coachName: null,
+                                    courseName: null,
+                                    courseState: null,
+                                    time: null,
+                                    traineeCount: null,
+                                    traineeName: null,
+                                    id:null
+                                };
+                            }
                         }
-                    }
-                }).result.then(function() {
-                    $state.go('shopop', null, { reload: 'shopop' });
-                }, function() {
-                    $state.go('shopop');
-                });
-            }]
-
-        })
+                    }).result.then(function() {
+                        $state.go('shopop', null, { reload: 'shopop' });
+                    }, function() {
+                        $state.go('shopop');
+                    });
+                }]
+            })
+            .state('shopop.delete', {
+                parent: 'shopop',
+                url: '/{id}/delete',
+                data: {
+                    authorities: ['ROLE_USER']
+                },
+                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                    $uibModal.open({
+                        templateUrl: 'app/pages/shop/shop-coachArrangement-delete.html',
+                        controller: 'CourseSchedulingDeleteController',
+                        controllerAs: 'vm',
+                        size: 'md',
+                        resolve: {
+                            entity: ['CourseScheduling', function(CourseScheduling) {
+                                return CourseScheduling.get({id : $stateParams.id}).$promise;
+                            }]
+                        }
+                    }).result.then(function() {
+                        $state.go('course-scheduling', null, { reload: 'course-scheduling' });
+                    }, function() {
+                        $state.go('^');
+                    });
+                }]
+            });
     }]);
 })();
 

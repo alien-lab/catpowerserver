@@ -21,4 +21,5 @@ public interface CourseSchedulingRepository extends JpaRepository<CourseScheduli
     List<CourseScheduling> findCourseSchedulingsByStartTimeBetween(ZonedDateTime startDate, ZonedDateTime endDate);
     Page<CourseScheduling> findCourseSchedulingsByStartTimeBetween(ZonedDateTime startDate, ZonedDateTime endDate, Pageable page);
 
+
 }

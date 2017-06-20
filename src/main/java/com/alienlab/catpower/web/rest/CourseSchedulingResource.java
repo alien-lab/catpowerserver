@@ -2,18 +2,17 @@ package com.alienlab.catpower.web.rest;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alienlab.catpower.domain.CourseScheduling;
 import com.alienlab.catpower.domain.LearnerCharge;
+import com.alienlab.catpower.service.CourseSchedulingService;
 import com.alienlab.catpower.service.LearnerChargeService;
 import com.alienlab.catpower.web.rest.util.ExecResult;
-import com.codahale.metrics.annotation.Timed;
-import com.alienlab.catpower.domain.CourseScheduling;
-import com.alienlab.catpower.service.CourseSchedulingService;
 import com.alienlab.catpower.web.rest.util.HeaderUtil;
 import com.alienlab.catpower.web.rest.util.PaginationUtil;
-import com.sun.org.apache.regexp.internal.RE;
+import com.codahale.metrics.annotation.Timed;
+import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +25,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -207,6 +204,21 @@ public class CourseSchedulingResource {
         }
 
 
+    }
+    /**
+     *
+     *  根据id更新上课的状态
+     */
+    @ApiOperation(value = "根据id更新上课的状态 ")
+    @PutMapping("/course-schedulings/courseStatus/{id}")
+    public ResponseEntity updateCourseStatus(@PathVariable Long id,@RequestBody String status){
+        try {
+            return ResponseEntity.ok().body(courseSchedulingService.updateCourseScheduling(id,status));
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
     }
 
 }

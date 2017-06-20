@@ -80,7 +80,8 @@
                         url: $state.href($state.current.name, $state.params)
                     };
                     return currentStateData;
-                }]
+                }],
+
             }
         })
         .state('buy-course-detail.edit', {

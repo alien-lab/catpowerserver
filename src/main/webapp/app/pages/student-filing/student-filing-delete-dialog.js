@@ -1,19 +1,21 @@
+/**
+ * Created by asus on 2017/6/18.
+ */
 (function() {
     'use strict';
 
     angular
         .module('catpowerserverApp')
-        .controller('LearnerDeleteController',LearnerDeleteController);
+        .controller('studentFilingDeleteController',studentFilingDeleteController);
 
-    LearnerDeleteController.$inject = ['$uibModalInstance', 'entity', 'Learner'];
+    studentFilingDeleteController.$inject = ['$uibModalInstance', 'entity', 'Learner'];
 
-    function LearnerDeleteController($uibModalInstance, entity, Learner) {
+    function studentFilingDeleteController($uibModalInstance, entity, Learner) {
         var vm = this;
 
         vm.learner = entity;
-
+        console.log("********************************");
         console.log(vm.learner);
-
         vm.clear = clear;
         vm.confirmDelete = confirmDelete;
 
@@ -25,7 +27,7 @@
             Learner.delete({id: id},
                 function () {
                     $uibModalInstance.close(true);
-                });
+            });
         }
     }
 })();

@@ -3,17 +3,14 @@
 
     angular
         .module('catpowerserverApp')
-        .controller('LearnerDeleteController',LearnerDeleteController);
+        .controller('CourseSchedulingDeleteController',CourseSchedulingDeleteController);
 
-    LearnerDeleteController.$inject = ['$uibModalInstance', 'entity', 'Learner'];
+    CourseSchedulingDeleteController.$inject = ['$uibModalInstance', 'entity', 'CourseScheduling'];
 
-    function LearnerDeleteController($uibModalInstance, entity, Learner) {
+    function CourseSchedulingDeleteController($uibModalInstance, entity, CourseScheduling) {
         var vm = this;
 
-        vm.learner = entity;
-
-        console.log(vm.learner);
-
+        vm.courseScheduling = entity;
         vm.clear = clear;
         vm.confirmDelete = confirmDelete;
 
@@ -22,7 +19,7 @@
         }
 
         function confirmDelete (id) {
-            Learner.delete({id: id},
+            CourseScheduling.delete({id: id},
                 function () {
                     $uibModalInstance.close(true);
                 });

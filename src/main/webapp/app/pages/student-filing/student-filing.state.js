@@ -21,6 +21,7 @@
                 resolve: {
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('student-filing');
+                        $translatePartialLoader.addPart('learner');
                         $translatePartialLoader.addPart('global');
                         return $translate.refresh();
                     }]
@@ -38,16 +39,22 @@
                         controller:'studentFilingDialogController',
                         controllerAs:'vm',
                         backdrop:'static',
-                        size:'lg',
+                        size:'md',
                         resolve:{
-                            student:function () {
+                            entity:function () {
                                 return{
-                                    stuName:null,
-                                    stuSex:null,
-                                    stuPhone:null,
-                                    registrationTime:null,
-                                    firstGoShopTime:null,
-                                    totalEmpiricalValue:null
+                                    learneName: null,
+                                    learnerPhone: null,
+                                    learnerSex: null,
+                                    registTime: null,
+                                    wxOpenId: null,
+                                    wxNickname: null,
+                                    wxHeader: null,
+                                    firstTotime: null,
+                                    firstBuyclass: null,
+                                    recentlySignin: null,
+                                    experience: null,
+                                    id: null
                                 }
                             }
                         }
@@ -58,5 +65,60 @@
                     });
                 }]
             })
+            .state('student-filing.detail', {
+                parent: 'student-filing',
+                url: '/student-filing/{id}',
+                data: {
+                    authorities: ['ROLE_USER']
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'app/pages/student-filing/student-filing-detail.html',
+                        controller: 'StudentFilingDetailController',
+                        controllerAs: 'vm'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('learner');
+                        return $translate.refresh();
+                    }],
+                    entity: ['$stateParams', 'Learner', function($stateParams, Learner) {
+                        return Learner.get({id : $stateParams.id}).$promise;
+                    }],
+                    previousState: ["$state", function ($state) {
+                        var currentStateData = {
+                            name: $state.current.name || 'learner',
+                            params: $state.params,
+                            url: $state.href($state.current.name, $state.params)
+                        };
+                        return currentStateData;
+                    }]
+                }
+        })
+            .state('student-filing.delete', {
+                parent: 'student-filing',
+                url: '/{id}/delete',
+                data: {
+                    authorities: ['ROLE_USER']
+                },
+                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                    $uibModal.open({
+                        templateUrl: 'app/pages/student-filing/student-filing-delete-dialog.html',
+                        controller: 'studentFilingDeleteController',
+                        controllerAs: 'vm',
+                        size: 'md',
+                        resolve: {
+                            entity: ['Learner', function(Learner) {
+                                return Learner.get({id : $stateParams.id}).$promise;
+                            }]
+                        }
+                    }).result.then(function() {
+                        $state.go('student-filing', null, { reload: 'student-filing' });
+                    }, function() {
+                        $state.go('^');
+                    });
+                }]
+            });
     }]);
 })();

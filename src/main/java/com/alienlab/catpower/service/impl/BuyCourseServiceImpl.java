@@ -1,22 +1,23 @@
 package com.alienlab.catpower.service.impl;
 
-import com.alienlab.catpower.service.BuyCourseService;
 import com.alienlab.catpower.domain.BuyCourse;
 import com.alienlab.catpower.repository.BuyCourseRepository;
-import org.joda.time.DateTime;
+import com.alienlab.catpower.service.BuyCourseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import java.util.List;
+import java.util.Map;
 
 /**
  * Service Implementation for managing BuyCourse.
@@ -25,9 +26,14 @@ import java.util.List;
 @Transactional
 public class BuyCourseServiceImpl implements BuyCourseService{
 
+
+
     private final Logger log = LoggerFactory.getLogger(BuyCourseServiceImpl.class);
 
     private final BuyCourseRepository buyCourseRepository;
+
+    @Autowired
+    JdbcTemplate jdbcTemplate;
 
     public BuyCourseServiceImpl(BuyCourseRepository buyCourseRepository) {
         this.buyCourseRepository = buyCourseRepository;
@@ -96,5 +102,27 @@ public class BuyCourseServiceImpl implements BuyCourseService{
         return buyCourseRepository.findBuyCourseByBuyTimeBetweenOrderByBuyTimeDesc(
             ZonedDateTime.parse(t1),ZonedDateTime.parse(t2)
             ,page);
+    }
+
+    @Override
+    public Map getTodayCountByDate(Date date) throws ParseException {
+        SimpleDateFormat sf=new SimpleDateFormat("yyyyMMddHHmmss");
+        SimpleDateFormat sf1=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String sd=sf.format(date);
+        sd=sd.substring(0,8)+"000000";
+        Date d1= null,d2=null;
+        d1 = sf.parse(sd);
+        d2=new Date(d1.getTime()+1000*60*60*24);
+        String startDate=sf1.format(d1);
+        String endDate=sf1.format(d2);
+
+        String sql = "SELECT tb1.buycount,tb2.buymenoy FROM(\n" +
+            "SELECT 1 f, COUNT(DISTINCT learner_id) buycount FROM `buy_course` WHERE buy_time>='"+startDate+"' AND buy_time<='"+endDate+"'\n" +
+            ") tb1,(\n" +
+            "SELECT 1 f, SUM(payment_account) buymenoy FROM `buy_course` WHERE buy_time>='"+startDate+"' AND buy_time<='"+endDate+"'\n" +
+            ") tb2\n" +
+            "WHERE tb1.f=tb2.f";
+
+        return jdbcTemplate.queryForMap(sql);
     }
 }

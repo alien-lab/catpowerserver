@@ -1,9 +1,8 @@
 package com.alienlab.catpower.repository;
 
 import com.alienlab.catpower.domain.CoachEvaluate;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import org.springframework.data.jpa.repository.*;
 
 
 /**
@@ -12,5 +11,6 @@ import org.springframework.data.jpa.repository.*;
 @SuppressWarnings("unused")
 @Repository
 public interface CoachEvaluateRepository extends JpaRepository<CoachEvaluate,Long> {
+
 
 }

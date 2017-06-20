@@ -1,21 +1,20 @@
 package com.alienlab.catpower.service.impl;
 
-import com.alienlab.catpower.service.LearnerService;
 import com.alienlab.catpower.domain.Learner;
 import com.alienlab.catpower.repository.LearnerRepository;
+import com.alienlab.catpower.service.LearnerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -101,7 +100,7 @@ public class LearnerServiceImpl implements LearnerService{
         String startDate=sf1.format(d1);
         String endDate=sf1.format(d2);
         String sql="SELECT tb1.sigincount,tb2.regcount FROM ( " +
-            "SELECT 1 f, COUNT(DISTINCT learner_id) sigincount FROM `learner_charge` " +
+            "SELECT 1 f, COUNT(learner_id) sigincount FROM `learner_charge` " +
             "WHERE charge_time>='"+startDate+"' AND charge_time<='"+endDate+"' " +
             ") tb1,( " +
             "SELECT 1 f,COUNT(DISTINCT id) regcount FROM `learner`  " +
