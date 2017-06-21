@@ -35,6 +35,7 @@
                     angular.forEach($scope.coachArrangements,function (item,key) {
                         if(item.sche.id == id ){
                             index = key;
+
                         }
                     });
                     if(index != -1){
@@ -49,7 +50,7 @@
                     }
                 };
                 //取消教练排课
-                /*$scope.removeCoachArrangement = function (id) {
+                $scope.removeCoachArrangement = function (id) {
                     var index = -1;
                     angular.forEach($scope.coachArrangements,function (item,key) {
                         if(item.id == id ){
@@ -60,19 +61,19 @@
                         $scope.coachArrangements.splice(index,1);
                     }
                     return $scope.coachArrangements;
-                };*/
+                };
                 //教练排课的样式
                 angular.forEach($scope.coachArrangements,function (item) {
                     console.log("********************0");
                     console.log(item.sche.status);
                      if(item.sche.status == '未开始'){
-                         $scope.arrangementStyle={
-                             "border": "1px solid #e3e3e3",
-                             "margin-top": "2.5%",
-                             "padding": "0px",
-                             "background": "#008800",
-                             "line-height": "3"
-                         };
+                         /*$scope.arrangementStyle={
+                         "border": "1px solid #e3e3e3",
+                         "margin-top": "2.5%",
+                         "padding": "0px",
+                         "background": "#008800",
+                         "line-height": "3"
+                         };*/
                      }
                      if(item.sche.status == '进行中'){
                          /*$scope.arrangementStyle={
@@ -210,7 +211,6 @@
                 alert(data);
             }
             $scope.buyCoursesToday =data.content;
-            console.log($scope.buyCoursesToday);
         });
         /**
          * 排课情况
@@ -293,7 +293,6 @@
                 index:index,
                 size:size
             },function(data){
-                console.log("shopopResource.query()",data);
                 if(callback){
                     callback(data,true);
                 }
@@ -305,7 +304,6 @@
             })
         }
     }]);
-
     app.service("CourseArrangementService",[function () {
         this.loadCourseArrangement = function () {
             var courseArrangements = [{
@@ -326,92 +324,6 @@
             return courseArrangements;
         }
     }]);
-
-
 })();
 
-(function(){
-    'use strict';
-    var app=angular.module('catpowerserverApp');
-    app.config(["$stateProvider",function($stateProvider){
-        $stateProvider
-            .state('shopop', {
-            parent: 'app',
-            url: '/',
-            data: {
-                authorities: ['ROLE_USER']
-            },
-            views: {
-                'content@': {
-                    templateUrl: 'app/pages/shop/shop.html',
-                    controller: 'shopOpController'
-                }
-            },
-            resolve: {
-                translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                    $translatePartialLoader.addPart('shop');
-                    $translatePartialLoader.addPart('global');
-                    return $translate.refresh();
-                }]
-            }
-        })
-            .state('shopop.new', {
-                parent: 'shopop',
-                url: 'new',
-                data: {
-                    authorities: ['ROLE_USER']
-                },
-                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
-                    $uibModal.open({
-                        templateUrl: 'app/pages/shop/addTodayCourse.html',
-                        controller: 'addCourseController',
-                        controllerAs: 'vm',
-                        backdrop: 'static',
-                        size: 'lg',
-                        resolve: {
-                            addArrangement: function () {
-                                return {
-                                    coachName: null,
-                                    courseName: null,
-                                    courseState: null,
-                                    time: null,
-                                    traineeCount: null,
-                                    traineeName: null,
-                                    id:null
-                                };
-                            }
-                        }
-                    }).result.then(function() {
-                        $state.go('shopop', null, { reload: 'shopop' });
-                    }, function() {
-                        $state.go('shopop');
-                    });
-                }]
-            })
-            .state('shopop.delete', {
-                parent: 'shopop',
-                url: '/{id}/delete',
-                data: {
-                    authorities: ['ROLE_USER']
-                },
-                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
-                    $uibModal.open({
-                        templateUrl: 'app/pages/shop/shop-coachArrangement-delete.html',
-                        controller: 'CourseSchedulingDeleteController',
-                        controllerAs: 'vm',
-                        size: 'md',
-                        resolve: {
-                            entity: ['CourseScheduling', function(CourseScheduling) {
-                                return CourseScheduling.get({id : $stateParams.id}).$promise;
-                            }]
-                        }
-                    }).result.then(function() {
-                        $state.go('course-scheduling', null, { reload: 'course-scheduling' });
-                    }, function() {
-                        $state.go('^');
-                    });
-                }]
-            });
-    }]);
-})();
 

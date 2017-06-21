@@ -1,3 +1,6 @@
+/**
+ *删除排课
+ */
 (function() {
     'use strict';
 
@@ -11,6 +14,8 @@
         var vm = this;
 
         vm.courseScheduling = entity;
+
+        console.log(vm.courseScheduling);
         vm.clear = clear;
         vm.confirmDelete = confirmDelete;
 
@@ -26,3 +31,36 @@
         }
     }
 })();
+/**
+ * 删除教练排课中是学员的核销记录
+ */
+(function() {
+    'use strict';
+
+    angular
+        .module('catpowerserverApp')
+        .controller('LearnerChargeDeleteController',LearnerChargeDeleteController);
+
+    LearnerChargeDeleteController.$inject = ['$uibModalInstance', 'entity', 'LearnerCharge'];
+
+    function LearnerChargeDeleteController($uibModalInstance, entity, LearnerCharge) {
+        var vm = this;
+
+        vm.learnerCharge = entity;
+        vm.clear = clear;
+        vm.confirmDelete = confirmDelete;
+
+        function clear () {
+            $uibModalInstance.dismiss('cancel');
+        }
+
+        function confirmDelete (id) {
+            LearnerCharge.delete({id: id},
+                function () {
+                    $uibModalInstance.close(true);
+                });
+        }
+    }
+})();
+
+

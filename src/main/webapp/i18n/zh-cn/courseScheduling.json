@@ -17,7 +17,7 @@
             },
             "startTime": "课程开始时间",
             "endTime": "课程结束时间",
-            "status": "课程",
+            "status": "上课状态",
             "qrCode": "微信二维码",
             "signInCount": "签到人数",
             "course": "课程",

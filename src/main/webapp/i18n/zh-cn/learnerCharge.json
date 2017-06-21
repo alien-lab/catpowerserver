@@ -16,12 +16,13 @@
                 "title": "核销单"
             },
             "chargeTime": "核销时间：",
+            "buyCourseId":"购买课程的ID",
             "chargePeople": "核销人：",
             "remainNumber": "核销之后的剩余次数：",
             "learner": "学员：",
             "course": "请选择课程：",
             "coach": "请选择教练：",
-            "courseScheduling": "教练排课："
+            "courseScheduling": "教练排课ID："
         }
     }
 }
