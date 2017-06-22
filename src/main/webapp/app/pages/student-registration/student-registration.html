@@ -21,12 +21,12 @@
                     <h3>{{course.courseName}} <span class="badge">{{course.registrationCount}}</span></h3>
                     <p>{{course.courseIntroductions}}</p>
                     <p style="font-size: 13px;">
-                        <span>￥{{course.coursePrices}}</span></span><br>
-                        <span style="color: #ff0000;">会员￥{{course.courseVipprices}}</span>
+                        <span>{{course.coursePrices | currency:"￥"}}</span></span><br>
+                        <span style="color: #ff0000;">会员{{course.courseVipprices | currency:"￥"}}</span>
                     </p>
                     <p>
-                        <button ui-sref="registration-detail({id:courses.courseId})" class="btn btn-primary" role="button">报名</button>
-                        <a href="" style="color: #0f0f0f;float: right;padding-top: 7%;">详情</a>
+                        <button ui-sref="student-registration.new" class="btn btn-primary" role="button">报名</button>
+                        <a ui-sref="student-registration.detail({id:course.id})" href="" style="color: #0f0f0f;float: right;padding-top: 7%;">详情</a>
                     </p>
                 </div>
             </div>

@@ -37,9 +37,10 @@
                 vm.totalItems = headers('X-Total-Count');
                 vm.queryCount = vm.totalItems;
                 vm.buyCourses = data;
-                vm.page = pagingParams.page;
 
                 console.log(vm.buyCourses);
+                vm.page = pagingParams.page;
+
             }
             function onError(error) {
                 AlertService.error(error.data.message);

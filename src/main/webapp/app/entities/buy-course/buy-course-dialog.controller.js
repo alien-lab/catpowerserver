@@ -11,6 +11,9 @@
         var vm = this;
 
         vm.buyCourse = entity;
+
+        console.log(vm.buyCourse);
+
         vm.clear = clear;
         vm.datePickerOpenStatus = {};
         vm.openCalendar = openCalendar;
@@ -18,6 +21,10 @@
         vm.learners = Learner.query();
         vm.courses = Course.query();
         vm.coaches = Coach.query();
+
+        console.log(vm.learners);
+        console.log(vm.courses);
+        console.log(vm.coaches);
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

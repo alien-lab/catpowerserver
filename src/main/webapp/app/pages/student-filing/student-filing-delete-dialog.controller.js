@@ -14,8 +14,9 @@
         var vm = this;
 
         vm.learner = entity;
-        console.log("********************************");
+
         console.log(vm.learner);
+
         vm.clear = clear;
         vm.confirmDelete = confirmDelete;
 
@@ -27,7 +28,7 @@
             Learner.delete({id: id},
                 function () {
                     $uibModalInstance.close(true);
-            });
+                });
         }
     }
 })();

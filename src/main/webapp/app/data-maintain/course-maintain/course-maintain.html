@@ -46,8 +46,8 @@
                                 <span>总课时{{course.totalClassHour}}次</span>
                             </p>
                             <p style="color: #f01414;font-size: 12px;">
-                                <span>￥{{course.coursePrices}}</span>
-                                <span style="float: right;">会员·￥{{course.courseVipprices}}</span>
+                                <span>{{course.coursePrices |currency:"￥"}}</span>
+                                <span style="float: right;">会员{{course.courseVipprices|currency:"￥"}}</span>
                             </p>
                             <p style="color: #969696;font-size: 12px;float: right;">
                                 <a ui-sref="course-maintain-detail({id:course.id})">详情</a>

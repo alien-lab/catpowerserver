@@ -11,6 +11,9 @@
         var vm = this;
 
         vm.learnerCharge = entity;
+
+        console.log(vm.learnerCharge);
+
         vm.clear = clear;
         vm.datePickerOpenStatus = {};
         vm.openCalendar = openCalendar;

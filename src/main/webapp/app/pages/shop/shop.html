@@ -63,7 +63,7 @@
                                 <div class="col-lg-8 col-md-8 col-sm-8" style="padding-left: 0px;">
                                     <div class="btn-group btn-sm" ng-repeat="trainee in arrangement.learners | filter : search" >
                                         <button type="button" class="btn btn-default btn-sm">{{trainee.learner.learneName}}</button>
-                                        <button ui-sref="shopop.learnerDelete({id:trainee.id})" type="button" class="btn btn-default btn-sm">
+                                        <button ui-sref="shopop.chargeDelete({id:trainee.id})" type="button" class="btn btn-default btn-sm">
                                             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                                         </button>
                                     </div>

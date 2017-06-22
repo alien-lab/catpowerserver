@@ -96,6 +96,31 @@
                     }]
                 }
         })
+            .state('student-filing.edit', {
+                parent: 'student-filing',
+                url: '/{id}/edit',
+                data: {
+                    authorities: ['ROLE_USER']
+                },
+                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                    $uibModal.open({
+                        templateUrl:'app/pages/student-filing/student-filing-dialog.html',
+                        controller:'studentFilingDialogController',
+                        controllerAs:'vm',
+                        backdrop:'static',
+                        size: 'md',
+                        resolve: {
+                            entity: ['Learner', function(Learner) {
+                                return Learner.get({id : $stateParams.id}).$promise;
+                            }]
+                        }
+                    }).result.then(function() {
+                        $state.go('student-filing', null, { reload: 'student-filing' });
+                    }, function() {
+                        $state.go('^');
+                    });
+                }]
+            })
             .state('student-filing.delete', {
                 parent: 'student-filing',
                 url: '/{id}/delete',
@@ -104,7 +129,7 @@
                 },
                 onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                     $uibModal.open({
-                        templateUrl: 'app/pages/student-filing/student-filing-delete-dialog.html',
+                        templateUrl: 'app/pages/student-filing/student-filing-delete.html',
                         controller: 'studentFilingDeleteController',
                         controllerAs: 'vm',
                         size: 'md',

@@ -132,7 +132,12 @@ public class BuyCourseResource {
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 
-
+    /**
+     *
+     * @param index
+     * @param size
+     * @return
+     */
     @ApiOperation(value="获取今日授课记录")
     @ApiImplicitParams({
         @ApiImplicitParam(name="index",value="分页页码",required = true,paramType = "query"),

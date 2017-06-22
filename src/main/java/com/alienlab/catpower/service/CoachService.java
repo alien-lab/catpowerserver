@@ -4,7 +4,7 @@ import com.alienlab.catpower.domain.Coach;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
+import java.util.Map;
 
 /**
  * Service Interface for managing Coach.
@@ -45,5 +45,5 @@ public interface CoachService {
     /**
      *
      */
-    List<Coach> getCoachByCoachId(Long id) throws Exception;
+    Map getCoachByCoachId(Long id) throws Exception;
 }

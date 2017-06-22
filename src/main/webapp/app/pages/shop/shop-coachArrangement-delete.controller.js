@@ -47,6 +47,8 @@
         var vm = this;
 
         vm.learnerCharge = entity;
+        console.log(vm.learnerCharge.id);
+        console.log("******************************************");                                                                                                                                                                                                                                                                                                                                                                                                                                       console.log(vm.learnerCharge);
         vm.clear = clear;
         vm.confirmDelete = confirmDelete;
 

@@ -7,6 +7,7 @@ import com.alienlab.catpower.web.rest.util.HeaderUtil;
 import com.alienlab.catpower.web.rest.util.PaginationUtil;
 import com.codahale.metrics.annotation.Timed;
 import io.github.jhipster.web.util.ResponseUtil;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -125,12 +127,13 @@ public class CoachResource {
     }
 
     /**
-     *
+     *根据教练ID查询教练的信息
      */
+    @ApiOperation(value = "根据教练ID查询教练的信息")
     @GetMapping("/coaches/info/{id}")
-    public ResponseEntity getCoachInfo(@RequestParam Long id){
+    public ResponseEntity getCoachInfo(@PathVariable Long id){
         try {
-           List<Coach> result = coachService.getCoachByCoachId(id);
+           Map result = coachService.getCoachByCoachId(id);
             return ResponseEntity.ok().body(result);
         } catch (Exception e) {
             e.printStackTrace();

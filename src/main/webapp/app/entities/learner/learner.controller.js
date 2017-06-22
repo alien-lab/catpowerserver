@@ -12,6 +12,8 @@
         var vm = this;
 
         vm.loadPage = loadPage;
+        console.log("*********************************");
+        console.log(vm.loadPage);
         vm.predicate = pagingParams.predicate;
         vm.reverse = pagingParams.ascending;
         vm.transition = transition;

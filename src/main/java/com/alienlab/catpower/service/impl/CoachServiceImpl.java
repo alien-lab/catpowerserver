@@ -12,7 +12,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Service Implementation for managing Coach.
@@ -87,12 +88,20 @@ public class CoachServiceImpl implements CoachService{
     }
 
     @Override
-    public List<Coach> getCoachByCoachId(Long id) throws Exception {
+    public Map getCoachByCoachId(Long id) throws Exception {
 
-        String sql = "SELECT a.complain,a.evaluation,b.coach_name,b.coach_phone,b.coach_introduce,b.coach_picture,c.course_id FROM `coach_evaluate` a,`coach` b, `buy_course` c\n" +
+       /* String sql = "SELECT a.complain,a.evaluation,b.coach_name,b.coach_phone,b.coach_introduce,b.coach_picture,c.course_id FROM `coach_evaluate` a,`coach` b, `buy_course` c\n" +
             "WHERE b.id='"+id+"' AND c.coach_id='"+id+"' AND a.coach_id=b.id AND b.id=c.coach_id ";
+        */
 
-        List list = jdbcTemplate.queryForList(sql);
-        return list;
+        String sql1 = "SELECT * FROM `coach` a WHERE a.id='"+id+"'";
+        String sql2 = "SELECT * FROM `coach_evaluate` b WHERE b.`coach_id`='"+id+"'";
+        String sql3 = "SELECT DISTINCT c.course_name FROM course c,buy_course b WHERE b.coach_id = '"+id+"' AND b.`course_id` = c.id";
+
+        Map<String ,Object> map = new HashMap<String ,Object>();
+        map.put("coachBase",jdbcTemplate.queryForMap(sql1));
+        map.put("courseCharge",jdbcTemplate.queryForMap(sql2));
+        map.put("courseInfo",jdbcTemplate.queryForMap(sql3));
+        return map;
     }
 }

@@ -6,7 +6,7 @@
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
-        <p>你确定要删除{{vm.course.id}}课程信息吗</p>
+        <p>你确定要删除<span style="color: #ff0000;">{{vm.course.courseName}}</span>的信息吗?</p>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">

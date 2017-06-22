@@ -14,6 +14,7 @@
                     alert(data);
                 }
                 $scope.registerCount =data;
+
             });
             //今日销售的数量及总金额
             shopopService.loadBuyCourseCountToday(date,function (data,flag) {
@@ -64,8 +65,6 @@
                 };
                 //教练排课的样式
                 angular.forEach($scope.coachArrangements,function (item) {
-                    console.log("********************0");
-                    console.log(item.sche.status);
                      if(item.sche.status == '未开始'){
                          /*$scope.arrangementStyle={
                          "border": "1px solid #e3e3e3",
@@ -105,44 +104,6 @@
             size:10
         };
 
-        //取消教练排课
-        $scope.removeCoachArrangement = function (id) {
-            var index = -1;
-            angular.forEach($scope.coachArrangements,function (item,key) {
-                if(item.id == id ){
-                    index = key;
-                };
-            });
-            if(index != -1){
-                $scope.coachArrangements.splice(index,1);
-            }
-            return $scope.coachArrangements;
-        };
-        //删除学员
-        $scope.removeTrainee = function (id,traineeId) {
-            var index = -1;
-            var count = '';
-            angular.forEach($scope.coachArrangements,function (item,key) {
-                if(item.id == id ){
-                    count = key;
-                    angular.forEach(item.traineeName,function (it,k) {
-                        if(it.traineeId == traineeId ){
-                            index = k;
-                        };
-                    });
-                    if(index != -1){
-                        item.traineeName.splice(index,1);
-                        item.traineeCount --;
-                        if(item.traineeName.length == 0){
-                            $scope.coachArrangements.splice(count,1);
-                        }
-                    }
-                    return item.traineeName;
-                };
-
-            });
-            return $scope.coachArrangements;
-        };
         //获取当前日期
         var now = new Date();
         var month = now.getMonth()+1;
@@ -197,7 +158,6 @@
         function onSuccess(data) {
             $scope.BuyCourses = data;
             console.log($scope.BuyCourses);
-
         }
         function onError(error) {
             AlertService.error(error.data.message);
@@ -210,7 +170,8 @@
             if(!flag){
                 alert(data);
             }
-            $scope.buyCoursesToday =data.content;
+            $scope.buyCoursesToday =data;
+            console.log($scope.buyCoursesToday)
         });
         /**
          * 排课情况
@@ -295,6 +256,7 @@
             },function(data){
                 if(callback){
                     callback(data,true);
+                    console.log(data);
                 }
             },function(error){
                 console.log("shopopResource.query()",error);
