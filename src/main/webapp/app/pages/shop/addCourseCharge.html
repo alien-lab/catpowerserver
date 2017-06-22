@@ -1,0 +1,82 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myLearnerChargeLabel" data-translate="catpowerserverApp.learnerCharge.home.createOrEditLabel">Create or edit a Learner Charge</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.learnerCharge.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   ng-model="vm.learnerCharge.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.learnerCharge.chargeTime" for="field_chargeTime">Charge Time</label>
+            <div class="input-group">
+                <input id="field_chargeTime" type="text" class="form-control" name="chargeTime" datetime-picker="{{dateformat}}" ng-model="vm.learnerCharge.chargeTime" is-open="vm.datePickerOpenStatus.chargeTime"
+                />
+                <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('chargeTime')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.learnerCharge.buyCourseId" for="field_buyCourseId">Buy Course Id</label>
+            <input type="text" class="form-control" name="buyCourseId" id="field_buyCourseId"
+                   ng-model="vm.learnerCharge.buyCourseId"
+            />
+        </div>
+
+
+
+
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.learnerCharge.chargePeople" for="field_chargePeople">Charge People</label>
+            <input type="text" class="form-control" name="chargePeople" id="field_chargePeople"
+                   ng-model="vm.learnerCharge.chargePeople"
+            />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.learnerCharge.remainNumber" for="field_remainNumber">Remain Number</label>
+            <input type="number" class="form-control" name="remainNumber" id="field_remainNumber"
+                   ng-model="vm.learnerCharge.remainNumber"
+            />
+        </div>
+
+        <div class="form-group">
+            <label data-translate="catpowerserverApp.learnerCharge.learner" for="field_learner">Learner</label>
+            <select class="form-control" id="field_learner" name="learner" ng-model="vm.learnerCharge.learner" ng-options="learner as learner.learneName for learner in vm.learners track by learner.id ">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label data-translate="catpowerserverApp.learnerCharge.course" for="field_course">Course</label>
+            <select class="form-control" id="field_course" name="course" ng-model="vm.learnerCharge.course" ng-options="course as course.courseName for course in vm.courses track by course.id">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label data-translate="catpowerserverApp.learnerCharge.coach" for="field_coach">Coach</label>
+            <select class="form-control" id="field_coach" name="coach" ng-model="vm.learnerCharge.coach" ng-options="coach as coach.coachName for coach in vm.coaches track by coach.id">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label data-translate="catpowerserverApp.learnerCharge.courseScheduling" for="field_courseScheduling">Course Scheduling</label>
+            <select class="form-control" id="field_courseScheduling" name="courseScheduling" ng-model="vm.learnerCharge.courseScheduling" ng-options="courseScheduling as courseScheduling.id for courseScheduling in vm.courseschedulings track by courseScheduling.id">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>
