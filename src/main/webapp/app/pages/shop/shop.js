@@ -256,7 +256,6 @@
             },function(data){
                 if(callback){
                     callback(data,true);
-                    console.log(data);
                 }
             },function(error){
                 console.log("shopopResource.query()",error);
