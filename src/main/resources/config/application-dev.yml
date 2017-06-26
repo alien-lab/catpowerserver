@@ -135,3 +135,18 @@ jhipster:
 # ===================================================================
 
 application:
+
+alienlab:
+    image:
+        path: http://test.moistmedia.net/catpowerserver/uploadimage/
+
+
+wechat:
+    appid:  wxd5ceca5e98cb548d
+    secret:
+    token:  alienlab
+    payid:  1247614101
+    paycallback:    http://test.moistmedia.net/catpowerserver/wxpay
+    host:
+        basepath:   http://test.moistmedia.net/catpowerwechat/
+        allowed:    116.62.47.176,test.moistmedia.net,www.bigercat.com
