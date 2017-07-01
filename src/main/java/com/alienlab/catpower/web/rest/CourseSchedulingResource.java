@@ -9,6 +9,7 @@ import com.alienlab.catpower.service.LearnerChargeService;
 import com.alienlab.catpower.web.rest.util.ExecResult;
 import com.alienlab.catpower.web.rest.util.HeaderUtil;
 import com.alienlab.catpower.web.rest.util.PaginationUtil;
+import com.alienlab.catpower.web.wechat.bean.entity.QrInfo;
 import com.codahale.metrics.annotation.Timed;
 import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.ApiOperation;
@@ -215,6 +216,18 @@ public class CourseSchedulingResource {
         try {
             return ResponseEntity.ok().body(courseSchedulingService.updateCourseScheduling(id,status));
         } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
+    }
+    @ApiOperation(value = "获取排课签到二维码")
+    @GetMapping("/course-schedulings/qr/{scheId}")
+    public ResponseEntity getScheQrcode(@PathVariable Long scheId){
+        try{
+            QrInfo qr=courseSchedulingService.getScheQrcode(scheId);
+            return ResponseEntity.ok(qr);
+        }catch(Exception e){
             e.printStackTrace();
             ExecResult er=new ExecResult(false,e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);

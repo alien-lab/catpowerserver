@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -25,6 +26,9 @@ public class QrTypeServiceImpl implements QrTypeService {
 
     @Autowired
     private QrTypeRepository qrTypeRepository;
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     /**
      * Save a qrType.
@@ -95,6 +99,6 @@ public class QrTypeServiceImpl implements QrTypeService {
 
     @Override
     public Map<String, Object> getIdInfo(String table_name, String id, String value) {
-        return null;
+        return jdbcTemplate.queryForMap("SELECT * FROM "+table_name+" where  "+id+" ="+value+"");
     }
 }

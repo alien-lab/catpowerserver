@@ -52,7 +52,6 @@ public class CourseSchedulingResourceIntTest {
     private static final String DEFAULT_STATUS = "AAAAAAAAAA";
     private static final String UPDATED_STATUS = "BBBBBBBBBB";
 
-    private static final String DEFAULT_QR_CODE = "AAAAAAAAAA";
     private static final String UPDATED_QR_CODE = "BBBBBBBBBB";
 
     private static final Long DEFAULT_SIGN_IN_COUNT = 1L;
@@ -101,7 +100,6 @@ public class CourseSchedulingResourceIntTest {
             .startTime(DEFAULT_START_TIME)
             .endTime(DEFAULT_END_TIME)
             .status(DEFAULT_STATUS)
-            .qrCode(DEFAULT_QR_CODE)
             .signInCount(DEFAULT_SIGN_IN_COUNT);
         return courseScheduling;
     }
@@ -129,7 +127,6 @@ public class CourseSchedulingResourceIntTest {
         assertThat(testCourseScheduling.getStartTime()).isEqualTo(DEFAULT_START_TIME);
         assertThat(testCourseScheduling.getEndTime()).isEqualTo(DEFAULT_END_TIME);
         assertThat(testCourseScheduling.getStatus()).isEqualTo(DEFAULT_STATUS);
-        assertThat(testCourseScheduling.getQrCode()).isEqualTo(DEFAULT_QR_CODE);
         assertThat(testCourseScheduling.getSignInCount()).isEqualTo(DEFAULT_SIGN_IN_COUNT);
     }
 
@@ -166,7 +163,6 @@ public class CourseSchedulingResourceIntTest {
             .andExpect(jsonPath("$.[*].startTime").value(hasItem(sameInstant(DEFAULT_START_TIME))))
             .andExpect(jsonPath("$.[*].endTime").value(hasItem(sameInstant(DEFAULT_END_TIME))))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
-            .andExpect(jsonPath("$.[*].qrCode").value(hasItem(DEFAULT_QR_CODE.toString())))
             .andExpect(jsonPath("$.[*].signInCount").value(hasItem(DEFAULT_SIGN_IN_COUNT.intValue())));
     }
 
@@ -184,7 +180,6 @@ public class CourseSchedulingResourceIntTest {
             .andExpect(jsonPath("$.startTime").value(sameInstant(DEFAULT_START_TIME)))
             .andExpect(jsonPath("$.endTime").value(sameInstant(DEFAULT_END_TIME)))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
-            .andExpect(jsonPath("$.qrCode").value(DEFAULT_QR_CODE.toString()))
             .andExpect(jsonPath("$.signInCount").value(DEFAULT_SIGN_IN_COUNT.intValue()));
     }
 
@@ -210,7 +205,6 @@ public class CourseSchedulingResourceIntTest {
             .startTime(UPDATED_START_TIME)
             .endTime(UPDATED_END_TIME)
             .status(UPDATED_STATUS)
-            .qrCode(UPDATED_QR_CODE)
             .signInCount(UPDATED_SIGN_IN_COUNT);
 
         restCourseSchedulingMockMvc.perform(put("/api/course-schedulings")

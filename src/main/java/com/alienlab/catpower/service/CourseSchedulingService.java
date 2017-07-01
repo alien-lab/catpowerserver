@@ -1,6 +1,7 @@
 package com.alienlab.catpower.service;
 
 import com.alienlab.catpower.domain.CourseScheduling;
+import com.alienlab.catpower.web.wechat.bean.entity.QrInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -50,4 +51,6 @@ public interface CourseSchedulingService {
      * 根据id更新上课的状态
      */
     int updateCourseScheduling(Long id,String status) throws  Exception;
+
+    QrInfo getScheQrcode(Long scheId) throws Exception;
 }

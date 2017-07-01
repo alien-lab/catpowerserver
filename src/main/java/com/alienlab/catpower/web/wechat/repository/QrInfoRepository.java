@@ -14,6 +14,5 @@ import java.util.List;
  */
 @Repository
 public interface QrInfoRepository extends JpaRepository<QrInfo,Long> {
-    @Query(value = " from QrType a")
-     List<QrInfoDto> findByQrTypeId();
+     List<QrInfoDto> findQrInfoById(long id);
 }
