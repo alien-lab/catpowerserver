@@ -11,22 +11,21 @@
             //今日签到与建档人数
             shopopService.loadRegisterCount(date,function (data,flag) {
                 if(!flag){
-                    alert(data);
+                   // alert(data);
                 }
                 $scope.registerCount =data;
-
             });
             //今日销售的数量及总金额
             shopopService.loadBuyCourseCountToday(date,function (data,flag) {
                 if(!flag){
-                    alert(data);
+                    //alert(data);
                 }
                 $scope.buyCourseCountToday = data;
             });
             //今日教练排课
             shopopService.loadCoachArrangement(date,function(data,flag){
                 if(!flag){
-                    alert(data);
+                   // alert(data);
                 }
                 $scope.coachArrangements =data;
                 console.log($scope.coachArrangements);
@@ -168,7 +167,7 @@
          */
         buyCourseService.loadBuyCourseToday(0,10,function (data,flag) {
             if(!flag){
-                alert(data);
+               // alert(data);
             }
             $scope.buyCoursesToday =data;
             console.log($scope.buyCoursesToday)
