@@ -1,6 +1,8 @@
 package com.alienlab.catpower.domain;
 
 
+import com.alienlab.catpower.web.wechat.bean.entity.QrInfo;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -28,8 +30,9 @@ public class CourseScheduling implements Serializable {
     @Column(name = "status")
     private String status;
 
-    @Column(name = "qr_code")
-    private String qrCode;
+    @ManyToOne
+    @JoinColumn(name="qr_code")
+    private QrInfo qrCode;
 
     @Column(name = "sign_in_count")
     private Long signInCount;
@@ -87,16 +90,16 @@ public class CourseScheduling implements Serializable {
         this.status = status;
     }
 
-    public String getQrCode() {
+    public QrInfo getQrCode() {
         return qrCode;
     }
 
-    public CourseScheduling qrCode(String qrCode) {
+    public CourseScheduling qrCode(QrInfo qrCode) {
         this.qrCode = qrCode;
         return this;
     }
 
-    public void setQrCode(String qrCode) {
+    public void setQrCode(QrInfo qrCode) {
         this.qrCode = qrCode;
     }
 

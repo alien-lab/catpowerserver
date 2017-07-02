@@ -16,7 +16,7 @@
 spring:
     profiles:
         active: dev
-        include: swagger
+        include: swagger,no-liquibase
     devtools:
         restart:
             enabled: true
@@ -36,6 +36,7 @@ spring:
                 prepStmtCacheSize: 250
                 prepStmtCacheSqlLimit: 2048
                 useServerPrepStmts: true
+            pool-name: catpowerserver
     jpa:
         database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
         database: MYSQL
@@ -106,7 +107,7 @@ jhipster:
         from: catpowerserver@localhost
         base-url: http://127.0.0.1:8080
     metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
-        jmx.enabled: true
+        jmx.enabled: false
         graphite: # Use the "graphite" Maven profile to have the Graphite dependencies
             enabled: false
             host: localhost
@@ -135,3 +136,18 @@ jhipster:
 # ===================================================================
 
 application:
+
+alienlab:
+    image:
+        path: http://test.moistmedia.net/catpowerserver/uploadimage/
+
+
+wechat:
+    appid:  wxd5ceca5e98cb548d
+    secret: 880a5e8d646fd7bc5616b98073bf87db
+    token:  alienlab
+    payid:  1279602601
+    paycallback:    http://test.moistmedia.net/catpowerserver/wxpay
+    host:
+        basepath:   http://test.moistmedia.net/catpowerwechat/
+        allowed:    116.62.47.176,test.moistmedia.net,www.bigercat.com

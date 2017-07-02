@@ -1,8 +1,13 @@
 package com.alienlab.catpower.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
+import com.alienlab.catpower.domain.Course;
 import com.alienlab.catpower.service.CourseSchedulingService;
 import com.alienlab.catpower.domain.CourseScheduling;
 import com.alienlab.catpower.repository.CourseSchedulingRepository;
+import com.alienlab.catpower.web.wechat.bean.entity.QrInfo;
+import com.alienlab.catpower.web.wechat.service.QrInfoService;
+import com.alienlab.catpower.web.wechat.util.WechatUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +34,13 @@ public class CourseSchedulingServiceImpl implements CourseSchedulingService{
 
     @Autowired
     JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    WechatUtil wechatUtil;
+
+    @Autowired
+    QrInfoService qrInfoService;
+
     public CourseSchedulingServiceImpl(CourseSchedulingRepository courseSchedulingRepository) {
         this.courseSchedulingRepository = courseSchedulingRepository;
     }
@@ -106,5 +118,30 @@ public class CourseSchedulingServiceImpl implements CourseSchedulingService{
         Object[] args = {status,id};
         n = jdbcTemplate.update(sql,args);
         return n;
+    }
+
+    @Override
+    public QrInfo getScheQrcode(Long scheId) throws Exception {
+        CourseScheduling sche=courseSchedulingRepository.findOne(scheId);
+        if(sche==null){
+            throw new Exception("没有找到排课信息，排课编码："+scheId);
+        }
+        if(sche.getStatus().equals("已下课")){
+            throw new Exception("课程已下课，排课编码："+scheId);
+        }
+        //如果已经生成，即直接返回
+        if(sche.getQrCode()!=null){
+            return sche.getQrCode();
+        }
+        //如果当前员工
+        String sceneId = "1and"+sche.getId()+"";
+        JSONObject jo =  wechatUtil.get_qr_code_ticket(sceneId);
+        if(jo==null || jo.getString("ticket")==null){
+            throw new Exception("生成签到二维码失败！排课编码："+sche.getId());
+        }
+        QrInfo qr=qrInfoService.createQrinfo(sceneId, 1L,jo.getString("ticket"));
+        sche.setQrCode(qr);
+        courseSchedulingRepository.save(sche);
+        return qr;
     }
 }

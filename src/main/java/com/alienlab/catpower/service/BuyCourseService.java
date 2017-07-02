@@ -1,11 +1,13 @@
 package com.alienlab.catpower.service;
 
 import com.alienlab.catpower.domain.BuyCourse;
+import com.alienlab.catpower.domain.Learner;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.text.ParseException;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -47,4 +49,7 @@ public interface BuyCourseService {
     Page<BuyCourse> getTodayData(Pageable page) throws Exception;
     //今日售课人数及总金额
     Map getTodayCountByDate(Date date) throws ParseException;
+
+    //获取指定人购买的指定课程
+    BuyCourse getCourseByLeanerAndCourse(Learner learner, Long courseId) throws Exception;
 }

@@ -1,6 +1,9 @@
 package com.alienlab.catpower.domain;
 
 
+import com.alienlab.catpower.web.wechat.bean.entity.QrInfo;
+import com.alienlab.catpower.web.wechat.bean.entity.WechatUser;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -31,14 +34,9 @@ public class Learner implements Serializable {
     @Column(name = "regist_time")
     private ZonedDateTime registTime;
 
-    @Column(name = "wx_open_id")
-    private String wxOpenId;
-
-    @Column(name = "wx_nickname")
-    private String wxNickname;
-
-    @Column(name = "wx_header")
-    private String wxHeader;
+    @ManyToOne
+    @JoinColumn(name="wechat_user")
+    private WechatUser wechatUser;
 
     @Column(name = "first_totime")
     private ZonedDateTime firstTotime;
@@ -51,6 +49,10 @@ public class Learner implements Serializable {
 
     @Column(name = "experience")
     private Long experience;
+
+    @ManyToOne
+    @JoinColumn(name="qr_code")
+    private QrInfo qrInfo;
 
     public Long getId() {
         return id;
@@ -112,44 +114,6 @@ public class Learner implements Serializable {
         this.registTime = registTime;
     }
 
-    public String getWxOpenId() {
-        return wxOpenId;
-    }
-
-    public Learner wxOpenId(String wxOpenId) {
-        this.wxOpenId = wxOpenId;
-        return this;
-    }
-
-    public void setWxOpenId(String wxOpenId) {
-        this.wxOpenId = wxOpenId;
-    }
-
-    public String getWxNickname() {
-        return wxNickname;
-    }
-
-    public Learner wxNickname(String wxNickname) {
-        this.wxNickname = wxNickname;
-        return this;
-    }
-
-    public void setWxNickname(String wxNickname) {
-        this.wxNickname = wxNickname;
-    }
-
-    public String getWxHeader() {
-        return wxHeader;
-    }
-
-    public Learner wxHeader(String wxHeader) {
-        this.wxHeader = wxHeader;
-        return this;
-    }
-
-    public void setWxHeader(String wxHeader) {
-        this.wxHeader = wxHeader;
-    }
 
     public ZonedDateTime getFirstTotime() {
         return firstTotime;
@@ -203,6 +167,14 @@ public class Learner implements Serializable {
         this.experience = experience;
     }
 
+    public WechatUser getWechatUser() {
+        return wechatUser;
+    }
+
+    public void setWechatUser(WechatUser wechatUser) {
+        this.wechatUser = wechatUser;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -223,6 +195,14 @@ public class Learner implements Serializable {
         return Objects.hashCode(getId());
     }
 
+    public QrInfo getQrInfo() {
+        return qrInfo;
+    }
+
+    public void setQrInfo(QrInfo qrInfo) {
+        this.qrInfo = qrInfo;
+    }
+
     @Override
     public String toString() {
         return "Learner{" +
@@ -231,9 +211,6 @@ public class Learner implements Serializable {
             ", learnerPhone='" + getLearnerPhone() + "'" +
             ", learnerSex='" + getLearnerSex() + "'" +
             ", registTime='" + getRegistTime() + "'" +
-            ", wxOpenId='" + getWxOpenId() + "'" +
-            ", wxNickname='" + getWxNickname() + "'" +
-            ", wxHeader='" + getWxHeader() + "'" +
             ", firstTotime='" + getFirstTotime() + "'" +
             ", firstBuyclass='" + getFirstBuyclass() + "'" +
             ", recentlySignin='" + getRecentlySignin() + "'" +

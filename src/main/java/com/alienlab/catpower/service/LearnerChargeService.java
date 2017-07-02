@@ -1,6 +1,7 @@
 package com.alienlab.catpower.service;
 
 import com.alienlab.catpower.domain.CourseScheduling;
+import com.alienlab.catpower.domain.Learner;
 import com.alienlab.catpower.domain.LearnerCharge;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -46,4 +47,8 @@ public interface LearnerChargeService {
     List<LearnerCharge> getLeanersBySche(long scheId) throws Exception;
 
     List<LearnerCharge> getLeanersBySche(CourseScheduling sche) throws Exception;
+
+    LearnerCharge chargeCourse(String openid,Long scheId)throws Exception;
+
+    LearnerCharge chargeCourse(Learner learner, CourseScheduling sche) throws Exception;
 }

@@ -12,5 +12,6 @@ import org.springframework.data.jpa.repository.*;
 @SuppressWarnings("unused")
 @Repository
 public interface LearnerRepository extends JpaRepository<Learner,Long> {
-
+    @Query("select a from Learner a where a.wechatUser.openId=?1")
+    Learner findLearnerByOpenid(String openid);
 }

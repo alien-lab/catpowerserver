@@ -45,6 +45,8 @@ spring:
             enabled: false
     thymeleaf:
         mode: XHTML
+    jmx:
+      default-domain: catpowerserver
 
 security:
     basic:
@@ -104,3 +106,13 @@ jhipster:
 # ===================================================================
 
 application:
+
+alienlab:
+    upload:
+        path: /uploadimage
+
+wechat:
+    response:
+        defaultText: 欢迎关注猫力健身。
+        subscribe: 欢迎关注猫力健身。
+        building: 功能即将上线，敬请期待。

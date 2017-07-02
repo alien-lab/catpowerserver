@@ -1,10 +1,15 @@
 package com.alienlab.catpower.service.impl;
 
+import com.alienlab.catpower.domain.BuyCourse;
 import com.alienlab.catpower.domain.CourseScheduling;
+import com.alienlab.catpower.domain.Learner;
+import com.alienlab.catpower.service.BuyCourseService;
 import com.alienlab.catpower.service.CourseSchedulingService;
 import com.alienlab.catpower.service.LearnerChargeService;
 import com.alienlab.catpower.domain.LearnerCharge;
 import com.alienlab.catpower.repository.LearnerChargeRepository;
+import com.alienlab.catpower.service.LearnerService;
+import com.alienlab.catpower.web.wechat.service.WechatUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +18,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 /**
@@ -28,6 +35,15 @@ public class LearnerChargeServiceImpl implements LearnerChargeService{
 
     @Autowired
     CourseSchedulingService courseSchedulingService;
+
+    @Autowired
+    WechatUserService wechatUserService;
+
+    @Autowired
+    LearnerService learnerService;
+
+    @Autowired
+    BuyCourseService buyCourseService;
 
     public LearnerChargeServiceImpl(LearnerChargeRepository learnerChargeRepository) {
         this.learnerChargeRepository = learnerChargeRepository;
@@ -102,5 +118,52 @@ public class LearnerChargeServiceImpl implements LearnerChargeService{
         }
         List<LearnerCharge> result=learnerChargeRepository.findLearnerChargesByCourseScheduling(sche);
         return result;
+    }
+
+    @Override
+    public LearnerCharge chargeCourse(String openid, Long scheId) throws Exception {
+        Learner learner=learnerService.findByOpenid(openid);
+        if(learner==null){
+            throw new Exception("未找到学员注册信息，openid:"+openid);
+        }
+        CourseScheduling sche=courseSchedulingService.findOne(scheId);
+        if(sche==null){
+            throw new Exception("未找到编码为："+scheId+" 的排课信息");
+        }
+        return chargeCourse(learner,sche);
+    }
+
+    @Override
+    public LearnerCharge chargeCourse(Learner learner, CourseScheduling sche) throws Exception {
+        //需要校验用户是否具有此门课程的课次
+        BuyCourse buyCourse=buyCourseService.getCourseByLeanerAndCourse(learner,sche.getCourse().getId());
+        if(buyCourse==null){
+            throw new Exception("账户下没有找到此课程");
+        }
+        if(buyCourse.getRemainClass()>0){
+            long remain=buyCourse.getRemainClass();
+            remain=remain-1;
+            LearnerCharge charge=new LearnerCharge();
+            charge.setLearner(learner);
+            charge.setCourseScheduling(sche);
+            charge.setCourse(sche.getCourse());
+            charge.setChargeTime(ZonedDateTime.now());
+            charge.setCoach(sche.getCoach());
+            charge.setRemainNumber(remain);
+            charge=learnerChargeRepository.save(charge);
+            buyCourse.setRemainClass(remain);
+            buyCourse=buyCourseService.save(buyCourse);
+            learner.setRecentlySignin(ZonedDateTime.now());
+            if(learner.getFirstTotime()==null){
+                learner.setFirstTotime(ZonedDateTime.now());
+            }
+            long exp=learner.getExperience();
+            exp+=sche.getCourse().getCoursePrices()/sche.getCourse().getTotalClassHour();
+            learner.setExperience(exp);
+            learnerService.save(learner);
+            return charge;
+        }else{
+            throw new Exception("课程课时已用完");
+        }
     }
 }
