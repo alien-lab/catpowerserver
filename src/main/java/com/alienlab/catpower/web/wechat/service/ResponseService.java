@@ -3,7 +3,12 @@ package com.alienlab.catpower.web.wechat.service;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
+import com.alienlab.catpower.domain.CourseScheduling;
+import com.alienlab.catpower.domain.Learner;
+import com.alienlab.catpower.service.CourseSchedulingService;
+import com.alienlab.catpower.service.LearnerService;
 import com.alienlab.catpower.web.wechat.bean.MessageResponse;
+import com.alienlab.catpower.web.wechat.bean.entity.WechatUser;
 import com.alienlab.catpower.web.wechat.util.MessageProcessor;
 import com.alienlab.catpower.web.wechat.util.WechatUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +32,14 @@ public class ResponseService {
     WechatService wechatService;
     @Autowired
     QrTypeService qrTypeService;
+    @Autowired
+    CourseSchedulingService courseSchedulingService;
 
+    @Autowired
+    LearnerService learnerService;
+
+    @Autowired
+    WechatUserService wechatUserService;
 
     @Value("${wechat.response.defaultText}")
     private String defaultText;
@@ -42,6 +54,7 @@ public class ResponseService {
 
     @Value("${wechat.host.basepath}")
     private String domain;
+
 
     public MessageResponse doResponse(String msg){
         JSONObject json_msg=messageProcessor.xml2JSON(msg);
@@ -85,13 +98,24 @@ public class ResponseService {
                         String from=json_msg.getString("ToUserName");
                         String to=json_msg.getString("FromUserName");
                         String qrkey = json_msg.getString("EventKey");
+                        //用户关注，更新用户信息
+                        JSONObject wechatUser=wechatUtil.get_user_info_openid(to);
+                        if(wechatUser.containsKey("openid")){
+                            WechatUser user=wechatUserService.findUserByOpenid(wechatUser.getString("openid"));
+                            if(user==null){//新用户
+                                user=new WechatUser();
+                            }
+                            user.setOpenId(wechatUser.getString("openid"));
+                            user.setNickName(wechatUser.getString("nickname"));
+                            user.setIcon(wechatUser.getString("headimgurl"));
+                            user=wechatUserService.save(user);
+                        }
                         if(qrkey.startsWith("qrscene_")){
                             json_msg.put("EventKey",qrkey.substring(8));
-                            System.out.println(qrkey);
+                            return qrscan(json_msg);
                         }else{
-
+                            return messageProcessor.getTextMsg(json_msg.getString("ToUserName"),json_msg.getString("FromUserName"),defaultText);
                         }
-                        return messageProcessor.getTextMsg(json_msg.getString("ToUserName"),json_msg.getString("FromUserName"),defaultText);
                     }
                     case "unsubscribe":{ //用户取消关注
                         String openid=json_msg.getString("FromUserName");
@@ -114,7 +138,7 @@ public class ResponseService {
                         return messageProcessor.getSinglesNews(from,to,ja);
                     }
                     case "SCAN":{ //用户扫描二维码
-                        return getMessage(json_msg);
+                       return qrscan(json_msg);
                     }
                     case "LOCATION":{ //用户提交位置
                         break;
@@ -126,6 +150,50 @@ public class ResponseService {
 
         return null;
 
+    }
+
+    public MessageResponse qrscan(JSONObject json_msg){
+        //课程签到
+        if(json_msg.getString("EventKey").startsWith("1and")){
+            String title="课程签到成功！";
+            String url="http://"+domain+"/#!/stusign";
+            String from=json_msg.getString("ToUserName");
+            String to=json_msg.getString("FromUserName");
+            String state=json_msg.getString("EventKey").substring(4);
+            String link=wechatUtil.getPageAuthUrl(url,state);
+            CourseScheduling sche=courseSchedulingService.findOne(Long.parseLong(state));
+            String desc="您已签到：["+sche.getCourse().getCourseName()+"]课程，教练："+sche.getCoach().getCoachName();
+            return messageProcessor.getSingleNews(from,to,
+                title,
+                url,
+                "http://"+domain+"/img/logo.jpg",
+                desc
+            );
+        }else if(json_msg.getString("EventKey").startsWith("2and")){//人员绑定
+            String title="学员账户绑定成功！";
+            String url="http://"+domain+"/#!/stuindex";
+            String from=json_msg.getString("ToUserName");
+            String to=json_msg.getString("FromUserName");
+            String state=json_msg.getString("EventKey").substring(4);
+            String link=wechatUtil.getPageAuthUrl(url,state);
+            Learner learner=learnerService.findOne(Long.parseLong(state));
+            String desc="您已绑定学员账户："+learner.getLearneName();
+            try{
+                learnerService.bindWechatUser(to,Long.parseLong(state));
+            }catch(Exception e){
+                e.printStackTrace();
+                title="学员账户绑定出错";
+                desc="您绑定学员账户："+learner.getLearneName()+" 时出错了。错误原因："+e.getMessage();
+            }
+            return messageProcessor.getSingleNews(from,to,
+                title,
+                url,
+                "http://"+domain+"/img/logo.jpg",
+                desc
+            );
+        }else{
+            return getMessage(json_msg);
+        }
     }
 
     public MessageResponse getMessage(JSONObject json_msg){
@@ -169,7 +237,7 @@ public class ResponseService {
                 return messageProcessor.getSingleNews(from,to,
                         title,
                         link,
-                        "http://"+domain+"/static/img/logo.jpg",
+                        "http://"+domain+"/img/logo.jpg",
                         state
                 );
             }

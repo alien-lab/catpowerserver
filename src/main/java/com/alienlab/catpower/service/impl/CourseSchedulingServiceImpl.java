@@ -126,6 +126,9 @@ public class CourseSchedulingServiceImpl implements CourseSchedulingService{
         if(sche==null){
             throw new Exception("没有找到排课信息，排课编码："+scheId);
         }
+        if(sche.getStatus().equals("已下课")){
+            throw new Exception("课程已下课，排课编码："+scheId);
+        }
         //如果已经生成，即直接返回
         if(sche.getQrCode()!=null){
             return sche.getQrCode();
@@ -136,7 +139,7 @@ public class CourseSchedulingServiceImpl implements CourseSchedulingService{
         if(jo==null || jo.getString("ticket")==null){
             throw new Exception("生成签到二维码失败！排课编码："+sche.getId());
         }
-        QrInfo qr=qrInfoService.createQrinfo(sceneId, 4L,jo.getString("ticket"));
+        QrInfo qr=qrInfoService.createQrinfo(sceneId, 1L,jo.getString("ticket"));
         sche.setQrCode(qr);
         courseSchedulingRepository.save(sche);
         return qr;

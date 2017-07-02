@@ -1,7 +1,10 @@
 package com.alienlab.catpower.service.impl;
 
 import com.alienlab.catpower.domain.BuyCourse;
+import com.alienlab.catpower.domain.Course;
+import com.alienlab.catpower.domain.Learner;
 import com.alienlab.catpower.repository.BuyCourseRepository;
+import com.alienlab.catpower.repository.CourseRepository;
 import com.alienlab.catpower.service.BuyCourseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +20,7 @@ import java.text.SimpleDateFormat;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,6 +38,9 @@ public class BuyCourseServiceImpl implements BuyCourseService{
 
     @Autowired
     JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    CourseRepository courseRepository;
 
     public BuyCourseServiceImpl(BuyCourseRepository buyCourseRepository) {
         this.buyCourseRepository = buyCourseRepository;
@@ -124,5 +131,14 @@ public class BuyCourseServiceImpl implements BuyCourseService{
             "WHERE tb1.f=tb2.f";
 
         return jdbcTemplate.queryForMap(sql);
+    }
+
+    @Override
+    public BuyCourse getCourseByLeanerAndCourse(Learner learner, Long courseId) throws Exception {
+        Course course=courseRepository.findOne(courseId);
+        if(course==null){
+            throw new Exception("未找到课程，课程编码："+courseId);
+        }
+        return buyCourseRepository.findBuyCourseByLearnerAndCourse(learner,course);
     }
 }

@@ -1,8 +1,14 @@
 package com.alienlab.catpower.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.alienlab.catpower.domain.Learner;
 import com.alienlab.catpower.repository.LearnerRepository;
 import com.alienlab.catpower.service.LearnerService;
+import com.alienlab.catpower.web.wechat.bean.entity.QrInfo;
+import com.alienlab.catpower.web.wechat.bean.entity.WechatUser;
+import com.alienlab.catpower.web.wechat.service.QrInfoService;
+import com.alienlab.catpower.web.wechat.service.WechatUserService;
+import com.alienlab.catpower.web.wechat.util.WechatUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +36,15 @@ public class LearnerServiceImpl implements LearnerService{
 
     @Autowired
     JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    WechatUserService wechatUserService;
+
+    @Autowired
+    WechatUtil wechatUtil;
+
+    @Autowired
+    QrInfoService qrInfoService;
 
     public LearnerServiceImpl(LearnerRepository learnerRepository) {
         this.learnerRepository = learnerRepository;
@@ -111,4 +126,60 @@ public class LearnerServiceImpl implements LearnerService{
         return jdbcTemplate.queryForMap(sql);
 
     }
+
+    @Override
+    public Learner findByOpenid(String openid) throws ParseException {
+        return learnerRepository.findLearnerByOpenid(openid);
+    }
+
+    @Override
+    public QrInfo getLearnerBindQr(String openid) throws Exception {
+        Learner learner=learnerRepository.findLearnerByOpenid(openid);
+        return getLearnerBindQr(learner);
+    }
+
+    @Override
+    public QrInfo getLearnerBindQr(Learner learner) throws Exception {
+        if(learner==null){
+            throw new Exception("未找到学员注册信息。");
+        }
+        if(learner.getQrInfo()!=null){
+            return learner.getQrInfo();
+        }
+        //如果当前员工
+        String sceneId = "2and"+learner.getId()+"";
+        JSONObject jo =  wechatUtil.get_qr_code_ticket(sceneId);
+        if(jo==null || jo.getString("ticket")==null){
+            throw new Exception("生成签到二维码失败！排课编码："+learner.getId());
+        }
+        QrInfo qr=qrInfoService.createQrinfo(sceneId, 2L,jo.getString("ticket"));
+        learner.setQrInfo(qr);
+        learnerRepository.save(learner);
+        return qr;
+    }
+
+    @Override
+    public Learner bindWechatUser(String openid, Long learnerId) throws Exception {
+        WechatUser user=wechatUserService.findUserByOpenid(openid);
+        if(user==null){
+            throw new Exception("未找到关联的微信用户，用户openid:"+openid);
+        }
+        Learner learner=learnerRepository.findOne(learnerId);
+        if(learner==null){
+            throw new Exception("未找到已注册的学员信息，学员编码:"+learnerId);
+        }
+        return bindWechatUser(user,learner);
+    }
+
+    @Override
+    public Learner bindWechatUser(WechatUser wechatUser, Learner learner) throws Exception {
+        if(learner.getWechatUser()!=null){
+            if(!learner.getWechatUser().getOpenId().equals(wechatUser.getOpenId())){
+                throw new Exception("学员账户"+learner.getLearneName()+"已被"+learner.getWechatUser().getNickName()+"绑定");
+            }
+        }
+        learner.setWechatUser(wechatUser);
+        return learnerRepository.save(learner);
+    }
+
 }

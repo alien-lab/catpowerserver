@@ -81,7 +81,6 @@ public class WeChatController {
             WechatUser user=wechatUserService.findUserByOpenid(wechatUser.getString("openid"));
             if(user==null){//新用户
                 user=new WechatUser();
-
             }
             user.setOpenId(wechatUser.getString("openid"));
             user.setNickName(wechatUser.getString("nickname"));

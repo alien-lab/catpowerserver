@@ -1,5 +1,6 @@
 package com.alienlab.catpower.web.rest;
 
+import com.alibaba.fastjson.util.TypeUtils;
 import com.alienlab.catpower.web.rest.util.ExecResult;
 import com.codahale.metrics.annotation.Timed;
 import com.alienlab.catpower.domain.LearnerCharge;
@@ -25,6 +26,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -144,5 +146,23 @@ public class LearnerChargeResource {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
         }
     }
+
+    @ApiOperation("学员课程签到，课程核销")
+    @PostMapping("/learner-charges/sche")
+    public ResponseEntity signCourse(@RequestBody Map param){
+        String openid= TypeUtils.castToString(param.get("openid"));
+        Long scheId=TypeUtils.castToLong(param.get("scheId"));
+        try {
+            LearnerCharge charge=learnerChargeService.chargeCourse(openid,scheId);
+            return ResponseEntity.ok(charge);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
+    }
+
+
+
 
 }
