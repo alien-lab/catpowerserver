@@ -53,4 +53,8 @@ public interface CourseSchedulingService {
     int updateCourseScheduling(Long id,String status) throws  Exception;
 
     QrInfo getScheQrcode(Long scheId) throws Exception;
+    /**
+     * 根据教练id获取排课记录
+     */
+    List<CourseScheduling> getcourseSche(Long coachId) throws  Exception;
 }

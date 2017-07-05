@@ -20,6 +20,7 @@
                 },
                 resolve: {
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('courseScheduling');
                         $translatePartialLoader.addPart('coachArrangement');
                         $translatePartialLoader.addPart('global');
                         return $translate.refresh();
@@ -36,22 +37,17 @@
                         controller:'arrangementController',
                         controllerAs:'vm',
                         backdrop:'static',
-                        size:'lg',
+                        size:'md',
                         resolve:{
-                            dialogData:function () {
-                                return{
-                                    coachId:null,
-                                    coachName:null,
-                                    courseCount:[{
-                                        coachId:null,
-                                        courseId:null,
-                                        courseImg:null,
-                                        courseState:null,
-                                        courseName:null,
-                                        startCourseTime:null,
-                                        studentNumber:null
-                                    }]
-                                }
+                            entity: function () {
+                                return {
+                                    startTime: null,
+                                    endTime: null,
+                                    status: null,
+                                    qrCode: null,
+                                    signInCount: null,
+                                    id: null
+                                };
                             }
                         }
                     }).result.then(function () {

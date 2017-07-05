@@ -6,48 +6,50 @@
 
     var app = angular.module('catpowerserverApp');
 
-    app.controller('arrangementController',['$timeout', '$scope', '$stateParams', '$uibModalInstance','coachArrangementResource','dialogData', function ($timeout,$scope,$stateParams,$uibModalInstance,coachArrangementResource,dialogData) {
-            var vm = this;
+    app.controller('arrangementController',['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'CourseScheduling', 'Course', 'Coach', function ($timeout, $scope, $stateParams, $uibModalInstance, entity, CourseScheduling, Course, Coach) {
+        var vm = this;
 
-            vm.coach = dialogData;
-            vm.clear = clear;
+        vm.courseScheduling = entity;
+        console.log("**************************************************");
+        console.log(vm.courseScheduling);
+        vm.clear = clear;
+        vm.datePickerOpenStatus = {};
+        vm.openCalendar = openCalendar;
+        vm.save = save;
+        vm.courses = Course.query();
+        vm.coaches = Coach.query();
 
-            $timeout(function (){
-                angular.element('.form-group:eq(1)>input').focus();
-            });
+        $timeout(function (){
+            angular.element('.form-group:eq(1)>input').focus();
+        });
 
-            function clear () {
-                $uibModalInstance.dismiss('cancel');
-            }
+        function clear () {
+            $uibModalInstance.dismiss('cancel');
+        }
+
         function save () {
             vm.isSaving = true;
-            if (vm.coach.coachId !== null) {
-                Coach.update(vm.coach, onSaveSuccess, onSaveError);
+            if (vm.courseScheduling.id !== null) {
+                CourseScheduling.update(vm.courseScheduling, onSaveSuccess, onSaveError);
             } else {
-                Coach.save(vm.coach, onSaveSuccess, onSaveError);
+                CourseScheduling.save(vm.courseScheduling, onSaveSuccess, onSaveError);
             }
         }
+
         function onSaveSuccess (result) {
-            $scope.$emit('catpowerserverApp:coachUpdate', result);
+            $scope.$emit('catpowerserverApp:courseSchedulingUpdate', result);
             $uibModalInstance.close(result);
             vm.isSaving = false;
         }
+
         function onSaveError () {
             vm.isSaving = false;
         }
-        //上课时间
-        $scope.today = function() {
-            $scope.startDate = new Date();
-        };
-        $scope.today();
-        $scope.clear = function() {
-            $scope.startDate = null;
-        };
-        $scope.startTime = function() {
-            $scope.popup1.opened = true;
-        };
-        $scope.popup1 = {
-            opened: false
-        };
+
+        vm.datePickerOpenStatus.startTime = false;
+        vm.datePickerOpenStatus.endTime = false;
+        function openCalendar (date) {
+            vm.datePickerOpenStatus[date] = true;
+        }
     }]);
 })();

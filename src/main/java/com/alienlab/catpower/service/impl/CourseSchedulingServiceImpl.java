@@ -1,10 +1,11 @@
 package com.alienlab.catpower.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.alienlab.catpower.domain.Course;
-import com.alienlab.catpower.service.CourseSchedulingService;
+import com.alienlab.catpower.domain.Coach;
 import com.alienlab.catpower.domain.CourseScheduling;
 import com.alienlab.catpower.repository.CourseSchedulingRepository;
+import com.alienlab.catpower.service.CoachService;
+import com.alienlab.catpower.service.CourseSchedulingService;
 import com.alienlab.catpower.web.wechat.bean.entity.QrInfo;
 import com.alienlab.catpower.web.wechat.service.QrInfoService;
 import com.alienlab.catpower.web.wechat.util.WechatUtil;
@@ -15,8 +16,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -34,6 +35,9 @@ public class CourseSchedulingServiceImpl implements CourseSchedulingService{
 
     @Autowired
     JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    CoachService coachService;
 
     @Autowired
     WechatUtil wechatUtil;
@@ -143,5 +147,15 @@ public class CourseSchedulingServiceImpl implements CourseSchedulingService{
         sche.setQrCode(qr);
         courseSchedulingRepository.save(sche);
         return qr;
+    }
+    /**
+     * 根据教练id获取排课记录
+     */
+    @Override
+    public List<CourseScheduling> getcourseSche(Long coachId) throws Exception {
+        Coach coach = coachService.findOne(coachId);
+
+        List<CourseScheduling> result = courseSchedulingRepository.findCourseSchedulingsByCoach(coach);
+        return result;
     }
 }
