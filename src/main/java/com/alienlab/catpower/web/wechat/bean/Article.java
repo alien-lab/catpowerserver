@@ -12,7 +12,7 @@ public class Article {
     private String Description;
     private String PicUrl;
     private String Url;
-    @XmlElement
+    @XmlElement(name="Title")
     public String getTitle() {
         return Title;
     }
@@ -20,7 +20,7 @@ public class Article {
     public void setTitle(String title) {
         Title = title;
     }
-    @XmlElement
+    @XmlElement(name="Description")
     public String getDescription() {
         return Description;
     }
@@ -28,7 +28,7 @@ public class Article {
     public void setDescription(String description) {
         Description = description;
     }
-    @XmlElement
+    @XmlElement(name="PicUrl")
     public String getPicUrl() {
         return PicUrl;
     }
@@ -36,7 +36,7 @@ public class Article {
     public void setPicUrl(String picUrl) {
         PicUrl = picUrl;
     }
-    @XmlElement
+    @XmlElement(name="Url")
     public String getUrl() {
         return Url;
     }
