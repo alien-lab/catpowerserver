@@ -149,5 +149,5 @@ wechat:
     payid:  1279602601
     paycallback:    http://test.moistmedia.net/catpowerserver/wxpay
     host:
-        basepath:   http://test.moistmedia.net/catpowerwechat/
+        basepath:   test.moistmedia.net/catpowerwechat/
         allowed:    116.62.47.176,test.moistmedia.net,www.bigercat.com
