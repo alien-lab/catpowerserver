@@ -5,9 +5,9 @@
         .module('catpowerserverApp')
         .controller('LearnerChargeDialogController', LearnerChargeDialogController);
 
-    LearnerChargeDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'LearnerCharge', 'Learner', 'Course', 'Coach', 'CourseScheduling'];
+    LearnerChargeDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'LearnerCharge', 'Learner', 'Course', 'Coach', 'CourseScheduling','shopopService'];
 
-    function LearnerChargeDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, LearnerCharge, Learner, Course, Coach, CourseScheduling) {
+    function LearnerChargeDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, LearnerCharge, Learner, Course, Coach, CourseScheduling,shopopService) {
         var vm = this;
 
         vm.learnerCharge = entity;
@@ -54,6 +54,16 @@
         function openCalendar (date) {
             vm.datePickerOpenStatus[date] = true;
         }
+
+        //获取今日教练排课信息
+        shopopService.loadCoachArrangement(function(data,flag){
+            if(!flag){
+                // alert(data);
+            }
+            $scope.coachArrangements = data;
+            console.log($scope.coachArrangements);
+
+        });
     }
 })();
 

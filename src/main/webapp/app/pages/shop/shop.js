@@ -4,7 +4,8 @@
 (function(){
     'use strict';
     var app=angular.module('catpowerserverApp');
-    app.controller("shopOpController",["$http","CourseScheduling","$scope","$filter","shopopService","BuyCourse","buyCourseService","AlertService", function($http,CourseScheduling,$scope,$filter,shopopService,BuyCourse,buyCourseService,AlertService){
+
+    app.controller("shopOpController",["$http","CourseScheduling","$scope","$filter","shopopService","BuyCourse","buyCourseService","AlertService","qrService", function($http,CourseScheduling,$scope,$filter,shopopService,BuyCourse,buyCourseService,AlertService,qrService){
         var vm = this;
         loadSche();
         function loadSche(date){
@@ -27,15 +28,36 @@
                 if(!flag){
                    // alert(data);
                 }
-                $scope.coachArrangements =data;
+                $scope.coachArrangements = data;
                 console.log($scope.coachArrangements);
+                console.log($scope.scheStatusStyle);
+                //获取签到二维码
+                $scope.signQr = function (scheId) {
+                    var index = -1;
+                    var scheCourseName;
+                    angular.forEach($scope.coachArrangements,function (item,key) {
+                        if(item.sche.id == scheId){
+                            index = key;
+                            scheCourseName = item.sche.course.courseName;
+                        }
+                    });
+                    if(index != -1){
+                        qrService.loadSignQr(scheId,function (data) {
+                            $scope.qr=data;
+                            console.log($scope.qr);
+                            console.log($scope.qr.qrTicker);
+                            $scope.arrangementCourseQr = "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket="+$scope.qr.qrTicker;
+                            console.log($scope.arrangementCourseQr);
+                            $scope.scheCourseName = scheCourseName;
+                        })
+                    }
+                };
                 //下课
                 $scope.getOutClass = function (id) {
                     var index = -1;
                     angular.forEach($scope.coachArrangements,function (item,key) {
                         if(item.sche.id == id ){
                             index = key;
-
                         }
                     });
                     if(index != -1){
@@ -55,50 +77,17 @@
                     angular.forEach($scope.coachArrangements,function (item,key) {
                         if(item.id == id ){
                             index = key;
-                        };
+                        }
                     });
                     if(index != -1){
                         $scope.coachArrangements.splice(index,1);
                     }
                     return $scope.coachArrangements;
                 };
-                //教练排课的样式
-                angular.forEach($scope.coachArrangements,function (item) {
-                     if(item.sche.status == '未开始'){
-                         /*$scope.arrangementStyle={
-                         "border": "1px solid #e3e3e3",
-                         "margin-top": "2.5%",
-                         "padding": "0px",
-                         "background": "#008800",
-                         "line-height": "3"
-                         };*/
-                     }
-                     if(item.sche.status == '进行中'){
-                         /*$scope.arrangementStyle={
-                         "border": "1px solid #e3e3e3",
-                         "margin-top": "2.5%",
-                         "padding": "0px",
-                         "background": "#FFD700",
-                         "line-height": "3"
-                         };*/
-                     }
-                     if(item.sche.status == '已下课'){
-                         /*$scope.arrangementStyle={
-                         "border": "1px solid #e3e3e3",
-                         "margin-top": "2.5%",
-                         "padding": "0px",
-                         "background": "#F08080",
-                         "line-height": "3"
-                         };*/
-                     }
-
-                 });
-
             });
         }
 
-
-        $scope.page={
+            $scope.page={
             index:0,
             size:10
         };
@@ -188,6 +177,7 @@
             AlertService.error(error.data.message);
         }
     }]);
+
     /**
      * 今日教练排课
      */
@@ -264,24 +254,28 @@
             })
         }
     }]);
-    app.service("CourseArrangementService",[function () {
-        this.loadCourseArrangement = function () {
-            var courseArrangements = [{
-                arrangementDate:'2017-6-5',
-                coachName:'教练1',
-                courseName:'基础理论课程',
-                startTime:'2017-6-5 17:00',
-                endTime:'2017-6-5 18:30',
-                attendanceNumber:'5'
-            },{
-                arrangementDate:'2017-6-6',
-                coachName:'教练2',
-                courseName:'功能训练课程  ',
-                startTime:'2017-6-6 18:00',
-                endTime:'2017-6-6 19:30',
-                attendanceNumber:'5'
-            }];
-            return courseArrangements;
+    //获取签到二维码
+    app.factory("qrResource",["$resource",function($resource){
+        var resourceUrl =  '/api/course-schedulings/qr/scheId';
+        return $resource(resourceUrl, {}, {
+            'getQr': { method: 'GET'}
+        });
+
+    }]);
+    app.service("qrService",["qrResource",function (qrResource) {
+        this.loadSignQr = function (scheId,callback) {
+            qrResource.getQr({
+                scheId:scheId
+            },function (data) {
+                if(callback){
+                    callback(data,true);
+                }
+            },function (error) {
+                console.log("qrResource.getQr()"+error);
+                if(callback){
+                    callback(error,false);
+                }
+            });
         }
     }]);
 })();

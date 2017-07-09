@@ -1,31 +1,33 @@
 <style>
+    .btnAdd{float: right;border-color: #f56158;color: #f56158;background: #ffffff;}
+    .generalize{border: 1px solid #f56158;text-align: center;padding-top: 15px;background: #ffffff;color: #f56158;}
     .table th,.table td{text-align: center; }
-
+    .arrangement{border: 1px solid #e3e3e3;margin-top: 2.5%;padding: 0px;background: #ffffff;line-height: 3;}
 </style>
 <h2 data-translate="catpowerserverApp.page.shopop.title">运行情况</h2>
 <hr/>
 <uib-tabset active="active">
     <uib-tab index="0">
-        <uib-tab-heading>
-            <i class="glyphicon glyphicon-bell"></i> 今日运营
+        <uib-tab-heading style="color: #000000;">
+            <span class="glyphicon glyphicon-certificate" aria-hidden="true"></span>&nbsp;今日运营
         </uib-tab-heading>
         <div class="container-fluid">
             <div class="row" style="padding: 30px;">
                 <!--运营情况-->
                 <div class="col-lg-12 col-md-12 col-sm-12" style="border: 1px solid #e3e3e3;margin-top:1.5%;">
-                    <div class="col-lg-2 col-md-2 col-sm-2" style="background-color:#f5f5f5;margin-top:-13px;font-size: 16px;width:10%;">
+                    <div class="col-lg-2 col-md-2 col-sm-2 " style="background-color:#f5f5f5;margin-top:-13px;font-size: 16px;width:10%;">
                         <b>运营情况</b>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12" style="margin: 2.5% auto;">
-                        <div class="col-lg-3 col-md-3 col-sm-3 center-block" style="border: 1px solid #e3e3e3;margin-left: 2.5%;text-align: center;padding-top: 15px;background: #ffffff;">
+                        <div class="col-lg-3 col-md-3 col-sm-3 generalize" style="margin-left: 2.5%">
                             <p>今日签到:{{registerCount.sigincount}}人</p>
                             <p>新建档:{{registerCount.regcount}}人</p>
                         </div>
-                        <div class="col-lg-3 col-md-3 col-sm-3" style="border: 1px solid #e3e3e3;margin-left: 10%;text-align: center;padding-top: 15px;background: #ffffff;">
+                        <div class="col-lg-3 col-md-3 col-sm-3 generalize" style="margin-left: 10%;">
                             <p>今日课程销售:{{buyCourseCountToday.buycount}}人</p>
                             <p>总金额：{{buyCourseCountToday.buymenoy | currency:"￥"}}</p>
                         </div>
-                        <div class="col-lg-3 col-md-3 col-sm-3" style="border: 1px solid #e3e3e3;margin-left: 10%;text-align: center;padding-top: 15px;background: #ffffff;">
+                        <div class="col-lg-3 col-md-3 col-sm-3 generalize" style="margin-left: 10%;">
                             <p>今日教练总课时</p>
                             <p>{{coachArrangements.length}}次</p>
                         </div>
@@ -50,15 +52,17 @@
                         </div>
                         <!--添加教练排课-->
                         <div class="col-lg-4 col-md-4 col-sm-4 col-lg-offset-4 col-md-offset-4 col-sm-offset-4" >
-                            <button ui-sref="shopop.new" type="button" class="btn btn-primary" style="float: right;"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加课时</button>
+                            <button ui-sref="shopop.new" type="button" class="btn btnAdd">
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加课时
+                            </button>
                         </div>
-                        <div ng-repeat="arrangement in coachArrangements | filter : search" class="col-lg-12 col-md-12 col-sm-12" style="border: 1px solid #e3e3e3;margin-top: 2.5%;padding: 0px;background: #ffffff;line-height: 3;">
+                        <div ng-repeat="arrangement in coachArrangements | filter : search" class="col-lg-12 col-md-12 col-sm-12 arrangement">
                             <div class="col-lg-3 col-md-3 col-sm-3"><span>教练：{{arrangement.sche.coach.coachName}}</span></div>
                             <div class="col-lg-4 col-md-4 col-sm-4"><span>课程：{{arrangement.sche.course.courseName}}</span></div>
                             <div class="col-lg-2 col-md-2 col-sm-2"><span>{{arrangement.sche.status}}</span></div>
                             <div class="col-lg-3 col-md-3 col-sm-3"><span>上课时间：{{arrangement.sche.startTime|date:"yyyy-MM-dd HH:mm"}}</span></div>
 
-                            <div class="col-lg-12 col-md-12 col-sm-12" style="margin-bottom: 2%;padding-left: 0px;">
+                            <div class="col-lg-12 col-md-12 col-sm-12" style="margin-bottom: 2%;padding-left: 0px;" >
                                 <div class="col-lg-2 col-md-2 col-sm-2"><span>已签到学员：{{arrangement.learners.length}}人</span></div>
                                 <div class="col-lg-8 col-md-8 col-sm-8" style="padding-left: 0px;">
                                     <div class="btn-group btn-sm" ng-repeat="trainee in arrangement.learners | filter : search" >
@@ -69,14 +73,35 @@
                                     </div>
                                     <span ui-sref="shopop.charge-new" style="color: #969696;cursor: pointer;" class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                                 </div>
-                                <div class="col-lg-2 col-md-2 col-sm-2"><button class="btn btn-default btn-sm" type="submit">签到码</button></div>
-                            </div>
-                            <div class="col-lg-12 col-md-12 col-sm-12" style="margin-top: -2%;padding: 0px;">
-                                <div class="col-lg-6 col-md-6 col-sm-6" style="border-top: 1px solid #e3e3e3;border-right: 1px solid #e3e3e3;padding: 0px;margin-top: 2%;">
-                                    <button ng-click="getOutClass(arrangement.sche.id)" class="btn btn-default col-lg-12 col-md-12 col-sm-12" type="submit" style="border: none;">下课</button>
+                                <div class="col-lg-2 col-md-2 col-sm-2" style="padding: 0;">
+                                    <!--弹出框-->
+                                    <button ng-click="signQr(arrangement.sche.id)" ng-if="arrangement.sche.status != '已下课'" type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#myModal">
+                                        获取签到码
+                                    </button>
+                                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    <h4 class="modal-title" id="myModalLabel"><strong style="color: #ff0000;">{{scheCourseName}}</strong>课程的二维码</h4>
+                                                </div>
+                                                <div class="modal-body" style="text-align: center;">
+                                                    <img ng-src="{{arrangementCourseQr}}"/>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6" style="border-top: 1px solid #e3e3e3;padding: 0px;margin-top: 2%;">
-                                    <button ui-sref="shopop.schedulingDelete({id:arrangement.sche.id})" ng-click="removeCoachArrangement(arrangement.sche.id)" class="btn btn-default col-lg-12 col-md-12 col-sm-12" type="submit" style="border: none;">取消</button>
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-12" ng-if="arrangement.sche.status != '已下课'" style="margin-top: -2%;padding: 0px;">
+                                <div ng-class="{false:'col-lg-6 col-md-6 col-sm-6',true:'col-lg-12 col-md-12 col-sm-12'}[arrangement.sche.status == '进行中']" style="border-top: 1px solid #e3e3e3;border-right: 1px solid #e3e3e3;padding: 0px;margin-top: 2%; ">
+                                    <button ng-click="getOutClass(arrangement.sche.id)" class="btn btn-info col-lg-12 col-md-12 col-sm-12" type="submit" style="border: none;background-color:#50db39;border-radius: 0;">下课</button>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6" ng-if="arrangement.sche.status != '进行中'" style="border-top: 1px solid #e3e3e3;padding: 0px;margin-top: 2%;">
+                                    <button ui-sref="shopop.schedulingDelete({id:arrangement.sche.id})" ng-click="removeCoachArrangement(arrangement.sche.id)" class="btn btn-info col-lg-12 col-md-12 col-sm-12" type="submit" style="border: none;background-color:#f56158;border-radius: 0;">取消</button>
                                 </div>
                             </div>
                         </div>
@@ -118,8 +143,8 @@
         </div>
     </uib-tab>
     <uib-tab index="1">
-        <uib-tab-heading>
-            <i class="glyphicon glyphicon-bell"></i>售课情况
+        <uib-tab-heading style="color: #000000;">
+            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>&nbsp;售课情况
         </uib-tab-heading>
         <div class="container-fluid">
             <div class="row">
@@ -190,8 +215,8 @@
         </div>
     </uib-tab>
     <uib-tab index="2">
-        <uib-tab-heading>
-            <i class="glyphicon glyphicon-bell"></i>排课情况
+        <uib-tab-heading style="color: #000000;">
+            <span class="glyphicon glyphicon-time" aria-hidden="true"></span>&nbsp;排课情况
         </uib-tab-heading>
         <div class="container-fluid">
             <div class="row">
