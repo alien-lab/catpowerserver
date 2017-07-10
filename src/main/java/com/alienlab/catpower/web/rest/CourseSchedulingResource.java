@@ -236,14 +236,15 @@ public class CourseSchedulingResource {
 
     @ApiOperation(value = "根据教练的ID获取教练的排课记录")
     @GetMapping("/course-schedulings/courseScheByCoachId")
-    public ResponseEntity<List<CourseScheduling>> getCourseSche(@RequestParam Long coachId){
+    public ResponseEntity getCourseSche(@RequestParam Long coachId){
         try {
             List<CourseScheduling> result = courseSchedulingService.getcourseSche(coachId);
             return ResponseEntity.ok().body(result);
         } catch (Exception e) {
             e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
         }
-        return null;
     }
 
 
