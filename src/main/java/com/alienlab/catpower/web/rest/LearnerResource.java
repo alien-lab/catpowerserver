@@ -6,6 +6,7 @@ import com.alienlab.catpower.domain.Learner;
 import com.alienlab.catpower.service.LearnerService;
 import com.alienlab.catpower.web.rest.util.HeaderUtil;
 import com.alienlab.catpower.web.rest.util.PaginationUtil;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
@@ -134,6 +135,19 @@ public class LearnerResource {
             Map result=learnerService.learnCountStatiscByDate(new Date());
             return ResponseEntity.ok().body(result);
         } catch (ParseException e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
+    }
+
+    @ApiOperation("获取学员首页信息")
+    @GetMapping("/learner-index/learnInfo")
+    public ResponseEntity getLearnerIndexInfo(@RequestParam String openid){
+        try {
+            Map map=learnerService.getLearnerIndexInfo(openid);
+            return ResponseEntity.ok().body(map);
+        } catch (Exception e) {
             e.printStackTrace();
             ExecResult er=new ExecResult(false,e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);

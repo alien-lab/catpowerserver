@@ -2,11 +2,13 @@ package com.alienlab.catpower.service;
 
 import com.alienlab.catpower.domain.BuyCourse;
 import com.alienlab.catpower.domain.Learner;
+import com.alienlab.catpower.domain.LearnerAppointment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.text.ParseException;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -52,6 +54,11 @@ public interface BuyCourseService {
     //获取指定人购买的指定课程
     BuyCourse getCourseByLeanerAndCourse(Learner learner, Long courseId) throws Exception;
 
-    //根据课程ID查询此课程在线人数
-    Map getLearnerCountByCourseId (Long courseId) throws  Exception;
+    /**
+     * 根据学员Id获取该学员全部教练信息
+     * @param learnerId
+     * @return
+     * @throws Exception
+     */
+    List getAllCoachByLearnerId(Long learnerId) throws Exception;
 }
