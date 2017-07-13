@@ -222,8 +222,8 @@ public class CourseSchedulingResource {
         }
     }
     @ApiOperation(value = "获取排课签到二维码")
-    @GetMapping("/course-schedulings/qr/{scheId}")
-    public ResponseEntity getScheQrcode(@PathVariable Long scheId){
+    @GetMapping("/course-schedulings/qr/scheId")
+    public ResponseEntity getScheQrcode(@RequestParam Long scheId){
         try{
             QrInfo qr=courseSchedulingService.getScheQrcode(scheId);
             return ResponseEntity.ok(qr);

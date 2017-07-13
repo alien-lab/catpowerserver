@@ -1,13 +1,10 @@
 package com.alienlab.catpower.service.impl;
 
-import com.alienlab.catpower.domain.BuyCourse;
-import com.alienlab.catpower.domain.CourseScheduling;
-import com.alienlab.catpower.domain.Learner;
+import com.alienlab.catpower.domain.*;
+import com.alienlab.catpower.repository.LearnerChargeRepository;
 import com.alienlab.catpower.service.BuyCourseService;
 import com.alienlab.catpower.service.CourseSchedulingService;
 import com.alienlab.catpower.service.LearnerChargeService;
-import com.alienlab.catpower.domain.LearnerCharge;
-import com.alienlab.catpower.repository.LearnerChargeRepository;
 import com.alienlab.catpower.service.LearnerService;
 import com.alienlab.catpower.web.wechat.service.WechatUserService;
 import org.slf4j.Logger;
@@ -15,10 +12,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.text.ParseException;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -165,5 +161,10 @@ public class LearnerChargeServiceImpl implements LearnerChargeService{
         }else{
             throw new Exception("课程课时已用完");
         }
+    }
+
+    @Override
+    public boolean addLearnerCharge(Long id, ZonedDateTime chargeTime, String buyCourseId, String chargePeople, Long remainNumber, Long learner, Course course, Coach coach) {
+        return false;
     }
 }

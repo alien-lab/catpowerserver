@@ -21,15 +21,15 @@
         <div class="form-group">
             <label class="control-label"  for="field_courseIntroductions">课程说明</label>
             <textarea  class="form-control" name="courseIntroductions" id="field_courseIntroductions"
-                   ng-model="vm.course.courseIntroductions" rows="3"
+                       ng-model="vm.course.courseIntroductions" rows="3"
             ></textarea>
         </div>
-        <!--<div class="form-group">
+        <div class="form-group">
             <label class="control-label" for="field_classNumber">在课人数</label>
             <input type="text" class="form-control" name="classNumber" id="field_classNumber"
-                   ng-model="vm.course.classNumber"
+                   ng-model="learnerCount.size" readonly
             />
-        </div>-->
+        </div>
         <div class="form-group">
             <label class="control-label" for="field_totalClassHour">总课时</label>
             <input type="text" class="form-control" name="totalClassHour" id="field_totalClassHour"
@@ -57,7 +57,7 @@
         <div class="form-group">
             <label class="control-label" for="field_courseOtherInfo">课程其他信息</label>
             <textarea type="text" class="form-control" name="courseOtherInfo" id="field_courseOtherInfo"
-                   ng-model="vm.course.courseOtherInfo"
+                      ng-model="vm.course.courseOtherInfo"
             ></textarea>
         </div>
 

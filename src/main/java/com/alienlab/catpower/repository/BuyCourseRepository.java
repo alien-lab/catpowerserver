@@ -22,4 +22,5 @@ public interface BuyCourseRepository extends JpaRepository<BuyCourse,Long> {
     Page<BuyCourse> findBuyCourseByBuyTimeBetweenOrderByBuyTimeDesc(ZonedDateTime butTime1,ZonedDateTime butTime2, Pageable page);
     @Query("select a from BuyCourse a where a.course=?2 and a.learner=?1 and a.status='正常'")
     BuyCourse findBuyCourseByLearnerAndCourse(Learner learner, Course course);
+
 }

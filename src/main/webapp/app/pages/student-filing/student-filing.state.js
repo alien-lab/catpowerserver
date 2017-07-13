@@ -8,17 +8,38 @@
         $stateProvider
             .state('student-filing', {
                 parent: 'app',
-                url: '/student-filing',
+                url: '/student-filing?page',
                 data: {
                     authorities: ['ROLE_USER']
                 },
                 views: {
                     'content@': {
                         templateUrl: 'app/pages/student-filing/student-filing.html',
-                        controller: 'studentFilingController'
+                        controller: 'studentFilingController',
+                        controllerAs: 'vm'
                     }
                 },
+                params:{
+                    page:{
+                        value:'1',
+                        squash:true
+                    },
+                    sort: {
+                        value: 'id,asc',
+                        squash: true
+                    },
+                    search: null
+                },
                 resolve: {
+                    pagingParams:['$stateParams','PaginationUtil',function ($stateParams,PaginationUtil) {
+                        return {
+                            page:PaginationUtil.parsePage($stateParams.page),
+                            sort: $stateParams.sort,
+                            predicate: PaginationUtil.parsePredicate($stateParams.sort),
+                            ascending: PaginationUtil.parseAscending($stateParams.sort),
+                            search: $stateParams.search
+                        }
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('student-filing');
                         $translatePartialLoader.addPart('learner');

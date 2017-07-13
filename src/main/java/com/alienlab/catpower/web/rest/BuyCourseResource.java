@@ -168,4 +168,19 @@ public class BuyCourseResource {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
         }
     }
+    /**
+     * 根据课程ID查询此课程在线人数
+     */
+    @ApiOperation(value = "根据课程ID查询此课程在线人数")
+    @GetMapping("/buy-course/learnerCount/courseId")
+    public ResponseEntity getLearnerCount(@RequestParam Long courseId){
+        try {
+            Map result = buyCourseService.getLearnerCountByCourseId(courseId);
+            return  ResponseEntity.ok(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
+    }
 }

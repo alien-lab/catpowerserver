@@ -8,6 +8,7 @@
 
     app.controller('coachMaintainDialogController',['$timeout', '$scope', '$uibModalInstance','dataMaintain','Coach',function ($timeout, $scope, $uibModalInstance,dataMaintain,Coach) {
         var vm = this;
+        vm.uploadurl="./api/image/upload";
         vm.coach = dataMaintain;
         vm.clear = clear;
         vm.save = save;

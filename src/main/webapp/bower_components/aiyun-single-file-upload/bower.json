@@ -1,0 +1,21 @@
+{
+  "name": "aiyun-single-file-upload",
+  "authors": [
+    "赵远 <admin@hythzx.com>"
+  ],
+  "description": "单文件上传组件",
+  "main": "dist/single-file-upload-directive.min.js",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ng-file-upload": "^12.2.13",
+    "bootstrap": "^3.3.7"
+  }
+}

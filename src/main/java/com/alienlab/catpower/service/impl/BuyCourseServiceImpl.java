@@ -20,7 +20,6 @@ import java.text.SimpleDateFormat;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -133,6 +132,13 @@ public class BuyCourseServiceImpl implements BuyCourseService{
         return jdbcTemplate.queryForMap(sql);
     }
 
+    /**
+     * 根据课程ID查询此课程在线人数
+     * @param learner
+     * @param courseId
+     * @return
+     * @throws Exception
+     */
     @Override
     public BuyCourse getCourseByLeanerAndCourse(Learner learner, Long courseId) throws Exception {
         Course course=courseRepository.findOne(courseId);
@@ -140,5 +146,11 @@ public class BuyCourseServiceImpl implements BuyCourseService{
             throw new Exception("未找到课程，课程编码："+courseId);
         }
         return buyCourseRepository.findBuyCourseByLearnerAndCourse(learner,course);
+    }
+
+    @Override
+    public Map getLearnerCountByCourseId(Long courseId) throws Exception {
+        String sql = "SELECT COUNT(DISTINCT learner_id) size FROM `buy_course` WHERE course_id='"+courseId+"' ";
+        return jdbcTemplate.queryForMap(sql);
     }
 }

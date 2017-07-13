@@ -1,11 +1,10 @@
 package com.alienlab.catpower.service;
 
-import com.alienlab.catpower.domain.CourseScheduling;
-import com.alienlab.catpower.domain.Learner;
-import com.alienlab.catpower.domain.LearnerCharge;
+import com.alienlab.catpower.domain.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 /**
@@ -51,4 +50,9 @@ public interface LearnerChargeService {
     LearnerCharge chargeCourse(String openid,Long scheId)throws Exception;
 
     LearnerCharge chargeCourse(Learner learner, CourseScheduling sche) throws Exception;
+
+    /**
+     * 添加核销记录
+     */
+    public boolean addLearnerCharge(Long id, ZonedDateTime chargeTime,String buyCourseId,String chargePeople,Long remainNumber,Long learner,Course course,Coach coach);
 }
