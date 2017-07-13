@@ -1,11 +1,11 @@
 package com.alienlab.catpower.service.impl;
 
-import com.alienlab.catpower.domain.BuyCourse;
-import com.alienlab.catpower.domain.Course;
-import com.alienlab.catpower.domain.Learner;
+import com.alienlab.catpower.domain.*;
 import com.alienlab.catpower.repository.BuyCourseRepository;
 import com.alienlab.catpower.repository.CourseRepository;
+import com.alienlab.catpower.repository.LearnerAppointmentRepository;
 import com.alienlab.catpower.service.BuyCourseService;
+import com.alienlab.catpower.service.LearnerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +19,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Service Implementation for managing BuyCourse.
@@ -41,6 +39,12 @@ public class BuyCourseServiceImpl implements BuyCourseService{
 
     @Autowired
     CourseRepository courseRepository;
+
+    @Autowired
+    private LearnerService learnerService;
+
+    @Autowired
+    private LearnerAppointmentRepository learnerAppointmentRepository;
 
     public BuyCourseServiceImpl(BuyCourseRepository buyCourseRepository) {
         this.buyCourseRepository = buyCourseRepository;
@@ -140,5 +144,28 @@ public class BuyCourseServiceImpl implements BuyCourseService{
             throw new Exception("未找到课程，课程编码："+courseId);
         }
         return buyCourseRepository.findBuyCourseByLearnerAndCourse(learner,course);
+    }
+
+ /*   @Override
+    public List getAppointment(Long learnerId) throws Exception{
+        List<LearnerAppointment> learnerAppointments=learnerAppointmentRepository.findAppointmentByLearner(learnerId);
+        return learnerAppointments;
+
+    }*/
+
+    @Override
+    public List getAllCoachByLearnerId(Long learnerId) throws Exception {
+        List list=new ArrayList();
+        List<BuyCourse> coachList=buyCourseRepository.findCoachByLearner(learnerId);
+        for (int i=0;i<coachList.size();i++){
+            Map map=new HashMap();
+            BuyCourse buyCourse=coachList.get(i);
+            Coach coach=buyCourse.getCoach();
+            List<BuyCourse> courses=buyCourseRepository.findCourseByCoach(coach,learnerId);
+            map.put("coach",coach);
+            map.put("courses",courses);
+            list.add(map);
+        }
+        return list;
     }
 }

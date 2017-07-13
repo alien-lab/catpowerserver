@@ -2,7 +2,11 @@ package com.alienlab.catpower.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alienlab.catpower.domain.Learner;
+import com.alienlab.catpower.repository.BuyCourseRepository;
+import com.alienlab.catpower.repository.LearnerAppointmentRepository;
 import com.alienlab.catpower.repository.LearnerRepository;
+import com.alienlab.catpower.service.BuyCourseService;
+import com.alienlab.catpower.service.LearnerAppointmentService;
 import com.alienlab.catpower.service.LearnerService;
 import com.alienlab.catpower.web.wechat.bean.entity.QrInfo;
 import com.alienlab.catpower.web.wechat.bean.entity.WechatUser;
@@ -21,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -45,6 +50,12 @@ public class LearnerServiceImpl implements LearnerService{
 
     @Autowired
     QrInfoService qrInfoService;
+
+    @Autowired
+    LearnerAppointmentRepository learnerAppointmentRepository;
+
+    @Autowired
+    BuyCourseRepository buyCourseRepository;
 
     public LearnerServiceImpl(LearnerRepository learnerRepository) {
         this.learnerRepository = learnerRepository;
@@ -180,6 +191,21 @@ public class LearnerServiceImpl implements LearnerService{
         }
         learner.setWechatUser(wechatUser);
         return learnerRepository.save(learner);
+    }
+
+    @Override
+    public Map getLearnerIndexInfo(String openid) throws Exception {
+        Learner learner=learnerRepository.findLearnerByOpenid(openid);
+        Long learnerId=learner.getId();
+        int appointCount=learnerAppointmentRepository.findAppointingByLearner(learnerId).size();
+        int courseCount=buyCourseRepository.findCourseByLearner(learnerId).size();
+        int coachCount=buyCourseRepository.findCoachByLearner(learnerId).size();
+        Map map=new HashMap();
+        map.put("learner",learner);
+        map.put("appointCount",appointCount);
+        map.put("courseCount",courseCount);
+        map.put("coachCount",coachCount);
+        return map;
     }
 
 }
