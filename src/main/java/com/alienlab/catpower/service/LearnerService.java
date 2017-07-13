@@ -56,4 +56,6 @@ public interface LearnerService {
     Learner bindWechatUser(String openid,Long learnerId) throws Exception;
     Learner bindWechatUser(WechatUser wechatUser,Learner learner) throws Exception;
 
+    Map getLearnerIndexInfo(String openid) throws Exception;
+
 }
