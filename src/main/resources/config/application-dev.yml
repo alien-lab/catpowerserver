@@ -139,7 +139,7 @@ application:
 
 alienlab:
     image:
-        path: http://localhost:8080/uploadimage/
+        path: http://test.moistmedia.net/catpowerserver/uploadimage/
 
 
 wechat:
