@@ -161,7 +161,7 @@ public class LearnerServiceImpl implements LearnerService{
         String sceneId = "2and"+learner.getId()+"";
         JSONObject jo =  wechatUtil.get_qr_code_ticket(sceneId);
         if(jo==null || jo.getString("ticket")==null){
-            throw new Exception("生成签到二维码失败！排课编码："+learner.getId());
+            throw new Exception("生成学员绑定二维码失败！排课编码："+learner.getId());
         }
         QrInfo qr=qrInfoService.createQrinfo(sceneId, 2L,jo.getString("ticket"));
         learner.setQrInfo(qr);
