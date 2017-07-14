@@ -30,8 +30,8 @@ public class LearnerAppointmentResource {
     }
 
     @ApiOperation("获取当前学员预约记录")
-    @GetMapping("/learner-appointment/allRecord")
-    public ResponseEntity getAppointment(@RequestParam Long learnerId){
+    @GetMapping("/learner-appointment/allRecord/{learnerId}")
+    public ResponseEntity getAppointment(@PathVariable Long learnerId){
         try {
             Map map=learnerAppointmentService.getAppointment(learnerId);
             return ResponseEntity.ok().body(map);

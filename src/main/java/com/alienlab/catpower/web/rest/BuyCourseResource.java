@@ -171,8 +171,8 @@ public class BuyCourseResource {
     }
 
     @ApiOperation("获取当前学员全部教练信息")
-    @GetMapping("/buy-course/allCoach")
-    public ResponseEntity getAllCoach(@RequestParam Long learnerId){
+    @GetMapping("/buy-course/allCoach/{learnerId}")
+    public ResponseEntity getAllCoach(@PathVariable Long learnerId){
         try {
             List coachList=buyCourseService.getAllCoachByLearnerId(learnerId);
             return ResponseEntity.ok().body(coachList);
