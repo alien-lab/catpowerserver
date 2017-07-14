@@ -1,6 +1,6 @@
 package com.alienlab.catpower.service;
 
-import java.util.List;
+import java.util.Map;
 
 /**
  * Created by LuDan on 2017/7/12.
@@ -13,6 +13,6 @@ public interface LearnerAppointmentService {
      * @return
      * @throws Exception
      */
-    List getAppointment(Long learnerId) throws Exception;
+    Map getAppointment(Long learnerId) throws Exception;
 
 }

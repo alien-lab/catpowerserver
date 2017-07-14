@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Map;
 
 /**
  * REST controller for managing BuyCourse.
@@ -33,8 +33,8 @@ public class LearnerAppointmentResource {
     @GetMapping("/learner-appointment/allRecord")
     public ResponseEntity getAppointment(@RequestParam Long learnerId){
         try {
-            List list=learnerAppointmentService.getAppointment(learnerId);
-            return ResponseEntity.ok().body(list);
+            Map map=learnerAppointmentService.getAppointment(learnerId);
+            return ResponseEntity.ok().body(map);
         } catch (Exception e) {
             e.printStackTrace();
             ExecResult er=new ExecResult(false,e.getMessage());

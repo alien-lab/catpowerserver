@@ -28,9 +28,15 @@ public class LearnerAppointmentServiceImpl implements LearnerAppointmentService 
     private LearnerAppointmentRepository learnerAppointmentRepository;
 
     @Override
-    public List getAppointment(Long learnerId) throws Exception{
-        List<LearnerAppointment> learnerAppointments=learnerAppointmentRepository.findAppointmentByLearner(learnerId);
-        return learnerAppointments;
+    public Map getAppointment(Long learnerId) throws Exception{
+        List<LearnerAppointment> allAppointment=learnerAppointmentRepository.findAppointmentByLearner(learnerId);
+        List<LearnerAppointment> appointing=learnerAppointmentRepository.findAppointingByLearner(learnerId);
+        List<LearnerAppointment> appointed=learnerAppointmentRepository.findAppointedByLearner(learnerId);
+        Map map=new HashMap();
+        map.put("allAppointment",allAppointment);
+        map.put("appointing",appointing);
+        map.put("appointed",appointed);
+        return map;
 
     }
 }

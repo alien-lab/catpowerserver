@@ -142,8 +142,8 @@ public class LearnerResource {
     }
 
     @ApiOperation("获取学员首页信息")
-    @GetMapping("/learner-index/learnInfo")
-    public ResponseEntity getLearnerIndexInfo(@RequestParam String openid){
+    @GetMapping("/learner-index/learnInfo/{openid}")
+    public ResponseEntity getLearnerIndexInfo(@PathVariable String openid){
         try {
             Map map=learnerService.getLearnerIndexInfo(openid);
             return ResponseEntity.ok().body(map);
