@@ -22,5 +22,9 @@ public interface LearnerAppointmentRepository extends JpaRepository<LearnerAppoi
     @Query("select a from LearnerAppointment a where a.buyCourse.learner.id=?1 and a.appointmentResult='预约中'")
     List<LearnerAppointment> findAppointingByLearner(Long learnerId);
 
+    @Query("select a from LearnerAppointment a where a.buyCourse.learner.id=?1 and a.appointmentResult='预约成功'")
+    List<LearnerAppointment> findAppointedByLearner(Long learnerId);
+
+
 
 }
