@@ -247,5 +247,18 @@ public class CourseSchedulingResource {
         }
     }
 
+    @ApiOperation(value = "获取全部教练的排课记录")
+    @GetMapping("/course-schedulings/courseScheduling")
+    public ResponseEntity getcourseScheduling(){
+        try {
+            List list = courseSchedulingService.getCourseScheduling();
+            return ResponseEntity.ok().body(list);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
+    }
+
 
 }
