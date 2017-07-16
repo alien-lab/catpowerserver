@@ -61,4 +61,14 @@ public interface BuyCourseService {
      * @throws Exception
      */
     List getAllCoachByLearnerId(Long learnerId) throws Exception;
+
+    //查询我的课程
+    List<BuyCourse> findBuyCourseByLearnerId(Long learnerId) throws Exception;
+
+    //查询我的可用的课程
+    List<BuyCourse> findUseBuyCourseByLearnerId(Long learnerId) throws Exception;
+
+    //查询我的不可用的课程
+    List<BuyCourse> findNotUseBuyCourseByLearnerId(Long learnerId) throws Exception;
+
 }
