@@ -110,8 +110,8 @@
                 },
                 onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                     $uibModal.open({
-                        templateUrl: 'app/data-maintain/course-maintain/course-maintain-dialog.html',
-                        controller: 'courseMaintainDialogController',
+                        templateUrl: 'app/data-maintain/course-maintain/course-maintain-edit.html',
+                        controller: 'courseMaintainEditController',
                         controllerAs: 'vm',
                         backdrop: 'static',
                         size: 'md',

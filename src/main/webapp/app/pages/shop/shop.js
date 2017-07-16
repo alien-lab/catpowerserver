@@ -30,7 +30,6 @@
                 }
                 $scope.coachArrangements = data;
                 console.log($scope.coachArrangements);
-                console.log($scope.scheStatusStyle);
                 //获取签到二维码
                 $scope.signQr = function (scheId) {
                     var index = -1;
@@ -54,7 +53,11 @@
                 };
                 //下课
                 $scope.getOutClass = function (id) {
+
                     var index = -1;
+                    if(this.arrangement.sche.status == '已下课' ){
+                        //alert(1);
+                    }
                     angular.forEach($scope.coachArrangements,function (item,key) {
                         if(item.sche.id == id ){
                             index = key;
@@ -84,6 +87,18 @@
                     }
                     return $scope.coachArrangements;
                 };
+                //添加学员
+                $scope.addStu = function (scheId) {
+                    var index = -1;
+                    angular.forEach($scope.coachArrangements,function (item,key) {
+                        if(item.sche.id == scheId ){
+                            index = key;
+                        }
+                    });
+                    if(index != -1){
+                        console.log($scope.coachArrangements[index]);
+                    }
+                }
             });
         }
 
@@ -176,8 +191,63 @@
         function onScheError(error) {
             AlertService.error(error.data.message);
         }
+
     }]);
 
+    //今日售课
+    app.factory("buyCourseResource",["$resource",function($resource){
+        var resourceUrl =  'api/buy-courses/today';
+        return $resource(resourceUrl, {}, {
+            'query': { method: 'GET'}
+        });
+
+    }]);
+    app.service("buyCourseService",["buyCourseResource",function(buyCourseResource){
+        this.loadBuyCourseToday=function(index,size,callback){
+            buyCourseResource.query({
+                index:index,
+                size:size
+            },function(data){
+                if(callback){
+                    callback(data,true);
+                }
+            },function(error){
+                console.log("shopopResource.query()",error);
+                if(callback){
+                    callback(error,false);
+                }
+            })
+        }
+    }]);
+    //获取签到二维码
+    app.factory("qrResource",["$resource",function($resource){
+        var resourceUrl =  '/api/course-schedulings/qr/scheId';
+        return $resource(resourceUrl, {}, {
+            'getQr': { method: 'GET'}
+        });
+
+    }]);
+    app.service("qrService",["qrResource",function (qrResource) {
+        this.loadSignQr = function (scheId,callback) {
+            qrResource.getQr({
+                scheId:scheId
+            },function (data) {
+                if(callback){
+                    callback(data,true);
+                }
+            },function (error) {
+                console.log("qrResource.getQr()"+error);
+                if(callback){
+                    callback(error,false);
+                }
+            });
+        }
+    }]);
+})();
+
+(function () {
+    'use strict'
+    var app=angular.module('catpowerserverApp');
     /**
      * 今日教练排课
      */
@@ -229,55 +299,7 @@
         }
 
     }]);
-    //今日售课
-    app.factory("buyCourseResource",["$resource",function($resource){
-        var resourceUrl =  'api/buy-courses/today';
-        return $resource(resourceUrl, {}, {
-            'query': { method: 'GET'}
-        });
 
-    }]);
-    app.service("buyCourseService",["buyCourseResource",function(buyCourseResource){
-        this.loadBuyCourseToday=function(index,size,callback){
-            buyCourseResource.query({
-                index:index,
-                size:size
-            },function(data){
-                if(callback){
-                    callback(data,true);
-                }
-            },function(error){
-                console.log("shopopResource.query()",error);
-                if(callback){
-                    callback(error,false);
-                }
-            })
-        }
-    }]);
-    //获取签到二维码
-    app.factory("qrResource",["$resource",function($resource){
-        var resourceUrl =  '/api/course-schedulings/qr/scheId';
-        return $resource(resourceUrl, {}, {
-            'getQr': { method: 'GET'}
-        });
-
-    }]);
-    app.service("qrService",["qrResource",function (qrResource) {
-        this.loadSignQr = function (scheId,callback) {
-            qrResource.getQr({
-                scheId:scheId
-            },function (data) {
-                if(callback){
-                    callback(data,true);
-                }
-            },function (error) {
-                console.log("qrResource.getQr()"+error);
-                if(callback){
-                    callback(error,false);
-                }
-            });
-        }
-    }]);
 })();
 
 

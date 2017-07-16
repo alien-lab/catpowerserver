@@ -11,7 +11,7 @@
                 <h3>{{vm.course.courseName}}</h3>
                 <p>{{vm.course.courseIntroductions}}</p>
                 <p>{{vm.course.courseOtherInfo}}</p>
-                <p style="color: #969696;font-size: 12px;">在线人数{{vm.course.classNumber}}&nbsp;·&nbsp;总课时{{vm.course.totalClassHour}}</p>
+                <p style="color: #969696;font-size: 12px;">在线人数 {{learnerCount.size}}人&nbsp;·&nbsp;总课时 {{vm.course.totalClassHour}}</p>
                 <p>
                     <span style="color: #ff0000;">{{vm.course.coursePrices | currency:"￥"}}</span>&nbsp;·&nbsp;
                     <span style="color: #ff0000;">会员{{vm.course.courseVipprices | currency:"￥"}}</span>

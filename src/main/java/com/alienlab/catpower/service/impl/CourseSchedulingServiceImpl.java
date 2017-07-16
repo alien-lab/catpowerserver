@@ -3,6 +3,7 @@ package com.alienlab.catpower.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.alienlab.catpower.domain.Coach;
 import com.alienlab.catpower.domain.CourseScheduling;
+import com.alienlab.catpower.repository.CoachRepository;
 import com.alienlab.catpower.repository.CourseSchedulingRepository;
 import com.alienlab.catpower.service.CoachService;
 import com.alienlab.catpower.service.CourseSchedulingService;
@@ -20,7 +21,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Service Implementation for managing CourseScheduling.
@@ -44,6 +48,9 @@ public class CourseSchedulingServiceImpl implements CourseSchedulingService{
 
     @Autowired
     QrInfoService qrInfoService;
+
+    @Autowired
+    CoachRepository coachRepository;
 
     public CourseSchedulingServiceImpl(CourseSchedulingRepository courseSchedulingRepository) {
         this.courseSchedulingRepository = courseSchedulingRepository;
@@ -157,5 +164,20 @@ public class CourseSchedulingServiceImpl implements CourseSchedulingService{
 
         List<CourseScheduling> result = courseSchedulingRepository.findCourseSchedulingsByCoach(coach);
         return result;
+    }
+
+    @Override
+    public List getCourseScheduling() throws Exception {
+        List<Coach> coachList = coachRepository.findAll();
+        List list = new ArrayList();
+        for (int i=0;i<coachList.size();i++){
+            Coach coach = coachList.get(i);
+            List<CourseScheduling> courseSchedulingList=courseSchedulingRepository.findCourseSchedulingsByCoach(coach);
+            Map map = new HashMap();
+            map.put("coach",coach);
+            map.put("courseSchedulingList",courseSchedulingList);
+            list.add(map);
+        }
+        return list;
     }
 }

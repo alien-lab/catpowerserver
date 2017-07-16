@@ -1,0 +1,32 @@
+{
+  "name": "aiyun-single-file-upload",
+  "authors": [
+    "赵远 <admin@hythzx.com>"
+  ],
+  "description": "单文件上传组件",
+  "main": "dist/single-file-upload-directive.min.js",
+  "license": "MIT",
+  "homepage": "https://github.com/aiyuninfo/single-file-upload",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ng-file-upload": "^12.2.13",
+    "bootstrap": "^3.3.7"
+  },
+  "version": "1.0.1",
+  "_release": "1.0.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "1.0.1",
+    "commit": "aaa8d691e68779255cd21abe6935c32250b5e5d3"
+  },
+  "_source": "https://github.com/aiyuninfo/single-file-upload.git",
+  "_target": "^1.0.1",
+  "_originalSource": "aiyun-single-file-upload",
+  "_direct": true
+}

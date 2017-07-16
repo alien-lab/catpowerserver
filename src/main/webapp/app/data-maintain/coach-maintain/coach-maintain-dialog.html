@@ -31,12 +31,21 @@
             />
         </div>
         <div class="form-group">
-            <label class="control-label" for="field_coachPicture">教练照片</label>
-            <input type="text" class="form-control" name="coachPicture" id="field_coachPicture"
+            <label class="control-label">教练照片</label>
+            <!--<input type="text" class="form-control" name="coachPicture" id="field_coachPicture"
                    ng-model="vm.coach.coachPicture"
-            />
+            />-->
+            <p>
+                <img  ng-src="{{vm.coach.coachPicture}}"/>
+            </p>
+            <p>
+                <single-file-upload upload-url="{{vm.uploadurl}}" file-url="vm.coach.coachPicture"
+                                    button-text="上传图片">
+                </single-file-upload>
+            </p>
+
         </div>
-        <div class="form-group">
+        <!--<div class="form-group">
             <label class="control-label" for="field_coachWechatopenid">教练微信openID</label>
             <input class="form-control" name="coachWechatopenid" id="field_coachWechatopenid"
                    ng-model="vm.coach.coachWechatopenid"
@@ -53,7 +62,7 @@
             <textarea type="text" class="form-control" name="coachWechatpicture" id="field_coachWechatpicture"
                       ng-model="vm.coach.coachWechatpicture"
             ></textarea>
-        </div>
+        </div>-->
 
     </div>
     <div class="modal-footer">

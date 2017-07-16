@@ -1,6 +1,5 @@
 package com.alienlab.catpower.web.rest;
 
-import com.alienlab.catpower.domain.LearnerCharge;
 import com.alienlab.catpower.web.rest.util.ExecResult;
 import com.codahale.metrics.annotation.Timed;
 import com.alienlab.catpower.domain.Learner;
@@ -142,5 +141,17 @@ public class LearnerResource {
         }
     }
 
+    @ApiOperation("获取学员首页信息")
+    @GetMapping("/learner-index/learnInfo/{openid}")
+    public ResponseEntity getLearnerIndexInfo(@PathVariable String openid){
+        try {
+            Map map=learnerService.getLearnerIndexInfo(openid);
+            return ResponseEntity.ok().body(map);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
+    }
 
 }

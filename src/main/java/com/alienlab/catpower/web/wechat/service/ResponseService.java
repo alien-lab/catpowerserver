@@ -6,9 +6,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.alienlab.catpower.domain.CourseScheduling;
 import com.alienlab.catpower.domain.Learner;
 import com.alienlab.catpower.service.CourseSchedulingService;
+import com.alienlab.catpower.service.LearnerChargeService;
 import com.alienlab.catpower.service.LearnerService;
 import com.alienlab.catpower.web.wechat.bean.MessageResponse;
 import com.alienlab.catpower.web.wechat.bean.NewsMessageResponse;
+import com.alienlab.catpower.web.wechat.bean.TextMessageResponse;
 import com.alienlab.catpower.web.wechat.bean.entity.WechatUser;
 import com.alienlab.catpower.web.wechat.util.MessageProcessor;
 import com.alienlab.catpower.web.wechat.util.WechatUtil;
@@ -38,6 +40,9 @@ public class ResponseService {
 
     @Autowired
     LearnerService learnerService;
+
+    @Autowired
+    LearnerChargeService learnerChargeService;
 
     @Autowired
     WechatUserService wechatUserService;
@@ -163,20 +168,24 @@ public class ResponseService {
             String state=json_msg.getString("EventKey").substring(4);
             String link=wechatUtil.getPageAuthUrl(url,state);
             CourseScheduling sche=courseSchedulingService.findOne(Long.parseLong(state));
-            String desc="您已签到：["+sche.getCourse().getCourseName()+"]课程，教练："+sche.getCoach().getCoachName();
+            try{
+                learnerChargeService.chargeCourse(to,sche.getId());
+                String desc="您已签到：["+sche.getCourse().getCourseName()+"]课程，教练："+sche.getCoach().getCoachName();
 
-            NewsMessageResponse result= messageProcessor.getSingleNews(from,to,
-                title,
-                link,
-                "http://"+domain+"/img/logo.jpg",
-                desc
-            );
-            System.out.println(">>>"+title);
-            System.out.println(">>>"+url);
-            System.out.println(">>>"+link);
-            System.out.println(">>>"+desc);
-            System.out.println(JSONObject.toJSONString(result));
-            return result;
+                NewsMessageResponse result= messageProcessor.getSingleNews(from,to,
+                    title,
+                    link,
+                    "http://"+domain+"/img/logo.jpg",
+                    desc
+                );
+                return result;
+            }catch(Exception e){
+                TextMessageResponse result=messageProcessor.getTextMsg(from,to,e.getMessage());
+                return result;
+            }
+
+
+
         }else if(json_msg.getString("EventKey").startsWith("2and")){//人员绑定
             String title="学员账户绑定成功！";
             String url="http://"+domain+"/#!/stuindex";

@@ -1,11 +1,9 @@
 package com.alienlab.catpower.service.impl;
 
-import com.alienlab.catpower.domain.BuyCourse;
-import com.alienlab.catpower.domain.Course;
-import com.alienlab.catpower.domain.Learner;
-import com.alienlab.catpower.domain.LearnerCharge;
+import com.alienlab.catpower.domain.*;
 import com.alienlab.catpower.repository.BuyCourseRepository;
 import com.alienlab.catpower.repository.CourseRepository;
+import com.alienlab.catpower.repository.LearnerAppointmentRepository;
 import com.alienlab.catpower.service.BuyCourseService;
 import com.alienlab.catpower.service.LearnerService;
 import org.slf4j.Logger;
@@ -21,10 +19,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Service Implementation for managing BuyCourse.
@@ -44,8 +39,12 @@ public class BuyCourseServiceImpl implements BuyCourseService{
 
     @Autowired
     CourseRepository courseRepository;
+
     @Autowired
-    LearnerService learnerService;
+    private LearnerService learnerService;
+
+    @Autowired
+    private LearnerAppointmentRepository learnerAppointmentRepository;
 
     public BuyCourseServiceImpl(BuyCourseRepository buyCourseRepository) {
         this.buyCourseRepository = buyCourseRepository;
@@ -147,55 +146,26 @@ public class BuyCourseServiceImpl implements BuyCourseService{
         return buyCourseRepository.findBuyCourseByLearnerAndCourse(learner,course);
     }
 
-    @Override
-    public List<BuyCourse> findBuyCourseByLearnerId(Long learnerId) throws Exception {
-        if (learnerId==null){
-            throw new Exception("请求错误："+learnerId);
-        }
-        Learner learner = learnerService.findOne(learnerId);
-        if (learner==null){
-            throw new Exception("没有找到该学员信息");
-        }
-        return buyCourseRepository.findBuyCourseByLearner(learner);
-    }
+ /*   @Override
+    public List getAppointment(Long learnerId) throws Exception{
+        List<LearnerAppointment> learnerAppointments=learnerAppointmentRepository.findAppointmentByLearner(learnerId);
+        return learnerAppointments;
+
+    }*/
 
     @Override
-    public List<BuyCourse> findUseBuyCourseByLearnerId(Long learnerId) throws Exception {
-        if (learnerId==null){
-            throw new Exception("请求错误："+learnerId);
+    public List getAllCoachByLearnerId(Long learnerId) throws Exception {
+        List list=new ArrayList();
+        List<BuyCourse> coachList=buyCourseRepository.findCoachByLearner(learnerId);
+        for (int i=0;i<coachList.size();i++){
+            Map map=new HashMap();
+            BuyCourse buyCourse=coachList.get(i);
+            Coach coach=buyCourse.getCoach();
+            List<BuyCourse> courses=buyCourseRepository.findCourseByCoach(coach,learnerId);
+            map.put("coach",coach);
+            map.put("courses",courses);
+            list.add(map);
         }
-        Learner learner = learnerService.findOne(learnerId);
-        if (learner==null){
-            throw new Exception("没有找到该学员信息");
-        }
-        List<BuyCourse> buyCourses = buyCourseRepository.findBuyCourseByLearner(learner);
-        List<BuyCourse> buyCoursesList = new ArrayList<BuyCourse>();
-        for (BuyCourse buyCourse :buyCourses){
-            if (buyCourse.getRemainClass()>0){
-                buyCoursesList.add(buyCourse);
-            }
-        }
-        return buyCoursesList;
+        return list;
     }
-
-    @Override
-    public List<BuyCourse> findNotUseBuyCourseByLearnerId(Long learnerId) throws Exception {
-        if (learnerId==null){
-            throw new Exception("请求错误："+learnerId);
-        }
-        Learner learner = learnerService.findOne(learnerId);
-        if (learner==null){
-            throw new Exception("没有找到该学员信息");
-        }
-        List<BuyCourse> buyCourses = buyCourseRepository.findBuyCourseByLearner(learner);
-        List<BuyCourse> buyCoursesList = new ArrayList<BuyCourse>();
-        for (BuyCourse buyCourse :buyCourses){
-            if (buyCourse.getRemainClass()<0){
-                buyCoursesList.add(buyCourse);
-            }
-        }
-        return buyCoursesList;
-    }
-
-
 }

@@ -45,6 +45,9 @@ public class Course implements Serializable {
     @Column(name = "course_thumbnail")
     private String courseThumbnail;
 
+    @Column(name = "course_type")
+    private String courseType;
+
     @OneToMany(mappedBy = "course")
     @JsonIgnore
     private Set<CourseAtlas> pictures = new HashSet<>();
@@ -157,6 +160,19 @@ public class Course implements Serializable {
         return this;
     }
 
+    public String getCourseType() {
+        return courseType;
+    }
+
+    public Course courseType(String courseType) {
+        this.courseType = courseType;
+        return this;
+    }
+
+    public void setCourseType(String courseType) {
+        this.courseType = courseType;
+    }
+
     public void setCourseThumbnail(String courseThumbnail) {
         this.courseThumbnail = courseThumbnail;
     }
@@ -218,6 +234,7 @@ public class Course implements Serializable {
             ", classNumber='" + getClassNumber() + "'" +
             ", courseOtherInfo='" + getCourseOtherInfo() + "'" +
             ", courseThumbnail='" + getCourseThumbnail() + "'" +
+            ", courseType='" + getCourseType() + "'" +
             "}";
     }
 }

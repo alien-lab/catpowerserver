@@ -222,8 +222,8 @@ public class CourseSchedulingResource {
         }
     }
     @ApiOperation(value = "获取排课签到二维码")
-    @GetMapping("/course-schedulings/qr/{scheId}")
-    public ResponseEntity getScheQrcode(@PathVariable Long scheId){
+    @GetMapping("/course-schedulings/qr/scheId")
+    public ResponseEntity getScheQrcode(@RequestParam Long scheId){
         try{
             QrInfo qr=courseSchedulingService.getScheQrcode(scheId);
             return ResponseEntity.ok(qr);
@@ -236,14 +236,28 @@ public class CourseSchedulingResource {
 
     @ApiOperation(value = "根据教练的ID获取教练的排课记录")
     @GetMapping("/course-schedulings/courseScheByCoachId")
-    public ResponseEntity<List<CourseScheduling>> getCourseSche(@RequestParam Long coachId){
+    public ResponseEntity getCourseSche(@RequestParam Long coachId){
         try {
             List<CourseScheduling> result = courseSchedulingService.getcourseSche(coachId);
             return ResponseEntity.ok().body(result);
         } catch (Exception e) {
             e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
         }
-        return null;
+    }
+
+    @ApiOperation(value = "获取全部教练的排课记录")
+    @GetMapping("/course-schedulings/courseScheduling")
+    public ResponseEntity getcourseScheduling(){
+        try {
+            List list = courseSchedulingService.getCourseScheduling();
+            return ResponseEntity.ok().body(list);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
     }
 
 

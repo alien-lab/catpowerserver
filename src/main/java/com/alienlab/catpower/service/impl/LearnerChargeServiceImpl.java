@@ -1,21 +1,21 @@
 package com.alienlab.catpower.service.impl;
 
 import com.alienlab.catpower.domain.*;
-import com.alienlab.catpower.repository.LearnerRepository;
-import com.alienlab.catpower.service.*;
 import com.alienlab.catpower.repository.LearnerChargeRepository;
+import com.alienlab.catpower.service.BuyCourseService;
+import com.alienlab.catpower.service.CourseSchedulingService;
+import com.alienlab.catpower.service.LearnerChargeService;
+import com.alienlab.catpower.service.LearnerService;
 import com.alienlab.catpower.web.wechat.service.WechatUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.text.ParseException;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,7 +29,6 @@ public class LearnerChargeServiceImpl implements LearnerChargeService{
 
     private final LearnerChargeRepository learnerChargeRepository;
 
-
     @Autowired
     CourseSchedulingService courseSchedulingService;
 
@@ -41,10 +40,6 @@ public class LearnerChargeServiceImpl implements LearnerChargeService{
 
     @Autowired
     BuyCourseService buyCourseService;
-
-    @Autowired
-    CourseService courseService;
-
 
     public LearnerChargeServiceImpl(LearnerChargeRepository learnerChargeRepository) {
         this.learnerChargeRepository = learnerChargeRepository;
@@ -168,38 +163,8 @@ public class LearnerChargeServiceImpl implements LearnerChargeService{
         }
     }
 
-
-    //查询全部已签到的课程
     @Override
-    public List<LearnerCharge> findLeanerChargeByLearnerId(Long learnerId) throws Exception{
-        Learner learner = learnerService.findOne(learnerId);
-        if (learner==null){
-            throw new Exception("没有找到该学员信息");
-        }
-        System.out.println("==========="+learner);
-
-        return learnerChargeRepository.findLearnerChargeByLearner(learner);
-    }
-
-    //查询课程签到记录
-    @Override
-    public List<LearnerCharge> findLearnerChargeByCourseIdAndLearnerId(Long courseId, Long learnerId) {
-        Learner learner = learnerService.findOne(learnerId);
-        if (learner==null){
-            try {
-                throw new Exception("没有找到该学员信息");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        Course course = courseService.findOne(courseId);
-        if (course==null){
-            try {
-                throw new Exception("没有找到该学员信息");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return learnerChargeRepository.findLearnerChargeByCourseAndLearner(course,learner);
+    public boolean addLearnerCharge(Long id, ZonedDateTime chargeTime, String buyCourseId, String chargePeople, Long remainNumber, Long learner, Course course, Coach coach) {
+        return false;
     }
 }
