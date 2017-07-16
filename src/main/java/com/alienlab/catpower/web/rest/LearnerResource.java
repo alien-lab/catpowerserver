@@ -1,11 +1,13 @@
 package com.alienlab.catpower.web.rest;
 
+import com.alienlab.catpower.domain.LearnerCharge;
 import com.alienlab.catpower.web.rest.util.ExecResult;
 import com.codahale.metrics.annotation.Timed;
 import com.alienlab.catpower.domain.Learner;
 import com.alienlab.catpower.service.LearnerService;
 import com.alienlab.catpower.web.rest.util.HeaderUtil;
 import com.alienlab.catpower.web.rest.util.PaginationUtil;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
@@ -139,5 +141,6 @@ public class LearnerResource {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
         }
     }
+
 
 }

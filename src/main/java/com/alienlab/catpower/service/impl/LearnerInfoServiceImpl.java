@@ -1,8 +1,13 @@
 package com.alienlab.catpower.service.impl;
 
+import com.alienlab.catpower.domain.CourseScheduling;
+import com.alienlab.catpower.domain.Learner;
+import com.alienlab.catpower.service.CourseSchedulingService;
+import com.alienlab.catpower.service.CourseService;
 import com.alienlab.catpower.service.LearnerInfoService;
 import com.alienlab.catpower.domain.LearnerInfo;
 import com.alienlab.catpower.repository.LearnerInfoRepository;
+import com.alienlab.catpower.service.LearnerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +34,11 @@ public class LearnerInfoServiceImpl implements LearnerInfoService{
 
     private final LearnerInfoRepository learnerInfoRepository;
 
+    @Autowired
+    LearnerService learnerService;
 
+    @Autowired
+    CourseSchedulingService courseSchedulingService;
 
     public LearnerInfoServiceImpl(LearnerInfoRepository learnerInfoRepository) {
         this.learnerInfoRepository = learnerInfoRepository;
@@ -85,6 +94,19 @@ public class LearnerInfoServiceImpl implements LearnerInfoService{
     public void delete(Long id) {
         log.debug("Request to delete LearnerInfo : {}", id);
         learnerInfoRepository.delete(id);
+    }
+
+    @Override
+    public LearnerInfo findLearnerInfoByLearnerIdAndCourseSchedulingId(Long learnerId, Long courseSchedulingId) throws Exception{
+        Learner learner = learnerService.findOne(learnerId);
+        if(learner == null){
+            throw new Exception("没有对应的学员信息");
+        }
+        CourseScheduling courseScheduling = courseSchedulingService.findOne(courseSchedulingId);
+        if (courseScheduling  == null){
+            throw new Exception("没有找到对应的排课表");
+        }
+        return learnerInfoRepository.findLearnerInfoByLearnerAndCourseScheduling(learner,courseScheduling);
     }
 
 

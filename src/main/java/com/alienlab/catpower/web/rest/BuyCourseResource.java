@@ -1,6 +1,7 @@
 package com.alienlab.catpower.web.rest;
 
 import com.alienlab.catpower.domain.BuyCourse;
+import com.alienlab.catpower.domain.LearnerCharge;
 import com.alienlab.catpower.service.BuyCourseService;
 import com.alienlab.catpower.web.rest.util.ExecResult;
 import com.alienlab.catpower.web.rest.util.HeaderUtil;
@@ -23,10 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * REST controller for managing BuyCourse.
@@ -167,5 +165,30 @@ public class BuyCourseResource {
             ExecResult er=new ExecResult(false,e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
         }
+    }
+
+    @ApiOperation("查询我的全部课程、可用课程、完结课程")
+    @GetMapping("/buy-courses/mycourse/{learnerId}")
+    public ResponseEntity getMyCourse(@PathVariable(value = "learnerId") Long learnerId){
+        //查询全部课程
+        List<BuyCourse> allCourse = null;
+        List<BuyCourse> startCourse = null;
+        List<BuyCourse> finishCourse = null;
+
+        try {
+            allCourse = buyCourseService.findBuyCourseByLearnerId(learnerId);
+            startCourse = buyCourseService.findUseBuyCourseByLearnerId(learnerId);
+            finishCourse = buyCourseService.findNotUseBuyCourseByLearnerId(learnerId);
+
+        } catch (Exception e) {
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
+
+        Map newMap = new HashMap();
+        newMap.put("allCourse",allCourse);
+        newMap.put("startCourse",startCourse);
+        newMap.put("finishCourse",finishCourse);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(newMap);
     }
 }

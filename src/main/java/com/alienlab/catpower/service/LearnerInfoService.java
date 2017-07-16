@@ -44,4 +44,7 @@ public interface LearnerInfoService {
      * 根据学员ID回去学员的健身资料卡
      */
 
+    //每节课的教练建议
+    LearnerInfo findLearnerInfoByLearnerIdAndCourseSchedulingId(Long learnerId,Long courseSchedulingId) throws Exception;
+
 }

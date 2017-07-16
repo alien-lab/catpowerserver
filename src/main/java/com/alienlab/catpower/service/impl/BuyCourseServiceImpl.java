@@ -3,9 +3,11 @@ package com.alienlab.catpower.service.impl;
 import com.alienlab.catpower.domain.BuyCourse;
 import com.alienlab.catpower.domain.Course;
 import com.alienlab.catpower.domain.Learner;
+import com.alienlab.catpower.domain.LearnerCharge;
 import com.alienlab.catpower.repository.BuyCourseRepository;
 import com.alienlab.catpower.repository.CourseRepository;
 import com.alienlab.catpower.service.BuyCourseService;
+import com.alienlab.catpower.service.LearnerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +44,8 @@ public class BuyCourseServiceImpl implements BuyCourseService{
 
     @Autowired
     CourseRepository courseRepository;
+    @Autowired
+    LearnerService learnerService;
 
     public BuyCourseServiceImpl(BuyCourseRepository buyCourseRepository) {
         this.buyCourseRepository = buyCourseRepository;
@@ -141,4 +146,56 @@ public class BuyCourseServiceImpl implements BuyCourseService{
         }
         return buyCourseRepository.findBuyCourseByLearnerAndCourse(learner,course);
     }
+
+    @Override
+    public List<BuyCourse> findBuyCourseByLearnerId(Long learnerId) throws Exception {
+        if (learnerId==null){
+            throw new Exception("请求错误："+learnerId);
+        }
+        Learner learner = learnerService.findOne(learnerId);
+        if (learner==null){
+            throw new Exception("没有找到该学员信息");
+        }
+        return buyCourseRepository.findBuyCourseByLearner(learner);
+    }
+
+    @Override
+    public List<BuyCourse> findUseBuyCourseByLearnerId(Long learnerId) throws Exception {
+        if (learnerId==null){
+            throw new Exception("请求错误："+learnerId);
+        }
+        Learner learner = learnerService.findOne(learnerId);
+        if (learner==null){
+            throw new Exception("没有找到该学员信息");
+        }
+        List<BuyCourse> buyCourses = buyCourseRepository.findBuyCourseByLearner(learner);
+        List<BuyCourse> buyCoursesList = new ArrayList<BuyCourse>();
+        for (BuyCourse buyCourse :buyCourses){
+            if (buyCourse.getRemainClass()>0){
+                buyCoursesList.add(buyCourse);
+            }
+        }
+        return buyCoursesList;
+    }
+
+    @Override
+    public List<BuyCourse> findNotUseBuyCourseByLearnerId(Long learnerId) throws Exception {
+        if (learnerId==null){
+            throw new Exception("请求错误："+learnerId);
+        }
+        Learner learner = learnerService.findOne(learnerId);
+        if (learner==null){
+            throw new Exception("没有找到该学员信息");
+        }
+        List<BuyCourse> buyCourses = buyCourseRepository.findBuyCourseByLearner(learner);
+        List<BuyCourse> buyCoursesList = new ArrayList<BuyCourse>();
+        for (BuyCourse buyCourse :buyCourses){
+            if (buyCourse.getRemainClass()<0){
+                buyCoursesList.add(buyCourse);
+            }
+        }
+        return buyCoursesList;
+    }
+
+
 }

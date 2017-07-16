@@ -1,6 +1,7 @@
 package com.alienlab.catpower.web.rest;
 
 import com.alibaba.fastjson.util.TypeUtils;
+import com.alienlab.catpower.domain.Learner;
 import com.alienlab.catpower.web.rest.util.ExecResult;
 import com.codahale.metrics.annotation.Timed;
 import com.alienlab.catpower.domain.LearnerCharge;
@@ -22,9 +23,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.Entity;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -41,6 +44,7 @@ public class LearnerChargeResource {
     private static final String ENTITY_NAME = "learnerCharge";
 
     private final LearnerChargeService learnerChargeService;
+
 
     public LearnerChargeResource(LearnerChargeService learnerChargeService) {
         this.learnerChargeService = learnerChargeService;
@@ -162,7 +166,30 @@ public class LearnerChargeResource {
         }
     }
 
+    @ApiOperation("查询学员已经签到的课程")
+    @GetMapping("/learner-charges/stusign/{learnerId}")
+    public ResponseEntity getStuSignCourse(@PathVariable(value = "learnerId") Long learnerId){
+        try {
+            List<LearnerCharge> learnerCharges = learnerChargeService.findLeanerChargeByLearnerId(learnerId);
+            return ResponseEntity.ok().body(learnerCharges);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
+    }
 
-
+    @ApiOperation("查询学员已经签到的签到记录")
+    @GetMapping("/learner-charges/stusign/log")
+    public ResponseEntity getStuSignLog(@RequestParam Long courseIdId,@RequestParam Long learnerId){
+        try {
+            List<LearnerCharge> learnerCharges = learnerChargeService.findLearnerChargeByCourseIdAndLearnerId(courseIdId,learnerId);
+            return ResponseEntity.ok().body(learnerCharges);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
+    }
 
 }

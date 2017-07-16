@@ -1,6 +1,7 @@
 package com.alienlab.catpower.service;
 
 import com.alienlab.catpower.domain.Learner;
+import com.alienlab.catpower.domain.LearnerCharge;
 import com.alienlab.catpower.web.wechat.bean.entity.QrInfo;
 import com.alienlab.catpower.web.wechat.bean.entity.WechatUser;
 import org.springframework.data.domain.Page;
@@ -8,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.text.ParseException;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -55,5 +57,8 @@ public interface LearnerService {
     //绑定学员微信
     Learner bindWechatUser(String openid,Long learnerId) throws Exception;
     Learner bindWechatUser(WechatUser wechatUser,Learner learner) throws Exception;
+
+
+
 
 }

@@ -2,6 +2,7 @@ package com.alienlab.catpower.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alienlab.catpower.domain.Learner;
+import com.alienlab.catpower.domain.LearnerCharge;
 import com.alienlab.catpower.repository.LearnerRepository;
 import com.alienlab.catpower.service.LearnerService;
 import com.alienlab.catpower.web.wechat.bean.entity.QrInfo;
@@ -21,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,7 +30,7 @@ import java.util.Map;
  */
 @Service
 @Transactional
-public class LearnerServiceImpl implements LearnerService{
+public class LearnerServiceImpl implements LearnerService {
 
     private final Logger log = LoggerFactory.getLogger(LearnerServiceImpl.class);
 
@@ -64,10 +66,10 @@ public class LearnerServiceImpl implements LearnerService{
     }
 
     /**
-     *  Get all the learners.
+     * Get all the learners.
      *
-     *  @param pageable the pagination information
-     *  @return the list of entities
+     * @param pageable the pagination information
+     * @return the list of entities
      */
     @Override
     @Transactional(readOnly = true)
@@ -78,10 +80,10 @@ public class LearnerServiceImpl implements LearnerService{
     }
 
     /**
-     *  Get one learner by id.
+     * Get one learner by id.
      *
-     *  @param id the id of the entity
-     *  @return the entity
+     * @param id the id of the entity
+     * @return the entity
      */
     @Override
     @Transactional(readOnly = true)
@@ -92,9 +94,9 @@ public class LearnerServiceImpl implements LearnerService{
     }
 
     /**
-     *  Delete the  learner by id.
+     * Delete the  learner by id.
      *
-     *  @param id the id of the entity
+     * @param id the id of the entity
      */
     @Override
     public void delete(Long id) {
@@ -105,21 +107,21 @@ public class LearnerServiceImpl implements LearnerService{
 
     @Override
     public Map learnCountStatiscByDate(Date date) throws ParseException {
-        SimpleDateFormat sf=new SimpleDateFormat("yyyyMMddHHmmss");
-        SimpleDateFormat sf1=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String sd=sf.format(date);
-        sd=sd.substring(0,8)+"000000";
-        Date d1= null,d2=null;
+        SimpleDateFormat sf = new SimpleDateFormat("yyyyMMddHHmmss");
+        SimpleDateFormat sf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String sd = sf.format(date);
+        sd = sd.substring(0, 8) + "000000";
+        Date d1 = null, d2 = null;
         d1 = sf.parse(sd);
-        d2=new Date(d1.getTime()+1000*60*60*24);
-        String startDate=sf1.format(d1);
-        String endDate=sf1.format(d2);
-        String sql="SELECT tb1.sigincount,tb2.regcount FROM ( " +
+        d2 = new Date(d1.getTime() + 1000 * 60 * 60 * 24);
+        String startDate = sf1.format(d1);
+        String endDate = sf1.format(d2);
+        String sql = "SELECT tb1.sigincount,tb2.regcount FROM ( " +
             "SELECT 1 f, COUNT(learner_id) sigincount FROM `learner_charge` " +
-            "WHERE charge_time>='"+startDate+"' AND charge_time<='"+endDate+"' " +
+            "WHERE charge_time>='" + startDate + "' AND charge_time<='" + endDate + "' " +
             ") tb1,( " +
             "SELECT 1 f,COUNT(DISTINCT id) regcount FROM `learner`  " +
-            "WHERE regist_time>='"+startDate+"' AND regist_time<='"+endDate+"'  " +
+            "WHERE regist_time>='" + startDate + "' AND regist_time<='" + endDate + "'  " +
             ") tb2 " +
             "WHERE tb1.f=tb2.f";
 
@@ -134,25 +136,25 @@ public class LearnerServiceImpl implements LearnerService{
 
     @Override
     public QrInfo getLearnerBindQr(String openid) throws Exception {
-        Learner learner=learnerRepository.findLearnerByOpenid(openid);
+        Learner learner = learnerRepository.findLearnerByOpenid(openid);
         return getLearnerBindQr(learner);
     }
 
     @Override
     public QrInfo getLearnerBindQr(Learner learner) throws Exception {
-        if(learner==null){
+        if (learner == null) {
             throw new Exception("未找到学员注册信息。");
         }
-        if(learner.getQrInfo()!=null){
+        if (learner.getQrInfo() != null) {
             return learner.getQrInfo();
         }
         //如果当前员工
-        String sceneId = "2and"+learner.getId()+"";
-        JSONObject jo =  wechatUtil.get_qr_code_ticket(sceneId);
-        if(jo==null || jo.getString("ticket")==null){
-            throw new Exception("生成签到二维码失败！排课编码："+learner.getId());
+        String sceneId = "2and" + learner.getId() + "";
+        JSONObject jo = wechatUtil.get_qr_code_ticket(sceneId);
+        if (jo == null || jo.getString("ticket") == null) {
+            throw new Exception("生成签到二维码失败！排课编码：" + learner.getId());
         }
-        QrInfo qr=qrInfoService.createQrinfo(sceneId, 2L,jo.getString("ticket"));
+        QrInfo qr = qrInfoService.createQrinfo(sceneId, 2L, jo.getString("ticket"));
         learner.setQrInfo(qr);
         learnerRepository.save(learner);
         return qr;
@@ -160,26 +162,27 @@ public class LearnerServiceImpl implements LearnerService{
 
     @Override
     public Learner bindWechatUser(String openid, Long learnerId) throws Exception {
-        WechatUser user=wechatUserService.findUserByOpenid(openid);
-        if(user==null){
-            throw new Exception("未找到关联的微信用户，用户openid:"+openid);
+        WechatUser user = wechatUserService.findUserByOpenid(openid);
+        if (user == null) {
+            throw new Exception("未找到关联的微信用户，用户openid:" + openid);
         }
-        Learner learner=learnerRepository.findOne(learnerId);
-        if(learner==null){
-            throw new Exception("未找到已注册的学员信息，学员编码:"+learnerId);
+        Learner learner = learnerRepository.findOne(learnerId);
+        if (learner == null) {
+            throw new Exception("未找到已注册的学员信息，学员编码:" + learnerId);
         }
-        return bindWechatUser(user,learner);
+        return bindWechatUser(user, learner);
     }
 
     @Override
     public Learner bindWechatUser(WechatUser wechatUser, Learner learner) throws Exception {
-        if(learner.getWechatUser()!=null){
-            if(!learner.getWechatUser().getOpenId().equals(wechatUser.getOpenId())){
-                throw new Exception("学员账户"+learner.getLearneName()+"已被"+learner.getWechatUser().getNickName()+"绑定");
+        if (learner.getWechatUser() != null) {
+            if (!learner.getWechatUser().getOpenId().equals(wechatUser.getOpenId())) {
+                throw new Exception("学员账户" + learner.getLearneName() + "已被" + learner.getWechatUser().getNickName() + "绑定");
             }
         }
         learner.setWechatUser(wechatUser);
         return learnerRepository.save(learner);
     }
+
 
 }

@@ -2,6 +2,7 @@ package com.alienlab.catpower.service;
 
 import com.alienlab.catpower.domain.BuyCourse;
 import com.alienlab.catpower.domain.Learner;
+import com.alienlab.catpower.domain.LearnerCharge;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -52,4 +53,15 @@ public interface BuyCourseService {
 
     //获取指定人购买的指定课程
     BuyCourse getCourseByLeanerAndCourse(Learner learner, Long courseId) throws Exception;
+
+
+    //查询我的课程
+    List<BuyCourse> findBuyCourseByLearnerId(Long learnerId) throws Exception;
+
+    //查询我的可用的课程
+    List<BuyCourse> findUseBuyCourseByLearnerId(Long learnerId) throws Exception;
+
+    //查询我的不可用的课程
+    List<BuyCourse> findNotUseBuyCourseByLearnerId(Long learnerId) throws Exception;
+
 }

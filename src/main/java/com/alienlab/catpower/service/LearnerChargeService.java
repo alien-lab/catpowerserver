@@ -1,5 +1,6 @@
 package com.alienlab.catpower.service;
 
+import com.alienlab.catpower.domain.Course;
 import com.alienlab.catpower.domain.CourseScheduling;
 import com.alienlab.catpower.domain.Learner;
 import com.alienlab.catpower.domain.LearnerCharge;
@@ -51,4 +52,11 @@ public interface LearnerChargeService {
     LearnerCharge chargeCourse(String openid,Long scheId)throws Exception;
 
     LearnerCharge chargeCourse(Learner learner, CourseScheduling sche) throws Exception;
+
+    //查询学员的签到课程
+    List<LearnerCharge> findLeanerChargeByLearnerId(Long learnerId) throws Exception;
+
+    //查询学员对应的签到记录
+    List<LearnerCharge> findLearnerChargeByCourseIdAndLearnerId(Long courseId,Long learnerId);
+
 }
