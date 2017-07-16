@@ -168,4 +168,56 @@ public class BuyCourseServiceImpl implements BuyCourseService{
         }
         return list;
     }
+
+    @Override
+    public List<BuyCourse> findBuyCourseByLearnerId(Long learnerId) throws Exception {
+        if (learnerId==null){
+            throw new Exception("请求错误："+learnerId);
+        }
+        Learner learner = learnerService.findOne(learnerId);
+        if (learner==null){
+            throw new Exception("没有找到该学员信息");
+        }
+        return buyCourseRepository.findBuyCourseByLearner(learner);
+    }
+
+    @Override
+    public List<BuyCourse> findUseBuyCourseByLearnerId(Long learnerId) throws Exception {
+        if (learnerId==null){
+            throw new Exception("请求错误："+learnerId);
+        }
+        Learner learner = learnerService.findOne(learnerId);
+        if (learner==null){
+            throw new Exception("没有找到该学员信息");
+        }
+        List<BuyCourse> buyCourses = buyCourseRepository.findBuyCourseByLearner(learner);
+        List<BuyCourse> buyCoursesList = new ArrayList<BuyCourse>();
+        for (BuyCourse buyCourse :buyCourses){
+            if (buyCourse.getRemainClass()>0){
+                buyCoursesList.add(buyCourse);
+            }
+        }
+        return buyCoursesList;
+    }
+
+    @Override
+    public List<BuyCourse> findNotUseBuyCourseByLearnerId(Long learnerId) throws Exception {
+        if (learnerId==null){
+            throw new Exception("请求错误："+learnerId);
+        }
+        Learner learner = learnerService.findOne(learnerId);
+        if (learner==null){
+            throw new Exception("没有找到该学员信息");
+        }
+        List<BuyCourse> buyCourses = buyCourseRepository.findBuyCourseByLearner(learner);
+        List<BuyCourse> buyCoursesList = new ArrayList<BuyCourse>();
+        for (BuyCourse buyCourse :buyCourses){
+            if (buyCourse.getRemainClass()<0){
+                buyCoursesList.add(buyCourse);
+            }
+        }
+        return buyCoursesList;
+    }
+
+
 }

@@ -172,7 +172,31 @@ public class LearnerChargeResource {
         jo.getJSONObject("obj");
         return ResponseEntity.ok("success");
     }
+    @ApiOperation("查询学员已经签到的课程")
+    @GetMapping("/learner-charges/stusign/{learnerId}")
+    public ResponseEntity getStuSignCourse(@PathVariable(value = "learnerId") Long learnerId){
+        try {
+            List<LearnerCharge> learnerCharges = learnerChargeService.findLeanerChargeByLearnerId(learnerId);
+            return ResponseEntity.ok().body(learnerCharges);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
+    }
 
+    @ApiOperation("查询学员已经签到的签到记录")
+    @GetMapping("/learner-charges/stusign/log")
+    public ResponseEntity getStuSignLog(@RequestParam Long courseIdId,@RequestParam Long learnerId){
+        try {
+            List<LearnerCharge> learnerCharges = learnerChargeService.findLearnerChargeByCourseIdAndLearnerId(courseIdId,learnerId);
+            return ResponseEntity.ok().body(learnerCharges);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
+    }
 
 
 
