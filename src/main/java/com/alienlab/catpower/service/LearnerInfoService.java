@@ -4,6 +4,8 @@ import com.alienlab.catpower.domain.LearnerInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 /**
  * Service Interface for managing LearnerInfo.
  */
@@ -46,5 +48,8 @@ public interface LearnerInfoService {
 
     //每节课的教练建议
     LearnerInfo findLearnerInfoByLearnerIdAndCourseSchedulingId(Long learnerId,Long courseSchedulingId) throws Exception;
+
+    //每节课的教练建议
+    List<LearnerInfo> findLearnerInfoByLearnerId(Long learnerId) throws Exception;
 
 }

@@ -138,4 +138,18 @@ public class LearnerInfoResource {
         }
     }
 
+
+    @ApiOperation("查询学员的健身日志")
+    @GetMapping("/learner-infos/fitlog/{learnerId}")
+    public ResponseEntity getFitLog(@PathVariable Long learnerId){
+        try {
+            List<LearnerInfo> learnerInfo = learnerInfoService.findLearnerInfoByLearnerId(learnerId);
+            return ResponseEntity.ok().body(learnerInfo);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
+
+        }
+    }
+
 }

@@ -109,5 +109,13 @@ public class LearnerInfoServiceImpl implements LearnerInfoService{
         return learnerInfoRepository.findLearnerInfoByLearnerAndCourseScheduling(learner,courseScheduling);
     }
 
+    @Override
+    public List<LearnerInfo> findLearnerInfoByLearnerId(Long learnerId) throws Exception {
 
+        Learner learner = learnerService.findOne(learnerId);
+        if(learner == null){
+            throw new Exception("没有对应的学员信息");
+        }
+        return learnerInfoRepository.findLearnerInfoByLearner(learner);
+    }
 }
