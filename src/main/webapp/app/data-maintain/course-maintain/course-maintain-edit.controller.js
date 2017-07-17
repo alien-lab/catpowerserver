@@ -7,7 +7,6 @@
     app.controller('courseMaintainEditController',['$timeout', '$scope', '$uibModalInstance','dataMaintain','Course','learnerCountService',function ($timeout, $scope, $uibModalInstance,dataMaintain,Course,learnerCountService) {
         var vm = this;
         vm.course = dataMaintain;
-
         console.log(vm.course.id);
         learnerCountService.loadlearnerCounts(vm.course.id,function (data) {
             $scope.learnerCount = data;

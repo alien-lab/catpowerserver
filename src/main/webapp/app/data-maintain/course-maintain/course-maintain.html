@@ -11,52 +11,116 @@
     <h2>课程维护</h2>
     <jhi-alert></jhi-alert>
     <div class="container-fluid">
-        <div class="row" style="padding-right: -15px;">
-            <div class="col-lg-12 col-md-12 col-sm-12" style="margin-top: 2.5%;">
-                <!--搜索-->
-                <div class="col-lg-offset-4 col-md-offset-4 col-sm-offset-4 col-lg-4 col-md-4 col-sm-4">
-                    <div class="input-group input-group-sm">
-                        <input type="text" class="form-control" ng-model="sss" placeholder="搜索...">
-                        <span class="input-group-btn">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12" >
+                <div class="col-lg-12 col-md-12 col-sm-12" style="margin-top: 2.5%;">
+                    <!--搜索-->
+                    <div class="col-lg-offset-4 col-md-offset-4 col-sm-offset-4 col-lg-4 col-md-4 col-sm-4">
+                        <div class="input-group input-group-md">
+                            <input type="text" class="form-control" ng-model="likeCourseName" placeholder="搜索...">
+                            <span class="input-group-btn" ng-click="search()">
                             <button class="btn btn-default" type="button">
-                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-search" aria-hidden="true" ></span>
                             </button>
-                        </span>
-                    </div>
-                </div>
-                <!--添加课程-->
-                <div class="col-lg-4 col-md-4 col-sm-4">
-                    <div class="col-lg-offset-4 col-md-offset-4 col-sm-offset-4 col-lg-4 col-md-4 col-sm-4"></div>
-                    <button class="btn btn-primary" ui-sref="course-maintain.new" >
-                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                        <span>创建课程</span>
-                    </button>
-                </div>
-            </div>
-            <div class="col-lg-12 col-md-12 col-sm-12" style="margin-top: 2.5%;">
-                <div class="col-lg-3 col-md-3 col-sm-3" ng-repeat="course in vm.courses | filter : sss">
-                    <div class="panel panel-info" id="panel">
-                        <div class="panel-heading">
-                            {{course.courseName}}
-                        </div>
-                        <div class="panel-body">
-                            <p style="height: 100px;line-height: 1.8;">{{course.courseIntroductions}}</p>
-                            <p style="color: #969696;font-size: 12px;">
-                                <span>{{course.classNumber}}人在学</span>&nbsp;·&nbsp;
-                                <span>总课时{{course.totalClassHour}}次</span>
-                            </p>
-                            <p style="color: #f01414;font-size: 12px;">
-                                <span>{{course.coursePrices |currency:"￥"}}</span>
-                                <span style="float: right;">会员{{course.courseVipprices|currency:"￥"}}</span>
-                            </p>
-                            <p style="color: #969696;font-size: 12px;float: right;">
-                                <a ui-sref="course-maintain-detail({id:course.id})">详情</a>
-                                <a ui-sref="course-maintain.edit({id:course.id})">编辑</a>
-                                <a ui-sref="course-maintain.delete({id:course.id})">删除</a>
-                            </p>
+                            </span>
                         </div>
                     </div>
+                    <!--添加课程-->
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div class="col-lg-offset-4 col-md-offset-4 col-sm-offset-4 col-lg-4 col-md-4 col-sm-4"></div>
+                        <button class="btn btn-primary" ui-sref="course-maintain.new" >
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                            <span>创建课程</span>
+                        </button>
+                    </div>
                 </div>
+                <uib-tabset class="col-lg-12 col-md-12 col-sm-12" type="pills" style="margin-top: 1.5%;">
+                    <!--全部课程-->
+                    <uib-tab heading="全部" classes="btn-sm" style="margin-left: 7px;font-size: 111%;" ng-click="getallCourse()">
+                        <div ng-show="allSearchShow" class="col-lg-12 col-md-12 col-sm-12" style="margin-top: 2.5%;padding: 0;">
+                            <div class="col-lg-3 col-md-3 col-sm-3" ng-repeat="course in allCourses">
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">
+                                        {{course.course_name}}
+                                        <span class="badge" style="float: right;">{{course.total_class_hour}}</span>
+                                    </div>
+                                    <div class="panel-body">
+                                        <p style="height: 100px;line-height: 1.8;">{{course.course_introductions}}</p>
+                                        <p style="color: #969696;font-size: 12px;">
+                                            <span>{{course.learnercount}}&nbsp;人在学</span>&nbsp;·&nbsp;
+                                            <span>排课次数&nbsp;{{course.schecount}}</span>
+                                        </p>
+                                        <p style="color: #f01414;font-size: 12px;">
+                                            <span>{{course.course_prices |currency:"￥"}}</span>
+                                            <span style="float: right;">会员{{course.course_vipprices|currency:"￥"}}</span>
+                                        </p>
+                                        <p style="color: #969696;font-size: 12px;float: right;">
+                                            <a ui-sref="course-maintain-detail({id:course.id})">详情</a>
+                                            <a ui-sref="course-maintain.edit({id:course.id})">编辑</a>
+                                            <a ui-sref="course-maintain.delete({id:course.id})">删除</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </uib-tab>
+                    <!--根据课程类型进行分类-->
+                    <uib-tab ng-repeat="courseType in allCourseType" heading="{{courseType.course_type}}" style="font-size: 111%;" ng-click="getCourseByType(courseType.course_type)" classes="btn-sm">
+                        <div ng-show="searchShow" class="col-lg-12 col-md-12 col-sm-12" style="margin-top: 2.5%;">
+                            <div class="col-lg-3 col-md-3 col-sm-3" ng-repeat="course in courseList">
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">
+                                        {{course.course_name}}
+                                        <span class="badge" style="float: right;">{{course.total_class_hour}}</span>
+                                    </div>
+                                    <div class="panel-body">
+                                        <p style="height: 100px;line-height: 1.8;">{{course.course_introductions}}</p>
+                                        <p style="color: #969696;font-size: 12px;">
+                                            <span>{{course.learnercount}}&nbsp;人在学</span>&nbsp;·&nbsp;
+                                            <span>排课次数&nbsp;{{course.schecount}}</span>
+                                        </p>
+                                        <p style="color: #f01414;font-size: 12px;">
+                                            <span>{{course.course_prices |currency:"￥"}}</span>
+                                            <span style="float: right;">会员{{course.course_vipprices|currency:"￥"}}</span>
+                                        </p>
+                                        <p style="color: #969696;font-size: 12px;float: right;">
+                                            <a ui-sref="course-maintain-detail({id:course.id})">详情</a>
+                                            <a ui-sref="course-maintain.edit({id:course.id})">编辑</a>
+                                            <a ui-sref="course-maintain.delete({id:course.id})">删除</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </uib-tab>
+                    <!--搜索结果-->
+                    <div class="col-lg-12 col-md-12 col-sm-12" style="margin-top: 2.5%;padding: 0;">
+                        <div ng-show="searchHide" class="col-lg-3 col-md-3 col-sm-3" ng-repeat="course in LikeCourses ">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    {{course.course_name}}
+                                    <span class="badge" style="float: right;">{{course.total_class_hour}}</span>
+                                </div>
+                                <div class="panel-body">
+                                    <p style="height: 100px;line-height: 1.8;">{{course.course_introductions}}</p>
+                                    <p style="color: #969696;font-size: 12px;">
+                                        <span>{{course.learnercount}}&nbsp;人在学</span>&nbsp;·&nbsp;
+                                        <span>排课次数&nbsp;{{course.schecount}}</span>
+                                    </p>
+                                    <p style="color: #f01414;font-size: 12px;">
+                                        <span>{{course.course_prices |currency:"￥"}}</span>
+                                        <span style="float: right;">会员{{course.course_vipprices|currency:"￥"}}</span>
+                                    </p>
+                                    <p style="color: #969696;font-size: 12px;float: right;">
+                                        <a ui-sref="course-maintain-detail({id:course.id})">详情</a>
+                                        <a ui-sref="course-maintain.edit({id:course.id})">编辑</a>
+                                        <a ui-sref="course-maintain.delete({id:course.id})">删除</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tabset>
             </div>
         </div>
     </div>

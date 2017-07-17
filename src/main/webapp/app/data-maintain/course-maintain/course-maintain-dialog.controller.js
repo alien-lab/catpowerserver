@@ -7,6 +7,7 @@
     app.controller('courseMaintainDialogController',['$timeout', '$scope', '$uibModalInstance','dataMaintain','Course',function ($timeout, $scope, $uibModalInstance,dataMaintain,Course) {
         var vm = this;
         vm.course = dataMaintain;
+        vm.uploadurl="./api/image/upload";
         vm.clear = clear;
         vm.save = save;
 
