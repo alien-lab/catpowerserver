@@ -173,7 +173,18 @@ public class CourseResource {
     /**
      * 根据课ID查询课程
      */
-    // public ResponseEntity getCourseByCourseId(@RequestMapping Long id){}
+    @ApiOperation(value = "根据课ID查询课程")
+    @GetMapping("/course/courseId")
+    public ResponseEntity getCourseByCourseId(@RequestParam Long id){
+        try {
+            Map result = courseService.getCourseById(id);
+            return ResponseEntity.ok().body(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
+    }
     /**
      * 根据课程名称获取课程总课时
      */

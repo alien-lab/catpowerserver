@@ -37,6 +37,15 @@
             />
         </div>
         <div class="col-md-12 col-lg-12 col-sm-12 form-group">
+            <label class="control-label"  for="field_CourseType">课程类型</label>
+            <input type="text" class="form-control" name="totalClassHour" id="field_CourseType"
+                   ng-model="vm.course.courseType"
+            />
+            <a class="btn btn-info" ng-repeat="courseType in allCourseType" ng-click="getcourseType(courseType.course_type)" style="margin-top: 1.5%;margin-left: 1.5%;">
+                {{courseType.course_type}}
+            </a>
+        </div>
+        <div class="col-md-12 col-lg-12 col-sm-12 form-group">
             <label class="control-label"  for="field_courseIntroductions">课程说明</label>
             <textarea  class="form-control" name="courseIntroductions" id="field_courseIntroductions"
                    ng-model="vm.course.courseIntroductions" rows="3"
@@ -58,7 +67,7 @@
             </p>
             <p>
                 <single-file-upload upload-url="{{vm.uploadurl}}" file-url="vm.course.courseThumbnail"
-                                    button-text="上传图片">
+                                    button-text="上传课程缩略图">
                 </single-file-upload>
             </p>
         </div>

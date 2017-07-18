@@ -84,7 +84,8 @@
             'getCourseByType':{url:'/api/courses/type',method:'GET',isArray:true},
             'getAllCourseType':{url:'/api/courses/courseType',method:'GET',isArray:true},
             'getTotalClassHour':{url:' /api/course/courseName',method:'GET'},
-            'getLikeCourse':{url:'/api/course/like/courseName',method:'GET',isArray:true}
+            'getLikeCourse':{url:'/api/course/like/courseName',method:'GET',isArray:true},
+            'getCourseByCourseId':{url:'/api/course/courseId',method:'GET'}
         });
     }]);
     app.service('courseService',['courseResource',function (courseResource) {
@@ -148,6 +149,21 @@
         this.loadLikeCourses = function (courseName,callback) {
             courseResource.getLikeCourse({
                 'courseName':courseName
+            },function (data) {
+                if(callback){
+                    callback(data,true);
+                }
+            },function (error) {
+                console.log("courseTypeResource.getTotalClassHour()"+error);
+                if(callback){
+                    callback(error,false)
+                }
+            });
+        }
+        //根据课程ID获取课程
+        this.loadCourseById = function (id,callback) {
+            courseResource.getCourseByCourseId({
+                'id':id
             },function (data) {
                 if(callback){
                     callback(data,true);
