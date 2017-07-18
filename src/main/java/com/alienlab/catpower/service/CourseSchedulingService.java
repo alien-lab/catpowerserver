@@ -57,4 +57,6 @@ public interface CourseSchedulingService {
      * 根据教练id获取排课记录
      */
     List<CourseScheduling> getcourseSche(Long coachId) throws  Exception;
+
+    List getCourseScheduling() throws Exception;
 }

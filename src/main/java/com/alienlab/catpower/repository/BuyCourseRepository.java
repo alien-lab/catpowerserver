@@ -35,5 +35,14 @@ public interface BuyCourseRepository extends JpaRepository<BuyCourse,Long> {
     @Query("select a from BuyCourse a where a.learner.id=?1")
     List<BuyCourse> findCourseByLearner(Long learnerId);
 
+    //查询我的课程
+    List<BuyCourse> findBuyCourseByLearner(Learner learner);
+
+    //查询我的可用的课程
+    List<BuyCourse> findUseBuyCourseByLearner(Learner learner);
+
+    //查询我的不可用的课程
+    List<BuyCourse> findNotUseBuyCourseByLearner(Learner learner);
+
 
 }

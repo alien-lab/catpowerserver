@@ -55,4 +55,11 @@ public interface LearnerChargeService {
      * 添加核销记录
      */
     public boolean addLearnerCharge(Long id, ZonedDateTime chargeTime,String buyCourseId,String chargePeople,Long remainNumber,Long learner,Course course,Coach coach);
+
+    //查询学员的签到课程
+    List<LearnerCharge> findLeanerChargeByLearnerId(Long learnerId) throws Exception;
+
+    //查询学员对应的签到记录
+    List<LearnerCharge> findLearnerChargeByCourseIdAndLearnerId(Long courseId,Long learnerId);
+
 }

@@ -4,11 +4,22 @@
 (function () {
     'use strict';
     var app = angular.module('catpowerserverApp');
-    app.controller('courseMaintainDialogController',['$timeout', '$scope', '$uibModalInstance','dataMaintain','Course',function ($timeout, $scope, $uibModalInstance,dataMaintain,Course) {
+    app.controller('courseMaintainDialogController',['$timeout', '$scope', '$uibModalInstance','dataMaintain','Course','courseService',function ($timeout, $scope, $uibModalInstance,dataMaintain,Course,courseService) {
         var vm = this;
         vm.course = dataMaintain;
+        vm.uploadurl="./api/image/upload";
         vm.clear = clear;
         vm.save = save;
+
+        //获取所有的课程类型
+        courseService.loadAllCourseType(function (data) {
+            $scope.allCourseType = data;
+            console.log($scope.allCourseType);
+            //添加课程类型
+            $scope.getcourseType = function (courseType) {
+                vm.course.courseType = this.courseType.course_type;
+            }
+        });
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

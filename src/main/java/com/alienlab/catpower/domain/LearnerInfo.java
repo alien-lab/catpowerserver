@@ -34,6 +34,12 @@ public class LearnerInfo implements Serializable {
     @ManyToOne
     private Learner learner;
 
+    @ManyToOne
+    private CourseScheduling courseScheduling;
+
+
+
+
     public Long getId() {
         return id;
     }
@@ -75,6 +81,14 @@ public class LearnerInfo implements Serializable {
     public LearnerInfo bodytestData(String bodytestData) {
         this.bodytestData = bodytestData;
         return this;
+    }
+
+    public CourseScheduling getCourseScheduling() {
+        return courseScheduling;
+    }
+
+    public void setCourseScheduling(CourseScheduling courseScheduling) {
+        this.courseScheduling = courseScheduling;
     }
 
     public void setBodytestData(String bodytestData) {
@@ -130,11 +144,13 @@ public class LearnerInfo implements Serializable {
     @Override
     public String toString() {
         return "LearnerInfo{" +
-            "id=" + getId() +
-            ", time='" + getTime() + "'" +
-            ", exerciseData='" + getExerciseData() + "'" +
-            ", bodytestData='" + getBodytestData() + "'" +
-            ", coachAdvice='" + getCoachAdvice() + "'" +
-            "}";
+            "id=" + id +
+            ", time=" + time +
+            ", exerciseData='" + exerciseData + '\'' +
+            ", bodytestData='" + bodytestData + '\'' +
+            ", coachAdvice='" + coachAdvice + '\'' +
+            ", learner=" + learner +
+            ", courseScheduling=" + courseScheduling +
+            '}';
     }
 }

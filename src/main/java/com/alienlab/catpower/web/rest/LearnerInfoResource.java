@@ -5,6 +5,7 @@ import com.alienlab.catpower.domain.LearnerInfo;
 import com.alienlab.catpower.service.LearnerInfoService;
 import com.alienlab.catpower.web.rest.util.HeaderUtil;
 import com.alienlab.catpower.web.rest.util.PaginationUtil;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
@@ -32,7 +33,7 @@ public class LearnerInfoResource {
     private final Logger log = LoggerFactory.getLogger(LearnerInfoResource.class);
 
     private static final String ENTITY_NAME = "learnerInfo";
-        
+
     private final LearnerInfoService learnerInfoService;
 
     public LearnerInfoResource(LearnerInfoService learnerInfoService) {
@@ -122,6 +123,33 @@ public class LearnerInfoResource {
         log.debug("REST request to delete LearnerInfo : {}", id);
         learnerInfoService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    @ApiOperation("找每节课后对应的教练建议")
+    @GetMapping("/learner-infos/coachadvice")
+    public ResponseEntity getCoachAdvices(@RequestParam Long learnerId,@RequestParam Long courseSchedulingId){
+        try {
+            LearnerInfo learnerInfo = learnerInfoService.findLearnerInfoByLearnerIdAndCourseSchedulingId(learnerId,courseSchedulingId);
+            return ResponseEntity.ok().body(learnerInfo);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
+
+        }
+    }
+
+
+    @ApiOperation("查询学员的健身日志")
+    @GetMapping("/learner-infos/fitlog/{learnerId}")
+    public ResponseEntity getFitLog(@PathVariable Long learnerId){
+        try {
+            List<LearnerInfo> learnerInfo = learnerInfoService.findLearnerInfoByLearnerId(learnerId);
+            return ResponseEntity.ok().body(learnerInfo);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
+
+        }
     }
 
 }

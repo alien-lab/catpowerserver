@@ -39,6 +39,7 @@ public class Wechat {
         }
     }
 
+    //有事情发生用post
     @RequestMapping(value="",method = RequestMethod.POST, produces = MediaType.APPLICATION_XML_VALUE)
     public @ResponseBody
     MessageResponse doMessageResponse(@RequestBody String body){
