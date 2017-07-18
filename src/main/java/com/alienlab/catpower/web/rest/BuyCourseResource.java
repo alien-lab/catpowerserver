@@ -182,7 +182,7 @@ public class BuyCourseResource {
 
     @ApiOperation("查询我的全部课程、可用课程、完结课程")
     @GetMapping("/buy-courses/mycourse/{learnerId}")
-    public ResponseEntity getMyCourse(@PathVariable(value = "learnerId") Long learnerId){
+    public ResponseEntity getMyCourse(@PathVariable Long learnerId){
         //查询全部课程
         List<BuyCourse> allCourse = null;
         List<BuyCourse> startCourse = null;
