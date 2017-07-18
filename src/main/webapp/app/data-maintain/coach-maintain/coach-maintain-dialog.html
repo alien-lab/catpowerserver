@@ -36,7 +36,7 @@
                    ng-model="vm.coach.coachPicture"
             />-->
             <p>
-                <img  ng-src="{{vm.coach.coachPicture}}"/>
+                <img ng-if="vm.coach.coachPicture&&vm.coach.coachPicture!=''" ng-src="{{vm.coach.coachPicture}}" style="max-width:300px;"/>
             </p>
             <p>
                 <single-file-upload upload-url="{{vm.uploadurl}}" file-url="vm.coach.coachPicture"
