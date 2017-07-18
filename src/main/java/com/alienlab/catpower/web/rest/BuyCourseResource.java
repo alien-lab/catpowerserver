@@ -187,12 +187,10 @@ public class BuyCourseResource {
         List<BuyCourse> allCourse = null;
         List<BuyCourse> startCourse = null;
         List<BuyCourse> finishCourse = null;
-
         try {
             allCourse = buyCourseService.findBuyCourseByLearnerId(learnerId);
             startCourse = buyCourseService.findUseBuyCourseByLearnerId(learnerId);
             finishCourse = buyCourseService.findNotUseBuyCourseByLearnerId(learnerId);
-
         } catch (Exception e) {
             ExecResult er=new ExecResult(false,e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
@@ -202,6 +200,6 @@ public class BuyCourseResource {
         newMap.put("allCourse",allCourse);
         newMap.put("startCourse",startCourse);
         newMap.put("finishCourse",finishCourse);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(newMap);
+        return ResponseEntity.ok().body(newMap);
     }
 }
