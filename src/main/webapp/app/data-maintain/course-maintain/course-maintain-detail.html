@@ -1,20 +1,22 @@
 <div>
-    <h2><span>课程详情</span> {{vm.course.id}}</h2>
+    <h2><span>{{vm.course.courseName}}详情</span></h2>
     <hr>
     <jhi-alert-error></jhi-alert-error>
 </div>
 <div class="row">
     <div class="col-sm-offset-3 col-lg-offset-3 col-md-offset-3 col-sm-6 col-lg-6 col-md-6">
         <div class="thumbnail">
-            <img ng-src="{{vm.course.courseThumbnail}}" style="width: 100%;"/>
+            <img ng-src="{{courseById.course_thumbnail}}" style="width: 100%;"/>
             <div class="caption">
-                <h3>{{vm.course.courseName}}</h3>
-                <p>{{vm.course.courseIntroductions}}</p>
-                <p>{{vm.course.courseOtherInfo}}</p>
-                <p style="color: #969696;font-size: 12px;">在线人数 {{learnerCount.size}}人&nbsp;·&nbsp;总课时 {{vm.course.totalClassHour}}</p>
+                <p><h4>{{courseById.course_name}}&nbsp;&nbsp;<span class="badge" >{{courseById.course_type}}</span></h4></p>
+                <label>课程说明</label>
+                <p>{{courseById.course_introductions}}</p>
+                <label>课程其他信息</label>
+                <p>{{courseById.course_other_info}}</p>
+                <p style="color: #969696;font-size: 70%;">在线人数 {{courseById.learnercount}}人&nbsp;·&nbsp;总课时 {{courseById.total_class_hour}}</p>
                 <p>
-                    <span style="color: #ff0000;">{{vm.course.coursePrices | currency:"￥"}}</span>&nbsp;·&nbsp;
-                    <span style="color: #ff0000;">会员{{vm.course.courseVipprices | currency:"￥"}}</span>
+                    <span style="color: #ff0000;">{{courseById.course_prices | currency:"￥"}}</span>&nbsp;·&nbsp;
+                    <span style="color: #ff0000;">会员{{courseById.course_vipprices | currency:"￥"}}</span>
                 </p>
                 <p>
                     <button type="submit"

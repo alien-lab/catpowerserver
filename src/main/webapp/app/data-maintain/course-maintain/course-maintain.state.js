@@ -30,6 +30,7 @@
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('course-maintain');
                         $translatePartialLoader.addPart('global');
+                        $translatePartialLoader.addPart('course');
                         return $translate.refresh();
                     }]
                 }
