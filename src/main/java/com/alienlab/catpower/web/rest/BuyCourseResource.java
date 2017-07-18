@@ -191,15 +191,14 @@ public class BuyCourseResource {
             allCourse = buyCourseService.findBuyCourseByLearnerId(learnerId);
             startCourse = buyCourseService.findUseBuyCourseByLearnerId(learnerId);
             finishCourse = buyCourseService.findNotUseBuyCourseByLearnerId(learnerId);
+            Map newMap = new HashMap();
+            newMap.put("allCourse",allCourse);
+            newMap.put("startCourse",startCourse);
+            newMap.put("finishCourse",finishCourse);
+            return ResponseEntity.ok().body(newMap);
         } catch (Exception e) {
             ExecResult er=new ExecResult(false,e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
         }
-
-        Map newMap = new HashMap();
-        newMap.put("allCourse",allCourse);
-        newMap.put("startCourse",startCourse);
-        newMap.put("finishCourse",finishCourse);
-        return ResponseEntity.ok().body(newMap);
     }
 }
