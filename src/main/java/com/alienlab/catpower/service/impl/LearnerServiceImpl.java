@@ -5,8 +5,6 @@ import com.alienlab.catpower.domain.Learner;
 import com.alienlab.catpower.repository.BuyCourseRepository;
 import com.alienlab.catpower.repository.LearnerAppointmentRepository;
 import com.alienlab.catpower.repository.LearnerRepository;
-import com.alienlab.catpower.service.BuyCourseService;
-import com.alienlab.catpower.service.LearnerAppointmentService;
 import com.alienlab.catpower.service.LearnerService;
 import com.alienlab.catpower.web.wechat.bean.entity.QrInfo;
 import com.alienlab.catpower.web.wechat.bean.entity.WechatUser;
@@ -24,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -70,6 +69,8 @@ public class LearnerServiceImpl implements LearnerService{
     @Override
     public Learner save(Learner learner) {
         log.debug("Request to save Learner : {}", learner);
+        ZonedDateTime dateTime = ZonedDateTime.now();
+        learner.setRegistTime(dateTime);
         Learner result = learnerRepository.save(learner);
         return result;
     }

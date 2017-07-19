@@ -59,6 +59,9 @@ public class BuyCourseServiceImpl implements BuyCourseService{
     @Override
     public BuyCourse save(BuyCourse buyCourse) {
         log.debug("Request to save BuyCourse : {}", buyCourse);
+        ZonedDateTime dateTime = ZonedDateTime.now();
+        buyCourse.setBuyTime(dateTime);
+        buyCourse.setOperateTime(dateTime);
         BuyCourse result = buyCourseRepository.save(buyCourse);
         return result;
     }
@@ -220,6 +223,12 @@ public class BuyCourseServiceImpl implements BuyCourseService{
             }
         }
         return buyCoursesList;
+    }
+
+    @Override
+    public List<BuyCourse> getPaymentWay() throws Exception {
+        List<BuyCourse> list = buyCourseRepository.findBuyCourse();
+        return list;
     }
 
 

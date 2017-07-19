@@ -1,12 +1,14 @@
 package com.alienlab.catpower.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
 import com.alienlab.catpower.domain.Course;
 import com.alienlab.catpower.service.CourseService;
+import com.alienlab.catpower.web.rest.util.ExecResult;
 import com.alienlab.catpower.web.rest.util.HeaderUtil;
 import com.alienlab.catpower.web.rest.util.PaginationUtil;
-import io.swagger.annotations.ApiParam;
+import com.codahale.metrics.annotation.Timed;
 import io.github.jhipster.web.util.ResponseUtil;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -18,8 +20,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -32,7 +34,7 @@ public class CourseResource {
     private final Logger log = LoggerFactory.getLogger(CourseResource.class);
 
     private static final String ENTITY_NAME = "course";
-        
+
     private final CourseService courseService;
 
     public CourseResource(CourseService courseService) {
@@ -122,6 +124,108 @@ public class CourseResource {
         log.debug("REST request to delete Course : {}", id);
         courseService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+    /**
+     * 查询所有的课程信息
+     */
+    @ApiOperation(value = "查询所有的课程信息")
+    @GetMapping("/courses/courseInfo")
+    public ResponseEntity getAllCourse(){
+        try {
+            List result = courseService.getCourse();
+            return ResponseEntity.ok().body(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult execResult = new ExecResult(false,e.getMessage());
+            return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(execResult);
+        }
+    }
+    /**
+     * 根据课程类型查询课程信息
+     */
+    @ApiOperation(value = "根据课程类型查询课程信息")
+    @GetMapping("/courses/type")
+    public ResponseEntity getCourseInfo(@RequestParam String courseType){
+        try {
+            List list = courseService.getCourseInfoByCourseType(courseType);
+            return ResponseEntity.ok().body(list);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
+    }
+    /**
+     * 查询所有课程类型
+     */
+    @ApiOperation(value = "查询所有课程类型")
+    @GetMapping("/courses/courseType")
+    public ResponseEntity getCourseType(){
+        try {
+            List list = courseService.getCourseType();
+            return ResponseEntity.ok().body(list);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er = new ExecResult(false,e.getMessage());
+            return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
+    }
+    /**
+     * 根据课ID查询课程
+     */
+    @ApiOperation(value = "根据课ID查询课程")
+    @GetMapping("/course/courseId")
+    public ResponseEntity getCourseByCourseId(@RequestParam Long id){
+        try {
+            Map result = courseService.getCourseById(id);
+            return ResponseEntity.ok().body(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
+    }
+    /**
+     * 根据课程名称获取课程总课时
+     */
+    @ApiOperation(value = "根据课程名称获取课程总课时")
+    @GetMapping("/course/courseName")
+    public ResponseEntity getTotalClassHour(@RequestParam String courseName){
+        try {
+            Map result = courseService.getTotalClassHourByCourseName(courseName);
+            return ResponseEntity.ok().body(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
+    }
+    /**
+     * 根据课程名称模糊查询
+     */
+    @ApiOperation(value = "根据课程名称模糊查询课程")
+    @GetMapping("/course/like/courseName")
+    public ResponseEntity getLikeCourse(@RequestParam String courseName){
+        try {
+            List result = courseService.getCourseByCourseName(courseName);
+            return ResponseEntity.ok().body(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
+    }
+    @ApiOperation(value = "根据课程名称获取课程")
+    @GetMapping("/course/courseInfo/courseName")
+    public ResponseEntity getcourseInfo(@RequestParam String courseName){
+        try {
+            List result = courseService.getCourseInfoByCourseName(courseName);
+            return ResponseEntity.ok().body(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
     }
 
 }

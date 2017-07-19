@@ -5,12 +5,13 @@
         .module('catpowerserverApp')
         .controller('BuyCourseDialogController', BuyCourseDialogController);
 
-    BuyCourseDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'BuyCourse', 'Learner', 'Course', 'Coach'];
+    BuyCourseDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'BuyCourse', 'Learner', 'Course', 'Coach','courseService','buyCourseService','$filter'];
 
-    function BuyCourseDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, BuyCourse, Learner, Course, Coach) {
+    function BuyCourseDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, BuyCourse, Learner, Course, Coach,courseService,buyCourseService,$filter) {
         var vm = this;
 
         vm.buyCourse = entity;
+        vm.buyCourse
         vm.clear = clear;
         vm.datePickerOpenStatus = {};
         vm.openCalendar = openCalendar;
@@ -22,6 +23,37 @@
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();
         });
+
+        //获取支付方式
+        buyCourseService.loadPaymentWay(function (data) {
+            $scope.payMentWayList = data;
+            $scope.getPaymentWay = function () {
+                vm.buyCourse.paymentWay = this.payWay.paymentWay;
+            }
+        });
+        //获取课时
+        $scope.getTotalHour = function () {
+            console.log(vm.buyCourse.course.courseName);
+            var courseName = vm.buyCourse.course.courseName;
+            courseService.loadTotalClassHour(courseName,function (data) {
+                $scope.totalClassHour = data;
+                vm.buyCourse.remainClass =$scope.totalClassHour.total_class_hour;
+            });
+            //获取课程购买价格
+            var id = vm.buyCourse.course.id;
+            console.log(id);
+            courseService.loadCourseById(id,function (data) {
+                $scope.prices = data;
+                console.log($scope.prices);
+                $scope.getPrices = function (price) {
+                    vm.buyCourse.paymentAccount = price;
+                };
+                $scope.getVipPrices = function (price) {
+                    vm.buyCourse.paymentAccount = price;
+                }
+            });
+        };
+
 
         function clear () {
             $uibModalInstance.dismiss('cancel');
@@ -53,4 +85,33 @@
             vm.datePickerOpenStatus[date] = true;
         }
     }
+})();
+
+(function () {
+    'use strict';
+    var app = angular.module('catpowerserverApp');
+
+    app.factory("buyCourseResource",["$resource",function ($resource) {
+
+        var resourceUrl = "/api/buy-courses/paymentWay";
+        var result = $resource(resourceUrl,{},{
+            'getPaymentWay':{method:'GET',isArray:true},
+        });
+        return result;
+    }]);
+    app.service("buyCourseService",["buyCourseResource",function (buyCourseResource) {
+
+        this.loadPaymentWay = function (callback) {
+            buyCourseResource.getPaymentWay(function (data) {
+                if(callback){
+                    callback(data,true)
+                }
+            },function (error) {
+                if (callback) {
+                    console.log(" buyCourseResource.getPaymentWay()"+error);
+                    callback(error, false)
+                }
+            });
+        };
+    }]);
 })();

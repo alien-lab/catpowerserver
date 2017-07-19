@@ -2,7 +2,6 @@ package com.alienlab.catpower.service;
 
 import com.alienlab.catpower.domain.BuyCourse;
 import com.alienlab.catpower.domain.Learner;
-import com.alienlab.catpower.domain.LearnerAppointment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -70,5 +69,8 @@ public interface BuyCourseService {
 
     //查询我的不可用的课程
     List<BuyCourse> findNotUseBuyCourseByLearnerId(Long learnerId) throws Exception;
+
+    //查询支付方式
+    List<BuyCourse> getPaymentWay() throws Exception;
 
 }
