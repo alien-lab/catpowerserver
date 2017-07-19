@@ -195,7 +195,13 @@ public class LearnerServiceImpl implements LearnerService{
 
     @Override
     public Map getLearnerIndexInfo(String openid) throws Exception {
+        if(openid==null){
+            throw new Exception("请求错误："+openid);
+        }
         Learner learner=learnerRepository.findLearnerByOpenid(openid);
+        if(learner==null){
+            throw new Exception("该微信用户未注册成为学员");
+        }
         Long learnerId=learner.getId();
         int appointCount=learnerAppointmentRepository.findAppointingByLearner(learnerId).size();
         int courseCount=buyCourseRepository.findCourseByLearner(learnerId).size();

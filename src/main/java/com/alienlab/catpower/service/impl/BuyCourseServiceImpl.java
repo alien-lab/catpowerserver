@@ -155,6 +155,9 @@ public class BuyCourseServiceImpl implements BuyCourseService{
 
     @Override
     public List getAllCoachByLearnerId(Long learnerId) throws Exception {
+        if (learnerId==null){
+            throw new Exception("请求错误："+learnerId);
+        }
         List list=new ArrayList();
         List<BuyCourse> coachList=buyCourseRepository.findCoachByLearner(learnerId);
         for (int i=0;i<coachList.size();i++){
