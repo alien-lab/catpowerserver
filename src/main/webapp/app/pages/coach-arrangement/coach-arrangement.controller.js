@@ -17,7 +17,12 @@
         function onScheError(error) {
             AlertService.error(error.data.message);
         }
-
+        //教练排课表
+        courseScheService.loadCoachSche(function (data) {
+            $scope.coaches = data;
+            console.log('//////////////////////////////////////////////////////')
+            console.log($scope.coaches)
+        });
         //定义的下拉的状态
         this.openStatus = true;
         /**
@@ -59,7 +64,8 @@
     app.factory("courseScheResource",["$resource",function($resource){
         var resourceUrl =  '/api/course-schedulings/courseScheByCoachId';
         return $resource(resourceUrl, {}, {
-            'query': { method: 'GET',isArray: true}
+            'query': { method: 'GET',isArray: true},
+            'getCoachSche':{url:'/api/course-schedulings/courseScheduling',method:'GET',isArray:true}
         });
 
     }]);
@@ -77,6 +83,19 @@
                     callback(error,false);
                 }
             })
+        };
+        //获取教练的排课
+        this.loadCoachSche = function (callback) {
+            courseScheResource.getCoachSche({},function (data) {
+                if(callback){
+                    callback(data,true);
+                }
+            },function (error) {
+                console.log("shopopResource.query()",error);
+                if(callback){
+                    callback(error,false);
+                }
+            });
         }
     }]);
 
