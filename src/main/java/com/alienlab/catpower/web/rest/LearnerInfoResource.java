@@ -1,5 +1,6 @@
 package com.alienlab.catpower.web.rest;
 
+import com.alibaba.fastjson.util.TypeUtils;
 import com.codahale.metrics.annotation.Timed;
 import com.alienlab.catpower.domain.LearnerInfo;
 import com.alienlab.catpower.service.LearnerInfoService;
@@ -21,6 +22,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -126,9 +128,11 @@ public class LearnerInfoResource {
     }
 
     @ApiOperation("找每节课后对应的教练建议")
-    @GetMapping("/learner-infos/coachadvice")
-    public ResponseEntity getCoachAdvices(@RequestParam Long learnerId,@RequestParam Long courseSchedulingId){
+    @PostMapping("/learner-infos/coachadvice")
+    public ResponseEntity getCoachAdvices(@RequestBody Map map){
         try {
+            Long learnerId = TypeUtils.castToLong(map.get("learnerId"));
+            Long courseSchedulingId = TypeUtils.castToLong(map.get("courseSchedulingId"));
             LearnerInfo learnerInfo = learnerInfoService.findLearnerInfoByLearnerIdAndCourseSchedulingId(learnerId,courseSchedulingId);
             return ResponseEntity.ok().body(learnerInfo);
         } catch (Exception e) {
