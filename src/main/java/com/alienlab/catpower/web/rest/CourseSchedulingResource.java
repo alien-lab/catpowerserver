@@ -117,6 +117,7 @@ public class CourseSchedulingResource {
      * @param id the id of the courseScheduling to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the courseScheduling, or with status 404 (Not Found)
      */
+    @ApiOperation("根据排课ID获取排课信息")
     @GetMapping("/course-schedulings/{id}")
     @Timed
     public ResponseEntity<CourseScheduling> getCourseScheduling(@PathVariable Long id) {

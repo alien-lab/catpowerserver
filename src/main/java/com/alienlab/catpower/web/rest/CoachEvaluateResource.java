@@ -1,14 +1,20 @@
 package com.alienlab.catpower.web.rest;
 
+import com.alibaba.fastjson.util.TypeUtils;
+import com.alienlab.catpower.domain.LearnerCharge;
+import com.alienlab.catpower.repository.LearnerChargeRepository;
+import com.alienlab.catpower.web.rest.util.ExecResult;
 import com.codahale.metrics.annotation.Timed;
 import com.alienlab.catpower.domain.CoachEvaluate;
 import com.alienlab.catpower.service.CoachEvaluateService;
 import com.alienlab.catpower.web.rest.util.HeaderUtil;
 import com.alienlab.catpower.web.rest.util.PaginationUtil;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
@@ -20,6 +26,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -32,7 +39,7 @@ public class CoachEvaluateResource {
     private final Logger log = LoggerFactory.getLogger(CoachEvaluateResource.class);
 
     private static final String ENTITY_NAME = "coachEvaluate";
-        
+
     private final CoachEvaluateService coachEvaluateService;
 
     public CoachEvaluateResource(CoachEvaluateService coachEvaluateService) {
@@ -122,6 +129,27 @@ public class CoachEvaluateResource {
         log.debug("REST request to delete CoachEvaluate : {}", id);
         coachEvaluateService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    @ApiOperation("学员对教练进行评价")
+    @PostMapping("/coach-evaluates-learner")
+    public ResponseEntity insertCoachEvaluate(@RequestBody Map param){
+        Long serviceAttitude = TypeUtils.castToLong(param.get("serviceAttitude"));
+        Long speciality = TypeUtils.castToLong(param.get("speciality"));
+        Long like =  TypeUtils.castToLong(param.get("like"));
+        String complain = TypeUtils.castToString(param.get("complain"));
+        Long evaluation = TypeUtils.castToLong(param.get("evaluation"));
+        Long   learnerId = TypeUtils.castToLong(param.get("learnerId"));
+        Long scheId = TypeUtils.castToLong(param.get("scheId"));
+        try {
+            CoachEvaluate result = coachEvaluateService.insert(serviceAttitude,speciality,like,complain,evaluation,learnerId,scheId);
+            return ResponseEntity.ok().body(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
+
     }
 
 }
