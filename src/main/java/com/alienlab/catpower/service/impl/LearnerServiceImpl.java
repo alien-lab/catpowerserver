@@ -22,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -69,8 +68,6 @@ public class LearnerServiceImpl implements LearnerService{
     @Override
     public Learner save(Learner learner) {
         log.debug("Request to save Learner : {}", learner);
-        ZonedDateTime dateTime = ZonedDateTime.now();
-        learner.setRegistTime(dateTime);
         Learner result = learnerRepository.save(learner);
         return result;
     }
@@ -162,7 +159,7 @@ public class LearnerServiceImpl implements LearnerService{
         String sceneId = "2and"+learner.getId()+"";
         JSONObject jo =  wechatUtil.get_qr_code_ticket(sceneId);
         if(jo==null || jo.getString("ticket")==null){
-            throw new Exception("生成签到二维码失败！排课编码："+learner.getId());
+            throw new Exception("生成签到二维码失败！学员绑定编码："+learner.getId());
         }
         QrInfo qr=qrInfoService.createQrinfo(sceneId, 2L,jo.getString("ticket"));
         learner.setQrInfo(qr);
