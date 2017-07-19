@@ -1,14 +1,15 @@
 package com.alienlab.catpower.web.rest;
 
-import com.alienlab.catpower.web.rest.util.ExecResult;
-import com.codahale.metrics.annotation.Timed;
 import com.alienlab.catpower.domain.Learner;
 import com.alienlab.catpower.service.LearnerService;
+import com.alienlab.catpower.web.rest.util.ExecResult;
 import com.alienlab.catpower.web.rest.util.HeaderUtil;
 import com.alienlab.catpower.web.rest.util.PaginationUtil;
+import com.alienlab.catpower.web.wechat.bean.entity.QrInfo;
+import com.codahale.metrics.annotation.Timed;
+import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -20,7 +21,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
@@ -148,6 +148,18 @@ public class LearnerResource {
             Map map=learnerService.getLearnerIndexInfo(openid);
             return ResponseEntity.ok().body(map);
         } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
+    }
+    @ApiOperation(value = "获取绑定二维码")
+    @GetMapping("/learners/qr/learner")
+    public ResponseEntity getScheQrcode(@RequestParam Learner learner){
+        try{
+            QrInfo qr=learnerService.getLearnerBindQr(learner);
+            return ResponseEntity.ok(qr);
+        }catch(Exception e){
             e.printStackTrace();
             ExecResult er=new ExecResult(false,e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);

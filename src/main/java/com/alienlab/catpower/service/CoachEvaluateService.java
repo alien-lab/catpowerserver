@@ -46,5 +46,11 @@ public interface CoachEvaluateService {
      * @return
      */
 
+    /**
+     * Save a coachEvaluate.
+     *
+     * @return the persisted entity
+     */
+    CoachEvaluate insert(Long serviceAttitude,Long speciality,Long like,String complain,Long evaluation,Long learnerId,Long scheId);
 
 }
