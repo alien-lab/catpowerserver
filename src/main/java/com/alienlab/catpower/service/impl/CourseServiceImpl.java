@@ -138,4 +138,10 @@ public class CourseServiceImpl implements CourseService{
         }
 
     }
+
+    @Override
+    public List<Course> getCourseInfoByCourseName(String courseName) throws Exception {
+        List<Course> result = courseRepository.findCourseByCourseName(courseName);
+        return result;
+    }
 }

@@ -7,44 +7,46 @@
 
     studentBuyCourseController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Course', 'CourseAtlas','Learner','courseService','Coach','buyCourseService','BuyCourse'];
 
-    function studentBuyCourseController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Course, CourseAtlas,Learner,courseService,Coach,buyCourseService,BuyCourse)
-    {
+    function studentBuyCourseController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Course, CourseAtlas,Learner,courseService,Coach,buyCourseService,BuyCourse) {
+
         var vm = this;
 
-        vm.course = entity;
-        console.log(vm.course);
-
+        vm.buyCourse = entity;
         vm.clear = clear;
+        vm.datePickerOpenStatus = {};
+        vm.openCalendar = openCalendar;
         vm.save = save;
         vm.learners = Learner.query();
         vm.courses = Course.query();
-        vm.courseatlases = CourseAtlas.query();
         vm.coaches = Coach.query();
 
-        console.log(vm.course.id);
-
         $timeout(function (){
-            angular.element('.form-group:eq(0)>select').focus();
+            angular.element('.form-group:eq(1)>input').focus();
         });
-        //根据ID获取课程名称
-        var className = vm.course.courseName;
-        console.log(className);
-        vm.course.course = vm.course.courseName;
-        //获取课时
-        courseService.loadTotalClassHour(vm.course.courseName,function (data) {
-            $scope.totalClassHour = data;
-            console.log($scope.totalClassHour);
-            vm.course.remainClass = $scope.totalClassHour.total_class_hour;
-            console.log($scope.totalClassHour.total_class_hour);
-        });
+
         //获取支付方式
         buyCourseService.loadPaymentWay(function (data) {
             $scope.payMentWayList = data;
             $scope.getPaymentWay = function () {
                 vm.buyCourse.paymentWay = this.payWay.paymentWay;
-                console.log(this.payWay.paymentWay);
             }
         });
+        //自动获取课程与课时和课程价格
+        vm.buyCourse.remainClass = vm.buyCourse.totalClassHour;
+        $scope.curName = vm.buyCourse.courseName;
+        //获取课程购买价格
+        courseService.loadCourseById(vm.buyCourse.id,function (data) {
+            $scope.prices = data;
+            console.log($scope.prices);
+            vm.buyCourse.paymentAccount = $scope.prices.course_prices;
+            $scope.getPrices = function (price) {
+                vm.buyCourse.paymentAccount = price;
+            };
+            $scope.getVipPrices = function (price) {
+                vm.buyCourse.paymentAccount = price;
+            }
+        });
+
 
         function clear () {
             $uibModalInstance.dismiss('cancel');
@@ -60,13 +62,20 @@
         }
 
         function onSaveSuccess (result) {
-            $scope.$emit('catpowerserverApp:courseUpdate', result);
+            $scope.$emit('catpowerserverApp:buyCourseUpdate', result);
             $uibModalInstance.close(result);
             vm.isSaving = false;
         }
 
         function onSaveError () {
             vm.isSaving = false;
+        }
+
+        vm.datePickerOpenStatus.buyTime = false;
+        vm.datePickerOpenStatus.operateTime = false;
+
+        function openCalendar (date) {
+            vm.datePickerOpenStatus[date] = true;
         }
     }
 })();

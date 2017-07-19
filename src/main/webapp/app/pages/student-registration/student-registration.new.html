@@ -1,47 +1,72 @@
-
 <form name="editForm" role="form" novalidate ng-submit="vm.save()">
 
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                 ng-click="vm.clear()">&times;</button>
-        <h4 class="modal-title" id="myCourseLabel">学员报名</h4>
+        <h4 class="modal-title" id="myBuyCourseLabel">报名表</h4>
     </div>
-
 
     <div class="modal-body row">
         <jhi-alert-error></jhi-alert-error>
-        <!--<div class="col-md-6 col-sm-6 col-lg-6 form-group" ng-show="vm.course.id">
-            <label for="id">选择课程的ID</label>
+        <!--<div class="col-md-12 col-sm-12 col-lg-12 form-group" ng-show="vm.buyCourse.id">
+            <label for="id" data-translate="global.field.id">ID</label>
             <input type="text" class="form-control" id="id" name="id"
-                   ng-model="vm.course.id" readonly />
+                   ng-model="vm.buyCourse.id" readonly />
         </div>-->
-        <div class="col-md-12 col-sm-12 col-lg-12 form-group">
-            <label for="field_learner">学员</label>
+        <div class="col-md-6 col-sm-6 col-lg-6 form-group">
+            <label data-translate="catpowerserverApp.buyCourse.learner" for="field_learner">Learner</label>
             <select class="form-control" id="field_learner" name="learner" ng-model="vm.buyCourse.learner" ng-options="learner as learner.learneName for learner in vm.learners track by learner.id">
-                <option value=""></option>
             </select>
         </div>
         <div class="col-md-6 col-sm-6 col-lg-6 form-group">
             <label data-translate="catpowerserverApp.buyCourse.course" for="field_course">Course</label>
-            <input class="form-control" type="text" id="field_course" name="course" ng-model="vm.buyCourse.course"  ng-change="getTotalHour()"/>
+            <select class="form-control" id="field_course" name="course" ng-model="vm.buyCourse.course" readonly ng-options="course as vm.buyCourse.courseName for buyCourse in vm.buyCourse track by buyCourse.id" >
+            </select>
+        </div>
+        <div class="col-md-6 col-sm-6 col-lg-6 form-group">
+            <label data-translate="catpowerserverApp.buyCourse.coach" for="field_coach">Coach</label>
+            <select class="form-control" id="field_coach" name="coach" ng-model="vm.buyCourse.coach" ng-options="coach as coach.coachName for coach in vm.coaches track by coach.id">
+
+            </select>
         </div>
         <div class="col-md-6 col-sm-6 col-lg-6 form-group">
             <label class="control-label" for="field_remainClass">总课时</label>
             <input type="number" class="form-control" name="remainClass" id="field_remainClass"
-                   ng-model="vm.buyCourse.remainClass"
+                   ng-model="vm.buyCourse.remainClass" readonly
             />
-        </div>
-        <div class="col-md-6 col-sm-6 col-lg-6 form-group">
-            <label for="field_coach">请选择教练</label>
-            <select class="form-control" id="field_coach" name="coach" ng-model="vm.buyCourse.coach" ng-options="coach as coach.coachName for coach in vm.coaches track by coach.id">
-                <option value=""></option>
-            </select>
         </div>
         <div class="col-md-6 col-sm-6 col-lg-6 form-group">
             <label class="control-label" data-translate="catpowerserverApp.buyCourse.paymentAccount" for="field_paymentAccount">Payment Account</label>
             <input type="number" class="form-control" name="paymentAccount" id="field_paymentAccount"
                    ng-model="vm.buyCourse.paymentAccount"
             />
+        </div>
+        <div class="col-md-6 col-sm-6 col-lg-6 form-group" ng-if="false">
+            <label class="control-label" data-translate="catpowerserverApp.buyCourse.buyTime" for="field_buyTime">Buy Time</label>
+            <div class="input-group">
+                <input id="field_buyTime" type="text" class="form-control" name="buyTime" datetime-picker="{{dateformat}}" ng-model="vm.buyCourse.buyTime" is-open="vm.datePickerOpenStatus.buyTime"
+                />
+                <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('buyTime')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+            </div>
+        </div>
+        <!--<div class="col-md-6 col-sm-6 col-lg-6 form-group">
+            <label class="control-label" data-translate="catpowerserverApp.buyCourse.buyTime" for="field_buyTime">Buy Time</label>
+            <input type="text" class="form-control" name="paymentWay" id="field_buyTime"
+                   ng-model="vm.buyCourse.buyTime"
+            />
+        </div>-->
+        <div class="col-md-6 col-sm-6 col-lg-6 form-group">
+            <label class="control-label" data-translate="catpowerserverApp.buyCourse.paymentWay" for="field_paymentWay">Payment Way</label>
+            <input type="text" class="form-control" name="paymentWay" id="field_paymentWay"
+                   ng-model="vm.buyCourse.paymentWay"
+            />
+        </div>
+        <div class="col-md-12 col-sm-12 col-lg-12 form-group" >
+            <a class="btn btn-info" style="margin-left: 1%;" ng-click="getPrices(prices.course_prices)" >普通{{prices.course_prices | currency:"￥"}}</a>
+            <a class="btn btn-info" style="margin-left: 1%;" ng-click="getVipPrices(prices.course_vipprices)" >会员{{prices.course_vipprices | currency:"￥"}}</a>
+            <a class="btn btn-info" style="margin-left: 1%;float: right;" ng-repeat="payWay in payMentWayList" ng-click="getPaymentWay()" >{{payWay.paymentWay}}</a>
         </div>
         <div class="col-md-6 col-sm-6 col-lg-6 form-group">
             <label class="control-label" data-translate="catpowerserverApp.buyCourse.operator" for="field_operator">Operator</label>
@@ -54,25 +79,6 @@
             <input type="text" class="form-control" name="status" id="field_status"
                    ng-model="vm.buyCourse.status"
             />
-        </div>
-        <div class="col-md-12 col-sm-12 col-lg-12 form-group">
-            <label class="control-label" data-translate="catpowerserverApp.buyCourse.paymentWay" for="field_paymentWay">Payment Way</label>
-            <input type="text" class="form-control" name="paymentWay" id="field_paymentWay"
-                   ng-model="vm.buyCourse.paymentWay"
-            />
-        </div>
-        <div class="col-md-12 col-sm-12 col-lg-12 form-group" >
-            <a class="btn btn-info" style="margin-left: 1%;" ng-repeat="payWay in payMentWayList" ng-click="getPaymentWay()" >{{payWay.paymentWay}}</a>
-        </div>
-        <div class="col-md-6 col-sm-6 col-lg-6 form-group" ng-if="false">
-            <label class="control-label" data-translate="catpowerserverApp.buyCourse.buyTime" for="field_buyTime">Buy Time</label>
-            <div class="input-group">
-                <input id="field_buyTime" type="text" class="form-control" name="buyTime" datetime-picker="{{dateformat}}" ng-model="vm.buyCourse.buyTime" is-open="vm.datePickerOpenStatus.buyTime"
-                />
-                <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('buyTime')"><i class="glyphicon glyphicon-calendar"></i></button>
-                    </span>
-            </div>
         </div>
         <div class="col-md-6 col-sm-6 col-lg-6 form-group" ng-if="false">
             <label class="control-label" data-translate="catpowerserverApp.buyCourse.operateTime" for="field_operateTime">Operate Time</label>
@@ -89,16 +95,15 @@
                       ng-model="vm.buyCourse.operateContent"
             ></textarea>
         </div>
-
-
-
     </div>
+
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
-            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>取消</span>
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
         </button>
         <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
-            <span class="glyphicon glyphicon-save"></span>&nbsp;<span >保存</span>
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
         </button>
     </div>
 </form>
+

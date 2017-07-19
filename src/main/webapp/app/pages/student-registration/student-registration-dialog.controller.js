@@ -11,6 +11,7 @@
         var vm = this;
 
         vm.buyCourse = entity;
+        vm.buyCourse
         vm.clear = clear;
         vm.datePickerOpenStatus = {};
         vm.openCalendar = openCalendar;
@@ -22,8 +23,6 @@
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();
         });
-
-
 
         //获取支付方式
         buyCourseService.loadPaymentWay(function (data) {
@@ -39,6 +38,19 @@
             courseService.loadTotalClassHour(courseName,function (data) {
                 $scope.totalClassHour = data;
                 vm.buyCourse.remainClass =$scope.totalClassHour.total_class_hour;
+            });
+            //获取课程购买价格
+            var id = vm.buyCourse.course.id;
+            console.log(id);
+            courseService.loadCourseById(id,function (data) {
+                $scope.prices = data;
+                console.log($scope.prices);
+                $scope.getPrices = function (price) {
+                    vm.buyCourse.paymentAccount = price;
+                };
+                $scope.getVipPrices = function (price) {
+                    vm.buyCourse.paymentAccount = price;
+                }
             });
         };
 

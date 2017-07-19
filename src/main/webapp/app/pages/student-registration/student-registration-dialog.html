@@ -66,6 +66,8 @@
             />
         </div>
         <div class="col-md-12 col-sm-12 col-lg-12 form-group" >
+            <a class="btn btn-info" style="margin-left: 1%;" ng-click="getPrices(prices.course_prices)" >普通{{prices.course_prices | currency:"￥"}}</a>
+            <a class="btn btn-info" style="margin-left: 1%;" ng-click="getVipPrices(prices.course_vipprices)" >会员{{prices.course_vipprices | currency:"￥"}}</a>
             <a class="btn btn-info" style="margin-left: 1%;float: right;" ng-repeat="payWay in payMentWayList" ng-click="getPaymentWay()" >{{payWay.paymentWay}}</a>
         </div>
         <div class="col-md-6 col-sm-6 col-lg-6 form-group">
