@@ -59,6 +59,9 @@ public class BuyCourseServiceImpl implements BuyCourseService{
     @Override
     public BuyCourse save(BuyCourse buyCourse) {
         log.debug("Request to save BuyCourse : {}", buyCourse);
+        ZonedDateTime dateTime = ZonedDateTime.now();
+        buyCourse.setBuyTime(dateTime);
+        buyCourse.setOperateTime(dateTime);
         BuyCourse result = buyCourseRepository.save(buyCourse);
         return result;
     }
@@ -155,6 +158,9 @@ public class BuyCourseServiceImpl implements BuyCourseService{
 
     @Override
     public List getAllCoachByLearnerId(Long learnerId) throws Exception {
+        if (learnerId==null){
+            throw new Exception("请求错误："+learnerId);
+        }
         List list=new ArrayList();
         List<BuyCourse> coachList=buyCourseRepository.findCoachByLearner(learnerId);
         for (int i=0;i<coachList.size();i++){
@@ -217,6 +223,12 @@ public class BuyCourseServiceImpl implements BuyCourseService{
             }
         }
         return buyCoursesList;
+    }
+
+    @Override
+    public List<BuyCourse> getPaymentWay() throws Exception {
+        List<BuyCourse> list = buyCourseRepository.findBuyCourse();
+        return list;
     }
 
 

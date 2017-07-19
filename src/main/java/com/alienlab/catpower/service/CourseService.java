@@ -66,4 +66,8 @@ public interface CourseService {
      * 根据课程名称模糊查询
      */
     List getCourseByCourseName(String courseName) throws Exception;
+    /**
+     * 根据课程名称获取课程
+     */
+    List<Course> getCourseInfoByCourseName(String courseName)throws Exception;
 }

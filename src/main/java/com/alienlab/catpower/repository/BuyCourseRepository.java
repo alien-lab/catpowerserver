@@ -44,5 +44,9 @@ public interface BuyCourseRepository extends JpaRepository<BuyCourse,Long> {
     //查询我的不可用的课程
     List<BuyCourse> findNotUseBuyCourseByLearner(Learner learner);
 
+    //查询支付方式
+    @Query("select a from BuyCourse a group by a.paymentWay")
+    List<BuyCourse> findBuyCourse();
+
 
 }

@@ -130,7 +130,7 @@
                 }
             });
         };
-        //根据课程的名称获取课程
+        //根据课程的名称获取课时
         this.loadTotalClassHour = function (courseName,callback) {
             courseResource.getTotalClassHour({
                 'courseName':courseName

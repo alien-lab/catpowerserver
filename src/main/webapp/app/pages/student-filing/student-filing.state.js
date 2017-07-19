@@ -125,8 +125,8 @@
                 },
                 onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                     $uibModal.open({
-                        templateUrl:'app/pages/student-filing/student-filing-dialog.html',
-                        controller:'studentFilingDialogController',
+                        templateUrl:'app/pages/student-filing/student-filling-edit.html',
+                        controller:'studentFilingEditController',
                         controllerAs:'vm',
                         backdrop:'static',
                         size: 'md',

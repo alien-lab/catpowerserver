@@ -203,11 +203,23 @@ public class CourseResource {
     /**
      * 根据课程名称模糊查询
      */
-    @ApiOperation(value = "根据课程名称获取课程")
+    @ApiOperation(value = "根据课程名称模糊查询课程")
     @GetMapping("/course/like/courseName")
     public ResponseEntity getLikeCourse(@RequestParam String courseName){
         try {
             List result = courseService.getCourseByCourseName(courseName);
+            return ResponseEntity.ok().body(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
+    }
+    @ApiOperation(value = "根据课程名称获取课程")
+    @GetMapping("/course/courseInfo/courseName")
+    public ResponseEntity getcourseInfo(@RequestParam String courseName){
+        try {
+            List result = courseService.getCourseInfoByCourseName(courseName);
             return ResponseEntity.ok().body(result);
         } catch (Exception e) {
             e.printStackTrace();

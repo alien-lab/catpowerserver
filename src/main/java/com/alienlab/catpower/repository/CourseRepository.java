@@ -17,5 +17,7 @@ public interface CourseRepository extends JpaRepository<Course,Long> {
 
     //根据课程名称获取课程总课时
     List<Course> findTotalClassHourByCourseName(String courseName) throws Exception;
+    //根据课程名称获取课程
+    List<Course> findCourseByCourseName(String courseName) throws Exception;
 
 }

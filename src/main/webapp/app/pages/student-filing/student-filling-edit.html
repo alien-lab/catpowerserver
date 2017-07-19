@@ -20,16 +20,13 @@
             />
         </div>
         <div class="col-md-offset-3 col-lg-offset-3 col-sm-offset-3 col-md-6 col-lg-6 col-sm-6 form-group">
-            <!--<label class="control-label" data-translate="catpowerserverApp.learner.learnerSex" for="field_learnerSex">Learner Sex</label>
+            <label class="control-label" data-translate="catpowerserverApp.learner.learnerSex" for="field_learnerSex">Learner Sex</label>
             <select type="text" class="form-control" name="learnerSex" id="field_learnerSex"
-                   ng-model="vm.learner.learnerSex"
+                    ng-model="vm.learner.learnerSex"
             >
                 <option vaule="1">男</option>
                 <option vaule="2">女</option>
-            </select>-->
-            <label class="control-label" data-translate="catpowerserverApp.learner.learnerSex">Learner Sex</label>
-            <input type="radio" value="男" ng-model="vm.learner.learnerSex" name="selectState">&nbsp;男
-            <input type="radio" value="女" ng-model="vm.learner.learnerSex" name="selectState" style="margin-left:10px;">&nbsp;女
+            </select>
         </div>
         <!--<div class="col-md-6 col-lg-6 col-sm-6 form-group">
             <label class="control-label" data-translate="catpowerserverApp.learner.registTime" for="field_registTime">Regist Time</label>
@@ -70,7 +67,7 @@
                     </span>
             </div>
         </div>
-        <div class="form-group">
+        <div class="col-md-6 col-lg-6 col-sm-6 form-group">
             <label class="control-label" data-translate="catpowerserverApp.learner.firstBuyclass" for="field_firstBuyclass">First Buyclass</label>
             <div class="input-group">
                 <input id="field_firstBuyclass" type="text" class="form-control" name="firstBuyclass" datetime-picker="{{dateformat}}" ng-model="vm.learner.firstBuyclass" is-open="vm.datePickerOpenStatus.firstBuyclass"
@@ -89,14 +86,14 @@
                         <button type="button" class="btn btn-default" ng-click="vm.openCalendar('recentlySignin')"><i class="glyphicon glyphicon-calendar"></i></button>
                     </span>
             </div>
-        </div>-->
-        <!--<div class="form-group">
+        </div>
+        <div class="form-group">
             <label class="control-label" data-translate="catpowerserverApp.learner.experience" for="field_experience">Experience</label>
             <input type="number" class="form-control" name="experience" id="field_experience"
                    ng-model="vm.learner.experience"
             />
-        </div>
--->
+        </div>-->
+
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
@@ -107,4 +104,5 @@
         </button>
     </div>
 </form>
+
 

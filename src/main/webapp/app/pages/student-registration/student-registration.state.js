@@ -93,6 +93,32 @@
                         return currentStateData;
                     }]
                 }
+            })
+            .state('student-registration.add', {
+                parent: 'student-registration',
+                url: '/{id}/add',
+                data: {
+                    authorities: ['ROLE_USER'],
+                    pageTitle: '编辑课程'
+                },
+                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                    $uibModal.open({
+                        templateUrl: 'app/pages/student-registration/student-registration.new.html',
+                        controller: 'studentBuyCourseController',
+                        controllerAs: 'vm',
+                        backdrop: 'static',
+                        size: 'md',
+                        resolve: {
+                            entity: ['Course', function(Course) {
+                                return Course.get({id : $stateParams.id}).$promise;
+                            }]
+                        }
+                    }).result.then(function() {
+                        $state.go('student-registration', null, { reload: 'student-registration' });
+                    }, function() {
+                        $state.go('^');
+                    });
+                }]
             });
 
     }]);

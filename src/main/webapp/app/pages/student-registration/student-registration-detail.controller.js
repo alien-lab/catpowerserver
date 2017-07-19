@@ -6,16 +6,22 @@
     angular
         .module('catpowerserverApp')
         .controller('courseMaintainDetailController',courseMaintainDetailController);
-    courseMaintainDetailController.$inject =  ['$scope', '$rootScope', '$stateParams', 'previousState', 'dataMaintain', 'Course', 'CourseAtlas'];
+    courseMaintainDetailController.$inject =  ['$scope', '$rootScope', '$stateParams', 'previousState', 'dataMaintain', 'Course', 'CourseAtlas','courseService'];
 
-    function courseMaintainDetailController($scope, $rootScope, $stateParams, previousState, dataMaintain, Course, CourseAtlas) {
+    function courseMaintainDetailController($scope, $rootScope, $stateParams, previousState, dataMaintain, Course, CourseAtlas,courseService) {
         var vm = this;
-
         vm.course = dataMaintain;
-        vm.previousState = previousState.name;
+        console.log(vm.course.id);
+        courseService.loadCourseById(vm.course.id,function (data) {
+            $scope.courseById = data;
+            console.log($scope.courseById)
+        });
+
+
         var unsubscribe = $rootScope.$on('catpowerserverApp:courseUpdate', function(event, result) {
             vm.course = result;
         });
+
         $scope.$on('$destroy', unsubscribe);
 
     }
