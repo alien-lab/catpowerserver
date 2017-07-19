@@ -6,7 +6,7 @@
 
     var app = angular.module('catpowerserverApp');
 
-    app.controller('arrangementController',['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'CourseScheduling', 'Course', 'Coach', function ($timeout, $scope, $stateParams, $uibModalInstance, entity, CourseScheduling, Course, Coach) {
+    app.controller('arrangementController',['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'CourseScheduling', 'Course', 'Coach',function ($timeout, $scope, $stateParams, $uibModalInstance, entity, CourseScheduling, Course, Coach) {
         var vm = this;
 
         vm.courseScheduling = entity;
@@ -63,5 +63,6 @@
         function openCalendar (date) {
             vm.datePickerOpenStatus[date] = true;
         }
+
     }]);
 })();

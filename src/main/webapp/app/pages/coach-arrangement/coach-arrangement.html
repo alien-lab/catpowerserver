@@ -253,7 +253,29 @@
                                     </a>
                                 </div>
                                 <div class="media-body">
-                                    <p style="float: right;">签到码</p>
+                                    <p ng-click="getscheqr(sche.id)" data-toggle="modal" data-target="#myModal" style="float: right;margin-top: 21px;margin-right:25px;text-align: center;cursor: pointer;">
+                                        <span class="glyphicon glyphicon-qrcode" aria-hidden="true"></span><br>
+                                        <span>签到码</span>
+                                    </p>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                                                </div>
+                                                <div class="modal-body" style="text-align: center;">
+                                                    <img ng-src="{{scheqr}}"/>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <p><button type="button" class="btn btn-default btn-xs">{{sche.status}}</button><span style="margin-left:2%;">{{sche.course.courseName}}</span></p>
                                     <p>上课时间：{{sche.startTime |date:"yyyy-MM-dd HH:mm:ss"}}</p>
                                     <p>课程人数：{{sche.course.classNumber}}</p>

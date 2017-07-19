@@ -4,7 +4,7 @@
 (function () {
     'use strict';
     var app=angular.module('catpowerserverApp');
-    app.controller('coachArrangementController',['$scope','CourseScheduling','courseScheService','AlertService','Coach',function ($scope,CourseScheduling,courseScheService,AlertService,Coach) {
+    app.controller('coachArrangementController',['$scope','CourseScheduling','courseScheService','AlertService','Coach','qrService','ticket',function ($scope,CourseScheduling,courseScheService,AlertService,Coach,qrService,ticket) {
 
         loadSchedulingAll();
         function loadSchedulingAll(){
@@ -20,9 +20,30 @@
         //教练排课表
         courseScheService.loadCoachSche(function (data) {
             $scope.coaches = data;
-            console.log('//////////////////////////////////////////////////////')
+
             console.log($scope.coaches)
+            //获取排课签到二维码
+            $scope.getscheqr = function (id) {
+                console.log(id);
+                //console.log(this.sche.id);
+                qrService.loadSignQr(id,function (data) {
+                    $scope.qr=data;
+                    console.log($scope.qr.qrTicker);
+                    $scope.scheqr = ticket +$scope.qr.qrTicker;
+                    console.log($scope.scheqr);
+
+                });
+            };
         });
+
+        /*qrService.loadSignQr(scheId,function (data) {
+         $scope.qr=data;
+         console.log($scope.qr);
+         console.log($scope.qr.qrTicker);
+         $scope.arrangementCourseQr = "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket="+$scope.qr.qrTicker;
+         console.log($scope.arrangementCourseQr);
+         $scope.scheCourseName = scheCourseName;
+         });*/
         //定义的下拉的状态
         this.openStatus = true;
         /**
