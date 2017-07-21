@@ -4,27 +4,50 @@
 (function () {
     'use strict';
     var app = angular.module('catpowerserverApp');
-    app.controller('coachMaintainDetailController',['$scope','$http','$rootScope', '$stateParams', 'previousState', 'dataMaintain', 'Coach',function ($scope,$http,$rootScope, $stateParams, previousState, dataMaintain,Coach) {
+    app.controller('coachMaintainDetailController',['$scope','$http','$rootScope', '$stateParams', 'previousState', 'dataMaintain','coachInfoService',function ($scope,$http,$rootScope, $stateParams, previousState, dataMaintain,coachInfoService) {
         var vm = this;
         vm.coach = dataMaintain;
         console.log( vm.coach);
-        vm.id = vm.coach.id;
+
         vm.previousState = previousState.name;
         var unsubscribe = $rootScope.$on('catpowerserverApp:courseUpdate', function(event, result) {
             vm.coach = result;
         });
         $scope.$on('$destroy', unsubscribe);
 
-        loadCoachInfo();
+        //获取教练的课程
+        $scope.courseStatus = true;
+        coachInfoService.loadCoachOtherInfo(vm.coach.id,function (data) {
+            $scope.coachCourse = data;
+            console.log($scope.coachCourse);
+            angular.forEach($scope.coachCourse,function (item) {
+                if(item.course_name != null){
+                    $scope.courseStatus = false;
+                    $scope.courseStatusY = true;
+                }
+            })
+        });
+        //根据教练ID获取教练的评价信息
+        $scope.complainStatus = true;
+        coachInfoService.loadCoachComment(vm.coach.id,function (data) {
+            $scope.coachComments = data;
+            angular.forEach($scope.coachComments,function (item) {
+                if(item.complain != null){
+                    $scope.complainStatus = false;
+                    $scope.complainStatusY = true;
+                }
+            })
+        });
+        /*loadCoachInfo();
         function loadCoachInfo() {
             $http({
-                url:"api/coaches/info/"+vm.id,
+                url:"api/coaches/info/"+vm.coach.id,
                 method:"GET", isArray: true
             }).success(function (data) {
                 $scope.coachDetail = data;
                 console.log($scope.coachDetail);
             })
-        }
+        }*/
 
 
     }]);

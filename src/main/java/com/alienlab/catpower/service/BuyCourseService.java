@@ -73,4 +73,7 @@ public interface BuyCourseService {
     //查询支付方式
     List<BuyCourse> getPaymentWay() throws Exception;
 
+    //根据教练ID查询教练的所有课程
+    List getCoachCourseByCoachId(Long coachId) throws Exception;
+
 }

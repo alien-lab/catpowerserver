@@ -208,4 +208,17 @@ public class BuyCourseResource {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
         }
     }
+
+    @ApiOperation(value = "根据教练ID获取教练的课程")
+    @GetMapping("/buy-courses/courses/coachId")
+    public ResponseEntity getCourseByCoachId(@RequestParam Long coachId){
+        try {
+            List result = buyCourseService.getCoachCourseByCoachId(coachId);
+            return ResponseEntity.ok().body(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
+    }
 }

@@ -5,7 +5,7 @@
     'use strict';
     var app=angular.module('catpowerserverApp');
 
-    app.controller("shopOpController",["$http","CourseScheduling","$scope","$filter","shopopService","BuyCourse","buyCourseService","AlertService","qrService", function($http,CourseScheduling,$scope,$filter,shopopService,BuyCourse,buyCourseService,AlertService,qrService){
+    app.controller("shopOpController",["$http","CourseScheduling","$scope","$filter","shopopService","BuyCourse","buyCourseTodayService","AlertService","qrService", function($http,CourseScheduling,$scope,$filter,shopopService,BuyCourse,buyCourseTodayService,AlertService,qrService){
         var vm = this;
         loadSche();
         function loadSche(date){
@@ -169,12 +169,9 @@
         /**
          * 今日售课
          */
-        buyCourseService.loadBuyCourseToday(0,10,function (data,flag) {
-            if(!flag){
-               // alert(data);
-            }
+        buyCourseTodayService.loadBuyCourseToday(0,10,function (data) {
             $scope.buyCoursesToday =data;
-            console.log($scope.buyCoursesToday)
+            console.log(data)
         });
         /**
          * 排课情况
@@ -195,16 +192,16 @@
     }]);
 
     //今日售课
-    app.factory("buyCourseResource",["$resource",function($resource){
+    app.factory("buyCourseTodayResource",["$resource",function($resource){
         var resourceUrl =  'api/buy-courses/today';
         return $resource(resourceUrl, {}, {
-            'query': { method: 'GET'}
+            'getBuyCourseToday': { method: 'GET'}
         });
 
     }]);
-    app.service("buyCourseService",["buyCourseResource",function(buyCourseResource){
+    app.service("buyCourseTodayService",["buyCourseTodayResource",function(buyCourseTodayResource){
         this.loadBuyCourseToday=function(index,size,callback){
-            buyCourseResource.query({
+            buyCourseTodayResource.getBuyCourseToday({
                 index:index,
                 size:size
             },function(data){
@@ -212,7 +209,7 @@
                     callback(data,true);
                 }
             },function(error){
-                console.log("shopopResource.query()",error);
+                console.log("shopopResource.getBuyCourseToday()",error);
                 if(callback){
                     callback(error,false);
                 }

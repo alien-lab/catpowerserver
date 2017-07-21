@@ -1,5 +1,5 @@
 <div>
-    <h2><span>教练详情</span> {{vm.coach.id}}</h2>
+    <h2><span>教练详情</span></h2>
     <hr>
     <jhi-alert-error></jhi-alert-error>
 </div>
@@ -7,15 +7,36 @@
     <div class="col-sm-offset-3 col-lg-offset-3 col-md-offset-3 col-sm-6 col-lg-6 col-md-6">
         <div class="thumbnail">
             <img ng-src="{{vm.coach.coachPicture}}" style="width: 100%;"/>
-            <div class="caption">
-                <h3>{{vm.coach.coachName}}</h3>
-                <p>手机号：{{vm.coach.coachPhone}}</p>
-                <p>教练课程</p>
-                <p>个人简介：{{vm.coach.coachIntroduce}}</p>
-                <p>好评：</p>
-                <p>差评：</p>
-                <p>{{}}</p>
-                <p>
+            <div class="caption row">
+                <div class="col-md-12 col-sm-12 col-lg-12 ">
+                    <h3>{{vm.coach.coachName}}</h3>
+                </div>
+                <div class="col-md-12 col-sm-12 col-lg-12 " style="margin-top: 10px;">
+                    <div class="col-md-2 col-sm-2 col-lg-2 " style="padding: 0;">手机号</div>
+                    <div class="col-md-10 col-sm-10 col-lg-10 ">{{vm.coach.coachPhone}}</div>
+                </div>
+                <div class="col-md-12 col-sm-12 col-lg-12 " style="margin-top: 10px;">
+                    <div class="col-md-2 col-sm-2 col-lg-2 " style="padding: 0;">教练课程</div>
+                    <div class="col-md-10 col-sm-10 col-lg-10 ">
+                        <span ng-if="courseStatusY" ng-repeat="course in coachCourse">{{course.course_name}}&nbsp;&nbsp;</span>
+                        <span ng-if="courseStatus">暂无课程</span>
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-12 col-lg-12 " style="margin-top: 10px;">
+                    <div class="col-md-2 col-sm-2 col-lg-2 " style="padding: 0;">个人简介</div>
+                    <div class="col-md-10 col-sm-10 col-lg-10 ">
+                        {{vm.coach.coachIntroduce}}
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-12 col-lg-12 " style="margin-top: 10px;">
+                    <div class="col-md-2 col-sm-2 col-lg-2 " style="padding: 0;">差评</div>
+                    <div class="col-md-10 col-sm-10 col-lg-10 ">
+                        <p ng-if="complainStatusY" ng-repeat="comment in coachComments">{{comment.complain}}</p>
+                        <p ng-if="complainStatus">暂无差评</p>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-sm-12 col-lg-12 " style="margin-top: 25px;">
                     <button type="submit"
                             ui-sref="{{ vm.previousState }}"
                             class="btn btn-info">
@@ -26,7 +47,7 @@
                         <span class="glyphicon glyphicon-pencil"></span>
                         <span class="hidden-sm-down"> 编辑</span>
                     </button>
-                </p>
+                </div>
             </div>
         </div>
     </div>

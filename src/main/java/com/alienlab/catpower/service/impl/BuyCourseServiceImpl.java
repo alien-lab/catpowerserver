@@ -231,5 +231,12 @@ public class BuyCourseServiceImpl implements BuyCourseService{
         return list;
     }
 
+    @Override
+    public List getCoachCourseByCoachId(Long coachId) throws Exception {
+        String sql = "SELECT * FROM `buy_course` a,`course` b WHERE a.coach_id='"+coachId+"' AND a.course_id=b.id GROUP BY a.course_id";
+        List list=jdbcTemplate.queryForList(sql);
+        return list;
+    }
+
 
 }

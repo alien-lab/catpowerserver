@@ -6,14 +6,26 @@
                 ng-click="vm.clear()">&times;</button>
         <h4 class="modal-title" id="myCourseSchedulingLabel" data-translate="catpowerserverApp.courseScheduling.home.createOrEditLabel">Create or edit a Course Scheduling</h4>
     </div>
-    <div class="modal-body">
+    <div class="modal-body row">
         <jhi-alert-error></jhi-alert-error>
-        <div class="form-group" ng-show="vm.courseScheduling.id">
+        <div class="col-md-12 col-lg-12 col-lg-12 form-group" ng-show="vm.courseScheduling.id">
             <label for="id" data-translate="global.field.id">ID</label>
             <input type="text" class="form-control" id="id" name="id"
                    ng-model="vm.courseScheduling.id" readonly />
         </div>
-        <div class="form-group">
+        <div class="col-md-6 col-lg-6 col-lg-6 form-group">
+            <label data-translate="catpowerserverApp.courseScheduling.coach" for="field_coach">Coach</label>
+            <select class="form-control" id="field_coach" name="coach" ng-model="vm.courseScheduling.coach" ng-options="coach as coach.coachName for coach in vm.coaches track by coach.id">
+
+            </select>
+        </div>
+        <div class="col-md-6 col-lg-6 col-lg-6 form-group">
+            <label data-translate="catpowerserverApp.courseScheduling.course" for="field_course">Course</label>
+            <select class="form-control" id="field_course" name="course" ng-model="vm.courseScheduling.course" ng-options="course as course.courseName for course in vm.courses track by course.id">
+
+            </select>
+        </div>
+        <div class="col-md-6 col-lg-6 col-lg-6 form-group">
             <label class="control-label" data-translate="catpowerserverApp.courseScheduling.startTime" for="field_startTime">Start Time</label>
             <div class="input-group">
                 <input id="field_startTime" type="text" class="form-control" name="startTime" datetime-picker="{{dateformat}}" ng-model="vm.courseScheduling.startTime" is-open="vm.datePickerOpenStatus.startTime"
@@ -23,7 +35,7 @@
                     </span>
             </div>
         </div>
-        <div class="form-group">
+        <div class="col-md-6 col-lg-6 col-lg-6 form-group">
             <label class="control-label" data-translate="catpowerserverApp.courseScheduling.endTime" for="field_endTime">End Time</label>
             <div class="input-group">
                 <input id="field_endTime" type="text" class="form-control" name="endTime" datetime-picker="{{dateformat}}" ng-model="vm.courseScheduling.endTime" is-open="vm.datePickerOpenStatus.endTime"
@@ -33,41 +45,16 @@
                     </span>
             </div>
         </div>
-        <div class="form-group">
+        <div class="col-md-6 col-lg-6 col-lg-6 form-group">
             <label class="control-label" data-translate="catpowerserverApp.courseScheduling.status" for="field_status">Status</label>
-            <select type="text" class="form-control" name="status" id="field_status"
+            <input type="text" class="form-control" name="status" id="field_status"
                     ng-model="vm.courseScheduling.status"
-            >
-                <option value="未开始">未开始</option>
-                <option value="进行中">进行中</option>
-                <option value="已下课">已下课</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label class="control-label" data-translate="catpowerserverApp.courseScheduling.qrCode" for="field_qrCode">Qr Code</label>
-            <input type="text" class="form-control" name="qrCode" id="field_qrCode"
-                   ng-model="vm.courseScheduling.qrCode"
             />
         </div>
-        <div class="form-group">
-            <label class="control-label" data-translate="catpowerserverApp.courseScheduling.signInCount" for="field_signInCount">Sign In Count</label>
-            <input type="number" class="form-control" name="signInCount" id="field_signInCount"
-                   ng-model="vm.courseScheduling.signInCount"
-            />
+        <div class="col-md-6 col-lg-6 col-lg-6 form-group">
+            <a class="btn btn-info" ng-click="getCoachStatus()" ng-repeat="sta in statusList" style="margin-top: 24px;margin-left: 10px;">{{sta.status}}</a>
         </div>
 
-        <div class="form-group">
-            <label data-translate="catpowerserverApp.courseScheduling.course" for="field_course">Course</label>
-            <select class="form-control" id="field_course" name="course" ng-model="vm.courseScheduling.course" ng-options="course as course.courseName for course in vm.courses track by course.id">
-                <option value=""></option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label data-translate="catpowerserverApp.courseScheduling.coach" for="field_coach">Coach</label>
-            <select class="form-control" id="field_coach" name="coach" ng-model="vm.courseScheduling.coach" ng-options="coach as coach.coachName for coach in vm.coaches track by coach.id">
-                <option value=""></option>
-            </select>
-        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
