@@ -11,6 +11,8 @@
         var vm = this;
 
         vm.learnerCharge = entity;
+
+        console.log("****************************");
         console.log(vm.learnerCharge);
 
         vm.clear = clear;
