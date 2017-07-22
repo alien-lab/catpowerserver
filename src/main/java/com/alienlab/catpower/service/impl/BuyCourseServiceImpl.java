@@ -1,10 +1,7 @@
 package com.alienlab.catpower.service.impl;
 
 import com.alienlab.catpower.domain.*;
-import com.alienlab.catpower.repository.BuyCourseRepository;
-import com.alienlab.catpower.repository.CourseRepository;
-import com.alienlab.catpower.repository.LearnerAppointmentRepository;
-import com.alienlab.catpower.repository.LearnerRepository;
+import com.alienlab.catpower.repository.*;
 import com.alienlab.catpower.service.BuyCourseService;
 import com.alienlab.catpower.service.LearnerService;
 import org.slf4j.Logger;
@@ -49,6 +46,9 @@ public class BuyCourseServiceImpl implements BuyCourseService{
 
     @Autowired
     private LearnerRepository learnerRepository;
+
+    @Autowired
+    private CoachRepository coachRepository;
 
     public BuyCourseServiceImpl(BuyCourseRepository buyCourseRepository) {
         this.buyCourseRepository = buyCourseRepository;
@@ -235,6 +235,23 @@ public class BuyCourseServiceImpl implements BuyCourseService{
     public List getCoachCourseByCoachId(Long coachId) throws Exception {
         String sql = "SELECT * FROM `buy_course` a,`course` b WHERE a.coach_id='"+coachId+"' AND a.course_id=b.id GROUP BY a.course_id";
         List list=jdbcTemplate.queryForList(sql);
+        return list;
+    }
+
+    @Override
+    public List getLearnerByCoachId(Long coachId) throws Exception {
+        if (coachId==null ){
+            throw new Exception("请求错误："+coachId);
+        }
+        List<BuyCourse> buyCourses = buyCourseRepository.getBuyCourseByCoachId(coachId);
+        List list = new ArrayList();
+        for (BuyCourse buyCourse : buyCourses){
+            Map map = new HashMap();
+            List<BuyCourse> courses = buyCourseRepository.findCourseByCoach(buyCourse.getCoach(),buyCourse.getLearner().getId());
+            map.put("learner",buyCourse.getLearner());
+            map.put("courses",courses);
+            list.add(map);
+        }
         return list;
     }
 

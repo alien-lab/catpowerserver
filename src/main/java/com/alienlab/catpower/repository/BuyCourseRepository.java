@@ -44,5 +44,8 @@ public interface BuyCourseRepository extends JpaRepository<BuyCourse,Long> {
     @Query("select a from BuyCourse a group by a.paymentWay")
     List<BuyCourse> findBuyCourse();
 
+    @Query("select a from BuyCourse a where a.coach.id=?1 group by a.learner.id")
+    List<BuyCourse> getBuyCourseByCoachId(Long coachId);
+
 
 }
