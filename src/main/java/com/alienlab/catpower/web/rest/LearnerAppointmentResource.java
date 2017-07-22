@@ -1,6 +1,6 @@
 package com.alienlab.catpower.web.rest;
+import com.alibaba.fastjson.util.TypeUtils;
 import com.alienlab.catpower.domain.LearnerAppointment;
-import com.alienlab.catpower.domain.LearnerCharge;
 import com.alienlab.catpower.service.LearnerAppointmentService;
 import com.alienlab.catpower.web.rest.util.ExecResult;
 import com.alienlab.catpower.web.rest.util.HeaderUtil;
@@ -11,8 +11,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.net.URI;
 import java.net.URISyntaxException;
+
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -49,12 +56,24 @@ public class LearnerAppointmentResource {
 
     @ApiOperation("学员预约")
     @PostMapping("/learner-appointment")
-    public ResponseEntity<LearnerAppointment> createLearnerCharge(@RequestBody LearnerAppointment learnerAppointment) throws URISyntaxException {
-        log.debug("REST request to save LearnerCharge : {}", learnerAppointment);
-        if (learnerAppointment.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new learnerCharge cannot already have an ID")).body(null);
+    public ResponseEntity<LearnerAppointment> createLearnerAppointment(@RequestBody Map map) throws URISyntaxException {
+        Long buyCourseId = TypeUtils.castToLong(map.get("buyCourseId"));
+        String t=TypeUtils.castToString(map.get("appointmentDate"));
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        Date d=null;
+        try {
+            d=sdf.parse(t);
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
-        LearnerAppointment result = learnerAppointmentService.save(learnerAppointment);
+        ZonedDateTime appointmentDate = ZonedDateTime.ofInstant(d.toInstant(), ZoneId.systemDefault());
+        String appointmentMemo = TypeUtils.castToString(map.get("appointmentMemo"));
+        LearnerAppointment result = null;
+        try {
+            result = learnerAppointmentService.save(buyCourseId,appointmentDate,appointmentMemo,"预约中");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return ResponseEntity.created(new URI("/api/learner-appointment/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);

@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,10 +33,25 @@ public class LearnerAppointmentServiceImpl implements LearnerAppointmentService 
 
     @Autowired
     private LearnerAppointmentRepository learnerAppointmentRepository;
+    @Autowired
+    private BuyCourseRepository buyCourseRepository;
 
     @Override
-    public LearnerAppointment save(LearnerAppointment learnerAppointment) {
-        return learnerAppointmentRepository.save(learnerAppointment);
+    public LearnerAppointment save(Long buyCourseId, ZonedDateTime appointmentDate, String appointmentResult, String appointmentMemo) throws Exception{
+        LearnerAppointment learnerAppointment = new LearnerAppointment();
+        learnerAppointment.setAppointmentDate(appointmentDate);
+        learnerAppointment.setAppointmentMemo(appointmentMemo);
+        if (buyCourseId == null){
+            throw new Exception("参数解析异常！");
+        }
+        BuyCourse buyCourse = buyCourseRepository.findOne(buyCourseId);
+        if (buyCourse == null){
+            throw new Exception("没有找到对应的买课信息");
+        }
+        learnerAppointment.setBuyCourse(buyCourse);
+        learnerAppointment.setAppointmentResult(appointmentResult);
+        learnerAppointmentRepository.save(learnerAppointment);
+        return null;
     }
 
     @Override
