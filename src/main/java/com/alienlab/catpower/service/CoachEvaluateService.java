@@ -4,6 +4,8 @@ import com.alienlab.catpower.domain.CoachEvaluate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 /**
  * Service Interface for managing CoachEvaluate.
  */
@@ -46,5 +48,15 @@ public interface CoachEvaluateService {
      * @return
      */
 
+    /**
+     * Save a coachEvaluate.
+     *
+     * @return the persisted entity
+     */
+    CoachEvaluate insert(Long serviceAttitude,Long speciality,Long like,String complain,Long evaluation,Long learnerId,Long scheId);
 
+    /**
+     * 根据教练ID获取此教练的评价
+     */
+    List<CoachEvaluate> getCoachEvaluateByCoachId(Long coachId) throws Exception;
 }

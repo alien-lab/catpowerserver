@@ -28,5 +28,9 @@ public interface LearnerChargeRepository extends JpaRepository<LearnerCharge,Lon
     @Query("select a from LearnerCharge a  where a.course=?1 and a.learner=?2 order by chargeTime DESC ")
     List<LearnerCharge> findLearnerChargeByCourseAndLearner(Course course,Learner learner);
 
+    //根据查询历史签到纪录
+    @Query("select a from LearnerCharge a  where a.learner.id=?1 and a.courseScheduling.id=?2 ")
+    LearnerCharge findLearnerChargeByLearnerIdAndScheId(Long learnerId,Long scheId);
+
 
 }

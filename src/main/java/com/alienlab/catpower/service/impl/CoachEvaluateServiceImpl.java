@@ -1,7 +1,12 @@
 package com.alienlab.catpower.service.impl;
+
+import com.alienlab.catpower.domain.Coach;
 import com.alienlab.catpower.domain.CoachEvaluate;
+import com.alienlab.catpower.domain.LearnerCharge;
 import com.alienlab.catpower.repository.CoachEvaluateRepository;
+import com.alienlab.catpower.repository.LearnerChargeRepository;
 import com.alienlab.catpower.service.CoachEvaluateService;
+import com.alienlab.catpower.service.CoachService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +15,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * Service Implementation for managing CoachEvaluate.
@@ -24,6 +31,12 @@ public class CoachEvaluateServiceImpl implements CoachEvaluateService{
 
     @Autowired
     JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    CoachService coachService;
+
+    @Autowired
+    private LearnerChargeRepository learnerChargeRepository;
 
     public CoachEvaluateServiceImpl(CoachEvaluateRepository coachEvaluateRepository) {
         this.coachEvaluateRepository = coachEvaluateRepository;
@@ -79,6 +92,36 @@ public class CoachEvaluateServiceImpl implements CoachEvaluateService{
     public void delete(Long id) {
         log.debug("Request to delete CoachEvaluate : {}", id);
         coachEvaluateRepository.delete(id);
+    }
+
+    /**
+     * Save a coachEvaluate.
+     * @return the persisted entity
+     */
+    @Override
+    public CoachEvaluate insert(Long serviceAttitude,Long speciality,Long like,String complain,Long evaluation,Long learnerId,Long scheId) {
+        CoachEvaluate coachEvaluate=new CoachEvaluate();
+        coachEvaluate.setServiceAttitude(serviceAttitude);
+        coachEvaluate.setSpeciality(speciality);
+        coachEvaluate.setLike(like);
+        coachEvaluate.setComplain(complain);
+        coachEvaluate.setEvaluation(evaluation);
+        LearnerCharge learnerCharge=learnerChargeRepository.findLearnerChargeByLearnerIdAndScheId(learnerId,scheId);
+        coachEvaluate.setLearner(learnerCharge.getLearner());
+        coachEvaluate.setCoach(learnerCharge.getCourseScheduling().getCoach());
+        coachEvaluate.setCourse(learnerCharge.getCourseScheduling().getCourse());
+        coachEvaluate.setLearnerCharge(learnerCharge);
+        CoachEvaluate result = coachEvaluateRepository.save(coachEvaluate);
+        return result;
+    }
+
+    @Override
+    public List<CoachEvaluate> getCoachEvaluateByCoachId(Long coachId) throws Exception {
+        Coach coach = coachService.findOne(coachId);
+        List<CoachEvaluate> list = coachEvaluateRepository.findCoachEvaluateByCoach(coach);
+        /*String sql = "SELECT * FROM `coach_evaluate` a WHERE a.coach_id='"+coachId+"'";
+        List list = jdbcTemplate.queryForList(sql);*/
+        return list;
     }
 
 

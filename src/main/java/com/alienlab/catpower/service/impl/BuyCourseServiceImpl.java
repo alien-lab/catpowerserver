@@ -1,9 +1,7 @@
 package com.alienlab.catpower.service.impl;
 
 import com.alienlab.catpower.domain.*;
-import com.alienlab.catpower.repository.BuyCourseRepository;
-import com.alienlab.catpower.repository.CourseRepository;
-import com.alienlab.catpower.repository.LearnerAppointmentRepository;
+import com.alienlab.catpower.repository.*;
 import com.alienlab.catpower.service.BuyCourseService;
 import com.alienlab.catpower.service.LearnerService;
 import org.slf4j.Logger;
@@ -46,6 +44,12 @@ public class BuyCourseServiceImpl implements BuyCourseService{
     @Autowired
     private LearnerAppointmentRepository learnerAppointmentRepository;
 
+    @Autowired
+    private LearnerRepository learnerRepository;
+
+    @Autowired
+    private CoachRepository coachRepository;
+
     public BuyCourseServiceImpl(BuyCourseRepository buyCourseRepository) {
         this.buyCourseRepository = buyCourseRepository;
     }
@@ -59,6 +63,9 @@ public class BuyCourseServiceImpl implements BuyCourseService{
     @Override
     public BuyCourse save(BuyCourse buyCourse) {
         log.debug("Request to save BuyCourse : {}", buyCourse);
+        ZonedDateTime dateTime = ZonedDateTime.now();
+        buyCourse.setBuyTime(dateTime);
+        buyCourse.setOperateTime(dateTime);
         BuyCourse result = buyCourseRepository.save(buyCourse);
         return result;
     }
@@ -146,15 +153,11 @@ public class BuyCourseServiceImpl implements BuyCourseService{
         return buyCourseRepository.findBuyCourseByLearnerAndCourse(learner,course);
     }
 
- /*   @Override
-    public List getAppointment(Long learnerId) throws Exception{
-        List<LearnerAppointment> learnerAppointments=learnerAppointmentRepository.findAppointmentByLearner(learnerId);
-        return learnerAppointments;
-
-    }*/
-
     @Override
     public List getAllCoachByLearnerId(Long learnerId) throws Exception {
+        if (learnerId==null){
+            throw new Exception("请求错误："+learnerId);
+        }
         List list=new ArrayList();
         List<BuyCourse> coachList=buyCourseRepository.findCoachByLearner(learnerId);
         for (int i=0;i<coachList.size();i++){
@@ -169,24 +172,26 @@ public class BuyCourseServiceImpl implements BuyCourseService{
         return list;
     }
 
+    //查询学员的全部课程
     @Override
     public List<BuyCourse> findBuyCourseByLearnerId(Long learnerId) throws Exception {
         if (learnerId==null){
             throw new Exception("请求错误："+learnerId);
-        }
-        Learner learner = learnerService.findOne(learnerId);
+         }
+        Learner learner = learnerRepository.findOne(learnerId);
         if (learner==null){
             throw new Exception("没有找到该学员信息");
         }
         return buyCourseRepository.findBuyCourseByLearner(learner);
     }
 
+    //查询学员的可用课程
     @Override
     public List<BuyCourse> findUseBuyCourseByLearnerId(Long learnerId) throws Exception {
         if (learnerId==null){
             throw new Exception("请求错误："+learnerId);
         }
-        Learner learner = learnerService.findOne(learnerId);
+        Learner learner = learnerRepository.findOne(learnerId);
         if (learner==null){
             throw new Exception("没有找到该学员信息");
         }
@@ -200,23 +205,54 @@ public class BuyCourseServiceImpl implements BuyCourseService{
         return buyCoursesList;
     }
 
+    //查询学员的不可用课程
     @Override
     public List<BuyCourse> findNotUseBuyCourseByLearnerId(Long learnerId) throws Exception {
-        if (learnerId==null){
+        if (learnerId==null ){
             throw new Exception("请求错误："+learnerId);
         }
-        Learner learner = learnerService.findOne(learnerId);
+        Learner learner = learnerRepository.findOne(learnerId);
         if (learner==null){
             throw new Exception("没有找到该学员信息");
         }
         List<BuyCourse> buyCourses = buyCourseRepository.findBuyCourseByLearner(learner);
         List<BuyCourse> buyCoursesList = new ArrayList<BuyCourse>();
         for (BuyCourse buyCourse :buyCourses){
-            if (buyCourse.getRemainClass()<0){
+            if (buyCourse.getRemainClass()<=0){
                 buyCoursesList.add(buyCourse);
             }
         }
         return buyCoursesList;
+    }
+
+    @Override
+    public List<BuyCourse> getPaymentWay() throws Exception {
+        List<BuyCourse> list = buyCourseRepository.findBuyCourse();
+        return list;
+    }
+
+    @Override
+    public List getCoachCourseByCoachId(Long coachId) throws Exception {
+        String sql = "SELECT * FROM `buy_course` a,`course` b WHERE a.coach_id='"+coachId+"' AND a.course_id=b.id GROUP BY a.course_id";
+        List list=jdbcTemplate.queryForList(sql);
+        return list;
+    }
+
+    @Override
+    public List getLearnerByCoachId(Long coachId) throws Exception {
+        if (coachId==null ){
+            throw new Exception("请求错误："+coachId);
+        }
+        List<BuyCourse> buyCourses = buyCourseRepository.getBuyCourseByCoachId(coachId);
+        List list = new ArrayList();
+        for (BuyCourse buyCourse : buyCourses){
+            Map map = new HashMap();
+            List<BuyCourse> courses = buyCourseRepository.findCourseByCoach(buyCourse.getCoach(),buyCourse.getLearner().getId());
+            map.put("learner",buyCourse.getLearner());
+            map.put("courses",courses);
+            list.add(map);
+        }
+        return list;
     }
 
 

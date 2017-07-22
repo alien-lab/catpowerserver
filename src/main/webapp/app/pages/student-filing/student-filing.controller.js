@@ -10,7 +10,7 @@
         vm.predicate = pagingParams.predicate;
         vm.reverse = pagingParams.ascending;
         vm.transition = transition;
-        vm.itemsPerPage = 9;
+        vm.itemsPerPage = 15;
         /**
          *获取学员信息
          */
@@ -56,3 +56,4 @@
 
     }]);
 })();
+

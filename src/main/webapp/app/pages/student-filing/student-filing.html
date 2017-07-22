@@ -34,7 +34,8 @@
                     <th>注册时间</th>
                     <th>第一次到店时间</th>
                     <th>经验值</th>
-                    <th></th>
+                    <th>学员绑定二维码</th>
+                    <th>操作</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -45,6 +46,13 @@
                     <td>{{stu.registTime | date:'medium'}}</td>
                     <td>{{stu.firstTotime | date:'medium'}}</td>
                     <td>{{stu.experience}}</td>
+                    <td>
+                        <span class="glyphicon glyphicon-qrcode" aria-hidden="true"
+                              ui-sref="student-filing.stuqr({id:stu.id})"
+                            style="cursor: pointer;">
+
+                        </span>
+                    </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"

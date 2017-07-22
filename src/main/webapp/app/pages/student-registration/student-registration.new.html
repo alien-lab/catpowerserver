@@ -8,33 +8,31 @@
 
     <div class="modal-body row">
         <jhi-alert-error></jhi-alert-error>
-        <div class="col-md-12 col-sm-12 col-lg-12 form-group" ng-show="vm.buyCourse.id">
+        <!--<div class="col-md-12 col-sm-12 col-lg-12 form-group" ng-show="vm.buyCourse.id">
             <label for="id" data-translate="global.field.id">ID</label>
             <input type="text" class="form-control" id="id" name="id"
                    ng-model="vm.buyCourse.id" readonly />
-        </div>
+        </div>-->
         <div class="col-md-6 col-sm-6 col-lg-6 form-group">
             <label data-translate="catpowerserverApp.buyCourse.learner" for="field_learner">Learner</label>
             <select class="form-control" id="field_learner" name="learner" ng-model="vm.buyCourse.learner" ng-options="learner as learner.learneName for learner in vm.learners track by learner.id">
-                <option value=""></option>
             </select>
         </div>
         <div class="col-md-6 col-sm-6 col-lg-6 form-group">
             <label data-translate="catpowerserverApp.buyCourse.course" for="field_course">Course</label>
-            <select class="form-control" id="field_course" name="course" ng-model="vm.buyCourse.course" ng-options="course as course.courseName for course in vm.courses track by course.id" ng-change="getTotalHour()">
-                <option value=""></option>
+            <select class="form-control" id="field_course" name="course" ng-model="vm.buyCourse.course" readonly ng-options="course as vm.buyCourse.courseName for buyCourse in vm.buyCourse track by buyCourse.id" >
             </select>
         </div>
         <div class="col-md-6 col-sm-6 col-lg-6 form-group">
             <label data-translate="catpowerserverApp.buyCourse.coach" for="field_coach">Coach</label>
             <select class="form-control" id="field_coach" name="coach" ng-model="vm.buyCourse.coach" ng-options="coach as coach.coachName for coach in vm.coaches track by coach.id">
-                <option value=""></option>
+
             </select>
         </div>
         <div class="col-md-6 col-sm-6 col-lg-6 form-group">
             <label class="control-label" for="field_remainClass">总课时</label>
             <input type="number" class="form-control" name="remainClass" id="field_remainClass"
-                   ng-model="vm.buyCourse.remainClass"
+                   ng-model="vm.buyCourse.remainClass" readonly
             />
         </div>
         <div class="col-md-6 col-sm-6 col-lg-6 form-group">

@@ -1,5 +1,6 @@
 package com.alienlab.catpower.web.rest;
 
+import com.alibaba.fastjson.util.TypeUtils;
 import com.codahale.metrics.annotation.Timed;
 import com.alienlab.catpower.domain.LearnerInfo;
 import com.alienlab.catpower.service.LearnerInfoService;
@@ -21,6 +22,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -126,9 +128,11 @@ public class LearnerInfoResource {
     }
 
     @ApiOperation("找每节课后对应的教练建议")
-    @GetMapping("/learner-infos/coachadvice")
-    public ResponseEntity getCoachAdvices(@RequestParam Long learnerId,@RequestParam Long courseSchedulingId){
+    @PostMapping("/learner-infos/coachadvice")
+    public ResponseEntity getCoachAdvices(@RequestBody Map map){
         try {
+            Long learnerId = TypeUtils.castToLong(map.get("learnerId"));
+            Long courseSchedulingId = TypeUtils.castToLong(map.get("courseSchedulingId"));
             LearnerInfo learnerInfo = learnerInfoService.findLearnerInfoByLearnerIdAndCourseSchedulingId(learnerId,courseSchedulingId);
             return ResponseEntity.ok().body(learnerInfo);
         } catch (Exception e) {
@@ -144,6 +148,24 @@ public class LearnerInfoResource {
     public ResponseEntity getFitLog(@PathVariable Long learnerId){
         try {
             List<LearnerInfo> learnerInfo = learnerInfoService.findLearnerInfoByLearnerId(learnerId);
+            return ResponseEntity.ok().body(learnerInfo);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
+
+        }
+    }
+
+    @ApiOperation("插入学员健身信息")
+    @PostMapping("/learner-infos/fitlog")
+    public ResponseEntity insertLearnerInfo(@RequestBody Map param){
+        String exerciseData = TypeUtils.castToString(param.get("exerciseData"));
+        String bodyTestData = TypeUtils.castToString(param.get("bodyTestData"));
+        String coachAdvice = TypeUtils.castToString(param.get("coachAdvice"));
+        Long learnerId = TypeUtils.castToLong(param.get("learnerId"));
+        Long scheId = TypeUtils.castToLong(param.get("scheId"));
+        try {
+            LearnerInfo learnerInfo = learnerInfoService.insertLearner(exerciseData,bodyTestData,coachAdvice,learnerId,scheId);
             return ResponseEntity.ok().body(learnerInfo);
         } catch (Exception e) {
             e.printStackTrace();

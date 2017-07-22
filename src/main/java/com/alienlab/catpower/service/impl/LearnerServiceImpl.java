@@ -5,8 +5,6 @@ import com.alienlab.catpower.domain.Learner;
 import com.alienlab.catpower.repository.BuyCourseRepository;
 import com.alienlab.catpower.repository.LearnerAppointmentRepository;
 import com.alienlab.catpower.repository.LearnerRepository;
-import com.alienlab.catpower.service.BuyCourseService;
-import com.alienlab.catpower.service.LearnerAppointmentService;
 import com.alienlab.catpower.service.LearnerService;
 import com.alienlab.catpower.web.wechat.bean.entity.QrInfo;
 import com.alienlab.catpower.web.wechat.bean.entity.WechatUser;
@@ -144,8 +142,8 @@ public class LearnerServiceImpl implements LearnerService{
     }
 
     @Override
-    public QrInfo getLearnerBindQr(Long learnerId) throws Exception {
-        Learner learner=learnerRepository.findOne(learnerId);
+    public QrInfo getLearnerBindQr(String openid) throws Exception {
+        Learner learner=learnerRepository.findLearnerByOpenid(openid);
         return getLearnerBindQr(learner);
     }
 
@@ -195,7 +193,13 @@ public class LearnerServiceImpl implements LearnerService{
 
     @Override
     public Map getLearnerIndexInfo(String openid) throws Exception {
+        if(openid==null){
+            throw new Exception("请求错误："+openid);
+        }
         Learner learner=learnerRepository.findLearnerByOpenid(openid);
+        if(learner==null){
+            throw new Exception("该微信用户未注册成为学员");
+        }
         Long learnerId=learner.getId();
         int appointCount=learnerAppointmentRepository.findAppointingByLearner(learnerId).size();
         int courseCount=buyCourseRepository.findCourseByLearner(learnerId).size();

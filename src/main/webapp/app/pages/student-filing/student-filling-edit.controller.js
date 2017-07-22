@@ -6,7 +6,7 @@
 
     var app = angular.module("catpowerserverApp");
 
-    app.controller('studentFilingDialogController',['$timeout', '$scope','$stateParams','$uibModalInstance','Learner','entity',function ($timeout,$scope,$stateParams,$uibModalInstance,Learner,entity) {
+    app.controller('studentFilingEditController',['$timeout', '$scope','$stateParams','$uibModalInstance','Learner','entity',function ($timeout,$scope,$stateParams,$uibModalInstance,Learner,entity) {
         var vm = this;
 
         vm.learner = entity;

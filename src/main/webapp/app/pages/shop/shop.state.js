@@ -88,6 +88,31 @@
                     });
                 }]
             })
+            /*.state('shopop.charge-new.scheId', {
+                parent: 'shopop',
+                url: '/{id}/newCharge',
+                data: {
+                    authorities: ['ROLE_USER']
+                },
+                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                    $uibModal.open({
+                        templateUrl: 'app/pages/shop/addCourseCharge.html',
+                        controller: 'LearnerChargeDialogController',
+                        controllerAs: 'vm',
+                        backdrop: 'static',
+                        size: 'md',
+                        resolve: {
+                            entity: ['CourseScheduling', function(CourseScheduling) {
+                                return CourseScheduling.get({id : $stateParams.id}).$promise;
+                            }]
+                        }
+                    }).result.then(function() {
+                        $state.go('shopop', null, { reload: 'shopop' });
+                    }, function() {
+                        $state.go('^');
+                    });
+                }]
+            })*/
             .state('shopop.schedulingDelete', {
                 parent: 'shopop',
                 url: '{id}/scheduling-delete',

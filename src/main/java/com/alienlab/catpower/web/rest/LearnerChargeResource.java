@@ -186,10 +186,12 @@ public class LearnerChargeResource {
     }
 
     @ApiOperation("查询学员已经签到的签到记录")
-    @GetMapping("/learner-charges/stusign/log")
-    public ResponseEntity getStuSignLog(@RequestParam Long courseIdId,@RequestParam Long learnerId){
+    @PostMapping("/learner-charges/stusign/log")
+    public ResponseEntity getStuSignLog(@RequestBody Map map){
+        Long learnerId = TypeUtils.castToLong(map.get("learnerId"));
+        Long courseId = TypeUtils.castToLong(map.get("courseId"));
         try {
-            List<LearnerCharge> learnerCharges = learnerChargeService.findLearnerChargeByCourseIdAndLearnerId(courseIdId,learnerId);
+            List<LearnerCharge> learnerCharges = learnerChargeService.findLearnerChargeByCourseIdAndLearnerId(courseId,learnerId);
             return ResponseEntity.ok().body(learnerCharges);
         } catch (Exception e) {
             e.printStackTrace();

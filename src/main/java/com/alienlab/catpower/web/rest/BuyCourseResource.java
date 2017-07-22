@@ -1,9 +1,7 @@
 package com.alienlab.catpower.web.rest;
 
 import com.alienlab.catpower.domain.BuyCourse;
-import com.alienlab.catpower.domain.LearnerAppointment;
 import com.alienlab.catpower.service.BuyCourseService;
-import com.alienlab.catpower.service.LearnerAppointmentService;
 import com.alienlab.catpower.web.rest.util.ExecResult;
 import com.alienlab.catpower.web.rest.util.HeaderUtil;
 import com.alienlab.catpower.web.rest.util.PaginationUtil;
@@ -15,7 +13,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -184,22 +181,57 @@ public class BuyCourseResource {
     @GetMapping("/buy-courses/mycourse/{learnerId}")
     public ResponseEntity getMyCourse(@PathVariable Long learnerId){
         //查询全部课程
-        List<BuyCourse> allCourse = null;
-        List<BuyCourse> startCourse = null;
-        List<BuyCourse> finishCourse = null;
         try {
-            allCourse = buyCourseService.findBuyCourseByLearnerId(learnerId);
-            startCourse = buyCourseService.findUseBuyCourseByLearnerId(learnerId);
-            finishCourse = buyCourseService.findNotUseBuyCourseByLearnerId(learnerId);
+            List<BuyCourse> allCourse = buyCourseService.findBuyCourseByLearnerId(learnerId);
+            List<BuyCourse> startCourse = buyCourseService.findUseBuyCourseByLearnerId(learnerId);
+            List<BuyCourse> finishCourse = buyCourseService.findNotUseBuyCourseByLearnerId(learnerId);
+            Map newMap = new HashMap();
+            newMap.put("allCourse",allCourse);
+            newMap.put("startCourse",startCourse);
+            newMap.put("finishCourse",finishCourse);
+            return ResponseEntity.ok().body(newMap);
         } catch (Exception e) {
             ExecResult er=new ExecResult(false,e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
         }
+    }
 
-        Map newMap = new HashMap();
-        newMap.put("allCourse",allCourse);
-        newMap.put("startCourse",startCourse);
-        newMap.put("finishCourse",finishCourse);
-        return ResponseEntity.ok().body(newMap);
+    @ApiOperation(value = "获取所有的买课的支付方式")
+    @GetMapping("/buy-courses/paymentWay")
+    public ResponseEntity getAllPaymentWay(){
+        try {
+            List<BuyCourse> result = buyCourseService.getPaymentWay();
+            return ResponseEntity.ok().body(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
+    }
+
+    @ApiOperation(value = "根据教练ID获取教练的课程")
+    @GetMapping("/buy-courses/courses/coachId")
+    public ResponseEntity getCourseByCoachId(@RequestParam Long coachId){
+        try {
+            List result = buyCourseService.getCoachCourseByCoachId(coachId);
+            return ResponseEntity.ok().body(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
+    }
+
+    @ApiOperation(value = "根据教练ID获取该教练的学员信息")
+    @GetMapping("/buy-courses/learner/coachId")
+    public ResponseEntity getLearnerByCoachId(@RequestParam Long coachId){
+        try {
+            List result = buyCourseService.getLearnerByCoachId(coachId);
+            return ResponseEntity.ok().body(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
     }
 }
