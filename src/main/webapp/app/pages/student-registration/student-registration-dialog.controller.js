@@ -93,7 +93,7 @@
 
     app.factory("buyCourseResource",["$resource",function ($resource) {
 
-        var resourceUrl = "/api/buy-courses/paymentWay";
+        var resourceUrl = "api/buy-courses/paymentWay";
         var result = $resource(resourceUrl,{},{
             'getPaymentWay':{method:'GET',isArray:true},
         });

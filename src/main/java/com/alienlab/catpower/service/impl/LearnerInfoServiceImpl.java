@@ -2,6 +2,8 @@ package com.alienlab.catpower.service.impl;
 
 import com.alienlab.catpower.domain.CourseScheduling;
 import com.alienlab.catpower.domain.Learner;
+import com.alienlab.catpower.repository.CourseSchedulingRepository;
+import com.alienlab.catpower.repository.LearnerRepository;
 import com.alienlab.catpower.service.CourseSchedulingService;
 import com.alienlab.catpower.service.CourseService;
 import com.alienlab.catpower.service.LearnerInfoService;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +42,12 @@ public class LearnerInfoServiceImpl implements LearnerInfoService{
 
     @Autowired
     CourseSchedulingService courseSchedulingService;
+
+    @Autowired
+    LearnerRepository learnerRepository;
+
+    @Autowired
+    CourseSchedulingRepository courseSchedulingRepository;
 
     public LearnerInfoServiceImpl(LearnerInfoRepository learnerInfoRepository) {
         this.learnerInfoRepository = learnerInfoRepository;
@@ -117,5 +126,19 @@ public class LearnerInfoServiceImpl implements LearnerInfoService{
             throw new Exception("没有对应的学员信息");
         }
         return learnerInfoRepository.findLearnerInfoByLearner(learner);
+    }
+
+    @Override
+    public LearnerInfo insertLearner(String exerciseData, String bodyTestData, String coachAdvice, Long learnerId, Long scheId) throws Exception {
+        LearnerInfo learnerInfo=new LearnerInfo();
+        ZonedDateTime dateTime = ZonedDateTime.now();
+        learnerInfo.setTime(dateTime);
+        learnerInfo.setExerciseData(exerciseData);
+        learnerInfo.setBodytestData(bodyTestData);
+        learnerInfo.setCoachAdvice(coachAdvice);
+        learnerInfo.setLearner(learnerRepository.findOne(learnerId));
+        learnerInfo.setCourseScheduling(courseSchedulingRepository.findOne(scheId));
+        LearnerInfo result = learnerInfoRepository.save(learnerInfo);
+        return result;
     }
 }

@@ -63,7 +63,7 @@
     'use strict';
     var app=angular.module('catpowerserverApp');
     app.factory('stuQrResource',['$resource',function ($resource) {
-        var resourceUrl="/api/learners/qr/learner";
+        var resourceUrl="api/learners/qr/learner";
         return $resource(resourceUrl,{}, {
             'getStuQr':{method:'GET'}
         });

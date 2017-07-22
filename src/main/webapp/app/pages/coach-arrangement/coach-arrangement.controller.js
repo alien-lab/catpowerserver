@@ -83,10 +83,10 @@
 
     }]);
     app.factory("courseScheResource",["$resource",function($resource){
-        var resourceUrl =  '/api/course-schedulings/courseScheByCoachId';
+        var resourceUrl =  'api/course-schedulings/courseScheByCoachId';
         return $resource(resourceUrl, {}, {
             'query': { method: 'GET',isArray: true},
-            'getCoachSche':{url:'/api/course-schedulings/courseScheduling',method:'GET',isArray:true}
+            'getCoachSche':{url:'api/course-schedulings/courseScheduling',method:'GET',isArray:true}
         });
 
     }]);

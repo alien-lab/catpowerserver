@@ -156,4 +156,22 @@ public class LearnerInfoResource {
         }
     }
 
+    @ApiOperation("插入学员健身信息")
+    @PostMapping("/learner-infos/fitlog")
+    public ResponseEntity insertLearnerInfo(@RequestBody Map param){
+        String exerciseData = TypeUtils.castToString(param.get("exerciseData"));
+        String bodyTestData = TypeUtils.castToString(param.get("bodyTestData"));
+        String coachAdvice = TypeUtils.castToString(param.get("coachAdvice"));
+        Long learnerId = TypeUtils.castToLong(param.get("learnerId"));
+        Long scheId = TypeUtils.castToLong(param.get("scheId"));
+        try {
+            LearnerInfo learnerInfo = learnerInfoService.insertLearner(exerciseData,bodyTestData,coachAdvice,learnerId,scheId);
+            return ResponseEntity.ok().body(learnerInfo);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
+
+        }
+    }
+
 }

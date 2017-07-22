@@ -78,14 +78,14 @@
     'use strict';
     var app = angular.module('catpowerserverApp');
     app.factory('courseResource',['$resource',function ($resource) {
-        var resourceUrl = "/api/courses/courseInfo";
+        var resourceUrl = "api/courses/courseInfo";
         return $resource(resourceUrl,{},{
             'getAllCourse':{method: 'GET',isArray:true},
-            'getCourseByType':{url:'/api/courses/type',method:'GET',isArray:true},
-            'getAllCourseType':{url:'/api/courses/courseType',method:'GET',isArray:true},
-            'getTotalClassHour':{url:' /api/course/courseName',method:'GET'},
-            'getLikeCourse':{url:'/api/course/like/courseName',method:'GET',isArray:true},
-            'getCourseByCourseId':{url:'/api/course/courseId',method:'GET'}
+            'getCourseByType':{url:'api/courses/type',method:'GET',isArray:true},
+            'getAllCourseType':{url:'api/courses/courseType',method:'GET',isArray:true},
+            'getTotalClassHour':{url:'api/course/courseName',method:'GET'},
+            'getLikeCourse':{url:'api/course/like/courseName',method:'GET',isArray:true},
+            'getCourseByCourseId':{url:'api/course/courseId',method:'GET'}
         });
     }]);
     app.service('courseService',['courseResource',function (courseResource) {

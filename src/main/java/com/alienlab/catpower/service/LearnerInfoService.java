@@ -52,4 +52,6 @@ public interface LearnerInfoService {
     //每节课的教练建议
     List<LearnerInfo> findLearnerInfoByLearnerId(Long learnerId) throws Exception;
 
+    LearnerInfo insertLearner(String exerciseData,String bodyTestData,String coachAdvice,Long learnerId,Long scheId) throws Exception;
+
 }

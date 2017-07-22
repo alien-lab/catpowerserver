@@ -49,7 +49,7 @@ public interface LearnerService {
 
     Learner findByOpenid(String openid) throws ParseException;
 
-    QrInfo getLearnerBindQr(String openid) throws Exception;
+    QrInfo getLearnerBindQr(Long learnerId) throws Exception;
     QrInfo getLearnerBindQr(Learner learner) throws Exception;
 
     //绑定学员微信
@@ -57,5 +57,7 @@ public interface LearnerService {
     Learner bindWechatUser(WechatUser wechatUser,Learner learner) throws Exception;
 
     Map getLearnerIndexInfo(String openid) throws Exception;
+
+    QrInfo getLearnerBindQr(String openid) throws Exception;
 
 }

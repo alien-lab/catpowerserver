@@ -5,7 +5,7 @@
     'use strict';
     var app=angular.module('catpowerserverApp');
 
-    app.controller("shopOpController",["$http","CourseScheduling","$scope","$filter","shopopService","BuyCourse","buyCourseTodayService","AlertService","qrService", function($http,CourseScheduling,$scope,$filter,shopopService,BuyCourse,buyCourseTodayService,AlertService,qrService){
+    app.controller("shopOpController",["$http","CourseScheduling","$scope","$filter","shopopService","BuyCourse","buyCourseTodayService","AlertService","qrService","ticket", function($http,CourseScheduling,$scope,$filter,shopopService,BuyCourse,buyCourseTodayService,AlertService,qrService,ticket){
         var vm = this;
         loadSche();
         function loadSche(date){
@@ -45,7 +45,7 @@
                             $scope.qr=data;
                             console.log($scope.qr);
                             console.log($scope.qr.qrTicker);
-                            $scope.arrangementCourseQr = "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket="+$scope.qr.qrTicker;
+                            $scope.arrangementCourseQr = ticket+$scope.qr.qrTicker;
                             console.log($scope.arrangementCourseQr);
                             $scope.scheCourseName = scheCourseName;
                         })
@@ -218,7 +218,7 @@
     }]);
     //获取签到二维码
     app.factory("qrResource",["$resource",function($resource){
-        var resourceUrl =  '/api/course-schedulings/qr/scheId';
+        var resourceUrl =  'api/course-schedulings/qr/scheId';
         return $resource(resourceUrl, {}, {
             'getQr': { method: 'GET'}
         });
