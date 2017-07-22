@@ -142,6 +142,12 @@ public class LearnerServiceImpl implements LearnerService{
     }
 
     @Override
+    public QrInfo getLearnerBindQr(Long learnerId) throws Exception {
+        Learner learner=learnerRepository.findOne(learnerId);
+        return null;
+    }
+
+    @Override
     public QrInfo getLearnerBindQr(String openid) throws Exception {
         Learner learner=learnerRepository.findLearnerByOpenid(openid);
         return getLearnerBindQr(learner);
@@ -159,7 +165,7 @@ public class LearnerServiceImpl implements LearnerService{
         String sceneId = "2and"+learner.getId()+"";
         JSONObject jo =  wechatUtil.get_qr_code_ticket(sceneId);
         if(jo==null || jo.getString("ticket")==null){
-            throw new Exception("生成学员绑定二维码失败！排课编码："+learner.getId());
+            throw new Exception("生成签到二维码失败！学员绑定编码："+learner.getId());
         }
         QrInfo qr=qrInfoService.createQrinfo(sceneId, 2L,jo.getString("ticket"));
         learner.setQrInfo(qr);

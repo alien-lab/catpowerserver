@@ -58,4 +58,6 @@ public interface LearnerService {
 
     Map getLearnerIndexInfo(String openid) throws Exception;
 
+    QrInfo getLearnerBindQr(String openid) throws Exception;
+
 }

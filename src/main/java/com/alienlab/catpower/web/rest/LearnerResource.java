@@ -1,8 +1,5 @@
 package com.alienlab.catpower.web.rest;
 
-import com.alienlab.catpower.web.rest.util.ExecResult;
-import com.alienlab.catpower.web.wechat.bean.entity.QrInfo;
-import com.codahale.metrics.annotation.Timed;
 import com.alienlab.catpower.domain.Learner;
 import com.alienlab.catpower.service.LearnerService;
 import com.alienlab.catpower.web.rest.util.ExecResult;
@@ -156,12 +153,11 @@ public class LearnerResource {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
         }
     }
-
-    @ApiOperation(value = "获取学员绑定二维码")
-    @GetMapping("/learners/qr/{learnerId}")
-    public ResponseEntity getScheQrcode(@PathVariable Long learnerId){
+    @ApiOperation(value = "获取绑定二维码")
+    @GetMapping("/learners/qr/learner")
+    public ResponseEntity getScheQrcode(@RequestParam Learner learner){
         try{
-            QrInfo qr=learnerService.getLearnerBindQr(learnerId);
+            QrInfo qr=learnerService.getLearnerBindQr(learner);
             return ResponseEntity.ok(qr);
         }catch(Exception e){
             e.printStackTrace();
