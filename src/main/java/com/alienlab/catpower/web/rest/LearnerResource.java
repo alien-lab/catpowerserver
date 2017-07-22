@@ -165,5 +165,17 @@ public class LearnerResource {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
         }
     }
+    @ApiOperation(value = "获取绑定二维码")
+    @GetMapping("/learners/qr/learner")
+    public ResponseEntity getScheQrcode(@RequestParam Learner learner){
+        try{
+            QrInfo qr=learnerService.getLearnerBindQr(learner);
+            return ResponseEntity.ok(qr);
+        }catch(Exception e){
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
+    }
 
 }

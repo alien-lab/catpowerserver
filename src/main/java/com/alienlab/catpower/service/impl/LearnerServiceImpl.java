@@ -142,6 +142,12 @@ public class LearnerServiceImpl implements LearnerService{
     }
 
     @Override
+    public QrInfo getLearnerBindQr(Long learnerId) throws Exception {
+        Learner learner=learnerRepository.findOne(learnerId);
+        return null;
+    }
+
+    @Override
     public QrInfo getLearnerBindQr(String openid) throws Exception {
         Learner learner=learnerRepository.findLearnerByOpenid(openid);
         return getLearnerBindQr(learner);
