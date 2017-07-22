@@ -218,7 +218,7 @@
     }]);
     //获取签到二维码
     app.factory("qrResource",["$resource",function($resource){
-        var resourceUrl =  '/api/course-schedulings/qr/scheId';
+        var resourceUrl =  'api/course-schedulings/qr/scheId';
         return $resource(resourceUrl, {}, {
             'getQr': { method: 'GET'}
         });

@@ -31,10 +31,10 @@
     var app = angular.module('catpowerserverApp');
 
     app.factory('coachInfoResource',['$resource',function ($resource) {
-        var resourceUrl = "/api/buy-courses/courses/coachId";
+        var resourceUrl = "api/buy-courses/courses/coachId";
         return $resource(resourceUrl,{},{
             'getCoachOtherInfo':{method:'GET',isArray:true},
-            'getCoachEvaluates':{url:'/api/coach-evaluates-learner/coach-evaluates/coachId',method:'GET',isArray:true}
+            'getCoachEvaluates':{url:'api/coach-evaluates-learner/coach-evaluates/coachId',method:'GET',isArray:true}
         });
     }]);
     app.service('coachInfoService',['coachInfoResource',function (coachInfoResource) {
