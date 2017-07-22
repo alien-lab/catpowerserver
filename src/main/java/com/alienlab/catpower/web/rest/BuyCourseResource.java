@@ -181,13 +181,10 @@ public class BuyCourseResource {
     @GetMapping("/buy-courses/mycourse/{learnerId}")
     public ResponseEntity getMyCourse(@PathVariable Long learnerId){
         //查询全部课程
-        List<BuyCourse> allCourse = null;
-        List<BuyCourse> startCourse = null;
-        List<BuyCourse> finishCourse = null;
         try {
-            allCourse = buyCourseService.findBuyCourseByLearnerId(learnerId);
-            startCourse = buyCourseService.findUseBuyCourseByLearnerId(learnerId);
-            finishCourse = buyCourseService.findNotUseBuyCourseByLearnerId(learnerId);
+            List<BuyCourse> allCourse = buyCourseService.findBuyCourseByLearnerId(learnerId);
+            List<BuyCourse> startCourse = buyCourseService.findUseBuyCourseByLearnerId(learnerId);
+            List<BuyCourse> finishCourse = buyCourseService.findNotUseBuyCourseByLearnerId(learnerId);
             Map newMap = new HashMap();
             newMap.put("allCourse",allCourse);
             newMap.put("startCourse",startCourse);
