@@ -54,6 +54,8 @@ public class LearnerChargeServiceImpl implements LearnerChargeService{
     @Override
     public LearnerCharge save(LearnerCharge learnerCharge) {
         log.debug("Request to save LearnerCharge : {}", learnerCharge);
+        ZonedDateTime dateTime = ZonedDateTime.now();
+        learnerCharge.setChargeTime(dateTime);
         LearnerCharge result = learnerChargeRepository.save(learnerCharge);
         return result;
     }

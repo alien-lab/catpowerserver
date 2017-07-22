@@ -19,9 +19,23 @@
             vm.coaches = Coach.query();
 
             $timeout(function (){
-                angular.element('.form-group:eq(1)>input').focus();
+                angular.element('.form-group:eq(0)>select').focus();
             });
 
+            //上课状态
+            $scope.statusList = [{
+                id:'1',
+                status:'未开始'
+            },{
+                id:'2',
+                status:'进行中'
+            },{
+                id:'3',
+                status:'已下课'
+            }];
+            $scope.getCoachStatus = function () {
+                vm.courseScheduling.status = this.sta.status;
+            };
             function clear () {
                 $uibModalInstance.dismiss('cancel');
             }
@@ -47,9 +61,9 @@
 
             vm.datePickerOpenStatus.startTime = false;
             vm.datePickerOpenStatus.endTime = false;
-
             function openCalendar (date) {
                 vm.datePickerOpenStatus[date] = true;
             }
-    }]);
+
+        }]);
 })();
