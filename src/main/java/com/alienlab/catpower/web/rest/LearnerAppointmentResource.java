@@ -56,7 +56,7 @@ public class LearnerAppointmentResource {
 
     @ApiOperation("学员预约")
     @PostMapping("/learner-appointment")
-    public ResponseEntity<LearnerAppointment> createLearnerAppointment(@RequestBody Map map) throws URISyntaxException {
+    public ResponseEntity createLearnerAppointment(@RequestBody Map map) throws URISyntaxException {
         Long buyCourseId = TypeUtils.castToLong(map.get("buyCourseId"));
         String t=TypeUtils.castToString(map.get("appointmentDate"));
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
@@ -71,11 +71,11 @@ public class LearnerAppointmentResource {
         LearnerAppointment result = null;
         try {
             result = learnerAppointmentService.save(buyCourseId,appointmentDate,appointmentMemo,"预约中");
+            return ResponseEntity.ok().body(result);
         } catch (Exception e) {
             e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
         }
-        return ResponseEntity.created(new URI("/api/learner-appointment/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+
     }
 }
