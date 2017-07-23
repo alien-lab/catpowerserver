@@ -70,7 +70,7 @@ public class LearnerAppointmentResource {
         String appointmentMemo = TypeUtils.castToString(map.get("appointmentMemo"));
         LearnerAppointment result = null;
         try {
-            result = learnerAppointmentService.save(buyCourseId,appointmentDate,appointmentMemo,"预约中");
+            result = learnerAppointmentService.save(buyCourseId,appointmentDate,"预约中",appointmentMemo);
             return ResponseEntity.ok().body(result);
         } catch (Exception e) {
             e.printStackTrace();
