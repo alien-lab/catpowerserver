@@ -66,4 +66,10 @@ public class LearnerAppointmentServiceImpl implements LearnerAppointmentService 
         return map;
 
     }
+
+    @Override
+    public void delete(Long id) {
+        log.debug("Request to delete Course : {}", id);
+        learnerAppointmentRepository.delete(id);
+    }
 }

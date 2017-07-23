@@ -78,4 +78,14 @@ public class LearnerAppointmentResource {
         }
 
     }
+
+
+    @ApiOperation(value = "学员取消预约信息")
+    @DeleteMapping("/learner-appointment/{id}")
+    public ResponseEntity<Void> deleteBuyCourse(@PathVariable Long id) {
+        log.debug("REST request to delete BuyCourse : {}", id);
+        learnerAppointmentService.delete(id);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
 }

@@ -26,6 +26,13 @@ public interface LearnerAppointmentService {
      */
     Map getAppointment(Long learnerId) throws Exception;
 
+    /**
+     *  Delete the "id" course.
+     *
+     *  @param id the id of the entity
+     */
+    void delete(Long id);
+
 
 
 }
