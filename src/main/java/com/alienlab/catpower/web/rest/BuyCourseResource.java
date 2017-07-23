@@ -223,8 +223,8 @@ public class BuyCourseResource {
     }
 
     @ApiOperation(value = "根据教练ID获取该教练的学员信息")
-    @GetMapping("/buy-courses/learner/coachId")
-    public ResponseEntity getLearnerByCoachId(@RequestParam Long coachId){
+    @GetMapping("/buy-courses/learner/{coachId}")
+    public ResponseEntity getLearnerByCoachId(@PathVariable Long coachId){
         try {
             List result = buyCourseService.getLearnerByCoachId(coachId);
             return ResponseEntity.ok().body(result);
