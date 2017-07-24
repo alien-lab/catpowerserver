@@ -88,4 +88,19 @@ public class LearnerAppointmentResource {
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 
+    @ApiOperation(value = "教练处理学员预约信息")
+    @PutMapping("/learner-appointment")
+    public ResponseEntity updateLearnerAppointment(@RequestBody Map map) {
+        Long appointmentId = TypeUtils.castToLong(map.get("appointmentId"));
+        String appointmentResult=TypeUtils.castToString(map.get("appointmentResult"));
+        try {
+            LearnerAppointment learnerAppointment=learnerAppointmentService.update(appointmentId,appointmentResult);
+            return ResponseEntity.ok().body(learnerAppointment);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
+    }
+
 }

@@ -33,6 +33,12 @@ public interface LearnerAppointmentService {
      */
     void delete(Long id);
 
-
+    /**
+     * 更新预约结果
+     * @param appointmentResult
+     * @return
+     * @throws Exception
+     */
+    LearnerAppointment update(Long appointmentId,String appointmentResult) throws Exception;
 
 }
