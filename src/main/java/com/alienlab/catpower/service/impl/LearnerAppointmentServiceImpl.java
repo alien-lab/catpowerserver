@@ -38,9 +38,6 @@ public class LearnerAppointmentServiceImpl implements LearnerAppointmentService 
 
     @Override
     public LearnerAppointment save(Long buyCourseId, ZonedDateTime appointmentDate, String appointmentResult, String appointmentMemo) throws Exception{
-        LearnerAppointment learnerAppointment = new LearnerAppointment();
-        learnerAppointment.setAppointmentDate(appointmentDate);
-        learnerAppointment.setAppointmentMemo(appointmentMemo);
         if (buyCourseId == null){
             throw new Exception("参数解析异常！");
         }
@@ -48,6 +45,13 @@ public class LearnerAppointmentServiceImpl implements LearnerAppointmentService 
         if (buyCourse == null){
             throw new Exception("没有找到对应的买课信息");
         }
+        LearnerAppointment appoint = learnerAppointmentRepository.findOne(buyCourseId);
+        if (appoint!=null){
+            throw new Exception("您已经预约该课程！");
+        }
+        LearnerAppointment learnerAppointment = new LearnerAppointment();
+        learnerAppointment.setAppointmentDate(appointmentDate);
+        learnerAppointment.setAppointmentMemo(appointmentMemo);
         learnerAppointment.setBuyCourse(buyCourse);
         learnerAppointment.setAppointmentResult(appointmentResult);
         learnerAppointmentRepository.save(learnerAppointment);
