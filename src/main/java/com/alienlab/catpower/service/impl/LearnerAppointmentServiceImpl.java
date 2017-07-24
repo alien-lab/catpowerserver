@@ -76,4 +76,18 @@ public class LearnerAppointmentServiceImpl implements LearnerAppointmentService 
         log.debug("Request to delete Course : {}", id);
         learnerAppointmentRepository.delete(id);
     }
+
+    @Override
+    public LearnerAppointment update(Long appointmentId,String appointmentResult) throws Exception {
+        if (appointmentId==null || appointmentResult==null){
+            throw new Exception("参数解析异常！");
+        }
+        LearnerAppointment learnerAppointment=learnerAppointmentRepository.findOne(appointmentId);
+        if (learnerAppointment==null){
+            throw new Exception("没有找到对应的预约信息");
+        }
+        learnerAppointment.setAppointmentResult(appointmentResult);
+        LearnerAppointment result=learnerAppointmentRepository.save(learnerAppointment);
+        return result;
+    }
 }
