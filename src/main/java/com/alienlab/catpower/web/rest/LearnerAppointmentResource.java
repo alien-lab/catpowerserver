@@ -103,4 +103,17 @@ public class LearnerAppointmentResource {
         }
     }
 
+    @ApiOperation("根据学员预约Id获取学员预约记录")
+    @GetMapping("/learner-appointment/{learnerappointmentId}")
+    public ResponseEntity getLearnerAppointmentById(@PathVariable Long learnerappointmentId){
+        try {
+            LearnerAppointment result=learnerAppointmentService.findLearnerAppointmentById(learnerappointmentId);
+            return ResponseEntity.ok().body(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
+    }
+
 }

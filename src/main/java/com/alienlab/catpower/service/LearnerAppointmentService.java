@@ -44,4 +44,6 @@ public interface LearnerAppointmentService {
 
     //根据预约时间和买课ID去查询预约信息
     LearnerAppointment findLearnerAppointmentByBuyCourseIdAndAppointmentDate(Long buyCourseId,ZonedDateTime appointmentDate)throws Exception;
+
+    LearnerAppointment findLearnerAppointmentById(Long id) throws Exception;
 }

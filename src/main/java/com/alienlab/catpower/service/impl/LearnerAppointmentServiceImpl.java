@@ -102,4 +102,16 @@ public class LearnerAppointmentServiceImpl implements LearnerAppointmentService 
         }
         return learnerAppointmentRepository.findLearnerAppointmentByAppointmentDateAndBuyCourse(appointmentDate,buyCourse);
     }
+
+    @Override
+    public LearnerAppointment findLearnerAppointmentById(Long id) throws Exception {
+        if (id == null){
+           throw new Exception("参数解析异常！");
+        }
+        LearnerAppointment learnerAppointment=learnerAppointmentRepository.findOne(id);
+        if (learnerAppointment==null){
+            throw new Exception("没有对应的预约记录！");
+        }
+        return learnerAppointment;
+    }
 }
