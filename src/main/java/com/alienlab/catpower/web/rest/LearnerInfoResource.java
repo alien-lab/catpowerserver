@@ -1,6 +1,7 @@
 package com.alienlab.catpower.web.rest;
 
 import com.alibaba.fastjson.util.TypeUtils;
+import com.alienlab.catpower.web.rest.util.ExecResult;
 import com.codahale.metrics.annotation.Timed;
 import com.alienlab.catpower.domain.LearnerInfo;
 import com.alienlab.catpower.service.LearnerInfoService;
@@ -137,7 +138,8 @@ public class LearnerInfoResource {
             return ResponseEntity.ok().body(learnerInfo);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
 
         }
     }
@@ -169,7 +171,8 @@ public class LearnerInfoResource {
             return ResponseEntity.ok().body(learnerInfo);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
 
         }
     }
