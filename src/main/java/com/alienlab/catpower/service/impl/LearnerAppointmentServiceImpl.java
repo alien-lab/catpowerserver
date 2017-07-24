@@ -45,9 +45,9 @@ public class LearnerAppointmentServiceImpl implements LearnerAppointmentService 
         if (buyCourse == null){
             throw new Exception("没有找到对应的买课信息");
         }
-        LearnerAppointment appoint = learnerAppointmentRepository.findOne(buyCourseId);
-        if (appoint!=null){
-            throw new Exception("您已经预约该课程！");
+        LearnerAppointment appointment = learnerAppointmentRepository.findLearnerAppointmentByAppointmentDateAndBuyCourse(appointmentDate,buyCourse);
+        if (appointment != null){
+            throw new Exception("您已经预约此课程!");
         }
         LearnerAppointment learnerAppointment = new LearnerAppointment();
         learnerAppointment.setAppointmentDate(appointmentDate);
@@ -89,5 +89,17 @@ public class LearnerAppointmentServiceImpl implements LearnerAppointmentService 
         learnerAppointment.setAppointmentResult(appointmentResult);
         LearnerAppointment result=learnerAppointmentRepository.save(learnerAppointment);
         return result;
+    }
+
+    @Override
+    public LearnerAppointment findLearnerAppointmentByBuyCourseIdAndAppointmentDate(Long buyCourseId, ZonedDateTime appointmentDate) throws Exception{
+        if (buyCourseId==null){
+            throw new Exception("参数解析异常！");
+        }
+        BuyCourse buyCourse = buyCourseRepository.findOne(buyCourseId);
+        if (buyCourse==null){
+            throw new Exception("没有购买对应的课程！");
+        }
+        return learnerAppointmentRepository.findLearnerAppointmentByAppointmentDateAndBuyCourse(appointmentDate,buyCourse);
     }
 }

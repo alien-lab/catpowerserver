@@ -1,5 +1,6 @@
 package com.alienlab.catpower.service;
 
+import com.alienlab.catpower.domain.BuyCourse;
 import com.alienlab.catpower.domain.CoachWorkSche;
 import com.alienlab.catpower.domain.Course;
 import com.alienlab.catpower.domain.LearnerAppointment;
@@ -41,4 +42,6 @@ public interface LearnerAppointmentService {
      */
     LearnerAppointment update(Long appointmentId,String appointmentResult) throws Exception;
 
+    //根据预约时间和买课ID去查询预约信息
+    LearnerAppointment findLearnerAppointmentByBuyCourseIdAndAppointmentDate(Long buyCourseId,ZonedDateTime appointmentDate)throws Exception;
 }
