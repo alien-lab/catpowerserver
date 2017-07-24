@@ -1,5 +1,6 @@
 package com.alienlab.catpower.web.rest;
 
+import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.util.TypeUtils;
 import com.alienlab.catpower.web.rest.util.ExecResult;
 import com.codahale.metrics.annotation.Timed;
@@ -160,12 +161,13 @@ public class LearnerInfoResource {
 
     @ApiOperation("插入学员健身信息")
     @PostMapping("/learner-infos/fitlog")
-    public ResponseEntity insertLearnerInfo(@RequestBody Map param){
-        String exerciseData = TypeUtils.castToString(param.get("exerciseData"));
-        String bodyTestData = TypeUtils.castToString(param.get("bodyTestData"));
-        String coachAdvice = TypeUtils.castToString(param.get("coachAdvice"));
-        Long learnerId = TypeUtils.castToLong(param.get("learnerId"));
-        Long scheId = TypeUtils.castToLong(param.get("scheId"));
+    public ResponseEntity insertLearnerInfo(@RequestBody String paramstr){
+        JSONObject param= JSONObject.parseObject(paramstr);
+        String exerciseData = param.getJSONObject("exerciseData").toJSONString();
+        String bodyTestData = param.getJSONObject("bodyTestData").toJSONString();
+        String coachAdvice = param.getJSONObject("coachAdvice").toJSONString();
+        Long learnerId = param.getLong("learnerId");
+        Long scheId = param.getLong("scheId");
         try {
             LearnerInfo learnerInfo = learnerInfoService.insertLearner(exerciseData,bodyTestData,coachAdvice,learnerId,scheId);
             return ResponseEntity.ok().body(learnerInfo);
