@@ -2,6 +2,8 @@ package com.alienlab.catpower.web.rest;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.util.TypeUtils;
+import com.alienlab.catpower.domain.Course;
+import com.alienlab.catpower.service.CourseService;
 import com.alienlab.catpower.web.rest.util.ExecResult;
 import com.codahale.metrics.annotation.Timed;
 import com.alienlab.catpower.domain.LearnerCharge;
@@ -16,6 +18,7 @@ import io.swagger.annotations.ApiParam;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
@@ -43,6 +46,8 @@ public class LearnerChargeResource {
 
     private final LearnerChargeService learnerChargeService;
 
+    @Autowired
+    CourseService courseService;
     public LearnerChargeResource(LearnerChargeService learnerChargeService) {
         this.learnerChargeService = learnerChargeService;
     }
