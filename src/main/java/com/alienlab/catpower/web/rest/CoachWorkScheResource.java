@@ -2,6 +2,7 @@ package com.alienlab.catpower.web.rest;
 
 import com.alienlab.catpower.domain.CoachWorkSche;
 import com.alienlab.catpower.service.CoachWorkScheService;
+import com.alienlab.catpower.web.rest.util.ExecResult;
 import com.alienlab.catpower.web.rest.util.HeaderUtil;
 import com.alienlab.catpower.web.rest.util.PaginationUtil;
 import com.codahale.metrics.annotation.Timed;
@@ -19,6 +20,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -137,6 +143,33 @@ public class CoachWorkScheResource {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
         }
     }
+    @ApiOperation(value = "获取所有的教练排班记录")
+    @GetMapping("/coachworksches")
+    public ResponseEntity getAllSche(){
+        List<CoachWorkSche> result = coachWorkScheService.findAll();
+        return ResponseEntity.ok().body(result);
+    }
 
+    @ApiOperation(value = "根据教练排班日期查询")
+    @GetMapping("/coachworksche/workDate")
+    public ResponseEntity getCoachesByDate(@RequestParam String workDate){
+        SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd");
+        Date d=null;
+        try {
+            d=sdf.parse(workDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        ZonedDateTime workZonedDate = ZonedDateTime.ofInstant(d.toInstant(), ZoneId.systemDefault());
+        try {
+            List<CoachWorkSche> result = coachWorkScheService.getCoachesByWorkDate(workZonedDate);
+            return ResponseEntity.ok().body(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+
+        }
+    }
 
 }

@@ -4,6 +4,7 @@ import com.alienlab.catpower.domain.CoachWorkSche;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 /**
@@ -45,5 +46,9 @@ public interface CoachWorkScheService {
 
     //根据教练ID查询对应的排版时间
     List<CoachWorkSche> findCoachWorkScheByCoachId(Long coachId) throws Exception;
+    //根据教练排班日期获取教练
+    List<CoachWorkSche> getCoachesByWorkDate(ZonedDateTime workDate)throws Exception;
+    //获取全部的教练排课
+    List<CoachWorkSche> findAll();
 
 }

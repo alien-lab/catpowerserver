@@ -1,4 +1,115 @@
-<h1>教练排班</h1>
-<div class="container-fluid row">
-    <div class="col-md-12 col-lg-12 col-sm-12">1</div>
+<style>
+    .inline_block{
+        display: inline-block;
+    }
+    .width30{
+        width: 14%;
+    }
+    .h30{
+        height: 80px;
+        line-height: 80px;
+    }
+    .width150{
+        width:150px;
+    }
+    .width210{
+        /*width:210px;*/
+    }
+    .fl{
+        float: left;
+    }
+    .fr{
+        float: right;
+    }
+    .over{
+        overflow: hidden;
+    }
+    .fontSize14{
+        font-size: 14px;
+    }
+    .fontSize16{
+        font-size: 16px;
+    }
+    .fontSize18{
+        font-size: 18px;
+    }
+    .textAlignCenter{
+        text-align: center;
+    }
+    .padding20{
+        padding: 20px;
+    }
+    .currentDay{
+        background-color: #317ef3;
+        color: #ffffff;
+    }
+</style>
+<h2>教练排班</h2>
+<hr/>
+<div class="container-fluid row" style="color: #000;margin-top: -15px;">
+    <div class="col-md-8 col-lg-8 col-sm-8 width210 padding20">
+    <div class="col-md-12 col-lg-12 col-sm-12 over">
+        <div class="col-md-2 col-lg-2 col-sm-2">
+            <span class="glyphicon glyphicon-menu-left" aria-hidden="true" ng-click="next('p')" style="font-size: 148%;"></span>
+        </div>
+        <div class="col-md-8 col-lg-8 col-sm-8" style="text-align: center;">
+            <span class="fontSize18">{{month}}月 {{year}}</span>
+        </div>
+        <div class="col-md-2 col-lg-2 col-sm-2">
+            <span class="glyphicon glyphicon-menu-right" aria-hidden="true" ng-click="next('n')" style="float: right;font-size: 148%;"></span>
+        </div>
+    </div>
+    <div class="col-md-12 col-lg-12 col-sm-12 over fontSize16" style="border: 1px solid #969696;margin-top: 10px;height: 50px;padding-top: 15px;">
+        <span class="width30 textAlignCenter fl">周日</span>
+        <span class="width30 textAlignCenter fl">周一</span>
+        <span class="width30 textAlignCenter fl">周二</span>
+        <span class="width30 textAlignCenter fl">周三</span>
+        <span class="width30 textAlignCenter fl">周四</span>
+        <span class="width30 textAlignCenter fl">周五</span>
+        <span class="width30 textAlignCenter fl">周六</span>
+    </div>
+    <div class="col-md-12 col-lg-12 col-sm-12 over fontSize14" style="border: 1px solid #969696;">
+        <span class="width30 textAlignCenter h30 fl" ng-click="getTest()" ng-repeat="day in daysOfBefore" >&ensp;</span>
+        <span class="width30 textAlignCenter h30 fl" ng-repeat="day in haveDays" >
+            <span class="textAlignCenter fl" ng-click="getTheDay(day)" ng-class="{currentDay:day==nowDay && month == nowmonth}" style="margin:22% 25%; width: 50%;height: 40px;line-height: 40px;border-radius: 40px;">{{day}}</s>
+        </span>
+    </div>
 </div>
+    <div class="col-md-4 col-lg-4 col-sm-4" style="border: 1px solid #e5e5e5;padding: 0;margin-top: 20px;">
+        <div class="col-md-12 col-lg-12 col-sm-12" style="border: 1px solid #e5e5e5;">
+            <span class="fontSize18">今日教练值班</span>
+        </div>
+        <div class="col-md-12 col-lg-12 col-sm-12" style="padding: 0;">
+            <button class="btn" ng-repeat="sche in todayListSche" style="margin: 15px;">{{sche.coach.coachName}}</button>
+        </div>
+        <div class="col-md-12 col-lg-12 col-sm-12" style="border: 1px solid #e5e5e5;">
+            <span class="fontSize18">教练排班记录</span>
+        </div>
+        <div class="col-md-12 col-lg-12 col-sm-12" style="padding: 0;">
+            <button class="btn" ng-repeat="sche in coacheListSche" style="margin: 15px;">{{sche.coach.coachName}}</button>
+        </div>
+        <div class="col-md-12 col-lg-12 col-sm-12" style="border: 1px solid #e5e5e5;">
+            <span class="fontSize18">添加教练排班</span>
+            <span class="glyphicon glyphicon-plus" aria-hidden="true" ng-click="openPage()" style="color: #969696;float: right;cursor: pointer;margin-top: 3px;"></span>
+        </div>
+        <div class="col-md-12 col-lg-12 col-sm-12" ng-if="closePage" style="padding:0;">
+            <button class="btn" ng-repeat="coach in coaches" ng-click="chooseCoach(coach)" style="margin-left: 15px;margin-top: 15px;width: 20%;">{{coach.coachName}}</button>
+            <div class="col-md-12 col-lg-12 col-sm-12" style="padding: 0;">
+                <div class="col-md-8 col-lg-8 col-sm-8" ng-if="addscheModel" style="border: 1px solid #969696;margin-left: 18%;margin-top: 15px;margin-bottom: 15px;">
+                    <p style="margin-top: 15px;">您选择是教练</p>
+                    <p style="padding-left: 15px;color: #ff0000;" ng-if="addcoaches">{{addcoachName}}</p>
+                    <p>您选择是排班时间</p>
+                    <p style="padding-left: 15px;color: #ff0000;" ng-if="workScheTiime">
+                        {{addScheTime}}&nbsp;{{week}}
+                    </p>
+                    <p>
+                        <button class="btn btn-sm btn-primary" ng-click="cancelCoachWork()" style="float: right;margin-top: 15px;">取消</button>
+                        <button class="btn btn-sm btn-primary" ng-click="saveCoachWork()" style="float: right;margin-top: 15px;margin-right: 15px;margin-bottom: 15px;">确定</button>
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+

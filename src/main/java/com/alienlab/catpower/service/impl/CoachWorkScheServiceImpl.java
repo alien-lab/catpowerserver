@@ -1,4 +1,5 @@
 package com.alienlab.catpower.service.impl;
+
 import com.alienlab.catpower.domain.Coach;
 import com.alienlab.catpower.domain.CoachWorkSche;
 import com.alienlab.catpower.repository.CoachWorkScheRespository;
@@ -13,6 +14,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 /**
@@ -47,6 +49,8 @@ public class CoachWorkScheServiceImpl implements CoachWorkScheService {
     @Override
     public CoachWorkSche save(CoachWorkSche coachWorkSche) {
         log.debug("Request to save Coach : {}", coachWorkSche);
+        ZonedDateTime dateTime = ZonedDateTime.now();
+        coachWorkSche.setWorkDate(dateTime);
         CoachWorkSche result = coachWorkScheRespository.save(coachWorkSche);
         return result;
     }
@@ -102,5 +106,21 @@ public class CoachWorkScheServiceImpl implements CoachWorkScheService {
         }
         List<CoachWorkSche> lists = coachWorkScheRespository.findCoachWorkScheByCoach(coach);
         return lists;
+    }
+
+    //根据教练排班日期获取教练
+    @Override
+    public List<CoachWorkSche> getCoachesByWorkDate(ZonedDateTime workDate) throws Exception {
+        /*SimpleDateFormat sf=new SimpleDateFormat("yyyy-MM-dd");
+        String sd=sf.format(workDate);
+        Date d1= null;
+        d1 = sf.parse(sd);
+        String workTime=sf.format(d1);*/
+        return coachWorkScheRespository.findCoachWorkScheByworkDate(workDate);
+    }
+
+    @Override
+    public List<CoachWorkSche> findAll() {
+        return coachWorkScheRespository.findAll();
     }
 }
