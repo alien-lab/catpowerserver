@@ -1,5 +1,6 @@
 package com.alienlab.catpower.service;
 
+import com.alienlab.catpower.domain.BuyCourse;
 import com.alienlab.catpower.domain.CoachWorkSche;
 import com.alienlab.catpower.domain.Course;
 import com.alienlab.catpower.domain.LearnerAppointment;
@@ -26,6 +27,23 @@ public interface LearnerAppointmentService {
      */
     Map getAppointment(Long learnerId) throws Exception;
 
+    /**
+     *  Delete the "id" course.
+     *
+     *  @param id the id of the entity
+     */
+    void delete(Long id);
 
+    /**
+     * 更新预约结果
+     * @param appointmentResult
+     * @return
+     * @throws Exception
+     */
+    LearnerAppointment update(Long appointmentId,String appointmentResult) throws Exception;
 
+    //根据预约时间和买课ID去查询预约信息
+    LearnerAppointment findLearnerAppointmentByBuyCourseIdAndAppointmentDate(Long buyCourseId,ZonedDateTime appointmentDate)throws Exception;
+
+    LearnerAppointment findLearnerAppointmentById(Long id) throws Exception;
 }

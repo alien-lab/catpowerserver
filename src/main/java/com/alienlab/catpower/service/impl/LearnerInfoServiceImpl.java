@@ -120,7 +120,6 @@ public class LearnerInfoServiceImpl implements LearnerInfoService{
 
     @Override
     public List<LearnerInfo> findLearnerInfoByLearnerId(Long learnerId) throws Exception {
-
         Learner learner = learnerService.findOne(learnerId);
         if(learner == null){
             throw new Exception("没有对应的学员信息");
@@ -130,6 +129,18 @@ public class LearnerInfoServiceImpl implements LearnerInfoService{
 
     @Override
     public LearnerInfo insertLearner(String exerciseData, String bodyTestData, String coachAdvice, Long learnerId, Long scheId) throws Exception {
+        Learner learner = learnerService.findOne(learnerId);
+        if(learner == null){
+            throw new Exception("没有对应的学员信息");
+        }
+        CourseScheduling courseScheduling = courseSchedulingService.findOne(scheId);
+        if (courseScheduling  == null){
+            throw new Exception("没有找到对应的排课表");
+        }
+        LearnerInfo flag=learnerInfoRepository.findLearnerInfoByLearnerAndCourseScheduling(learner,courseScheduling);
+        if (flag != null){
+            throw new Exception("你已经填写此学员的建议！");
+        }
         LearnerInfo learnerInfo=new LearnerInfo();
         ZonedDateTime dateTime = ZonedDateTime.now();
         learnerInfo.setTime(dateTime);

@@ -38,9 +38,6 @@ public class LearnerAppointmentServiceImpl implements LearnerAppointmentService 
 
     @Override
     public LearnerAppointment save(Long buyCourseId, ZonedDateTime appointmentDate, String appointmentResult, String appointmentMemo) throws Exception{
-        LearnerAppointment learnerAppointment = new LearnerAppointment();
-        learnerAppointment.setAppointmentDate(appointmentDate);
-        learnerAppointment.setAppointmentMemo(appointmentMemo);
         if (buyCourseId == null){
             throw new Exception("参数解析异常！");
         }
@@ -48,6 +45,13 @@ public class LearnerAppointmentServiceImpl implements LearnerAppointmentService 
         if (buyCourse == null){
             throw new Exception("没有找到对应的买课信息");
         }
+        LearnerAppointment appointment = learnerAppointmentRepository.findLearnerAppointmentByAppointmentDateAndBuyCourse(appointmentDate,buyCourse);
+        if (appointment != null){
+            throw new Exception("您已经预约此课程!");
+        }
+        LearnerAppointment learnerAppointment = new LearnerAppointment();
+        learnerAppointment.setAppointmentDate(appointmentDate);
+        learnerAppointment.setAppointmentMemo(appointmentMemo);
         learnerAppointment.setBuyCourse(buyCourse);
         learnerAppointment.setAppointmentResult(appointmentResult);
         learnerAppointmentRepository.save(learnerAppointment);
@@ -65,5 +69,49 @@ public class LearnerAppointmentServiceImpl implements LearnerAppointmentService 
         map.put("appointed",appointed);
         return map;
 
+    }
+
+    @Override
+    public void delete(Long id) {
+        log.debug("Request to delete Course : {}", id);
+        learnerAppointmentRepository.delete(id);
+    }
+
+    @Override
+    public LearnerAppointment update(Long appointmentId,String appointmentResult) throws Exception {
+        if (appointmentId==null || appointmentResult==null){
+            throw new Exception("参数解析异常！");
+        }
+        LearnerAppointment learnerAppointment=learnerAppointmentRepository.findOne(appointmentId);
+        if (learnerAppointment==null){
+            throw new Exception("没有找到对应的预约信息");
+        }
+        learnerAppointment.setAppointmentResult(appointmentResult);
+        LearnerAppointment result=learnerAppointmentRepository.save(learnerAppointment);
+        return result;
+    }
+
+    @Override
+    public LearnerAppointment findLearnerAppointmentByBuyCourseIdAndAppointmentDate(Long buyCourseId, ZonedDateTime appointmentDate) throws Exception{
+        if (buyCourseId==null){
+            throw new Exception("参数解析异常！");
+        }
+        BuyCourse buyCourse = buyCourseRepository.findOne(buyCourseId);
+        if (buyCourse==null){
+            throw new Exception("没有购买对应的课程！");
+        }
+        return learnerAppointmentRepository.findLearnerAppointmentByAppointmentDateAndBuyCourse(appointmentDate,buyCourse);
+    }
+
+    @Override
+    public LearnerAppointment findLearnerAppointmentById(Long id) throws Exception {
+        if (id == null){
+           throw new Exception("参数解析异常！");
+        }
+        LearnerAppointment learnerAppointment=learnerAppointmentRepository.findOne(id);
+        if (learnerAppointment==null){
+            throw new Exception("没有对应的预约记录！");
+        }
+        return learnerAppointment;
     }
 }

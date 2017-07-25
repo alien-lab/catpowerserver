@@ -51,4 +51,6 @@ public interface CoachWorkScheService {
     //获取全部的教练排课
     List<CoachWorkSche> findAll();
 
+    CoachWorkSche createCoachWorkSche(ZonedDateTime time,int wordWeekday,Long coachId) throws Exception;
+
 }

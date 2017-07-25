@@ -56,7 +56,7 @@ public class LearnerAppointmentResource {
 
     @ApiOperation("学员预约")
     @PostMapping("/learner-appointment")
-    public ResponseEntity<LearnerAppointment> createLearnerAppointment(@RequestBody Map map) throws URISyntaxException {
+    public ResponseEntity createLearnerAppointment(@RequestBody Map map) throws URISyntaxException {
         Long buyCourseId = TypeUtils.castToLong(map.get("buyCourseId"));
         String t=TypeUtils.castToString(map.get("appointmentDate"));
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
@@ -70,12 +70,50 @@ public class LearnerAppointmentResource {
         String appointmentMemo = TypeUtils.castToString(map.get("appointmentMemo"));
         LearnerAppointment result = null;
         try {
-            result = learnerAppointmentService.save(buyCourseId,appointmentDate,appointmentMemo,"预约中");
+            result = learnerAppointmentService.save(buyCourseId,appointmentDate,"预约中",appointmentMemo);
+            return ResponseEntity.ok().body(result);
         } catch (Exception e) {
             e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
         }
-        return ResponseEntity.created(new URI("/api/learner-appointment/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+
     }
+
+
+    @ApiOperation(value = "学员取消预约信息")
+    @DeleteMapping("/learner-appointment/{id}")
+    public ResponseEntity<Void> deleteBuyCourse(@PathVariable Long id) {
+        log.debug("REST request to delete BuyCourse : {}", id);
+        learnerAppointmentService.delete(id);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    @ApiOperation(value = "教练处理学员预约信息")
+    @PutMapping("/learner-appointment")
+    public ResponseEntity updateLearnerAppointment(@RequestBody Map map) {
+        Long appointmentId = TypeUtils.castToLong(map.get("appointmentId"));
+        String appointmentResult=TypeUtils.castToString(map.get("appointmentResult"));
+        try {
+            LearnerAppointment learnerAppointment=learnerAppointmentService.update(appointmentId,appointmentResult);
+            return ResponseEntity.ok().body(learnerAppointment);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
+    }
+
+    @ApiOperation("根据学员预约Id获取学员预约记录")
+    @GetMapping("/learner-appointment/{learnerappointmentId}")
+    public ResponseEntity getLearnerAppointmentById(@PathVariable Long learnerappointmentId){
+        try {
+            LearnerAppointment result=learnerAppointmentService.findLearnerAppointmentById(learnerappointmentId);
+            return ResponseEntity.ok().body(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
+    }
+
 }
