@@ -9,6 +9,7 @@ import com.alienlab.catpower.service.CoachService;
 import com.alienlab.catpower.service.CourseSchedulingService;
 import com.alienlab.catpower.web.wechat.bean.entity.QrInfo;
 import com.alienlab.catpower.web.wechat.service.QrInfoService;
+import com.alienlab.catpower.web.wechat.service.WechatMessageService;
 import com.alienlab.catpower.web.wechat.util.WechatUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -122,12 +123,19 @@ public class CourseSchedulingServiceImpl implements CourseSchedulingService{
      *根据ID更新上课的状态
      *
      */
+
+    @Autowired
+    WechatMessageService wechatMessageService;
+
     @Override
     public int updateCourseScheduling(Long id,String status) throws Exception {
         int n = 0;
         String sql = "UPDATE `course_scheduling` SET STATUS=? WHERE id=?";
         Object[] args = {status,id};
         n = jdbcTemplate.update(sql,args);
+        if(n>0&&status.equals("已下课")){
+            wechatMessageService.sendEvalCoachMsg(id);
+        }
         return n;
     }
 
