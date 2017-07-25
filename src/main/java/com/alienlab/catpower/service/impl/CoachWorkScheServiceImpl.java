@@ -2,6 +2,7 @@ package com.alienlab.catpower.service.impl;
 import com.alibaba.fastjson.util.TypeUtils;
 import com.alienlab.catpower.domain.Coach;
 import com.alienlab.catpower.domain.CoachWorkSche;
+import com.alienlab.catpower.repository.CoachRepository;
 import com.alienlab.catpower.repository.CoachWorkScheRespository;
 import com.alienlab.catpower.service.CoachService;
 import com.alienlab.catpower.service.CoachWorkScheService;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -38,6 +40,8 @@ public class CoachWorkScheServiceImpl implements CoachWorkScheService {
     CoachWorkScheService coachWorkScheService;
     @Autowired
     CoachService coachService;
+    @Autowired
+    CoachRepository coachRepository;
 
     public CoachWorkScheServiceImpl(CoachWorkScheRespository coachWorkScheRespository) {
         this.coachWorkScheRespository = coachWorkScheRespository;
@@ -119,5 +123,21 @@ public class CoachWorkScheServiceImpl implements CoachWorkScheService {
             }
         }
         return coachScheLists;
+    }
+
+    @Override
+    public CoachWorkSche createCoachWorkSche(ZonedDateTime time, int wordWeekday, Long coachId) throws Exception {
+        if (time == null || coachId == null){
+            throw new Exception("参数解析异常！");
+        }
+        Coach coach = coachRepository.findOne(coachId);
+        if (coach == null){
+            throw new Exception("没有找到对应的教练！");
+        }
+        CoachWorkSche coachWorkSche=new CoachWorkSche();
+        coachWorkSche.setWorkDate(time);
+        coachWorkSche.setWorkWeekday(wordWeekday);
+        coachWorkSche.setCoach(coach);
+        return coachWorkScheRespository.save(coachWorkSche);
     }
 }
