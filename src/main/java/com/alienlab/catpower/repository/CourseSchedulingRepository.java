@@ -24,7 +24,7 @@ public interface CourseSchedulingRepository extends JpaRepository<CourseScheduli
     //根据教练获取排课记录
     List<CourseScheduling> findCourseSchedulingsByCoach(Coach coach);
     //根据具体日期和时间查询当天排课情况
-    @Query("select a from  CourseScheduling a where a.coach=?1 and a.startTime=?2")
+   /* @Query("select a from  CourseScheduling a where a.coach=?1 and a.startTime=?2")
     List<CourseScheduling> findCourseSchedulingsByCoachAndStartTime(Coach coach,ZonedDateTime startDate);
-
+*/
 }

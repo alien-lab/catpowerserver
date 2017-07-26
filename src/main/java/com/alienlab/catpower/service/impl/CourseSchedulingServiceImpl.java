@@ -188,7 +188,7 @@ public class CourseSchedulingServiceImpl implements CourseSchedulingService{
         return list;
     }
 
-    //根据当前日期查询对应的排班情况
+   /* //根据当前日期查询对应的排班情况
     @Override
     public List<CourseScheduling> findCourseSchedulingByCoachIdAndStratTime(Long coachId, ZonedDateTime startTime) throws Exception {
         if(coachId==null){
@@ -199,5 +199,5 @@ public class CourseSchedulingServiceImpl implements CourseSchedulingService{
             throw new Exception("灭有找到对应教练信息！");
         }
         return courseSchedulingRepository.findCourseSchedulingsByCoachAndStartTime(coach,startTime);
-    }
+    }*/
 }

@@ -31,6 +31,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -265,10 +266,11 @@ public class CourseSchedulingResource {
     @ApiOperation(value = "获取指定日期指定教练的排班记录")
     @GetMapping("/course-schedulings/courseSchedulingBytimeAndId")
     public ResponseEntity getCourseScheByIdAndTime(@RequestParam Long coachId,@RequestParam String startTime){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-ss HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-ss");
         Date d1 = null;
         Date d2 = null;
         ZonedDateTime start = null;
+        List<CourseScheduling> result = new ArrayList<>();
         try {
             d1 = sdf.parse(startTime);
             List<CourseScheduling> result1 = courseSchedulingService.getcourseSche(coachId);
@@ -279,10 +281,9 @@ public class CourseSchedulingResource {
                 String startTime2 = TypeUtils.castToString(scheduling.getStartTime());
                 d2 = sdf.parse(startTime2);
                 if (d1.getTime() == d2.getTime()){
-                    start = ZonedDateTime.ofInstant(d1.toInstant(), ZoneId.systemDefault());
+                    result.add(scheduling);
                 }
             }
-            List<CourseScheduling> result = courseSchedulingService.findCourseSchedulingByCoachIdAndStratTime(coachId,start);
             return ResponseEntity.ok().body(result);
         } catch (Exception e) {
             e.printStackTrace();

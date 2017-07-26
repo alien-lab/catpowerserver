@@ -61,5 +61,5 @@ public interface CourseSchedulingService {
     List getCourseScheduling() throws Exception;
 
     //根据当前日期和教练id获取排课信息
-    List<CourseScheduling> findCourseSchedulingByCoachIdAndStratTime(Long coachId,ZonedDateTime startTime) throws Exception;
+    //List<CourseScheduling> findCourseSchedulingByCoachIdAndStratTime(Long coachId,ZonedDateTime startTime) throws Exception;
 }
