@@ -30,9 +30,8 @@ public interface LearnerAppointmentRepository extends JpaRepository<LearnerAppoi
     @Query("select a from LearnerAppointment a where a.buyCourse=?2 and a.appointmentDate=?1")
     LearnerAppointment findLearnerAppointmentByAppointmentDateAndBuyCourse(ZonedDateTime appointmentDate,BuyCourse buyCourse);
 
-
-
-
+    @Query("select a from LearnerAppointment a where a.buyCourse.coach.id=?1 order by a.appointmentDate DESC")
+    List<LearnerAppointment> findAppointmentByCoachId(Long coachId);
 
 
 }

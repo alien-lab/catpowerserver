@@ -114,4 +114,24 @@ public class LearnerAppointmentServiceImpl implements LearnerAppointmentService 
         }
         return learnerAppointment;
     }
+
+    @Override
+    public Map getAppointmentByCoachId(Long coachId) throws Exception {
+        Map map = new HashMap();
+        List<LearnerAppointment> allAppointment=learnerAppointmentRepository.findAppointmentByCoachId(coachId);
+        List appointing=new ArrayList();
+        List appointed=new ArrayList();
+        for (LearnerAppointment learnerAppointment:allAppointment){
+            if (learnerAppointment.getAppointmentResult().equals("预约中")){
+                appointing.add(learnerAppointment);
+            }
+            if (learnerAppointment.getAppointmentResult().equals("预约成功") || learnerAppointment.getAppointmentResult().equals("已约满")){
+                appointed.add(learnerAppointment);
+            }
+        }
+        map.put("allAppointment",allAppointment);
+        map.put("appointing",appointing);
+        map.put("appointed",appointed);
+        return map;
+    }
 }

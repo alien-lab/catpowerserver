@@ -6,6 +6,7 @@ import com.alienlab.catpower.domain.Course;
 import com.alienlab.catpower.domain.LearnerAppointment;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -46,4 +47,6 @@ public interface LearnerAppointmentService {
     LearnerAppointment findLearnerAppointmentByBuyCourseIdAndAppointmentDate(Long buyCourseId,ZonedDateTime appointmentDate)throws Exception;
 
     LearnerAppointment findLearnerAppointmentById(Long id) throws Exception;
+
+    Map getAppointmentByCoachId(Long coachId) throws Exception;
 }
