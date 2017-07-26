@@ -1,5 +1,6 @@
 package com.alienlab.catpower.web.rest;
 
+import com.alibaba.fastjson.util.TypeUtils;
 import com.alienlab.catpower.domain.CoachWorkSche;
 import com.alienlab.catpower.service.CoachWorkScheService;
 import com.alienlab.catpower.web.rest.util.ExecResult;
@@ -26,6 +27,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -163,6 +165,31 @@ public class CoachWorkScheResource {
         ZonedDateTime workZonedDate = ZonedDateTime.ofInstant(d.toInstant(), ZoneId.systemDefault());
         try {
             List<CoachWorkSche> result = coachWorkScheService.getCoachesByWorkDate(workZonedDate);
+            return ResponseEntity.ok().body(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+
+        }
+    }
+
+    @ApiOperation("插入教练排班信息")
+    @PostMapping("/courseworksche/info")
+    public ResponseEntity insertLearnerInfo(@RequestBody Map map){
+        int workWeekday= TypeUtils.castToInt(map.get("workWeekday"));
+        Long coachId = TypeUtils.castToLong(map.get("coachId"));
+        String time=TypeUtils.castToString(map.get("time"));
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        Date d=null;
+        try {
+            d=sdf.parse(time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        ZonedDateTime workTime = ZonedDateTime.ofInstant(d.toInstant(), ZoneId.systemDefault());
+        try {
+            CoachWorkSche result=coachWorkScheService.createCoachWorkSche(workTime,workWeekday,coachId);
             return ResponseEntity.ok().body(result);
         } catch (Exception e) {
             e.printStackTrace();
