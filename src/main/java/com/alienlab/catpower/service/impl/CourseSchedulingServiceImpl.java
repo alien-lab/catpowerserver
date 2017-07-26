@@ -188,4 +188,16 @@ public class CourseSchedulingServiceImpl implements CourseSchedulingService{
         }
         return list;
     }
+
+    @Override
+    public CourseScheduling updateEndTime(Long scheId) throws Exception {
+        CourseScheduling courseScheduling=courseSchedulingRepository.findOne(scheId);
+        if (courseScheduling == null){
+            throw new Exception();
+        }
+        ZonedDateTime endTime = ZonedDateTime.now();
+        courseScheduling.setEndTime(endTime);
+        CourseScheduling result = courseSchedulingRepository.save(courseScheduling);
+        return result;
+    }
 }

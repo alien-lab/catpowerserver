@@ -261,5 +261,18 @@ public class CourseSchedulingResource {
         }
     }
 
+    @ApiOperation(value = "下课时更新课程结束时间")
+    @PutMapping("/course-schedulings/courseScheduling")
+    public ResponseEntity updateEndTime(@RequestParam Long scheId){
+        try {
+            CourseScheduling result = courseSchedulingService.updateEndTime(scheId);
+            return ResponseEntity.ok().body(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
+    }
+
 
 }

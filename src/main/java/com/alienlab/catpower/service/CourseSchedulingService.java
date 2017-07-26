@@ -59,4 +59,12 @@ public interface CourseSchedulingService {
     List<CourseScheduling> getcourseSche(Long coachId) throws  Exception;
 
     List getCourseScheduling() throws Exception;
+
+    /**
+     * 下课时更新课程结束时间
+     * @param scheId
+     * @return
+     * @throws Exception
+     */
+    CourseScheduling updateEndTime(Long scheId) throws Exception;
 }
