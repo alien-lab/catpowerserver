@@ -46,6 +46,10 @@ public interface CoachWorkScheService {
 
     //根据教练ID查询对应的排版时间
     List<CoachWorkSche> findCoachWorkScheByCoachId(Long coachId) throws Exception;
+    //根据教练排班日期获取教练
+    List<CoachWorkSche> getCoachesByWorkDate(ZonedDateTime workDate)throws Exception;
+    //获取全部的教练排课
+    List<CoachWorkSche> findAll();
 
     CoachWorkSche createCoachWorkSche(ZonedDateTime time,int wordWeekday,Long coachId) throws Exception;
 

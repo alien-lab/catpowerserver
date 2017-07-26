@@ -5,6 +5,7 @@ import com.alienlab.catpower.domain.CoachWorkSche;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 /**
@@ -14,4 +15,6 @@ public interface CoachWorkScheRespository extends JpaRepository<CoachWorkSche,Lo
     //根据教练id查询相对应的排版时间
     @Query("select a from CoachWorkSche a where a.coach = ?1")
     List<CoachWorkSche> findCoachWorkScheByCoach(Coach coach);
+    //根据教练排班日期获取教练
+    List<CoachWorkSche> findCoachWorkScheByworkDate(ZonedDateTime workDate);
 }

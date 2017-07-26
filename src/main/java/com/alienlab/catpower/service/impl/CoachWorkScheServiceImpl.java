@@ -1,8 +1,7 @@
 package com.alienlab.catpower.service.impl;
-import com.alibaba.fastjson.util.TypeUtils;
+
 import com.alienlab.catpower.domain.Coach;
 import com.alienlab.catpower.domain.CoachWorkSche;
-import com.alienlab.catpower.repository.CoachRepository;
 import com.alienlab.catpower.repository.CoachWorkScheRespository;
 import com.alienlab.catpower.service.CoachService;
 import com.alienlab.catpower.service.CoachWorkScheService;
@@ -15,11 +14,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,8 +35,6 @@ public class CoachWorkScheServiceImpl implements CoachWorkScheService {
     CoachWorkScheService coachWorkScheService;
     @Autowired
     CoachService coachService;
-    @Autowired
-    CoachRepository coachRepository;
 
     public CoachWorkScheServiceImpl(CoachWorkScheRespository coachWorkScheRespository) {
         this.coachWorkScheRespository = coachWorkScheRespository;
@@ -56,6 +49,8 @@ public class CoachWorkScheServiceImpl implements CoachWorkScheService {
     @Override
     public CoachWorkSche save(CoachWorkSche coachWorkSche) {
         log.debug("Request to save Coach : {}", coachWorkSche);
+        ZonedDateTime dateTime = ZonedDateTime.now();
+        coachWorkSche.setWorkDate(dateTime);
         CoachWorkSche result = coachWorkScheRespository.save(coachWorkSche);
         return result;
     }
@@ -110,34 +105,22 @@ public class CoachWorkScheServiceImpl implements CoachWorkScheService {
             throw  new Exception("没有找到对应的教练信息");
         }
         List<CoachWorkSche> lists = coachWorkScheRespository.findCoachWorkScheByCoach(coach);
-        Date date  = new Date();
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        Date d1 =df.parse(TypeUtils.castToString(date.toInstant()));
-        List<CoachWorkSche> coachScheLists =  new ArrayList<CoachWorkSche>();
-        for (CoachWorkSche coachChe:lists
-             ) {
-            Date d2 =df.parse(TypeUtils.castToString(coachChe.getWorkDate().toInstant()));
-            Long time = d2.getTime()-d1.getTime();
-            if (0 < time && time <= 604800000){
-                coachScheLists.add(coachChe);
-            }
-        }
-        return coachScheLists;
+        return lists;
+    }
+
+    //根据教练排班日期获取教练
+    @Override
+    public List<CoachWorkSche> getCoachesByWorkDate(ZonedDateTime workDate) throws Exception {
+        /*SimpleDateFormat sf=new SimpleDateFormat("yyyy-MM-dd");
+        String sd=sf.format(workDate);
+        Date d1= null;
+        d1 = sf.parse(sd);
+        String workTime=sf.format(d1);*/
+        return coachWorkScheRespository.findCoachWorkScheByworkDate(workDate);
     }
 
     @Override
-    public CoachWorkSche createCoachWorkSche(ZonedDateTime time, int wordWeekday, Long coachId) throws Exception {
-        if (time == null || coachId == null){
-            throw new Exception("参数解析异常！");
-        }
-        Coach coach = coachRepository.findOne(coachId);
-        if (coach == null){
-            throw new Exception("没有找到对应的教练！");
-        }
-        CoachWorkSche coachWorkSche=new CoachWorkSche();
-        coachWorkSche.setWorkDate(time);
-        coachWorkSche.setWorkWeekday(wordWeekday);
-        coachWorkSche.setCoach(coach);
-        return coachWorkScheRespository.save(coachWorkSche);
+    public List<CoachWorkSche> findAll() {
+        return coachWorkScheRespository.findAll();
     }
 }

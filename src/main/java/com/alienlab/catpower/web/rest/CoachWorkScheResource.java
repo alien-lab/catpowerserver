@@ -1,10 +1,6 @@
 package com.alienlab.catpower.web.rest;
 
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.util.TypeUtils;
 import com.alienlab.catpower.domain.CoachWorkSche;
-import com.alienlab.catpower.domain.LearnerAppointment;
-import com.alienlab.catpower.domain.LearnerInfo;
 import com.alienlab.catpower.service.CoachWorkScheService;
 import com.alienlab.catpower.web.rest.util.ExecResult;
 import com.alienlab.catpower.web.rest.util.HeaderUtil;
@@ -30,7 +26,6 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -148,23 +143,26 @@ public class CoachWorkScheResource {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
         }
     }
+    @ApiOperation(value = "获取所有的教练排班记录")
+    @GetMapping("/coachworksches")
+    public ResponseEntity getAllSche(){
+        List<CoachWorkSche> result = coachWorkScheService.findAll();
+        return ResponseEntity.ok().body(result);
+    }
 
-    @ApiOperation("插入学员健身信息")
-    @PostMapping("/courseworksche/info")
-    public ResponseEntity insertLearnerInfo(@RequestBody Map map){
-        int workWeekday=TypeUtils.castToInt(map.get("workWeekday"));
-        Long coachId = TypeUtils.castToLong(map.get("coachId"));
-        String time=TypeUtils.castToString(map.get("time"));
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+    @ApiOperation(value = "根据教练排班日期查询")
+    @GetMapping("/coachworksche/workDate")
+    public ResponseEntity getCoachesByDate(@RequestParam String workDate){
+        SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd");
         Date d=null;
         try {
-            d=sdf.parse(time);
+            d=sdf.parse(workDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        ZonedDateTime workTime = ZonedDateTime.ofInstant(d.toInstant(), ZoneId.systemDefault());
+        ZonedDateTime workZonedDate = ZonedDateTime.ofInstant(d.toInstant(), ZoneId.systemDefault());
         try {
-            CoachWorkSche result=coachWorkScheService.createCoachWorkSche(workTime,workWeekday,coachId);
+            List<CoachWorkSche> result = coachWorkScheService.getCoachesByWorkDate(workZonedDate);
             return ResponseEntity.ok().body(result);
         } catch (Exception e) {
             e.printStackTrace();
