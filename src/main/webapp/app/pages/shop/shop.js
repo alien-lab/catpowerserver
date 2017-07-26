@@ -5,7 +5,7 @@
     'use strict';
     var app=angular.module('catpowerserverApp');
 
-    app.controller("shopOpController",["$http","CourseScheduling","$scope","$filter","shopopService","BuyCourse","buyCourseTodayService","AlertService","qrService","ticket", function($http,CourseScheduling,$scope,$filter,shopopService,BuyCourse,buyCourseTodayService,AlertService,qrService,ticket){
+    app.controller("shopOpController",["$http","CourseScheduling","$scope","$filter","shopopService","BuyCourse","buyCourseTodayService","AlertService","qrService","ticket",function($http,CourseScheduling,$scope,$filter,shopopService,BuyCourse,buyCourseTodayService,AlertService,qrService,ticket){
         var vm = this;
         loadSche();
         function loadSche(date){
@@ -51,9 +51,9 @@
                         })
                     }
                 };
+
                 //下课
                 $scope.getOutClass = function (id) {
-
                     var index = -1;
                     if(this.arrangement.sche.status == '已下课' ){
                         //alert(1);
@@ -73,6 +73,13 @@
                             console.log(data);
                         });
                     }
+                    //插入排课结束时间
+                    var scheId = id;
+                    shopopService.addEndCourseTime(scheId,function (data,flag) {
+                        if(!flag){
+                            // alert(data);
+                        }
+                    });
                 };
                 //取消教练排课
                 $scope.removeCoachArrangement = function (id) {
@@ -284,6 +291,21 @@
             $http({
                 url:'api/buy-courses/today/count',
                 method:'GET'
+            }).then(function (data) {
+                if(callback){
+                    callback(data.data,true);
+                }
+            },function (error) {
+                if(callback){
+                    callback(error,false);
+                }
+            });
+        };
+        //插入教练排课结束时间
+        this.addEndCourseTime = function (scheId,callback) {
+            $http({
+                url:"api/course-schedulings/courseScheduling/"+scheId,
+                method:"PUT"
             }).then(function (data) {
                 if(callback){
                     callback(data.data,true);

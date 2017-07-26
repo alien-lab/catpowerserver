@@ -262,8 +262,8 @@ public class CourseSchedulingResource {
     }
 
     @ApiOperation(value = "下课时更新课程结束时间")
-    @PutMapping("/course-schedulings/courseScheduling")
-    public ResponseEntity updateEndTime(@RequestParam Long scheId){
+    @PutMapping("/course-schedulings/courseScheduling/{scheId}")
+    public ResponseEntity updateEndTime(@PathVariable Long scheId){
         try {
             CourseScheduling result = courseSchedulingService.updateEndTime(scheId);
             return ResponseEntity.ok().body(result);
