@@ -23,6 +23,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.*;
 
 /**
@@ -234,4 +238,26 @@ public class BuyCourseResource {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
         }
     }
+
+    @ApiOperation(value = "根据教练ID和日期获取预约改教练的学员信息")
+    @GetMapping("/buy-courses/learnerbyidandtime")
+    public ResponseEntity getLearnerByCoachIdandtime(@RequestParam Long coachId,@RequestParam String appointmentTime){
+        SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd");
+        Date d =null;
+        try {
+            d =sdf.parse(appointmentTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        ZonedDateTime workZonedDate = ZonedDateTime.ofInstant(d.toInstant(), ZoneId.systemDefault());
+        try {
+            List<BuyCourse> buyCourses = buyCourseService.findBuyCourseByCoachIdAndAppointment(coachId,workZonedDate);
+            return ResponseEntity.ok().body(buyCourses);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
+    }
+
 }
