@@ -7,6 +7,7 @@
 
     app.controller("shopOpController",["$http","CourseScheduling","$scope","$filter","shopopService","BuyCourse","buyCourseTodayService","AlertService","qrService","ticket",function($http,CourseScheduling,$scope,$filter,shopopService,BuyCourse,buyCourseTodayService,AlertService,qrService,ticket){
         var vm = this;
+        $scope.outCourse = null;
         loadSche();
         function loadSche(date){
             //今日签到与建档人数
@@ -54,6 +55,14 @@
 
                 //下课
                 $scope.getOutClass = function (id) {
+                    this.outCourse = true;
+                    //插入排课结束时间
+                    var scheId = id;
+                    shopopService.addEndCourseTime(scheId,function (data,flag) {
+                        if(!flag){
+                            // alert(data);
+                        }
+                    });
                     var index = -1;
                     if(this.arrangement.sche.status == '已下课' ){
                         //alert(1);
@@ -65,21 +74,8 @@
                     });
                     if(index != -1){
                         $scope.coachArrangements[index].sche.status = '已下课';
-                        $http({
-                            url:"api/course-schedulings/courseStatus/"+$scope.coachArrangements[index].sche.id,
-                            method:"PUT",
-                            data:$scope.coachArrangements[index].sche.status
-                        }).success(function (data) {
-                            console.log(data);
-                        });
                     }
-                    //插入排课结束时间
-                    var scheId = id;
-                    shopopService.addEndCourseTime(scheId,function (data,flag) {
-                        if(!flag){
-                            // alert(data);
-                        }
-                    });
+
                 };
                 //取消教练排课
                 $scope.removeCoachArrangement = function (id) {
@@ -316,6 +312,21 @@
                 }
             });
         }
+        //更新上课的状态
+        /*this.updateCourseStatus = function (id,status,callback) {
+            $http({
+                url:"api/course-schedulings/courseStatus/"+id+"/"+status,
+                method:"PUT"
+            }).then(function (data) {
+                if(callback){
+                    callback(data.data,true);
+                }
+            },function (error) {
+                if(callback){
+                    callback(error,false);
+                }
+            });
+        }*/
 
     }]);
 

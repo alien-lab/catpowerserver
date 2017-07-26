@@ -26,6 +26,12 @@
             </select>
         </div>
         <div class="col-md-6 col-lg-6 col-lg-6 form-group">
+            <label class="control-label" data-translate="catpowerserverApp.courseScheduling.status" for="field_status">Status</label>
+            <input type="text" class="form-control" name="status" id="field_status"
+                   ng-model="vm.courseScheduling.status"
+            />
+        </div>
+        <div class="col-md-6 col-lg-6 col-lg-6 form-group">
             <label class="control-label" data-translate="catpowerserverApp.courseScheduling.startTime" for="field_startTime">Start Time</label>
             <div class="input-group">
                 <input id="field_startTime" type="text" class="form-control" name="startTime" datetime-picker="{{dateformat}}" ng-model="vm.courseScheduling.startTime" is-open="vm.datePickerOpenStatus.startTime"
@@ -35,7 +41,7 @@
                     </span>
             </div>
         </div>
-        <div class="col-md-6 col-lg-6 col-lg-6 form-group">
+        <!--<div class="col-md-6 col-lg-6 col-lg-6 form-group">
             <label class="control-label" data-translate="catpowerserverApp.courseScheduling.endTime" for="field_endTime">End Time</label>
             <div class="input-group">
                 <input id="field_endTime" type="text" class="form-control" name="endTime" datetime-picker="{{dateformat}}" ng-model="vm.courseScheduling.endTime" is-open="vm.datePickerOpenStatus.endTime"
@@ -44,15 +50,10 @@
                         <button type="button" class="btn btn-default" ng-click="vm.openCalendar('endTime')"><i class="glyphicon glyphicon-calendar"></i></button>
                     </span>
             </div>
-        </div>
+        </div>-->
+
         <div class="col-md-6 col-lg-6 col-lg-6 form-group">
-            <label class="control-label" data-translate="catpowerserverApp.courseScheduling.status" for="field_status">Status</label>
-            <input type="text" class="form-control" name="status" id="field_status"
-                    ng-model="vm.courseScheduling.status"
-            />
-        </div>
-        <div class="col-md-6 col-lg-6 col-lg-6 form-group">
-            <a class="btn btn-info" ng-click="getCoachStatus()" ng-repeat="sta in statusList" style="margin-top: 24px;margin-left: 10px;">{{sta.status}}</a>
+            <a class="btn btn-info" ng-click="getCoachStatus()" ng-repeat="sta in statusList" style="margin-left: 10px;">{{sta.status}}</a>
         </div>
 
     </div>

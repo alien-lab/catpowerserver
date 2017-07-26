@@ -112,8 +112,8 @@
                                 </div>
                                 <!--第五部分：下课按钮-->
                                 <div class="col-lg-12 col-md-12 col-sm-12" style="margin-top: -2%;padding: 0px;">
-                                    <div ng-disabled="isSubmitted" class="goOutCourse" ng-class="{false:'col-lg-6 col-md-6 col-sm-6 goOutCourse',true:'col-lg-12 col-md-12 col-sm-12 goOutCourse'}[arrangement.sche.status == '已下课']" style="border-top: 1px solid #e3e3e3;border-right: 1px solid #e3e3e3;padding: 0px;margin-top: 2%; ">
-                                        <button ng-click="getOutClass(arrangement.sche.id)" class="btn btn-info col-lg-12 col-md-12 col-sm-12" type="submit" style="border: none;background-color:#50db39;border-radius: 0;">下课</button>
+                                    <div class="goOutCourse" ng-class="{false:'col-lg-6 col-md-6 col-sm-6 goOutCourse',true:'col-lg-12 col-md-12 col-sm-12 goOutCourse'}[arrangement.sche.status == '已下课']" style="border-top: 1px solid #e3e3e3;border-right: 1px solid #e3e3e3;padding: 0px;margin-top: 2%; ">
+                                        <button ng-disabled="outCourse" ng-click="getOutClass(arrangement.sche.id)" class="btn btn-info col-lg-12 col-md-12 col-sm-12" type="submit" style="border: none;background-color:#50db39;border-radius: 0;">下课</button>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6" ng-if="arrangement.sche.status !=  '已下课'" style="border-top: 1px solid #e3e3e3;padding: 0px;margin-top: 2%;">
                                         <button ui-sref="shopop.schedulingDelete({id:arrangement.sche.id})" ng-click="removeCoachArrangement(arrangement.sche.id)" class="btn btn-info col-lg-12 col-md-12 col-sm-12" type="submit" style="border: none;background-color:#f56158;border-radius: 0;">取消</button>
@@ -298,7 +298,4 @@
         </div>
     </uib-tab>
 </uib-tabset>
-
-
-
 

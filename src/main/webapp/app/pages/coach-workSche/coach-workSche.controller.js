@@ -304,7 +304,7 @@
         this.saveCoachWorkSche = function (param,callback) {
             $http({
                 method:'POST',
-                url:'/api/courseworksche',
+                url:'api/courseworksche/info',
                 data:param
             }).then(function (data) {
                 if (callback){

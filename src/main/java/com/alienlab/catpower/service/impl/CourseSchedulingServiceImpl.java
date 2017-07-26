@@ -197,6 +197,7 @@ public class CourseSchedulingServiceImpl implements CourseSchedulingService{
         }
         ZonedDateTime endTime = ZonedDateTime.now();
         courseScheduling.setEndTime(endTime);
+        courseScheduling.setStatus("已下课");
         CourseScheduling result = courseSchedulingRepository.save(courseScheduling);
         return result;
     }

@@ -32,6 +32,7 @@
             id:'3',
             status:'已下课'
         }];
+        vm.courseScheduling.status = '未开始';
         $scope.getCoachStatus = function () {
             vm.courseScheduling.status = this.sta.status;
         };
