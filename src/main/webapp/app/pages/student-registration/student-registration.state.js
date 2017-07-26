@@ -99,7 +99,6 @@
                 url: '/{id}/add',
                 data: {
                     authorities: ['ROLE_USER'],
-                    pageTitle: '编辑课程'
                 },
                 onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                     $uibModal.open({
@@ -109,7 +108,20 @@
                         backdrop: 'static',
                         size: 'md',
                         resolve: {
-                            entity: ['Course', function(Course) {
+                            entity: function () {
+                                return {
+                                    paymentWay: null,
+                                    paymentAccount: null,
+                                    buyTime: null,
+                                    status: null,
+                                    operator: null,
+                                    operateContent: null,
+                                    operateTime: null,
+                                    remainClass: null,
+                                    id: null
+                                };
+                            },
+                            courseEntity: ['Course', function(Course) {
                                 return Course.get({id : $stateParams.id}).$promise;
                             }]
                         }

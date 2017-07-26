@@ -21,16 +21,22 @@
         vm.coaches = Coach.query();
 
         $timeout(function (){
-            angular.element('.form-group:eq(1)>input').focus();
+            angular.element('.form-group:eq(1)>select').focus();
         });
 
-        //获取支付方式
-        buyCourseService.loadPaymentWay(function (data) {
-            $scope.payMentWayList = data;
-            $scope.getPaymentWay = function () {
-                vm.buyCourse.paymentWay = this.payWay.paymentWay;
-            }
-        });
+        //支付方式
+        $scope.payMentWayList = [{
+            paymentWay:'微信支付'
+        },{
+            paymentWay:'现金'
+        },{
+            paymentWay:'支付宝'
+        }];
+        $scope.getPaymentWay = function () {
+            vm.buyCourse.paymentWay = this.payWay.paymentWay;
+        };
+        //买课状态
+        vm.buyCourse.status = '正常';
         //获取课时
         $scope.getTotalHour = function () {
             console.log(vm.buyCourse.course.courseName);
@@ -45,6 +51,7 @@
             courseService.loadCourseById(id,function (data) {
                 $scope.prices = data;
                 console.log($scope.prices);
+                vm.buyCourse.paymentAccount=$scope.prices.course_prices;
                 $scope.getPrices = function (price) {
                     vm.buyCourse.paymentAccount = price;
                 };
@@ -53,7 +60,6 @@
                 }
             });
         };
-
 
         function clear () {
             $uibModalInstance.dismiss('cancel');

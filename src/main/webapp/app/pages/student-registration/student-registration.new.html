@@ -20,8 +20,8 @@
         </div>
         <div class="col-md-6 col-sm-6 col-lg-6 form-group">
             <label data-translate="catpowerserverApp.buyCourse.course" for="field_course">Course</label>
-            <select class="form-control" id="field_course" name="course" ng-model="vm.buyCourse.course" readonly ng-options="course as vm.buyCourse.courseName for buyCourse in vm.buyCourse track by buyCourse.id" >
-            </select>
+            <input ng-if="false" class="form-control" id="field_course" name="course" ng-model="vm.buyCourse.course" readonly />
+            <input class="form-control"  name="course" ng-model="CoursesName" readonly />
         </div>
         <div class="col-md-6 col-sm-6 col-lg-6 form-group">
             <label data-translate="catpowerserverApp.buyCourse.coach" for="field_coach">Coach</label>
@@ -64,8 +64,8 @@
             />
         </div>
         <div class="col-md-12 col-sm-12 col-lg-12 form-group" >
-            <a class="btn btn-info" style="margin-left: 1%;" ng-click="getPrices(prices.course_prices)" >普通{{prices.course_prices | currency:"￥"}}</a>
-            <a class="btn btn-info" style="margin-left: 1%;" ng-click="getVipPrices(prices.course_vipprices)" >会员{{prices.course_vipprices | currency:"￥"}}</a>
+            <a class="btn btn-info" style="margin-left: 1%;" ng-click="getPrices(vm.course.coursePrices)" >普通{{vm.course.coursePrices | currency:"￥"}}</a>
+            <a class="btn btn-info" style="margin-left: 1%;" ng-click="getVipPrices(vm.course.courseVipprices)" >会员{{vm.course.courseVipprices | currency:"￥"}}</a>
             <a class="btn btn-info" style="margin-left: 1%;float: right;" ng-repeat="payWay in payMentWayList" ng-click="getPaymentWay()" >{{payWay.paymentWay}}</a>
         </div>
         <div class="col-md-6 col-sm-6 col-lg-6 form-group">
