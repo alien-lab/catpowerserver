@@ -169,7 +169,6 @@ public class CourseSchedulingServiceImpl implements CourseSchedulingService{
     @Override
     public List<CourseScheduling> getcourseSche(Long coachId) throws Exception {
         Coach coach = coachService.findOne(coachId);
-
         List<CourseScheduling> result = courseSchedulingRepository.findCourseSchedulingsByCoach(coach);
         return result;
     }
@@ -187,5 +186,18 @@ public class CourseSchedulingServiceImpl implements CourseSchedulingService{
             list.add(map);
         }
         return list;
+    }
+
+    //根据当前日期查询对应的排班情况
+    @Override
+    public List<CourseScheduling> findCourseSchedulingByCoachIdAndStratTime(Long coachId, ZonedDateTime startTime) throws Exception {
+        if(coachId==null){
+            throw new Exception("参数解析异常！");
+        }
+        Coach coach = coachRepository.findOne(coachId);
+        if (coach==null){
+            throw new Exception("灭有找到对应教练信息！");
+        }
+        return courseSchedulingRepository.findCourseSchedulingsByCoachAndStartTime(coach,startTime);
     }
 }

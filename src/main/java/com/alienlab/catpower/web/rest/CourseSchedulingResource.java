@@ -2,6 +2,7 @@ package com.alienlab.catpower.web.rest;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.util.TypeUtils;
 import com.alienlab.catpower.domain.CourseScheduling;
 import com.alienlab.catpower.domain.LearnerCharge;
 import com.alienlab.catpower.service.CourseSchedulingService;
@@ -258,6 +259,35 @@ public class CourseSchedulingResource {
             e.printStackTrace();
             ExecResult er=new ExecResult(false,e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
+    }
+
+    @ApiOperation(value = "获取指定日期指定教练的排班记录")
+    @GetMapping("/course-schedulings/courseSchedulingBytimeAndId")
+    public ResponseEntity getCourseScheByIdAndTime(@RequestParam Long coachId,@RequestParam String startTime){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-ss HH:mm:ss");
+        Date d1 = null;
+        Date d2 = null;
+        ZonedDateTime start = null;
+        try {
+            d1 = sdf.parse(startTime);
+            List<CourseScheduling> result1 = courseSchedulingService.getcourseSche(coachId);
+            if (result1==null){
+                throw new Exception("该教练没有拍班信息！");
+            }
+            for (CourseScheduling scheduling :result1){
+                String startTime2 = TypeUtils.castToString(scheduling.getStartTime());
+                d2 = sdf.parse(startTime2);
+                if (d1.getTime() == d2.getTime()){
+                    start = ZonedDateTime.ofInstant(d1.toInstant(), ZoneId.systemDefault());
+                }
+            }
+            List<CourseScheduling> result = courseSchedulingService.findCourseSchedulingByCoachIdAndStratTime(coachId,start);
+            return ResponseEntity.ok().body(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
+
         }
     }
 
