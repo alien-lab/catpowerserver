@@ -268,15 +268,14 @@ public class BuyCourseServiceImpl implements BuyCourseService{
             throw new Exception("没有对应的教练信息！");
         }
         List<BuyCourse> list = buyCourseRepository.findBuyCourseByCoach(coach);
-        if (list.size() == 0 || list != null){
+        if (list.size() == 0 || list == null){
             throw new Exception("没有找到对应的买课信息！");
         }
         for (BuyCourse buyCourse :list){
             appointmentList = learnerAppointmentRepository.findLearnerAppointmentByAppointmentDateAndBuyCourse(appointmentTime,buyCourse);
-            if (appointmentList!=null){
-                throw new Exception("没有找到对应的预约信息");
+            if (appointmentList != null){
+                buyCourses.add(buyCourse);
             }
-            buyCourses.add(buyCourse);
         }
         return buyCourses;
     }
