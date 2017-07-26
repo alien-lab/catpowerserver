@@ -256,4 +256,27 @@ public class BuyCourseServiceImpl implements BuyCourseService{
     }
 
 
+    @Override
+    public List<BuyCourse> findBuyCourseByCoachIdAndAppointment(Long coachId, ZonedDateTime appointmentTime) throws Exception {
+        LearnerAppointment appointmentList =  null;
+        List<BuyCourse> buyCourses = new ArrayList<>();
+        if (coachId == null) {
+            throw new Exception("参数解析异常！");
+        }
+        Coach coach = coachRepository.findOne(coachId);
+        if (coach == null){
+            throw new Exception("没有对应的教练信息！");
+        }
+        List<BuyCourse> list = buyCourseRepository.findBuyCourseByCoach(coach);
+        if (list.size() == 0 || list == null){
+            throw new Exception("没有找到对应的买课信息！");
+        }
+        for (BuyCourse buyCourse :list){
+            appointmentList = learnerAppointmentRepository.findLearnerAppointmentByAppointmentDateAndBuyCourse(appointmentTime,buyCourse);
+            if (appointmentList != null){
+                buyCourses.add(buyCourse);
+            }
+        }
+        return buyCourses;
+    }
 }

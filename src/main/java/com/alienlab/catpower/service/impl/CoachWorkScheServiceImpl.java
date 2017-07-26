@@ -1,5 +1,6 @@
 package com.alienlab.catpower.service.impl;
 
+import com.alibaba.fastjson.util.TypeUtils;
 import com.alienlab.catpower.domain.Coach;
 import com.alienlab.catpower.domain.CoachWorkSche;
 import com.alienlab.catpower.repository.CoachRepository;
@@ -15,7 +16,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -108,7 +113,19 @@ public class CoachWorkScheServiceImpl implements CoachWorkScheService {
             throw  new Exception("没有找到对应的教练信息");
         }
         List<CoachWorkSche> lists = coachWorkScheRespository.findCoachWorkScheByCoach(coach);
-        return lists;
+        Date date  = new Date();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        Date d1 =df.parse(TypeUtils.castToString(date.toInstant()));
+        List<CoachWorkSche> coachScheLists =  new ArrayList<CoachWorkSche>();
+        for (CoachWorkSche coachChe:lists
+            ) {
+            Date d2 =df.parse(TypeUtils.castToString(coachChe.getWorkDate().toInstant()));
+            Long time = d2.getTime()-d1.getTime();
+            if (0 < time && time <= 604800000){
+                coachScheLists.add(coachChe);
+            }
+        }
+        return coachScheLists;
     }
 
     //根据教练排班日期获取教练
