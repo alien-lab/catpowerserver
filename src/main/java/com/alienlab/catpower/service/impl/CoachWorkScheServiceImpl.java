@@ -19,9 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -158,5 +156,20 @@ public class CoachWorkScheServiceImpl implements CoachWorkScheService {
         coachWorkSche.setWorkWeekday(wordWeekday);
         coachWorkSche.setCoach(coach);
         return coachWorkScheRespository.save(coachWorkSche);
+    }
+
+    @Override
+    public List getCoachByTime(ZonedDateTime firstDay, ZonedDateTime finalDay) throws Exception {
+        List list = new ArrayList();
+        List<CoachWorkSche> workScheList = coachWorkScheRespository.findCoachByTime(firstDay,finalDay);
+        for (CoachWorkSche coachWorkSche:workScheList){
+            ZonedDateTime workTime=coachWorkSche.getWorkDate();
+            List<CoachWorkSche> coachWorkScheList=coachWorkScheRespository.findCoachWorkScheByworkDate(workTime);
+            Map map = new HashMap();
+            map.put("workDate",workTime);
+            map.put("coachWorkScheList",coachWorkScheList);
+            list.add(map);
+        }
+        return list;
     }
 }

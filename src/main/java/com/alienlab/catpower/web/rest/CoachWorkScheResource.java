@@ -199,4 +199,29 @@ public class CoachWorkScheResource {
         }
     }
 
+    @ApiOperation("查询一个月教练的排班时间")
+    @GetMapping("/courseworksche/coach")
+    public ResponseEntity getCoachByMonth(@RequestParam String firstTime,@RequestParam String finalTime){
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        Date d1=null;
+        Date d2=null;
+        try {
+            d1=sdf.parse(firstTime);
+            d2=sdf.parse(finalTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        ZonedDateTime firstDay = ZonedDateTime.ofInstant(d1.toInstant(), ZoneId.systemDefault());
+        ZonedDateTime finalDay = ZonedDateTime.ofInstant(d2.toInstant(), ZoneId.systemDefault());
+        try {
+            List result=coachWorkScheService.getCoachByTime(firstDay,finalDay);
+            return ResponseEntity.ok().body(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+
+        }
+    }
+
 }
