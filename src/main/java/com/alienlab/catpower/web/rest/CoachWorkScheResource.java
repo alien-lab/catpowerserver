@@ -211,10 +211,10 @@ public class CoachWorkScheResource {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        ZonedDateTime firstDay = ZonedDateTime.ofInstant(d1.toInstant(), ZoneId.systemDefault());
-        ZonedDateTime finalDay = ZonedDateTime.ofInstant(d2.toInstant(), ZoneId.systemDefault());
+        /*ZonedDateTime firstDay = ZonedDateTime.ofInstant(d1.toInstant(), ZoneId.systemDefault());
+        ZonedDateTime finalDay = ZonedDateTime.ofInstant(d2.toInstant(), ZoneId.systemDefault());*/
         try {
-            List result=coachWorkScheService.getCoachByTime(firstDay,finalDay);
+            List result=coachWorkScheService.getCoachByTime(d1,d2);
             return ResponseEntity.ok().body(result);
         } catch (Exception e) {
             e.printStackTrace();

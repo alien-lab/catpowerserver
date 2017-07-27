@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.*;
 
@@ -159,9 +160,9 @@ public class CoachWorkScheServiceImpl implements CoachWorkScheService {
     }
 
     @Override
-    public List getCoachByTime(ZonedDateTime firstDay, ZonedDateTime finalDay) throws Exception {
+    public List getCoachByTime(Date firstDay, Date finalDay) throws Exception {
         List list = new ArrayList();
-        List<CoachWorkSche> workScheList = coachWorkScheRespository.findCoachByTime(firstDay,finalDay);
+        /*List<CoachWorkSche> workScheList = coachWorkScheRespository.findCoachByTime(firstDay,finalDay);
         for (CoachWorkSche coachWorkSche:workScheList){
             ZonedDateTime workTime=coachWorkSche.getWorkDate();
             List<CoachWorkSche> coachWorkScheList=coachWorkScheRespository.findCoachWorkScheByworkDate(workTime);
@@ -169,7 +170,18 @@ public class CoachWorkScheServiceImpl implements CoachWorkScheService {
             map.put("workDate",workTime);
             map.put("coachWorkScheList",coachWorkScheList);
             list.add(map);
+        }*/
+
+        while (firstDay.getTime() <= finalDay.getTime()){
+            ZonedDateTime workTime = ZonedDateTime.ofInstant(firstDay.toInstant(), ZoneId.systemDefault());
+            List<CoachWorkSche> coachWorkScheList=coachWorkScheRespository.findCoachWorkScheByworkDate(workTime);
+            Map map = new HashMap();
+            map.put("workDate",workTime);
+            map.put("coachWorkScheList",coachWorkScheList);
+            list.add(map);
+            firstDay = new Date(firstDay.getTime()+1000*24*60*60);
         }
+
         return list;
     }
 }

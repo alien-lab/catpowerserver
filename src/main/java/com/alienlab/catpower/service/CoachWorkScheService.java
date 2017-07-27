@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -54,6 +55,6 @@ public interface CoachWorkScheService {
 
     CoachWorkSche createCoachWorkSche(ZonedDateTime time,int wordWeekday,Long coachId) throws Exception;
 
-    List getCoachByTime(ZonedDateTime firstDay,ZonedDateTime finalDay) throws Exception;
+    List getCoachByTime(Date firstDay, Date finalDay) throws Exception;
 
 }
