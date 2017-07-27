@@ -1,12 +1,7 @@
 package com.alienlab.catpower.service.impl;
 
-import com.alienlab.catpower.domain.BuyCourse;
-import com.alienlab.catpower.domain.CoachWorkSche;
-import com.alienlab.catpower.domain.Learner;
-import com.alienlab.catpower.domain.LearnerAppointment;
-import com.alienlab.catpower.repository.BuyCourseRepository;
-import com.alienlab.catpower.repository.LearnerAppointmentRepository;
-import com.alienlab.catpower.repository.LearnerRepository;
+import com.alienlab.catpower.domain.*;
+import com.alienlab.catpower.repository.*;
 import com.alienlab.catpower.service.BuyCourseService;
 import com.alienlab.catpower.service.LearnerAppointmentService;
 import com.alienlab.catpower.service.LearnerService;
@@ -35,6 +30,8 @@ public class LearnerAppointmentServiceImpl implements LearnerAppointmentService 
     private LearnerAppointmentRepository learnerAppointmentRepository;
     @Autowired
     private BuyCourseRepository buyCourseRepository;
+    @Autowired
+    private CoachRepository coachRepository;
 
     @Override
     public LearnerAppointment save(Long buyCourseId, ZonedDateTime appointmentDate, String appointmentResult, String appointmentMemo) throws Exception{
@@ -133,5 +130,34 @@ public class LearnerAppointmentServiceImpl implements LearnerAppointmentService 
         map.put("appointing",appointing);
         map.put("appointed",appointed);
         return map;
+    }
+
+    //根据教练ID获取对应预约他的课进行中的预约信息
+    @Override
+    public List findLearnerAppointmentByCoachIdAndAppointmentDate(Long coachId, ZonedDateTime appointmentDate) throws Exception {
+        List appointments = new ArrayList();
+        if (coachId==null){
+            throw new Exception("参数解析异常！");
+        }
+        Coach coach = coachRepository.findOne(coachId);
+        if (coach==null){
+            throw new Exception("该教练信息为空！");
+        }
+        List<BuyCourse> buyCourse = buyCourseRepository.findBuyCourseByCoach(coach);
+        if (buyCourse.size()==0){
+            throw new Exception("没找到对应的买课信息！");
+        }
+        for (BuyCourse buy : buyCourse){
+            LearnerAppointment appointment = learnerAppointmentRepository.findLearnerAppointmentByAppointmentDateAndBuyCourse(appointmentDate,buy);
+            if (appointment != null){
+                System.out.println(appointment);
+                String result = appointment.getAppointmentResult();
+                if (result.equals("预约中")){
+                    appointments.add(appointment);
+                }
+            }
+
+        }
+        return appointments;
     }
 }

@@ -34,4 +34,6 @@ public interface LearnerAppointmentRepository extends JpaRepository<LearnerAppoi
     List<LearnerAppointment> findAppointmentByCoachId(Long coachId);
 
 
+
+
 }

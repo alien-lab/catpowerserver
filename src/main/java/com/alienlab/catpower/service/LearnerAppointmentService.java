@@ -49,4 +49,6 @@ public interface LearnerAppointmentService {
     LearnerAppointment findLearnerAppointmentById(Long id) throws Exception;
 
     Map getAppointmentByCoachId(Long coachId) throws Exception;
+
+    List findLearnerAppointmentByCoachIdAndAppointmentDate(Long coachId,ZonedDateTime appointmentDate) throws Exception;
 }
