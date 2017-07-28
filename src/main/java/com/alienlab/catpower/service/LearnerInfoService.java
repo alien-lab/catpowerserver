@@ -4,6 +4,7 @@ import com.alienlab.catpower.domain.LearnerInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 /**
@@ -54,4 +55,6 @@ public interface LearnerInfoService {
 
     LearnerInfo insertLearner(String exerciseData,String bodyTestData,String coachAdvice,Long learnerId,Long scheId) throws Exception;
 
+    //根据教练ID查找当天教练下面所有未填写和已填写教练建议的学员
+    List<LearnerInfo> getLearnerInfoBySche(Long coachId, ZonedDateTime startTime) throws Exception;
 }

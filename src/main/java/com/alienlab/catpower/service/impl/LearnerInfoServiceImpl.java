@@ -1,14 +1,11 @@
 package com.alienlab.catpower.service.impl;
 
-import com.alienlab.catpower.domain.CourseScheduling;
-import com.alienlab.catpower.domain.Learner;
-import com.alienlab.catpower.repository.CourseSchedulingRepository;
-import com.alienlab.catpower.repository.LearnerRepository;
+import com.alibaba.fastjson.util.TypeUtils;
+import com.alienlab.catpower.domain.*;
+import com.alienlab.catpower.repository.*;
 import com.alienlab.catpower.service.CourseSchedulingService;
 import com.alienlab.catpower.service.CourseService;
 import com.alienlab.catpower.service.LearnerInfoService;
-import com.alienlab.catpower.domain.LearnerInfo;
-import com.alienlab.catpower.repository.LearnerInfoRepository;
 import com.alienlab.catpower.service.LearnerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +19,8 @@ import org.springframework.stereotype.Service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -48,6 +47,12 @@ public class LearnerInfoServiceImpl implements LearnerInfoService{
 
     @Autowired
     CourseSchedulingRepository courseSchedulingRepository;
+
+    @Autowired
+    CoachRepository coachRepository;
+
+    @Autowired
+    LearnerChargeRepository learnerChargeRepository;
 
     public LearnerInfoServiceImpl(LearnerInfoRepository learnerInfoRepository) {
         this.learnerInfoRepository = learnerInfoRepository;
@@ -151,5 +156,45 @@ public class LearnerInfoServiceImpl implements LearnerInfoService{
         learnerInfo.setCourseScheduling(courseSchedulingRepository.findOne(scheId));
         LearnerInfo result = learnerInfoRepository.save(learnerInfo);
         return result;
+    }
+
+    //根据教练ID查找当天教练下面所有未填写和已填写教练建议的学员
+    @Override
+    public List<LearnerInfo> getLearnerInfoBySche(Long coachId, ZonedDateTime startTime) throws Exception {
+        List<LearnerInfo> learnerInfos = new ArrayList<LearnerInfo>();
+        LearnerInfo learnerInfo ;
+        List<CourseScheduling> courseSchedulings = new ArrayList<>();
+        if (coachId == null){
+            throw new Exception("参数解析异常!");
+        }
+        Coach coach = coachRepository.findOne(coachId);
+        if (coach == null){
+            throw new Exception("没有找到对应的教练信息！");
+        }
+        List<CourseScheduling> list = courseSchedulingRepository.findCourseSchedulingsByCoach(coach);
+        if (list.size()==0){
+            throw new Exception("没有该教练对应的拍班信息!");
+        }
+        for (CourseScheduling courseScheduling : list){
+            ZonedDateTime date = courseScheduling.getStartTime();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            Date d1 =TypeUtils.castToDate(date.format(formatter));
+            Date d2 = TypeUtils.castToDate(startTime.format(formatter));
+            if (d1.getTime() == d2.getTime()){
+                courseSchedulings.add(courseScheduling);
+                for (CourseScheduling course : courseSchedulings){
+                    CourseScheduling coursche = courseSchedulingRepository.findOne(course.getId());
+                    if (coursche!=null){
+                        List<LearnerCharge> learnerCharges = learnerChargeRepository.findLearnerChargeByCoachAndCourseScheduling(coach,coursche);
+                        for(LearnerCharge learnerCharge : learnerCharges){
+                            Learner learner = learnerCharge.getLearner();
+                            learnerInfo = learnerInfoRepository.findLearnerInfoByLearnerAndCourseScheduling(learner,coursche);
+                            learnerInfos.add(learnerInfo);
+                        }
+                    }
+                }
+            }
+        }
+        return learnerInfos;
     }
 }

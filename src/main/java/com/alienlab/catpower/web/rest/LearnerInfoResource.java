@@ -23,6 +23,11 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -177,6 +182,26 @@ public class LearnerInfoResource {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
 
         }
+    }
+
+    @ApiOperation("根据教练ID查询当天对应的已填写建议和未填写建议的学员")
+    @GetMapping("/learner-infos/advicebyidandtime")
+    public ResponseEntity findLearnerInfoByIdAndTime(@RequestParam Long coachId,@RequestParam String startTime){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date d = null;
+        try {
+            d= sdf.parse(startTime);
+            ZonedDateTime startDate = ZonedDateTime.ofInstant(d.toInstant(), ZoneId.systemDefault());
+            List<LearnerInfo> learnerInfo =  learnerInfoService.getLearnerInfoBySche(coachId,startDate);
+            return ResponseEntity.ok().body(learnerInfo);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
+        }
+
     }
 
 }
