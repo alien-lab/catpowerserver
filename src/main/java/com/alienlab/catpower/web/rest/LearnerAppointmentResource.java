@@ -20,6 +20,7 @@ import java.net.URISyntaxException;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -128,6 +129,24 @@ public class LearnerAppointmentResource {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
         }
     }
+
+    @ApiOperation("根据教练Id获取该教练的预约中的记录")
+    @GetMapping("/learner-appointment/learnerbyidandtime")
+    public ResponseEntity getAppointmentByIdAndTime(@RequestParam Long coachId,@RequestParam String appointmentDate){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date d = null;
+        try {
+            d = sdf.parse(appointmentDate);
+            ZonedDateTime  appointmentTime = ZonedDateTime.ofInstant(d.toInstant(),ZoneId.systemDefault());
+            List result = learnerAppointmentService.findLearnerAppointmentByCoachIdAndAppointmentDate(coachId,appointmentTime);
+            return ResponseEntity.ok().body(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
+        }
+    }
+
+
 
 
 }

@@ -67,4 +67,9 @@ public interface CourseSchedulingService {
      * @throws Exception
      */
     CourseScheduling updateEndTime(Long scheId) throws Exception;
+
+    //根据教练ID和开始时间获取当天的排课记录
+    List<CourseScheduling> findCourseSchedulingByCoachIdAndStartTime(Long coachId,ZonedDateTime startTime) throws Exception;
+
+
 }

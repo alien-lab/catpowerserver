@@ -201,4 +201,18 @@ public class CourseSchedulingServiceImpl implements CourseSchedulingService{
         CourseScheduling result = courseSchedulingRepository.save(courseScheduling);
         return result;
     }
+
+    //根据教练ID和开始时间获取当天的排课记录
+    @Override
+    public List<CourseScheduling> findCourseSchedulingByCoachIdAndStartTime(Long coachId, ZonedDateTime startTime) throws Exception {
+        if (coachId == null){
+            throw new Exception("参数解析异常！");
+        }
+        Coach coach = coachRepository.findOne(coachId);
+        if (coach == null){
+            throw new Exception("没有找到该教练的信息！");
+        }
+        List<CourseScheduling> list = courseSchedulingRepository.findCourseSchedulingsByCoachAndStartTime(coach,startTime);
+        return list;
+    }
 }

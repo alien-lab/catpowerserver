@@ -24,4 +24,7 @@ public interface LearnerInfoRepository extends JpaRepository<LearnerInfo,Long> {
     @Query("select a from LearnerInfo a  where a.learner=?1 order by time desc")
     List<LearnerInfo> findLearnerInfoByLearner(Learner leaner);
 
+    //根据排课ID查询学员信息
+   // @Query("select a from LearnerInfo a  where a.courseScheduling=?1")
+    //LearnerInfo findLearnerInfoByLearnerAndCourseScheduling(Learner learner ,CourseScheduling courseScheduling);
 }

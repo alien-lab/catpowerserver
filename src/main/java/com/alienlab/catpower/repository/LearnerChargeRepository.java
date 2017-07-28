@@ -1,9 +1,6 @@
 package com.alienlab.catpower.repository;
 
-import com.alienlab.catpower.domain.Course;
-import com.alienlab.catpower.domain.CourseScheduling;
-import com.alienlab.catpower.domain.Learner;
-import com.alienlab.catpower.domain.LearnerCharge;
+import com.alienlab.catpower.domain.*;
 import org.springframework.stereotype.Repository;
 
 import org.springframework.data.jpa.repository.*;
@@ -33,4 +30,7 @@ public interface LearnerChargeRepository extends JpaRepository<LearnerCharge,Lon
     LearnerCharge findLearnerChargeByLearnerIdAndScheId(Long learnerId,Long scheId);
 
 
+    //根据教练和排课信息查找核销内容
+    @Query("select a from LearnerCharge a  where a.coach=?1 and a.courseScheduling=?2")
+    List<LearnerCharge> findLearnerChargeByCoachAndCourseScheduling(Coach coach ,CourseScheduling courseScheduling);
 }
