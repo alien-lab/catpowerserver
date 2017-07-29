@@ -145,32 +145,37 @@ public class CoachWorkScheResource {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
         }
     }
-    @ApiOperation(value = "获取所有的教练排班记录")
-    @GetMapping("/coachworksches")
-    public ResponseEntity getAllSche(){
-        List<CoachWorkSche> result = coachWorkScheService.findAll();
-        return ResponseEntity.ok().body(result);
-    }
 
-    @ApiOperation(value = "根据教练排班日期查询")
+    @ApiOperation(value = "根据排班时间获取排班信息")
     @GetMapping("/coachworksche/workDate")
-    public ResponseEntity getCoachesByDate(@RequestParam String workDate){
-        SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd");
+    public ResponseEntity getCoachWorkScheByWorkDate(@RequestParam String workDate){
+        //String t=TypeUtils.castToString(workDate);
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
         Date d=null;
         try {
             d=sdf.parse(workDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        ZonedDateTime workZonedDate = ZonedDateTime.ofInstant(d.toInstant(), ZoneId.systemDefault());
+        ZonedDateTime workTime = ZonedDateTime.ofInstant(d.toInstant(), ZoneId.systemDefault());
         try {
-            List<CoachWorkSche> result = coachWorkScheService.getCoachesByWorkDate(workZonedDate);
-            return ResponseEntity.ok().body(result);
+            List<CoachWorkSche> list = coachWorkScheService.getCoachesByWorkDate(workTime);
+            return ResponseEntity.ok().body(list);
         } catch (Exception e) {
             e.printStackTrace();
             ExecResult er=new ExecResult(false,e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
-
+        }
+    }
+    @ApiOperation(value = "获取所有的教练排班")
+    @GetMapping("/coachworksches")
+    public ResponseEntity getAllCoachWorkSches(){
+        try {
+            List<CoachWorkSche> list = coachWorkScheService.findAll();
+            return ResponseEntity.ok().body(list);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
         }
     }
 

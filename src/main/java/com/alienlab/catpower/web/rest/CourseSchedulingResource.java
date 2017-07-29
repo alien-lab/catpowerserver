@@ -214,8 +214,8 @@ public class CourseSchedulingResource {
      *  根据id更新上课的状态
      */
     @ApiOperation(value = "根据id更新上课的状态 ")
-    @PutMapping("/course-schedulings/courseStatus/{id}")
-    public ResponseEntity updateCourseStatus(@PathVariable Long id,@RequestBody String status){
+    @PutMapping("/course-schedulings/courseStatus/{id}/{status}")
+    public ResponseEntity updateCourseStatus(@PathVariable Long id,@PathVariable String status){
         try {
             return ResponseEntity.ok().body(courseSchedulingService.updateCourseScheduling(id,status));
         } catch (Exception e) {

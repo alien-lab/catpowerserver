@@ -135,7 +135,8 @@ public class CoachWorkScheServiceImpl implements CoachWorkScheService {
         Date d1= null;
         d1 = sf.parse(sd);
         String workTime=sf.format(d1);*/
-        return coachWorkScheRespository.findCoachWorkScheByworkDate(workDate);
+        List<CoachWorkSche> result = coachWorkScheRespository.findCoachWorkScheByworkDate(workDate);
+        return result;
     }
 
     @Override
