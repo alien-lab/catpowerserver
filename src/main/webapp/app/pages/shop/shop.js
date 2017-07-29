@@ -8,6 +8,10 @@
     app.controller("shopOpController",["$http","CourseScheduling","$scope","$filter","shopopService","BuyCourse","buyCourseTodayService","AlertService","qrService","ticket",function($http,CourseScheduling,$scope,$filter,shopopService,BuyCourse,buyCourseTodayService,AlertService,qrService,ticket){
         var vm = this;
         $scope.outCourse = null;
+        $scope.buyCourseCountToday = null;
+        $scope.haveBuyCourse=false;
+        $scope.noneBuyCourse = false;
+
         loadSche();
         function loadSche(date){
             //今日签到与建档人数
@@ -23,6 +27,14 @@
                     //alert(data);
                 }
                 $scope.buyCourseCountToday = data;
+                console.log($scope.buyCourseCountToday)
+
+                if($scope.buyCourseCountToday.buycount == 0){
+                    $scope.noneBuyCourse=true;
+                }else{
+                    $scope.haveBuyCourse=true;
+                }
+
             });
             //今日教练排课
             shopopService.loadCoachArrangement(date,function(data,flag){
@@ -104,10 +116,9 @@
                 }
             });
         }
-
-            $scope.page={
+        $scope.page={
             index:0,
-            size:10
+            size:100
         };
 
         //获取当前日期
@@ -172,10 +183,13 @@
         /**
          * 今日售课
          */
-        buyCourseTodayService.loadBuyCourseToday(0,10,function (data) {
+        $scope.buyCoursesToday = [];
+        buyCourseTodayService.loadBuyCourseToday(0,100,function (data) {
             $scope.buyCoursesToday =data;
-            console.log(data)
+            console.log($scope.buyCoursesToday)
         });
+
+
         /**
          * 排课情况
          */

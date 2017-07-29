@@ -128,7 +128,12 @@
                     <div class="col-lg-2 col-md-2 col-sm-2" style="background-color:#f5f5f5;margin-top:-13px;font-size: 16px;width:10%;">
                         <b>今日售课</b>
                     </div>
-                    <div class="col-lg-12 col-md-12 col-sm-12" style="margin: 2.5% auto;">
+                    <div ng-if="noneBuyCourse" class="col-lg-12 col-md-12 col-sm-12 " style="margin: 2.5% auto;">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-lg-offset-3 col-md-offset-3 col-sm-offset-3 alert alert-warning" role="alert" >
+                            <h3 style="text-align: center;">今日暂无授课</h3>
+                        </div>
+                    </div>
+                    <div ng-if="haveBuyCourse" class="col-lg-12 col-md-12 col-sm-12" style="margin: 2.5% auto;">
                         <div class="table-responsive">
                             <table class="table table-striped" style="background: #ffffff;">
                                <thead>
