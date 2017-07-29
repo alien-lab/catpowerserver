@@ -176,22 +176,19 @@ public class LearnerInfoServiceImpl implements LearnerInfoService{
             throw new Exception("没有该教练对应的拍班信息!");
         }
         for (CourseScheduling courseScheduling : list){
-            ZonedDateTime date = courseScheduling.getStartTime();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            Date d1 =TypeUtils.castToDate(date.format(formatter));
-            Date d2 = TypeUtils.castToDate(startTime.format(formatter));
-            if (d1.getTime() == d2.getTime()){
-                courseSchedulings.add(courseScheduling);
-                for (CourseScheduling course : courseSchedulings){
-                    CourseScheduling coursche = courseSchedulingRepository.findOne(course.getId());
-                    if (coursche!=null){
-                        List<LearnerCharge> learnerCharges = learnerChargeRepository.findLearnerChargeByCoachAndCourseScheduling(coach,coursche);
-                        for(LearnerCharge learnerCharge : learnerCharges){
-                            Learner learner = learnerCharge.getLearner();
-                            learnerInfo = learnerInfoRepository.findLearnerInfoByLearnerAndCourseScheduling(learner,coursche);
-                            learnerInfos.add(learnerInfo);
-                        }
+            if (courseScheduling!=null){
+                List<LearnerCharge> learnerCharges = learnerChargeRepository.findLearnerChargeByCoachAndCourseScheduling(coach,courseScheduling);
+                for(LearnerCharge learnerCharge : learnerCharges){
+                    ZonedDateTime date = learnerCharge.getChargeTime();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                    Date d1 =TypeUtils.castToDate(date.format(formatter));
+                    Date d2 = TypeUtils.castToDate(startTime.format(formatter));
+                    if (d1.getTime() == d2.getTime()){
+                        Learner learner = learnerCharge.getLearner();
+                        learnerInfo = learnerInfoRepository.findLearnerInfoByLearnerAndCourseScheduling(learner,courseScheduling);
+                        learnerInfos.add(learnerInfo);
                     }
+
                 }
             }
         }
