@@ -19,7 +19,7 @@
             vm.coaches = Coach.query();
 
             $timeout(function (){
-                angular.element('.form-group:eq(0)>select').focus();
+                angular.element('.form-group:eq(1)>select').focus();
             });
 
             //上课状态

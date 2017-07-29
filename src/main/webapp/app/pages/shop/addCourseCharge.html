@@ -54,21 +54,17 @@
         </div>
         <div class="col-md-6 col-lg-6 col-sm-6 form-group">
             <label data-translate="catpowerserverApp.learnerCharge.course" for="field_course">Course</label>
-            <select class="form-control" id="field_course" name="course" ng-model="vm.learnerCharge.course" ng-options="course as course.courseName for course in vm.courses track by course.id">
-                <option value=""></option>
-            </select>
+            <input ng-if="false" class="form-control" id="field_course" name="course" ng-model="vm.learnerCharge.course" />
+            <input class="form-control" name="course" ng-model="courseName" readonly/>
         </div>
         <div class="col-md-6 col-lg-6 col-sm-6 form-group">
             <label data-translate="catpowerserverApp.learnerCharge.coach" for="field_coach">Coach</label>
-            <select class="form-control" id="field_coach" name="coach" ng-model="vm.learnerCharge.coach" ng-options="coach as coach.coachName for coach in vm.coaches track by coach.id">
-                <option value=""></option>
-            </select>
+            <input ng-if="false" class="form-control" id="field_coach" name="coach" ng-model="vm.learnerCharge.coach" />
+            <input class="form-control" name="coach" ng-model="coachName" readonly />
         </div>
-        <div class="col-md-6 col-lg-6 col-sm-6 form-group">
+        <div class="col-md-6 col-lg-6 col-sm-6 form-group" ng-if="false">
             <label data-translate="catpowerserverApp.learnerCharge.courseScheduling" for="field_courseScheduling">Course Scheduling</label>
-            <select class="form-control" id="field_courseScheduling" name="courseScheduling" ng-model="vm.learnerCharge.courseScheduling" ng-options="courseScheduling as courseScheduling.id for courseScheduling in vm.courseschedulings track by courseScheduling.id">
-                <option value=""></option>
-            </select>
+            <input class="form-control" id="field_courseScheduling" name="courseScheduling" ng-model="vm.learnerCharge.courseScheduling" />
         </div>
     </div>
     <div class="modal-footer">
