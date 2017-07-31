@@ -99,7 +99,7 @@ public class CoachEvaluateServiceImpl implements CoachEvaluateService{
      * @return the persisted entity
      */
     @Override
-    public CoachEvaluate insert(Long serviceAttitude,Long speciality,Long like,String complain,Long evaluation,Long learnerId,Long scheId) {
+    public CoachEvaluate insert(Long serviceAttitude,Long speciality,Long like,String complain,Long evaluation,Long learnerId,Long scheId) throws Exception {
         CoachEvaluate coachEvaluate=new CoachEvaluate();
         coachEvaluate.setServiceAttitude(serviceAttitude);
         coachEvaluate.setSpeciality(speciality);
@@ -107,6 +107,9 @@ public class CoachEvaluateServiceImpl implements CoachEvaluateService{
         coachEvaluate.setComplain(complain);
         coachEvaluate.setEvaluation(evaluation);
         LearnerCharge learnerCharge=learnerChargeRepository.findLearnerChargeByLearnerIdAndScheId(learnerId,scheId);
+        if (learnerCharge==null){
+            throw new Exception("没有找到对应的核销记录！");
+        }
         coachEvaluate.setLearner(learnerCharge.getLearner());
         coachEvaluate.setCoach(learnerCharge.getCourseScheduling().getCoach());
         coachEvaluate.setCourse(learnerCharge.getCourseScheduling().getCourse());
