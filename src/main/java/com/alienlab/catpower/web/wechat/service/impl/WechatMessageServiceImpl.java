@@ -141,20 +141,28 @@ public class WechatMessageServiceImpl implements WechatMessageService {
         remark.put("color","#000000");
         param.put("remark",remark);
 
+        //会员名称
         JSONObject keyword1 =new JSONObject();
         keyword1.put("value",learnerAppointment.getBuyCourse().getLearner().getLearneName());
         keyword1.put("color","#173177");
         param.put("keyword1",keyword1);
 
+        //会员电话
         JSONObject keyword2 =new JSONObject();
-        keyword2.put("value",learnerAppointment.getBuyCourse().getCourse().getCourseName());
+        keyword2.put("value",learnerAppointment.getBuyCourse().getLearner().getLearnerPhone());
         keyword2.put("color","#173177");
         param.put("keyword2",keyword2);
+
+        //上课时间
+        JSONObject keyword3 =new JSONObject();
+        keyword3.put("value",learnerAppointment.getAppointmentDate());
+        keyword3.put("color","#173177");
+        param.put("keyword3",keyword3);
 
         try{
             String openid=learnerAppointment.getBuyCourse().getCoach().getCoachWechatopenid();
             String url=wechathost+"#/coachappoint?appointId="+appointmentId;
-            wechatUtil.sendTemplateMsg(openid,url,"_95GX9FsmJS4HmC4MYqHFAeXMrjHPg3iy67yARtXU0U",param);
+            wechatUtil.sendTemplateMsg(openid,url,"wqQCKNMvTx5klxHuHCOti6Jti1-ugWaUaVRq_Z0yc4M",param);
         }catch (Exception e){
             e.getMessage();
         }
@@ -173,24 +181,37 @@ public class WechatMessageServiceImpl implements WechatMessageService {
         param.put("first",first);
 
         JSONObject remark=new JSONObject();
-        remark.put("value","回复结果为："+appointment.getAppointmentResult());
+        remark.put("value","如有疑问，请及时联系教练。");
         remark.put("color","#000000");
         param.put("remark",remark);
 
+        //姓名
         JSONObject keyword1 =new JSONObject();
-        keyword1.put("value",appointment.getBuyCourse().getCoach().getCoachName());
+        keyword1.put("value",appointment.getBuyCourse().getLearner().getLearneName());
         keyword1.put("color","#173177");
         param.put("keyword1",keyword1);
 
+        //手机
         JSONObject keyword2 =new JSONObject();
-        keyword2.put("value",appointment.getBuyCourse().getCourse().getCourseName());
+        keyword2.put("value",appointment.getBuyCourse().getLearner().getLearnerPhone());
         keyword2.put("color","#173177");
         param.put("keyword2",keyword2);
+
+        //受理时间
+        JSONObject keyword3 =new JSONObject();
+        keyword3.put("value",appointment.getAppointmentDate());
+        keyword3.put("color","#173177");
+        param.put("keyword3",keyword3);
+
+        JSONObject keyword4 =new JSONObject();
+        keyword4.put("value",appointment.getBuyCourse().getCourse().getCourseName()+appointment.getAppointmentResult());
+        keyword4.put("color","#173177");
+        param.put("keyword3",keyword4);
 
         try{
             String openid=appointment.getBuyCourse().getLearner().getWechatUser().getOpenId();
             String url=wechathost+"#/coachappoint?appointId="+appointmentId;
-            wechatUtil.sendTemplateMsg(openid,url,"_95GX9FsmJS4HmC4MYqHFAeXMrjHPg3iy67yARtXU0U",param);
+            wechatUtil.sendTemplateMsg(openid,url,"4Gapth7XFtB1n9MQ0-_MKcbuV_NvKrEHShACGnQ3bz4",param);
         }catch (Exception e){
             e.getMessage();
         }
