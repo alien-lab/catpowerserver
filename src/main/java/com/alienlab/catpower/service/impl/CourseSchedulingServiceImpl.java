@@ -134,7 +134,9 @@ public class CourseSchedulingServiceImpl implements CourseSchedulingService{
         Object[] args = {status,id};
         n = jdbcTemplate.update(sql,args);
         if(n>0&&status.equals("已下课")){
+            //下课时发送消息推送
             wechatMessageService.sendEvalCoachMsg(id);
+            wechatMessageService.sendOverClassMsg(id);
         }
         return n;
     }
