@@ -12,4 +12,10 @@ public interface WechatMessageService {
     //下课时，教练给学员建议的消息推送
     void sendOverClassMsg(Long scheId) throws Exception;
 
+    //学员预约时，教练对预约进行回复的推送
+    void sendAppointMsg(Long appointmentId) throws Exception;
+
+    //教练回复后，学员收到教练回复的推送
+    void sendAppointResultMsg(Long appointmentId) throws Exception;
+
 }
