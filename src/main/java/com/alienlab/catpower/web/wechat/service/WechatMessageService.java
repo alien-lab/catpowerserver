@@ -1,6 +1,5 @@
 package com.alienlab.catpower.web.wechat.service;
 
-import com.alibaba.fastjson.JSONObject;
 import com.alienlab.catpower.domain.BuyCourse;
 
 /**

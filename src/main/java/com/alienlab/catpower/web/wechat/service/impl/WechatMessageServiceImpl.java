@@ -73,7 +73,7 @@ public class WechatMessageServiceImpl implements WechatMessageService {
 
             try{
                 String openid=learnerCharge.getLearner().getWechatUser().getOpenId();
-                String url=wechathost+"#/stuevaluate?scheId="+scheId;
+                String url=wechathost+"#!/stuevaluate?scheId="+scheId;
                 wechatUtil.sendTemplateMsg(openid,url,"_95GX9FsmJS4HmC4MYqHFAeXMrjHPg3iy67yARtXU0U",param);
             }catch (Exception e){
                 e.getMessage();
@@ -113,7 +113,7 @@ public class WechatMessageServiceImpl implements WechatMessageService {
 
             try{
                 String openid=learnerCharge.getCoach().getCoachWechatopenid();
-                String url=wechathost+"#/coachwriteinfo?scheId="+scheId+"&learnerId="+learnerCharge.getLearner().getId();
+                String url=wechathost+"#!/coachwriteinfo?scheId="+scheId+"&learnerId="+learnerCharge.getLearner().getId();
                 wechatUtil.sendTemplateMsg(openid,url,"_95GX9FsmJS4HmC4MYqHFAeXMrjHPg3iy67yARtXU0U",param);
             }catch (Exception e){
                 e.getMessage();
@@ -161,7 +161,7 @@ public class WechatMessageServiceImpl implements WechatMessageService {
 
         try{
             String openid=learnerAppointment.getBuyCourse().getCoach().getCoachWechatopenid();
-            String url=wechathost+"#/coachappoint?appointId="+appointmentId;
+            String url=wechathost+"#!/coachappoint?appointId="+appointmentId;
             wechatUtil.sendTemplateMsg(openid,url,"wqQCKNMvTx5klxHuHCOti6Jti1-ugWaUaVRq_Z0yc4M",param);
         }catch (Exception e){
             e.getMessage();
@@ -210,7 +210,7 @@ public class WechatMessageServiceImpl implements WechatMessageService {
 
         try{
             String openid=appointment.getBuyCourse().getLearner().getWechatUser().getOpenId();
-            String url=wechathost+"#/coachappoint?appointId="+appointmentId;
+            String url=wechathost+"#!/coachappoint?appointId="+appointmentId;
             wechatUtil.sendTemplateMsg(openid,url,"4Gapth7XFtB1n9MQ0-_MKcbuV_NvKrEHShACGnQ3bz4",param);
         }catch (Exception e){
             e.getMessage();
