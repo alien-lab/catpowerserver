@@ -5,15 +5,16 @@
         .module('catpowerserverApp')
         .controller('LearnerChargeDialogController', LearnerChargeDialogController);
 
-    LearnerChargeDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'LearnerCharge', 'Learner', 'Course', 'Coach', 'CourseScheduling'];
+    LearnerChargeDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'LearnerCharge', 'Learner', 'Course', 'Coach', 'CourseScheduling','entityCourseScheduling'];
 
-    function LearnerChargeDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, LearnerCharge, Learner, Course, Coach, CourseScheduling) {
+    function LearnerChargeDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, LearnerCharge, Learner, Course, Coach, CourseScheduling,entityCourseScheduling) {
         var vm = this;
 
         vm.learnerCharge = entity;
-
+        vm.coursescheduling = entityCourseScheduling;
         console.log("****************************");
         console.log(vm.learnerCharge);
+        console.log(vm.coursescheduling);
 
         vm.clear = clear;
         vm.datePickerOpenStatus = {};
@@ -24,6 +25,16 @@
         vm.coaches = Coach.query();
         vm.courseschedulings = CourseScheduling.query();
 
+        //核销课程
+        vm.learnerCharge.course = vm.coursescheduling.course;
+        $scope.courseName = vm.coursescheduling.course.courseName;
+        console.log(vm.learnerCharge.course);
+        //核销的教练
+        vm.learnerCharge.coach = vm.coursescheduling.coach;
+        $scope.coachName = vm.coursescheduling.coach.coachName;
+        console.log(vm.learnerCharge.coach);
+        //核销排课id
+        vm.learnerCharge.courseScheduling = vm.coursescheduling;
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();
         });
@@ -33,12 +44,9 @@
         }
 
         function save () {
+
             vm.isSaving = true;
-            if (vm.learnerCharge.id !== null) {
-                LearnerCharge.update(vm.learnerCharge, onSaveSuccess, onSaveError);
-            } else {
-                LearnerCharge.save(vm.learnerCharge, onSaveSuccess, onSaveError);
-            }
+            LearnerCharge.save(vm.learnerCharge, onSaveSuccess, onSaveError);
         }
 
         function onSaveSuccess (result) {
