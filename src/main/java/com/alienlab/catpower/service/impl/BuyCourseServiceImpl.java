@@ -4,6 +4,7 @@ import com.alienlab.catpower.domain.*;
 import com.alienlab.catpower.repository.*;
 import com.alienlab.catpower.service.BuyCourseService;
 import com.alienlab.catpower.service.LearnerService;
+import com.alienlab.catpower.web.wechat.service.WechatMessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,9 @@ public class BuyCourseServiceImpl implements BuyCourseService{
     @Autowired
     private CoachRepository coachRepository;
 
+    @Autowired
+    WechatMessageService wechatMessageService;
+
     public BuyCourseServiceImpl(BuyCourseRepository buyCourseRepository) {
         this.buyCourseRepository = buyCourseRepository;
     }
@@ -67,6 +71,13 @@ public class BuyCourseServiceImpl implements BuyCourseService{
         buyCourse.setBuyTime(dateTime);
         buyCourse.setOperateTime(dateTime);
         BuyCourse result = buyCourseRepository.save(buyCourse);
+        if (result!=null){
+            try {
+                wechatMessageService.sendBuyClassSuccess(result);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         return result;
     }
 
