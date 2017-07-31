@@ -2,19 +2,19 @@ package com.alienlab.catpower.web.wechat.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 
-import com.alienlab.catpower.domain.CourseScheduling;
-import com.alienlab.catpower.domain.Learner;
-import com.alienlab.catpower.domain.LearnerAppointment;
-import com.alienlab.catpower.domain.LearnerCharge;
+import com.alienlab.catpower.domain.*;
 import com.alienlab.catpower.repository.LearnerAppointmentRepository;
+import com.alienlab.catpower.service.BuyCourseService;
 import com.alienlab.catpower.service.CourseSchedulingService;
 import com.alienlab.catpower.service.LearnerChargeService;
+import com.alienlab.catpower.service.LearnerService;
 import com.alienlab.catpower.web.wechat.service.WechatMessageService;
 import com.alienlab.catpower.web.wechat.util.WechatUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -36,7 +36,11 @@ public class WechatMessageServiceImpl implements WechatMessageService {
 
     @Autowired
     WechatUtil wechatUtil;
+    @Autowired
+    LearnerService learnerService;
 
+    @Autowired
+    BuyCourseService buyCourseService;
 
     @Override
     public void sendEvalCoachMsg(Long scheId) throws Exception {
@@ -190,5 +194,66 @@ public class WechatMessageServiceImpl implements WechatMessageService {
         }catch (Exception e){
             e.getMessage();
         }
+    }
+
+
+    @Override
+    public void sendBuyClassSuccess(BuyCourse buyCourse) throws Exception {
+        //获取时间
+        ZonedDateTime zonedDateTime = buyCourse.getBuyTime();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:ss");
+        String time = zonedDateTime.format(dtf);
+
+        String describer = "猫力健身房";
+
+        JSONObject param=new JSONObject();
+        JSONObject first=new JSONObject();
+        first.put("value","尊敬的会员，您已经成功购买《"+buyCourse.getCourse().getCourseName()+"》！");
+        first.put("color","#000000");
+        param.put("first",first);
+
+        JSONObject remark=new JSONObject();
+        remark.put("value","猫力健身欢迎你的到来！");
+        remark.put("color","#000000");
+        param.put("remark",remark);
+
+        //购买日期
+        JSONObject keyword1 =new JSONObject();
+        keyword1.put("value",time);
+        keyword1.put("color","#173177");
+        param.put("keyword1",keyword1);
+
+        //项目名称
+        JSONObject keyword2 =new JSONObject();
+        keyword2.put("value",buyCourse.getCourse().getCourseName());
+        keyword2.put("color","#173177");
+        param.put("keyword2",keyword2);
+
+        //支付金额
+        JSONObject keyword3 = new JSONObject();
+        keyword3.put("value",buyCourse.getPaymentAccount()+"元");
+        keyword3.put("color","#173177");
+        param.put("keyword3",keyword3);
+
+        //支付类型
+        JSONObject keyword4 = new JSONObject();
+        keyword4.put("value",buyCourse.getPaymentWay());
+        keyword4.put("color","#173177");
+        param.put("keyword4",keyword4);
+
+        //支付门店
+        JSONObject keyword5 = new JSONObject();
+        keyword5.put("value",describer);
+        keyword5.put("color","#173177");
+        param.put("keyword5",keyword5);
+
+        try{
+            String openid=buyCourse.getLearner().getWechatUser().getOpenId();
+            String url=wechathost+"#!/stucourse";
+            wechatUtil.sendTemplateMsg(openid,url,"fsHSuGzowoSVyPyth_2v_39OR6ysm7ItDjv3Wk3_WMg",param);
+        }catch (Exception e){
+            e.getMessage();
+        }
+
     }
 }
