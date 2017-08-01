@@ -5,6 +5,7 @@ import com.alienlab.catpower.repository.*;
 import com.alienlab.catpower.service.BuyCourseService;
 import com.alienlab.catpower.service.LearnerAppointmentService;
 import com.alienlab.catpower.service.LearnerService;
+import com.alienlab.catpower.web.wechat.service.WechatMessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,8 @@ public class LearnerAppointmentServiceImpl implements LearnerAppointmentService 
     private BuyCourseRepository buyCourseRepository;
     @Autowired
     private CoachRepository coachRepository;
+    @Autowired
+    private WechatMessageService wechatMessageService;
 
     @Override
     public LearnerAppointment save(Long buyCourseId, ZonedDateTime appointmentDate, String appointmentResult, String appointmentMemo) throws Exception{
@@ -51,7 +54,10 @@ public class LearnerAppointmentServiceImpl implements LearnerAppointmentService 
         learnerAppointment.setAppointmentMemo(appointmentMemo);
         learnerAppointment.setBuyCourse(buyCourse);
         learnerAppointment.setAppointmentResult(appointmentResult);
-        learnerAppointmentRepository.save(learnerAppointment);
+        LearnerAppointment learnerAppoint=learnerAppointmentRepository.save(learnerAppointment);
+        if (learnerAppoint!=null){
+            wechatMessageService.sendAppointMsg(learnerAppoint.getId());
+        }
         return null;
     }
 
@@ -85,6 +91,9 @@ public class LearnerAppointmentServiceImpl implements LearnerAppointmentService 
         }
         learnerAppointment.setAppointmentResult(appointmentResult);
         LearnerAppointment result=learnerAppointmentRepository.save(learnerAppointment);
+        if (result!=null){
+            wechatMessageService.sendAppointResultMsg(result.getId());
+        }
         return result;
     }
 

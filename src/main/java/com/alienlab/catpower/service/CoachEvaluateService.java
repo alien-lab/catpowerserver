@@ -53,7 +53,7 @@ public interface CoachEvaluateService {
      *
      * @return the persisted entity
      */
-    CoachEvaluate insert(Long serviceAttitude,Long speciality,Long like,String complain,Long evaluation,Long learnerId,Long scheId);
+    CoachEvaluate insert(Long serviceAttitude,Long speciality,Long like,String complain,Long evaluation,Long learnerId,Long scheId) throws Exception;
 
     /**
      * 根据教练ID获取此教练的评价
