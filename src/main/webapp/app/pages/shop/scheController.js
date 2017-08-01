@@ -1,22 +1,27 @@
-/**
- * Created by asus on 2017/6/2.
- */
-(function () {
+(function() {
     'use strict';
-    var app=angular.module('catpowerserverApp');
-    app.controller('studentFilingController',['$scope','Learner','AlertService','pagingParams','ParseLinks','$state',function ($scope,Learner,AlertService,pagingParams,ParseLinks,$state) {
+
+    angular
+        .module('catpowerserverApp')
+        .controller('scheController', scheController);
+
+    scheController.$inject = ['$scope','$state', 'CourseScheduling', 'ParseLinks', 'AlertService', 'paginationConstants', 'pagingParams'];
+
+    function scheController($scope,$state, CourseScheduling, ParseLinks, AlertService, paginationConstants, pagingParams) {
+
         var vm = this;
+
         vm.loadPage = loadPage;
         vm.predicate = pagingParams.predicate;
         vm.reverse = pagingParams.ascending;
         vm.transition = transition;
-        vm.itemsPerPage = 3;
-        /**
-         *获取学员信息
-         */
+        //vm.itemsPerPage = paginationConstants.itemsPerPage;
+        vm.itemsPerPage = 15;
+
         loadAll();
+
         function loadAll () {
-            Learner.query({
+            CourseScheduling.query({
                 page: pagingParams.page - 1,
                 size: vm.itemsPerPage,
                 sort: sort()
@@ -28,18 +33,18 @@
                 }
                 return result;
             }
-            function onSuccess(data,headers) {
+            function onSuccess(data, headers) {
                 vm.links = ParseLinks.parse(headers('link'));
                 vm.totalItems = headers('X-Total-Count');
                 vm.queryCount = vm.totalItems;
-                $scope.learners = data;
-                console.log($scope.learners)
+                $scope.courseSchedulings = data;
                 vm.page = pagingParams.page;
             }
             function onError(error) {
                 AlertService.error(error.data.message);
             }
         }
+
         function loadPage(page) {
             vm.page = page;
             vm.transition();
@@ -50,10 +55,7 @@
                 page: vm.page,
                 sort: vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc'),
                 search: vm.currentSearch
-
             });
         }
-
-    }]);
+    }
 })();
-

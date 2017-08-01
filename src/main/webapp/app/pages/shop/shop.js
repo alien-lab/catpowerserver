@@ -5,8 +5,11 @@
     'use strict';
     var app=angular.module('catpowerserverApp');
 
-    app.controller("shopOpController",["$http","CourseScheduling","$scope","$filter","shopopService","BuyCourse","buyCourseTodayService","AlertService","qrService","ticket",function($http,CourseScheduling,$scope,$filter,shopopService,BuyCourse,buyCourseTodayService,AlertService,qrService,ticket){
+    app.controller("shopOpController",["$http","CourseScheduling","$scope","$filter","shopopService","BuyCourse","buyCourseTodayService","AlertService","qrService","ticket","pagingParams","ParseLinks","$state",function($http,CourseScheduling,$scope,$filter,shopopService,BuyCourse,buyCourseTodayService,AlertService,qrService,ticket,pagingParams,ParseLinks,$state){
+
+
         var vm = this;
+
         $scope.outCourse = null;
         $scope.buyCourseCountToday = null;
         $scope.haveBuyCourse=false;
@@ -116,10 +119,6 @@
                 }
             });
         }
-        $scope.page={
-            index:0,
-            size:100
-        };
 
         //获取当前日期
         var now = new Date();
@@ -168,16 +167,64 @@
         /**
          * 售课情况
          */
+        vm.loadPage = loadPage;
+        vm.predicate = pagingParams.predicate;
+        vm.reverse = pagingParams.ascending;
+        vm.transition = transition;
+        vm.itemsPerPage = 15;
+
+        console.log("pagingParams.page------>",pagingParams.page);
+        console.log("pagingParams.sort------>",pagingParams.sort);
+        console.log("pagingParams.search------>",pagingParams.search);
+        console.log("vm.predicate------>",vm.predicate);
+        console.log("vm.predicate------>",vm.reverse);
         loadAll();
-        function loadAll(){
-            BuyCourse.query({},onSuccess,onError);
+
+        function loadAll () {
+            BuyCourse.query({
+                page: pagingParams.page - 1,
+                size: vm.itemsPerPage,
+                sort: sort()
+            }, onSuccess, onError);
+            function sort() {
+                var result = [vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc')];
+                if (vm.predicate !== 'id') {
+                    result.push('id');
+                }
+                return result;
+            }
+            function onSuccess(data, headers) {
+                vm.links = ParseLinks.parse(headers('link'));
+                vm.totalItems = headers('X-Total-Count');
+                vm.queryCount = vm.totalItems;
+                $scope.buyCourses = data;
+
+                console.log($scope.buyCourses);
+                vm.page = pagingParams.page;
+
+                console.log("headers------>",headers);
+                console.log("vm.links------>",vm.links);
+                console.log("vm.totalItems------>",vm.totalItems);
+                console.log("vm.queryCount------>",vm.queryCount);
+                console.log("vm.page------>",vm.page);
+
+            }
+            function onError(error) {
+                AlertService.error(error.data.message);
+            }
         }
-        function onSuccess(data) {
-            $scope.BuyCourses = data;
-            console.log($scope.BuyCourses);
+
+        function loadPage(page) {
+            vm.page = page;
+            vm.transition();
         }
-        function onError(error) {
-            AlertService.error(error.data.message);
+
+        function transition() {
+            $state.transitionTo($state.$current, {
+                page: vm.page,
+                sort: vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc'),
+                search: vm.currentSearch
+            });
         }
 
         /**
@@ -189,22 +236,21 @@
             console.log($scope.buyCoursesToday)
         });
 
-
         /**
          * 排课情况
          */
         loadSchedulingAll();
         function loadSchedulingAll(){
             CourseScheduling.query({},onScheSuccess,onScheError);
+            function onScheSuccess(data) {
+                $scope.courseSchedulings = data;
+                console.log($scope.courseSchedulings);
+            }
+            function onScheError(error) {
+                AlertService.error(error.data.message);
+            }
         }
-        function onScheSuccess(data) {
-            $scope.courseSchedulings = data;
-            console.log($scope.courseSchedulings);
 
-        }
-        function onScheError(error) {
-            AlertService.error(error.data.message);
-        }
 
     }]);
 
@@ -325,7 +371,7 @@
                     callback(error,false);
                 }
             });
-        }
+        };
         //更新上课的状态
         /*this.updateCourseStatus = function (id,status,callback) {
             $http({

@@ -12,16 +12,93 @@
                 views: {
                     'content@': {
                         templateUrl: 'app/pages/shop/shop.html',
-                        controller: 'shopOpController'
+                        controller: 'shopOpController',
+                        controllerAs: 'vm'
                     }
                 },
+                params: {
+                    page: {
+                        value: '1',
+                        squash: true
+                    },
+                    sort: {
+                        value: 'id,asc',
+                        squash: true
+                    },
+                    search: null
+                },
                 resolve: {
+                    pagingParams: ['$stateParams', 'PaginationUtil', function ($stateParams, PaginationUtil) {
+                        return {
+                            page: PaginationUtil.parsePage($stateParams.page),
+                            sort: $stateParams.sort,
+                            predicate: PaginationUtil.parsePredicate($stateParams.sort),
+                            ascending: PaginationUtil.parseAscending($stateParams.sort),
+                            search: $stateParams.search
+                        };
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('shop');
                         $translatePartialLoader.addPart('global');
                         $translatePartialLoader.addPart('learnerCharge');
                         $translatePartialLoader.addPart('courseScheduling');
                         return $translate.refresh();
+                    }]
+                }
+            })
+            .state('shopop.buyCourses', {
+                url: 'buyCourses',
+                templateUrl: 'app/pages/shop/shopBuyCourses.html',
+                controller: 'shopBuyCourseController',
+                controllerAs: 'vm',
+                params: {
+                    page: {
+                        value: '1',
+                        squash: true
+                    },
+                    sort: {
+                        value: 'id,asc',
+                        squash: true
+                    },
+                    search: null
+                },
+                resolve: {
+                    pagingParams: ['$stateParams', 'PaginationUtil', function ($stateParams, PaginationUtil) {
+                        return {
+                            page: PaginationUtil.parsePage($stateParams.page),
+                            sort: $stateParams.sort,
+                            predicate: PaginationUtil.parsePredicate($stateParams.sort),
+                            ascending: PaginationUtil.parseAscending($stateParams.sort),
+                            search: $stateParams.search
+                        };
+                    }]
+                }
+            })
+            .state('shopop.sche', {
+                url: 'sche',
+                templateUrl: 'app/pages/shop/sche.html',
+                controller: 'scheController',
+                controllerAs: 'vm',
+                params: {
+                    page: {
+                        value: '1',
+                        squash: true
+                    },
+                    sort: {
+                        value: 'id,asc',
+                        squash: true
+                    },
+                    search: null
+                },
+                resolve:{
+                    pagingParams: ['$stateParams', 'PaginationUtil', function ($stateParams, PaginationUtil) {
+                        return {
+                            page: PaginationUtil.parsePage($stateParams.page),
+                            sort: $stateParams.sort,
+                            predicate: PaginationUtil.parsePredicate($stateParams.sort),
+                            ascending: PaginationUtil.parseAscending($stateParams.sort),
+                            search: $stateParams.search
+                        };
                     }]
                 }
             })

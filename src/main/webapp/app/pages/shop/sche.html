@@ -1,0 +1,60 @@
+<div class="col-lg-12 col-md-12 col-sm-12" style="padding: 0;margin-top: 3%;">
+    <div class="col-lg-3 col-md-3 col-sm-3" style="margin-left: -15px;">
+        <p class="input-group">
+            <input type="text" class="form-control" uib-datepicker-popup ng-model="startArrangementCourseDate" is-open="popupStartArrangementCourse.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="startArrangementCourse()"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+        </p>
+    </div>
+    <div class="col-lg-1 col-md-1 col-sm-1" style="padding:5px 0px;width:1%;"><span>—</span></div>
+    <div class="col-lg-3 col-md-3 col-sm-3" style="">
+        <p class="input-group">
+            <input type="text" class="form-control" uib-datepicker-popup ng-model="endArrangementCourseDate" is-open="popupEndArrangementCourse.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="endArrangementCourse()"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+        </p>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2"></div>
+    <div class="col-lg-3 col-md-3 col-sm-3">
+        <div class="input-group">
+            <input ng-model="courseSchSearch" type="text" class="form-control" placeholder="搜索...">
+            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">
+                                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                </button>
+                            </span>
+        </div>
+    </div>
+</div>
+<div class="col-lg-12 col-md-12 col-sm-12" style="padding: 0;margin-top: 3%;">
+    <div class="table-responsive">
+        <table class="table table-striped" style="background: #ffffff;">
+            <thead>
+            <tr>
+                <th>教练</th>
+                <th>课程</th>
+                <th>开课时间</th>
+                <th>结束时间</th>
+                <th>签到人数</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="courseScheduling in courseSchedulings | filter : courseSchSearch">
+                <td>{{courseScheduling.coach.coachName}}</td>
+                <td>{{courseScheduling.course.courseName}}</td>
+                <td>{{courseScheduling.startTime | date:'medium'}}</td>
+                <td>{{courseScheduling.endTime | date:'medium'}}</td>
+                <td>{{courseScheduling.signInCount}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="col-lg-12 col-md-12 col-sm-12" >
+    <div class="text-center">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" items-per-page="vm.itemsPerPage" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+    </div>
+</div>

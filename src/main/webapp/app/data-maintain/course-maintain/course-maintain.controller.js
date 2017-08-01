@@ -23,14 +23,16 @@
         $scope.searchShow = true;
         $scope.searchHide = true;
         $scope.allSearchShow = true;
-        //获取所有的课程
+        $scope.allCourses = [];
+       //获取所有的课程
         courseService.loadAllCourse(function (data) {
             $scope.allCourses = data;
+            console.log($scope.allCourses)
         });
-        $scope.getallCourse = function () {
+       $scope.getallCourse = function () {
             courseService.loadLikeCourses($scope.likeCourseName,function (data) {
                 $scope.searchHide = true;
-                $scope.LikeCourses = data;
+                $scope.allCourses = data;
                 console.log($scope.LikeCourses);
             });
         };
@@ -50,21 +52,18 @@
                 });
                 if(index != -1){
                     courseService.loadCourse(courseType,function (data) {
-                        $scope.courseList = data;
-                        console.log($scope.courseList);
+                        $scope.allCourses = data;
+                        console.log($scope.allCourses);
                     });
                 }
             }
         });
         //根据课程名称模糊查询
         $scope.likeCourseName = '';
-
         $scope.search = function () {
-            $scope.searchShow = !$scope.searchShow;
-            $scope.allSearchShow = !$scope.allSearchShow;
             courseService.loadLikeCourses($scope.likeCourseName,function (data) {
-                $scope.LikeCourses = data;
-                console.log($scope.LikeCourses);
+                $scope.allCourses = data;
+                console.log($scope.allCourses);
             });
         };
         /**/

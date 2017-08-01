@@ -8,7 +8,7 @@
         $stateProvider
             .state('student-filing', {
                 parent: 'app',
-                url: '/student-filing?page',
+                url: '/student-filing',
                 data: {
                     authorities: ['ROLE_USER']
                 },
