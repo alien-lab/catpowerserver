@@ -24,6 +24,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -151,6 +152,15 @@ public class LearnerServiceImpl implements LearnerService{
     public QrInfo getLearnerBindQr(String openid) throws Exception {
         Learner learner=learnerRepository.findLearnerByOpenid(openid);
         return getLearnerBindQr(learner);
+    }
+    //根据学员名字查询
+    @Override
+    public List<Learner> getLearnerBylearnerName(String learneName) throws Exception {
+        if(learneName == null){
+            throw new Exception("未输入学员姓名");
+        }
+        List<Learner> learner = learnerRepository.findLearnerByLearneName(learneName);
+        return learner;
     }
 
     @Override

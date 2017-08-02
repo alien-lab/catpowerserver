@@ -4,13 +4,13 @@
 (function () {
     'use strict';
     var app=angular.module('catpowerserverApp');
-    app.controller('studentFilingController',['$scope','Learner','AlertService','pagingParams','ParseLinks','$state',function ($scope,Learner,AlertService,pagingParams,ParseLinks,$state) {
+    app.controller('studentFilingController',['$scope','Learner','AlertService','pagingParams','ParseLinks','$state','stuQrService',function ($scope,Learner,AlertService,pagingParams,ParseLinks,$state,stuQrService) {
         var vm = this;
         vm.loadPage = loadPage;
         vm.predicate = pagingParams.predicate;
         vm.reverse = pagingParams.ascending;
         vm.transition = transition;
-        vm.itemsPerPage = 3;
+        vm.itemsPerPage = 15;
         /**
          *获取学员信息
          */
@@ -53,6 +53,15 @@
 
             });
         }
+
+        //根据学员姓名查询
+        $scope.learnerName = null;
+        $scope.getLeatnerByName = function () {
+            stuQrService.loadLearnerByName($scope.learnerName,function (data) {
+                $scope.learners=data;
+                console.log($scope.learners);
+            });
+        };
 
     }]);
 })();

@@ -1,9 +1,7 @@
 package com.alienlab.catpower.service;
 
 import com.alienlab.catpower.domain.BuyCourse;
-import com.alienlab.catpower.domain.Coach;
 import com.alienlab.catpower.domain.Learner;
-import com.alienlab.catpower.domain.LearnerAppointment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -84,5 +82,7 @@ public interface BuyCourseService {
     //根据教练id查询对应的预约人员
     List<BuyCourse> findBuyCourseByCoachIdAndAppointment(Long coachId, ZonedDateTime appointmentTime) throws Exception;
 
+    //根据课程名称查询销售情况
+    //List<BuyCourse> getCourseByCourseName(String courseName)throws Exception;
 
 }

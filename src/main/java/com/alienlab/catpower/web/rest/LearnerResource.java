@@ -166,4 +166,17 @@ public class LearnerResource {
         }
     }
 
+    @ApiOperation(value = "根据学员姓名查询")
+    @GetMapping("/learners/learnerName")
+    public ResponseEntity getLearnerByLearnerName(@RequestParam String learnerName){
+        try {
+            List<Learner> learner = learnerService.getLearnerBylearnerName(learnerName);
+            return ResponseEntity.ok(learner);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
+    }
+
 }

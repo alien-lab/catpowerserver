@@ -1,6 +1,7 @@
 package com.alienlab.catpower.repository;
 
 import com.alienlab.catpower.domain.Coach;
+import com.alienlab.catpower.domain.Course;
 import com.alienlab.catpower.domain.CourseScheduling;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,6 +27,6 @@ public interface CourseSchedulingRepository extends JpaRepository<CourseScheduli
     //根据具体日期和时间查询当天排课情况
     @Query("select a from  CourseScheduling a where a.coach=?1 and a.startTime=?2")
     List<CourseScheduling> findCourseSchedulingsByCoachAndStartTime(Coach coach,ZonedDateTime startTime);
-    //获取教练当天的排班记录
-    //List<CourseScheduling> findCourseSchedulingByCoach
+
+
 }

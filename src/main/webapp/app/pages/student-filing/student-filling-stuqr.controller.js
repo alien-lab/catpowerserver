@@ -65,14 +65,31 @@
     app.factory('stuQrResource',['$resource',function ($resource) {
         var resourceUrl="api/learners/qr/learner";
         return $resource(resourceUrl,{}, {
-            'getStuQr':{method:'GET'}
+            'getStuQr':{method:'GET'},
+            'getLearner':{url:'api/learners/learnerName',method:'GET',isArray:true}
         });
 
     }]);
     app.service('stuQrService',['stuQrResource',function (stuQrResource) {
+        //获取学员二维码
         this.loadStuQr = function (learner,callback) {
             stuQrResource.getStuQr({
                 'learner':learner
+            },function (data) {
+                if(callback){
+                    callback(data,true);
+                }
+            },function (error) {
+                if(callback){
+                    console.log("stuQrResource.getStuQr()"+error);
+                    callback(error,false);
+                }
+            });
+        }
+        //根据学员姓名查询
+        this.loadLearnerByName = function (learnerName,callback) {
+            stuQrResource.getLearner({
+                'learnerName':learnerName
             },function (data) {
                 if(callback){
                     callback(data,true);

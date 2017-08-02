@@ -9,8 +9,8 @@
     <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 0px;margin-top: 2.5%;">
         <div class="col-lg-4 col-md-4 col-sm-4">
             <div class="input-group">
-                <input type="text" class="form-control" ng-model="search" placeholder="搜索...">
-                <span class="input-group-btn">
+                <input type="text" class="form-control" ng-model="learnerName" placeholder="搜索...">
+                <span class="input-group-btn" ng-click="getLeatnerByName()">
                     <button class="btn btn-default" type="button" style="float: right;">
                         <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                     </button>
@@ -39,7 +39,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="stu in learners | filter : search">
+                <tr ng-repeat="stu in learners ">
                     <td>{{stu.learneName}}</td>
                     <td>{{stu.learnerSex}}</td>
                     <td>{{stu.learnerPhone}}</td>

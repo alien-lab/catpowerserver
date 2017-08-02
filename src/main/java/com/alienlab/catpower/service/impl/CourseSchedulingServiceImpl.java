@@ -217,4 +217,14 @@ public class CourseSchedulingServiceImpl implements CourseSchedulingService{
         List<CourseScheduling> list = courseSchedulingRepository.findCourseSchedulingsByCoachAndStartTime(coach,startTime);
         return list;
     }
+
+    //根据教练查询查询教练排班
+    @Override
+    public List<CourseScheduling> getSchebyCoachName(String coachName) throws Exception {
+        List<CourseScheduling> courseSchedulings = courseSchedulingRepository.findCourseSchedulingsByCoachName(coachName);
+        return courseSchedulings;
+    }
+
+
+
 }

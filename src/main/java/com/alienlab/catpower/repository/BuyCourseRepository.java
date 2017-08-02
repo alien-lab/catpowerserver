@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.ZonedDateTime;
@@ -50,5 +51,8 @@ public interface BuyCourseRepository extends JpaRepository<BuyCourse,Long> {
     @Query("select a from BuyCourse a where a.coach=?1 ")
     List<BuyCourse> findBuyCourseByCoach(Coach coach);
 
+    //模糊查询
+    //@Query(value="select * from Course a,BuyCourse b where a.courseName like CONCAT('%',:keyName,'%') and a.id=b.courseId",nativeQuery = true)
+   // List<BuyCourse> findBuyCourseByCourse(@Param("keyName") String keyName );
 
 }

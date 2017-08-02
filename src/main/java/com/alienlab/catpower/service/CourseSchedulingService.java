@@ -71,5 +71,6 @@ public interface CourseSchedulingService {
     //根据教练ID和开始时间获取当天的排课记录
     List<CourseScheduling> findCourseSchedulingByCoachIdAndStartTime(Long coachId,ZonedDateTime startTime) throws Exception;
 
-
+    //根据教练查询查询教练排班
+   // List<CourseScheduling> getSchebyCoachName(String coachName) throws Exception;
 }

@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.text.ParseException;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -60,4 +61,6 @@ public interface LearnerService {
 
     QrInfo getLearnerBindQr(String openid) throws Exception;
 
+    //根据学员名字查询
+    List<Learner> getLearnerBylearnerName(String learneName) throws Exception;
 }
