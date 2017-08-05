@@ -218,13 +218,13 @@ public class CourseSchedulingServiceImpl implements CourseSchedulingService{
         return list;
     }
 
-    //根据教练查询查询教练排班
     @Override
-    public List<CourseScheduling> getSchebyCoachName(String coachName) throws Exception {
-        List<CourseScheduling> courseSchedulings = courseSchedulingRepository.findCourseSchedulingsByCoachName(coachName);
+    public List<CourseScheduling> LikeSche(String keyword) throws Exception {
+        if(keyword == null){
+            throw new Exception("未输入关键字");
+        }
+        List<CourseScheduling> courseSchedulings = courseSchedulingRepository.findCourseSchedulingByCourseNameLike("%"+keyword+"%");
         return courseSchedulings;
     }
-
-
 
 }

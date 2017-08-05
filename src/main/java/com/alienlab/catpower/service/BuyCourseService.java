@@ -82,7 +82,7 @@ public interface BuyCourseService {
     //根据教练id查询对应的预约人员
     List<BuyCourse> findBuyCourseByCoachIdAndAppointment(Long coachId, ZonedDateTime appointmentTime) throws Exception;
 
-    //根据课程名称查询销售情况
-    //List<BuyCourse> getCourseByCourseName(String courseName)throws Exception;
+    //模糊查询
+    List<BuyCourse> getCourseLikeCourseName(String keyword)throws Exception;
 
 }

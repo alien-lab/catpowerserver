@@ -144,4 +144,10 @@ public class CourseServiceImpl implements CourseService{
         List<Course> result = courseRepository.findCourseByCourseName(courseName);
         return result;
     }
+
+    @Override
+    public List<Course> likeCourse(String keyword) throws Exception {
+        List<Course> list = courseRepository.findByCoursekeyword(keyword);
+        return list;
+    }
 }

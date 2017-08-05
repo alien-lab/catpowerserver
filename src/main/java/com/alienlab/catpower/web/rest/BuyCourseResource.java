@@ -259,5 +259,16 @@ public class BuyCourseResource {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
         }
     }
-
+    @ApiOperation(value = "模糊查询售课情况")
+    @GetMapping("/buy-courses/like/keyword")
+    public ResponseEntity getLikeCourse(@RequestParam String keyword){
+        try {
+            List<BuyCourse> result = buyCourseService.getCourseLikeCourseName(keyword);
+            return ResponseEntity.ok().body(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
+    }
 }

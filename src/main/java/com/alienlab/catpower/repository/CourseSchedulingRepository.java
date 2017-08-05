@@ -1,7 +1,7 @@
 package com.alienlab.catpower.repository;
 
+import com.alienlab.catpower.domain.BuyCourse;
 import com.alienlab.catpower.domain.Coach;
-import com.alienlab.catpower.domain.Course;
 import com.alienlab.catpower.domain.CourseScheduling;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,5 +28,8 @@ public interface CourseSchedulingRepository extends JpaRepository<CourseScheduli
     @Query("select a from  CourseScheduling a where a.coach=?1 and a.startTime=?2")
     List<CourseScheduling> findCourseSchedulingsByCoachAndStartTime(Coach coach,ZonedDateTime startTime);
 
+    //模糊查询
+    @Query("select a from CourseScheduling a where (a.course.courseName like CONCAT('%',?1,'%')) or (a.coach.coachName like CONCAT('%',?1,'%')) ")
+    List<CourseScheduling> findCourseSchedulingByCourseNameLike(String keyword);
 
 }

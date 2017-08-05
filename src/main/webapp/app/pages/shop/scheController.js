@@ -5,9 +5,9 @@
         .module('catpowerserverApp')
         .controller('scheController', scheController);
 
-    scheController.$inject = ['$scope','$state', 'CourseScheduling', 'ParseLinks', 'AlertService', 'paginationConstants', 'pagingParams'];
+    scheController.$inject = ['$scope','$state', 'CourseScheduling', 'ParseLinks', 'AlertService', 'paginationConstants', 'pagingParams','courseScheService'];
 
-    function scheController($scope,$state, CourseScheduling, ParseLinks, AlertService, paginationConstants, pagingParams) {
+    function scheController($scope,$state, CourseScheduling, ParseLinks, AlertService, paginationConstants, pagingParams,courseScheService) {
 
         var vm = this;
 
@@ -57,5 +57,12 @@
                 search: vm.currentSearch
             });
         }
+        //模糊成查询
+        $scope.searchContent = null;
+        $scope.search = function () {
+            courseScheService.loadLikeSches($scope.searchContent,function (data) {
+                $scope.courseSchedulings = data;
+            });
+        };
     }
 })();

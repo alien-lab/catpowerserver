@@ -291,4 +291,13 @@ public class BuyCourseServiceImpl implements BuyCourseService{
         return buyCourses;
     }
 
+    @Override
+    public List<BuyCourse> getCourseLikeCourseName(String keyword) throws Exception {
+        if(keyword == null){
+            throw new Exception("未输入关键字");
+        }
+        List<BuyCourse> buyCourses = buyCourseRepository.findBuyCourseByCourseNameLike("%"+keyword+"%");
+        return buyCourses;
+    }
+
 }

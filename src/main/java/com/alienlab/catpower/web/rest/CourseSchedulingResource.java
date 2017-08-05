@@ -304,5 +304,17 @@ public class CourseSchedulingResource {
 
         }
     }
+    @ApiOperation(value = "模糊查询售课情况")
+    @GetMapping("/course-schedulings/like/keyword")
+    public ResponseEntity getLikeCourse(@RequestParam String keyword){
+        try {
+            List<CourseScheduling> result = courseSchedulingService.LikeSche(keyword);
+            return ResponseEntity.ok().body(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
+    }
 
 }

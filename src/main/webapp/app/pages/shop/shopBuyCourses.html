@@ -20,8 +20,8 @@
     <div class="col-lg-2 col-md-2 col-sm-2"></div>
     <div class="col-lg-3 col-md-3 col-sm-3">
         <div class="input-group">
-            <input ng-model="buyCourseSearch" type="text" class="form-control" placeholder="搜索..." ng-model="search">
-            <span class="input-group-btn">
+            <input type="text" class="form-control" placeholder="搜索..." ng-model="searchContent">
+            <span class="input-group-btn" ng-click="search()">
                                 <button class="btn btn-default" type="button">
                                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                                 </button>
@@ -44,7 +44,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="buyCourse in buyCourses | filter : buyCourseSearch" >
+            <tr ng-repeat="buyCourse in buyCourses" >
                 <td>{{buyCourse.learner.learneName}}</td>
                 <td>{{buyCourse.course.courseName}}</td>
                 <td>{{buyCourse.coach.coachName}}</td>

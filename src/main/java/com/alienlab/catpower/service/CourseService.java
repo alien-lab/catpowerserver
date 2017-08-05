@@ -70,4 +70,8 @@ public interface CourseService {
      * 根据课程名称获取课程
      */
     List<Course> getCourseInfoByCourseName(String courseName)throws Exception;
+
+
+    //
+    List<Course> likeCourse(String keyword)throws Exception;
 }

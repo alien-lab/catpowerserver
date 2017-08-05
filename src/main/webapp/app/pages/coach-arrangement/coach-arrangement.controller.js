@@ -86,7 +86,8 @@
         var resourceUrl =  'api/course-schedulings/courseScheByCoachId';
         return $resource(resourceUrl, {}, {
             'query': { method: 'GET',isArray: true},
-            'getCoachSche':{url:'api/course-schedulings/courseScheduling',method:'GET',isArray:true}
+            'getCoachSche':{url:'api/course-schedulings/courseScheduling',method:'GET',isArray:true},
+            'likeSches':{url:'api/course-schedulings/like/keyword',method:'GET',isArray:true}
         });
 
     }]);
@@ -117,6 +118,22 @@
                     callback(error,false);
                 }
             });
+        };
+        //模糊查询
+        this.loadLikeSches = function (keyword,callback) {
+            courseScheResource.likeSches({
+                'keyword':keyword
+            },function (data) {
+                if(callback){
+                    callback(data,true);
+                }
+            },function (error) {
+                console.log("courseScheResource.likeSches",error);
+                if(callback){
+                    callback(error,false);
+                }
+            });
+
         }
     }]);
 

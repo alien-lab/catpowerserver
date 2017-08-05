@@ -73,4 +73,7 @@ public interface CourseSchedulingService {
 
     //根据教练查询查询教练排班
    // List<CourseScheduling> getSchebyCoachName(String coachName) throws Exception;
+
+    //模糊查询
+    List<CourseScheduling> LikeSche(String keyword)throws Exception;
 }

@@ -228,4 +228,17 @@ public class CourseResource {
         }
     }
 
+    @ApiOperation(value = "模糊查询售课情况")
+    @GetMapping("/courses/like/keyword")
+    public ResponseEntity getLikeCourses(@RequestParam String keyword){
+        try {
+            List<Course> result = courseService.likeCourse(keyword);
+            return ResponseEntity.ok().body(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
+    }
+
 }
