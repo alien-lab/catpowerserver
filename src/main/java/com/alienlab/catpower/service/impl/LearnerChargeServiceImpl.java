@@ -1,6 +1,8 @@
 package com.alienlab.catpower.service.impl;
 
 import com.alienlab.catpower.domain.*;
+import com.alienlab.catpower.repository.BuyCourseRepository;
+import com.alienlab.catpower.repository.CourseSchedulingRepository;
 import com.alienlab.catpower.repository.LearnerChargeRepository;
 import com.alienlab.catpower.service.*;
 import com.alienlab.catpower.web.wechat.service.WechatUserService;
@@ -37,9 +39,14 @@ public class LearnerChargeServiceImpl implements LearnerChargeService{
 
     @Autowired
     BuyCourseService buyCourseService;
+    @Autowired
+    BuyCourseRepository buyCourseRepository;
 
     @Autowired
     CourseService courseService;
+
+    @Autowired
+    CourseSchedulingRepository courseSchedulingRepository;
 
     public LearnerChargeServiceImpl(LearnerChargeRepository learnerChargeRepository) {
         this.learnerChargeRepository = learnerChargeRepository;
@@ -138,10 +145,14 @@ public class LearnerChargeServiceImpl implements LearnerChargeService{
         if(buyCourse==null){
             throw new Exception("账户下没有找到此课程");
         }
+        LearnerCharge learnerCharge = learnerChargeRepository.findLearnerChargeByLearnerIdAndScheId(learner.getId(),sche.getId());
+        if (learnerCharge==null){
+            throw new Exception("你已经签到此课程");
+        }
+        LearnerCharge charge=new LearnerCharge();
         if(buyCourse.getRemainClass()>0){
             long remain=buyCourse.getRemainClass();
             remain=remain-1;
-            LearnerCharge charge=new LearnerCharge();
             charge.setLearner(learner);
             charge.setCourseScheduling(sche);
             charge.setCourse(sche.getCourse());
@@ -150,7 +161,12 @@ public class LearnerChargeServiceImpl implements LearnerChargeService{
             charge.setRemainNumber(remain);
             charge=learnerChargeRepository.save(charge);
             buyCourse.setRemainClass(remain);
-            buyCourse=buyCourseService.save(buyCourse);
+            buyCourse=buyCourseRepository.save(buyCourse);
+            //签到次数+1
+            long signCount = sche.getSignInCount();
+            signCount = signCount +1;
+            sche.setSignInCount(signCount);
+            sche = courseSchedulingRepository.save(sche);
             learner.setRecentlySignin(ZonedDateTime.now());
             if(learner.getFirstTotime()==null){
                 learner.setFirstTotime(ZonedDateTime.now());

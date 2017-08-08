@@ -66,6 +66,7 @@ public class CourseSchedulingServiceImpl implements CourseSchedulingService{
     @Override
     public CourseScheduling save(CourseScheduling courseScheduling) {
         log.debug("Request to save CourseScheduling : {}", courseScheduling);
+        courseScheduling.setSignInCount(0l);
         CourseScheduling result = courseSchedulingRepository.save(courseScheduling);
         return result;
     }
