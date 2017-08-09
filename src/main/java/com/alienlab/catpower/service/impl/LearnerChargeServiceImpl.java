@@ -127,6 +127,7 @@ public class LearnerChargeServiceImpl implements LearnerChargeService{
 
     @Override
     public LearnerCharge chargeCourse(String openid, Long scheId) throws Exception {
+
         Learner learner=learnerService.findByOpenid(openid);
         if(learner==null){
             throw new Exception("未找到学员注册信息，openid:"+openid);
@@ -135,24 +136,27 @@ public class LearnerChargeServiceImpl implements LearnerChargeService{
         if(sche==null){
             throw new Exception("未找到编码为："+scheId+" 的排课信息");
         }
+
         return chargeCourse(learner,sche);
     }
 
     @Override
     public LearnerCharge chargeCourse(Learner learner, CourseScheduling sche) throws Exception {
+
+        LearnerCharge learnerCharge = learnerChargeRepository.findLearnerChargeByLearnerIdAndScheId(learner.getId(),sche.getId());
+        if (learnerCharge!=null){
+            throw new Exception("您已经签到此次课程！");
+        }
         //需要校验用户是否具有此门课程的课次
         BuyCourse buyCourse=buyCourseService.getCourseByLeanerAndCourse(learner,sche.getCourse().getId());
         if(buyCourse==null){
             throw new Exception("账户下没有找到此课程");
         }
-        LearnerCharge learnerCharge = learnerChargeRepository.findLearnerChargeByLearnerIdAndScheId(learner.getId(),sche.getId());
-        if (learnerCharge==null){
-            throw new Exception("你已经签到此课程");
-        }
-        LearnerCharge charge=new LearnerCharge();
+
         if(buyCourse.getRemainClass()>0){
             long remain=buyCourse.getRemainClass();
             remain=remain-1;
+            LearnerCharge charge=new LearnerCharge();
             charge.setLearner(learner);
             charge.setCourseScheduling(sche);
             charge.setCourse(sche.getCourse());
@@ -162,11 +166,6 @@ public class LearnerChargeServiceImpl implements LearnerChargeService{
             charge=learnerChargeRepository.save(charge);
             buyCourse.setRemainClass(remain);
             buyCourse=buyCourseRepository.save(buyCourse);
-            //签到次数+1
-            long signCount = sche.getSignInCount();
-            signCount = signCount +1;
-            sche.setSignInCount(signCount);
-            sche = courseSchedulingRepository.save(sche);
             learner.setRecentlySignin(ZonedDateTime.now());
             if(learner.getFirstTotime()==null){
                 learner.setFirstTotime(ZonedDateTime.now());
