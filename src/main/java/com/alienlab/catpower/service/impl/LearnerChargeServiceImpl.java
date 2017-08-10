@@ -1,6 +1,8 @@
 package com.alienlab.catpower.service.impl;
 
 import com.alienlab.catpower.domain.*;
+import com.alienlab.catpower.repository.BuyCourseRepository;
+import com.alienlab.catpower.repository.CourseSchedulingRepository;
 import com.alienlab.catpower.repository.LearnerChargeRepository;
 import com.alienlab.catpower.service.*;
 import com.alienlab.catpower.web.wechat.service.WechatUserService;
@@ -37,9 +39,14 @@ public class LearnerChargeServiceImpl implements LearnerChargeService{
 
     @Autowired
     BuyCourseService buyCourseService;
+    @Autowired
+    BuyCourseRepository buyCourseRepository;
 
     @Autowired
     CourseService courseService;
+
+    @Autowired
+    CourseSchedulingRepository courseSchedulingRepository;
 
     public LearnerChargeServiceImpl(LearnerChargeRepository learnerChargeRepository) {
         this.learnerChargeRepository = learnerChargeRepository;
@@ -120,6 +127,7 @@ public class LearnerChargeServiceImpl implements LearnerChargeService{
 
     @Override
     public LearnerCharge chargeCourse(String openid, Long scheId) throws Exception {
+
         Learner learner=learnerService.findByOpenid(openid);
         if(learner==null){
             throw new Exception("未找到学员注册信息，openid:"+openid);
@@ -133,16 +141,25 @@ public class LearnerChargeServiceImpl implements LearnerChargeService{
 
     @Override
     public LearnerCharge chargeCourse(Learner learner, CourseScheduling sche) throws Exception {
+
+        LearnerCharge learnerCharge = learnerChargeRepository.findLearnerChargeByLearnerIdAndScheId(learner.getId(),sche.getId());
+        if (learnerCharge!=null){
+            throw new Exception("您已经签到此次课程！");
+        }
         //需要校验用户是否具有此门课程的课次
         BuyCourse buyCourse=buyCourseService.getCourseByLeanerAndCourse(learner,sche.getCourse().getId());
         if(buyCourse==null){
             throw new Exception("账户下没有找到此课程");
         }
+
         if(buyCourse.getRemainClass()>0){
             long remain=buyCourse.getRemainClass();
             remain=remain-1;
             LearnerCharge charge=new LearnerCharge();
             charge.setLearner(learner);
+            Long count = sche.getSignInCount();
+            count = count +1;
+            sche.setSignInCount(count);
             charge.setCourseScheduling(sche);
             charge.setCourse(sche.getCourse());
             charge.setChargeTime(ZonedDateTime.now());
@@ -150,7 +167,7 @@ public class LearnerChargeServiceImpl implements LearnerChargeService{
             charge.setRemainNumber(remain);
             charge=learnerChargeRepository.save(charge);
             buyCourse.setRemainClass(remain);
-            buyCourse=buyCourseService.save(buyCourse);
+            buyCourse=buyCourseRepository.save(buyCourse);
             learner.setRecentlySignin(ZonedDateTime.now());
             if(learner.getFirstTotime()==null){
                 learner.setFirstTotime(ZonedDateTime.now());
