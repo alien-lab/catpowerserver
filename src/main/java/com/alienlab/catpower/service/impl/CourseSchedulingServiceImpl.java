@@ -219,12 +219,23 @@ public class CourseSchedulingServiceImpl implements CourseSchedulingService{
     }
 
     @Override
-    public List<CourseScheduling> LikeSche(String keyword) throws Exception {
+    public Page<CourseScheduling> LikeSche(String keyword, Pageable pageable) throws Exception {
         if(keyword == null){
             throw new Exception("未输入关键字");
         }
-        List<CourseScheduling> courseSchedulings = courseSchedulingRepository.findCourseSchedulingByCourseNameLike("%"+keyword+"%");
-        return courseSchedulings;
+        return courseSchedulingRepository.findCourseSchedulingByCourseNameLike("%"+keyword+"%",pageable);
     }
+
+    //根据时间查询教练排班情况
+    @Override
+    public Page<CourseScheduling> getScheByTime(ZonedDateTime startDate, ZonedDateTime endDate, Pageable pageable) throws Exception {
+        if(startDate == null){
+            throw new Exception("未选择开始时间");
+        }else if (endDate == null){
+            throw new Exception("未选择结束时间时间");
+        }
+        return courseSchedulingRepository.findCourseSchedulingsByStartTimeBetween(startDate,endDate,pageable);
+    }
+
 
 }

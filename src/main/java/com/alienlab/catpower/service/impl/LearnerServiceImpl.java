@@ -180,6 +180,10 @@ public class LearnerServiceImpl implements LearnerService{
         QrInfo qr=qrInfoService.createQrinfo(sceneId, 2L,jo.getString("ticket"));
         learner.setQrInfo(qr);
         learnerRepository.save(learner);
+        System.out.println("*****************************************************************");
+        System.out.println(qr);
+        System.out.println(learner);
+
         return qr;
     }
 

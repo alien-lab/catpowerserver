@@ -260,15 +260,51 @@ public class BuyCourseResource {
         }
     }
     @ApiOperation(value = "模糊查询售课情况")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name="page",value="分页位置",paramType = "query"),
+        @ApiImplicitParam(name="size",value="分页长度",paramType = "query")
+    })
     @GetMapping("/buy-courses/like/keyword")
-    public ResponseEntity getLikeCourse(@RequestParam String keyword){
+    public ResponseEntity<List<BuyCourse>> getLikeCourse(@RequestParam String keyword,@RequestParam int page,@RequestParam int size){
         try {
-            List<BuyCourse> result = buyCourseService.getCourseLikeCourseName(keyword);
-            return ResponseEntity.ok().body(result);
+            Page<BuyCourse> result = buyCourseService.getCourseLikeCourseName(keyword,new PageRequest(page,size));
+            HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(result, "/api/buy-courses/like/keyword");
+            return new ResponseEntity<>(result.getContent(), headers, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
-            ExecResult er=new ExecResult(false,e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+            //ExecResult er=new ExecResult(false,e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            //return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
         }
     }
+
+    @ApiOperation(value = "根据时间查询售课情况")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name="page",value="分页位置",paramType = "query"),
+        @ApiImplicitParam(name = "size",value = "分页长度",paramType = "query")
+    })
+    @GetMapping("/buy-courses/time")
+    public ResponseEntity<List<BuyCourse>> getBuyCoursesTime(@RequestParam String butTime1,@RequestParam String butTime2,@RequestParam int page,@RequestParam int size){
+        SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd");
+        Date d1 =null;
+        Date d2 =null;
+        try {
+            d1 =sdf.parse(butTime1);
+            d2 =sdf.parse(butTime2);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        ZonedDateTime startTime = ZonedDateTime.ofInstant(d1.toInstant(), ZoneId.systemDefault());
+        ZonedDateTime endTime = ZonedDateTime.ofInstant(d2.toInstant(), ZoneId.systemDefault());
+        try {
+            Page<BuyCourse> result = buyCourseService.getBuyCourseByTime(startTime,endTime,new PageRequest(page,size));
+            HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(result, "/api/buy-courses/time");
+            return new ResponseEntity<>(result.getContent(), headers, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
 }
+

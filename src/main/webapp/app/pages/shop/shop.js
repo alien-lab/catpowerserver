@@ -6,8 +6,6 @@
     var app=angular.module('catpowerserverApp');
 
     app.controller("shopOpController",["$http","CourseScheduling","$scope","$filter","shopopService","BuyCourse","buyCourseTodayService","AlertService","qrService","ticket","pagingParams","ParseLinks","$state",function($http,CourseScheduling,$scope,$filter,shopopService,BuyCourse,buyCourseTodayService,AlertService,qrService,ticket,pagingParams,ParseLinks,$state){
-
-
         var vm = this;
 
         $scope.outCourse = null;

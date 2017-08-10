@@ -72,8 +72,10 @@ public interface CourseSchedulingService {
     List<CourseScheduling> findCourseSchedulingByCoachIdAndStartTime(Long coachId,ZonedDateTime startTime) throws Exception;
 
     //根据教练查询查询教练排班
-   // List<CourseScheduling> getSchebyCoachName(String coachName) throws Exception;
+    // List<CourseScheduling> getSchebyCoachName(String coachName) throws Exception;
 
     //模糊查询
-    List<CourseScheduling> LikeSche(String keyword)throws Exception;
+    Page<CourseScheduling> LikeSche(String keyword,Pageable pageable)throws Exception;
+    //根据时间查询教练排课情况
+    Page<CourseScheduling> getScheByTime(ZonedDateTime startDate, ZonedDateTime endDate, Pageable pageable)throws Exception;
 }

@@ -2,9 +2,10 @@ package com.alienlab.catpower.web.wechat.service;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-
+import com.alienlab.catpower.domain.Coach;
 import com.alienlab.catpower.domain.CourseScheduling;
 import com.alienlab.catpower.domain.Learner;
+import com.alienlab.catpower.service.CoachService;
 import com.alienlab.catpower.service.CourseSchedulingService;
 import com.alienlab.catpower.service.LearnerChargeService;
 import com.alienlab.catpower.service.LearnerService;
@@ -40,6 +41,9 @@ public class ResponseService {
 
     @Autowired
     LearnerService learnerService;
+
+    @Autowired
+    CoachService coachService;
 
     @Autowired
     LearnerChargeService learnerChargeService;
@@ -184,8 +188,6 @@ public class ResponseService {
                 return result;
             }
 
-
-
         }else if(json_msg.getString("EventKey").startsWith("2and")){//人员绑定
             String title="学员账户绑定成功！";
             String url="http://"+domain+"/#!/stuindex";
@@ -201,6 +203,28 @@ public class ResponseService {
                 e.printStackTrace();
                 title="学员账户绑定出错";
                 desc="您绑定学员账户："+learner.getLearneName()+" 时出错了。错误原因："+e.getMessage();
+            }
+            return messageProcessor.getSingleNews(from,to,
+                title,
+                url,
+                "http://"+domain+"/img/logo.jpg",
+                desc
+            );
+        }else if (json_msg.getString("EventKey").startsWith("3and")){
+            String title="教练账户绑定成功！";
+            String url="http://"+domain+"/#!/coachindex";
+            String from=json_msg.getString("ToUserName");
+            String to=json_msg.getString("FromUserName");
+            String state=json_msg.getString("EventKey").substring(4);
+            String link=wechatUtil.getPageAuthUrl(url,state);
+            Coach coach=coachService.findOne(Long.parseLong(state));
+            String desc="您已绑定教练账户："+coach.getCoachName();
+            try{
+                coachService.bindWechatUser(to,Long.parseLong(state));
+            }catch(Exception e){
+                e.printStackTrace();
+                title="教练账户绑定出错";
+                desc="您绑定教练账户："+coach.getCoachName()+" 时出错了。错误原因："+e.getMessage();
             }
             return messageProcessor.getSingleNews(from,to,
                 title,

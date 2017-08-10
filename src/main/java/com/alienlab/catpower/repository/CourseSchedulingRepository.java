@@ -21,7 +21,8 @@ import java.util.List;
 public interface CourseSchedulingRepository extends JpaRepository<CourseScheduling,Long> {
 
     List<CourseScheduling> findCourseSchedulingsByStartTimeBetween(ZonedDateTime startDate, ZonedDateTime endDate);
-    Page<CourseScheduling> findCourseSchedulingsByStartTimeBetween(ZonedDateTime startDate, ZonedDateTime endDate, Pageable page);
+    //根据时间查询教练排课情况
+    Page<CourseScheduling> findCourseSchedulingsByStartTimeBetween(ZonedDateTime startDate, ZonedDateTime endDate, Pageable pageable);
     //根据教练获取排课记录
     List<CourseScheduling> findCourseSchedulingsByCoach(Coach coach);
     //根据具体日期和时间查询当天排课情况
@@ -29,7 +30,7 @@ public interface CourseSchedulingRepository extends JpaRepository<CourseScheduli
     List<CourseScheduling> findCourseSchedulingsByCoachAndStartTime(Coach coach,ZonedDateTime startTime);
 
     //模糊查询
-    @Query("select a from CourseScheduling a where (a.course.courseName like CONCAT('%',?1,'%')) or (a.coach.coachName like CONCAT('%',?1,'%')) ")
-    List<CourseScheduling> findCourseSchedulingByCourseNameLike(String keyword);
+    @Query("select a from CourseScheduling a where (a.course.courseName like CONCAT('%',?1,'%')) or (a.coach.coachName like CONCAT('%',?1,'%')) or (a.status like CONCAT('%',?1,'%')) ")
+    Page<CourseScheduling> findCourseSchedulingByCourseNameLike(String keyword,Pageable pageable);
 
 }

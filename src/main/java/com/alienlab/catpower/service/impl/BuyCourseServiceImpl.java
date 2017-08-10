@@ -66,6 +66,7 @@ public class BuyCourseServiceImpl implements BuyCourseService{
      */
     @Override
     public BuyCourse save(BuyCourse buyCourse) {
+
         log.debug("Request to save BuyCourse : {}", buyCourse);
         ZonedDateTime dateTime = ZonedDateTime.now();
         buyCourse.setBuyTime(dateTime);
@@ -292,12 +293,25 @@ public class BuyCourseServiceImpl implements BuyCourseService{
     }
 
     @Override
-    public List<BuyCourse> getCourseLikeCourseName(String keyword) throws Exception {
+    public Page<BuyCourse> getCourseLikeCourseName(String keyword, Pageable pageable) throws Exception {
         if(keyword == null){
             throw new Exception("未输入关键字");
         }
-        List<BuyCourse> buyCourses = buyCourseRepository.findBuyCourseByCourseNameLike("%"+keyword+"%");
+        Page<BuyCourse> buyCourses = buyCourseRepository.findBuyCourseByCourseNameLike("%"+keyword+"%",pageable);
         return buyCourses;
     }
+
+    //根据时间查询售课情况
+    @Override
+    public Page<BuyCourse> getBuyCourseByTime(ZonedDateTime butTime1, ZonedDateTime butTime2, Pageable pageable) throws Exception {
+        if(butTime1 == null){
+            throw new Exception("未选择开始时间");
+        }else if (butTime2 == null){
+            throw new Exception("未选择结束时间时间");
+        }
+
+        return buyCourseRepository.findBuyCourseByBuyTimeBetweenOrderByBuyTimeDesc(butTime1,butTime2,pageable);
+    }
+
 
 }

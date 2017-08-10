@@ -3,11 +3,11 @@
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                 ng-click="vm.clear()">&times;</button>
-        <h4 class="modal-title" id="myLearnerLabel">{{vm.learner.learneName}}学员身份绑定二维码</h4>
+        <h4 class="modal-title" id="myLearnerLabel">{{vm.coach.learneName}}教练身份绑定二维码</h4>
     </div>
     <div class="modal-body" style="text-align: center;">
         <jhi-alert-error></jhi-alert-error>
-        <img ng-src="{{stuqr}}"/>
+        <img ng-src="{{coachBindQr}}"/>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">

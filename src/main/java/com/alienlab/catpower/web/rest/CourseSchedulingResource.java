@@ -13,12 +13,15 @@ import com.alienlab.catpower.web.rest.util.PaginationUtil;
 import com.alienlab.catpower.web.wechat.bean.entity.QrInfo;
 import com.codahale.metrics.annotation.Timed;
 import io.github.jhipster.web.util.ResponseUtil;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -305,16 +308,51 @@ public class CourseSchedulingResource {
         }
     }
     @ApiOperation(value = "模糊查询售课情况")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "page", value = "分页位置", paramType = "query"),
+        @ApiImplicitParam(name = "size", value = "分页长度", paramType = "query")
+    })
     @GetMapping("/course-schedulings/like/keyword")
-    public ResponseEntity getLikeCourse(@RequestParam String keyword){
+    public ResponseEntity getLikeCourse(@RequestParam String keyword,@RequestParam int page,@RequestParam int size){
         try {
-            List<CourseScheduling> result = courseSchedulingService.LikeSche(keyword);
-            return ResponseEntity.ok().body(result);
+            Page<CourseScheduling> result = courseSchedulingService.LikeSche(keyword,new PageRequest(page,size));
+            HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(result, "/api/course-schedulings/like/keyword");
+            return new ResponseEntity<>(result.getContent(), headers, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             ExecResult er=new ExecResult(false,e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
         }
     }
+
+    @ApiOperation(value = "根据时间查询教练排班情况")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "page", value = "分页位置", paramType = "query"),
+        @ApiImplicitParam(name = "size", value = "分页大小", paramType = "query")
+    })
+    @GetMapping("/course-schedulings/time")
+    public ResponseEntity<List<CourseScheduling>> getscheBydate(@RequestParam String startDate,@RequestParam String endDate,@RequestParam int page,@RequestParam int size){
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date d1 = null;
+        Date d2 = null;
+        try {
+            d1 = sdf.parse(startDate);
+            d2 = sdf.parse(endDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        ZonedDateTime startTime = ZonedDateTime.ofInstant(d1.toInstant(),ZoneId.systemDefault());
+        ZonedDateTime endTime = ZonedDateTime.ofInstant(d2.toInstant(),ZoneId.systemDefault());
+        try {
+            Page<CourseScheduling> result = courseSchedulingService.getScheByTime(startTime,endTime,new PageRequest(page,size));
+            HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(result,"/api/course-schedulings/time");
+            return  new ResponseEntity<List<CourseScheduling>>(result.getContent(),headers,HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
 }

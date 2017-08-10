@@ -37,6 +37,7 @@
                 <th>课程</th>
                 <th>开课时间</th>
                 <th>结束时间</th>
+                <th>状态</th>
                 <th>签到人数</th>
             </tr>
             </thead>
@@ -46,6 +47,7 @@
                 <td>{{courseScheduling.course.courseName}}</td>
                 <td>{{courseScheduling.startTime | date:'medium'}}</td>
                 <td>{{courseScheduling.endTime | date:'medium'}}</td>
+                <td>{{courseScheduling.status}}</td>
                 <td>{{courseScheduling.signInCount}}</td>
             </tr>
             </tbody>

@@ -1,25 +1,25 @@
 <!--选择时间段查询-->
 <div class="col-lg-12 col-md-12 col-sm-12" style="margin-top: 3%;">
     <div class="col-lg-3 col-md-3 col-sm-3" style="margin-left: -15px;">
-        <p class="input-group">
-            <input type="text" class="form-control" uib-datepicker-popup ng-model="startDate" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+        <p class="input-group input-group-sm">
+            <input type="text" class="form-control" ng-change="currentTime()" uib-datepicker-popup ng-model="startTime" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
             <span class="input-group-btn">
-                                <button type="button" class="btn btn-default" ng-click="startTime()"><i class="glyphicon glyphicon-calendar"></i></button>
-                            </span>
+                <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
         </p>
     </div>
-    <div class="col-lg-1 col-md-1 col-sm-1" style="padding:5px 0px;width:1%;"><span>—</span></div>
+    <div class="col-lg-1 col-md-1 col-sm-1" style="padding:5px 0px;width:1%;"><span>至</span></div>
     <div class="col-lg-3 col-md-3 col-sm-3" style="">
-        <p class="input-group">
-            <input type="text" class="form-control" uib-datepicker-popup ng-model="endDate" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+        <p class="input-group input-group-sm">
+            <input type="text" class="form-control" ng-change="currentTime()" uib-datepicker-popup ng-model="endTime" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
             <span class="input-group-btn">
-                                <button type="button" class="btn btn-default" ng-click="endTime()"><i class="glyphicon glyphicon-calendar"></i></button>
-                            </span>
+                <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
         </p>
     </div>
     <div class="col-lg-2 col-md-2 col-sm-2"></div>
     <div class="col-lg-3 col-md-3 col-sm-3">
-        <div class="input-group">
+        <div class="input-group input-group-sm">
             <input type="text" class="form-control" placeholder="搜索..." ng-model="searchContent">
             <span class="input-group-btn" ng-click="search()">
                                 <button class="btn btn-default" type="button">

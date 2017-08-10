@@ -1,8 +1,14 @@
 package com.alienlab.catpower.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.alienlab.catpower.domain.Coach;
 import com.alienlab.catpower.repository.CoachRepository;
 import com.alienlab.catpower.service.CoachService;
+import com.alienlab.catpower.web.wechat.bean.entity.QrInfo;
+import com.alienlab.catpower.web.wechat.bean.entity.WechatUser;
+import com.alienlab.catpower.web.wechat.service.QrInfoService;
+import com.alienlab.catpower.web.wechat.service.WechatUserService;
+import com.alienlab.catpower.web.wechat.util.WechatUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +36,12 @@ public class CoachServiceImpl implements CoachService{
     JdbcTemplate jdbcTemplate;
     @Autowired
     CoachService coachService;
+    @Autowired
+    WechatUtil wechatUtil;
+    @Autowired
+    QrInfoService qrInfoService;
+    @Autowired
+    WechatUserService wechatUserService;
 
     public CoachServiceImpl(CoachRepository coachRepository) {
         this.coachRepository = coachRepository;
@@ -103,5 +115,53 @@ public class CoachServiceImpl implements CoachService{
         map.put("courseCharge",jdbcTemplate.queryForMap(sql2));
         map.put("courseInfo",jdbcTemplate.queryForMap(sql3));
         return map;
+    }
+
+    @Override
+    public QrInfo getCoachBindQr(Coach coach) throws Exception {
+        if(coach==null){
+            throw new Exception("未找到教练信息。");
+        }
+        if(coach.getQrInfo() != null){
+            return coach.getQrInfo();
+        }
+        String sceneId = "3and" + coach.getId() + "";
+        JSONObject jo = wechatUtil.get_qr_code_ticket(sceneId);
+        if( jo == null || jo.getString("ticket") == null){
+            throw new Exception("生成绑定教练二维码失败！教练绑定编码："+ coach.getId());
+        }
+        QrInfo qr = qrInfoService.createQrinfo(sceneId,3L,jo.getString("ticket"));
+        coach.setQrInfo(qr);
+        coachRepository.save(coach);
+        return qr;
+    }
+
+    @Override
+    public Coach bindWechatUser(WechatUser wechatUser, Coach coach) throws Exception {
+        Coach coach1 = coachRepository.findCoachBycoachWechatopenid(coach.getCoachWechatopenid());
+        System.out.println(coach1);
+        if (coach1 != null){
+            throw new Exception("教练账户" + coach.getCoachName() + "已被" + coach.getCoachWechatname() + "绑定");
+        }
+       /*if(coach.getWechatUser() != null){
+            throw new Exception("教练账户" + coach.getCoachName() + "已被" + coach.getWechatUser().getNickName() + "绑定");
+        }*/
+        coach.setCoachWechatopenid(wechatUser.getOpenId());
+        coach.setCoachWechatname(wechatUser.getNickName());
+        coach.setCoachWechatpicture(wechatUser.getIcon());
+        return coachRepository.save(coach);
+    }
+
+    @Override
+    public Coach bindWechatUser(String openid, Long coachId) throws Exception {
+        WechatUser user=wechatUserService.findUserByOpenid(openid);
+        if(user==null){
+            throw new Exception("未找到关联的微信用户，用户openid:"+openid);
+        }
+        Coach coach = coachRepository.findOne(coachId);
+        if (coach == null){
+            throw new Exception("未找到已注册的教练信息，教练编码：" + coachId);
+        }
+        return bindWechatUser(user,coach);
     }
 }

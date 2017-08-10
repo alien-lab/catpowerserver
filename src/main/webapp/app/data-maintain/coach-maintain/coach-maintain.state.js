@@ -55,9 +55,6 @@
                                     coachName: null,
                                     coachPhone: null,
                                     coachPicture: null,
-                                    coachWechatname: null,
-                                    coachWechatopenid: null,
-                                    coachWechatpicture: null,
                                     id:null
                                 };
                             }
@@ -167,6 +164,31 @@
                         size: 'md',
                         resolve: {
                             dataMaintain: ['Coach', function(Coach) {
+                                return Coach.get({id : $stateParams.id}).$promise;
+                            }]
+                        }
+                    }).result.then(function() {
+                        $state.go('coach-maintain', null, { reload: 'coach-maintain' });
+                    }, function() {
+                        $state.go('^');
+                    });
+                }]
+            })
+            .state('coach-maintain.coachbindqr', {
+                parent: 'coach-maintain',
+                url: '/{id}/coachbindqr',
+                data: {
+                    authorities: ['ROLE_USER']
+                },
+                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                    $uibModal.open({
+                        templateUrl:'app/data-maintain/coach-maintain/coach-bind-qr.html',
+                        controller:'coachBindQrController',
+                        controllerAs:'vm',
+                        backdrop:'static',
+                        size: 'md',
+                        resolve: {
+                            entity: ['Coach', function(Coach) {
                                 return Coach.get({id : $stateParams.id}).$promise;
                             }]
                         }

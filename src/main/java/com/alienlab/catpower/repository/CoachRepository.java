@@ -12,4 +12,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CoachRepository extends JpaRepository<Coach,Long> {
 
+    Coach findCoachBycoachWechatopenid(String coachWechatopenid);
 }

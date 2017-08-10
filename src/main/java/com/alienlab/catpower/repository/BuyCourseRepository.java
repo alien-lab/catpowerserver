@@ -20,6 +20,8 @@ import java.util.List;
 @SuppressWarnings("unused")
 @Repository
 public interface BuyCourseRepository extends JpaRepository<BuyCourse,Long> {
+
+    //根据时间查询授课情况
     Page<BuyCourse> findBuyCourseByBuyTimeBetweenOrderByBuyTimeDesc(ZonedDateTime butTime1,ZonedDateTime butTime2, Pageable page);
 
     @Query("select a from BuyCourse a where a.course=?2 and a.learner=?1 and a.status='正常'")
@@ -52,6 +54,8 @@ public interface BuyCourseRepository extends JpaRepository<BuyCourse,Long> {
 
     //模糊查询
     @Query("select a from BuyCourse a where (a.course.courseName like CONCAT('%',?1,'%')) or (a.learner.learneName like CONCAT('%',?1,'%')) or (a.coach.coachName like CONCAT('%',?1,'%')) ")
-    List<BuyCourse> findBuyCourseByCourseNameLike(String keyword);
+    Page<BuyCourse> findBuyCourseByCourseNameLike(String keyword,Pageable pageable);
+
+
 
 }

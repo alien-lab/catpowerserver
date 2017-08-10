@@ -83,6 +83,8 @@ public interface BuyCourseService {
     List<BuyCourse> findBuyCourseByCoachIdAndAppointment(Long coachId, ZonedDateTime appointmentTime) throws Exception;
 
     //模糊查询
-    List<BuyCourse> getCourseLikeCourseName(String keyword)throws Exception;
+    Page<BuyCourse> getCourseLikeCourseName(String keyword,Pageable pageable)throws Exception;
+    //根据时间查询售课情况
+    Page<BuyCourse> getBuyCourseByTime(ZonedDateTime butTime1,ZonedDateTime butTime2,Pageable pageable) throws Exception;
 
 }

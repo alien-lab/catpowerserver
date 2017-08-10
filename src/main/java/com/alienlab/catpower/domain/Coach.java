@@ -1,6 +1,8 @@
 package com.alienlab.catpower.domain;
 
 
+import com.alienlab.catpower.web.wechat.bean.entity.QrInfo;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -38,6 +40,10 @@ public class Coach implements Serializable {
 
     @Column(name = "coach_wechatpicture")
     private String coachWechatpicture;
+
+    @ManyToOne
+    @JoinColumn(name="qr_code")
+    private QrInfo qrInfo;
 
     public Long getId() {
         return id;
@@ -156,6 +162,14 @@ public class Coach implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hashCode(getId());
+    }
+
+    public QrInfo getQrInfo() {
+        return qrInfo;
+    }
+
+    public void setQrInfo(QrInfo qrInfo) {
+        this.qrInfo = qrInfo;
     }
 
     @Override

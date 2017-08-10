@@ -19,7 +19,6 @@
         vm.itemsPerPage = 15;
 
         loadAll();
-
         function loadAll () {
             CourseScheduling.query({
                 page: pagingParams.page - 1,
@@ -60,9 +59,7 @@
         //模糊成查询
         $scope.searchContent = null;
         $scope.search = function () {
-            courseScheService.loadLikeSches($scope.searchContent,function (data) {
-                $scope.courseSchedulings = data;
-            });
+
         };
     }
 })();

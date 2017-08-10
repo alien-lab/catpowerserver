@@ -5,6 +5,7 @@ import com.alienlab.catpower.service.CoachService;
 import com.alienlab.catpower.web.rest.util.ExecResult;
 import com.alienlab.catpower.web.rest.util.HeaderUtil;
 import com.alienlab.catpower.web.rest.util.PaginationUtil;
+import com.alienlab.catpower.web.wechat.bean.entity.QrInfo;
 import com.codahale.metrics.annotation.Timed;
 import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.ApiOperation;
@@ -140,6 +141,19 @@ public class CoachResource {
             ExecResult er = new ExecResult(false, e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
         }
-
     }
+
+    @ApiOperation(value = "获取绑定教练二维码")
+    @GetMapping("/coaches/qr/coach")
+    public ResponseEntity getCoachQrcode(@RequestParam Coach coach){
+        try{
+            QrInfo qr=coachService.getCoachBindQr(coach);
+            return ResponseEntity.ok(qr);
+        }catch(Exception e){
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
+    }
+
 }

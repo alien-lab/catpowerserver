@@ -1,6 +1,8 @@
 package com.alienlab.catpower.service;
 
 import com.alienlab.catpower.domain.Coach;
+import com.alienlab.catpower.web.wechat.bean.entity.QrInfo;
+import com.alienlab.catpower.web.wechat.bean.entity.WechatUser;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -46,4 +48,10 @@ public interface CoachService {
      *
      */
     Map getCoachByCoachId(Long id) throws Exception;
+    //生成教练绑定二维码
+    QrInfo getCoachBindQr(Coach coach)throws Exception;
+    //判断教练身份是否已被绑定
+    Coach bindWechatUser(WechatUser wechatUser, Coach coach)throws Exception;
+
+    Coach bindWechatUser(String openid, Long coachId)throws Exception;
 }

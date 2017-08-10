@@ -60,7 +60,10 @@
                         value: 'id,asc',
                         squash: true
                     },
-                    search: null
+                    search: {
+                        value:'keyword',
+                        squash: true
+                    }
                 },
                 resolve: {
                     pagingParams: ['$stateParams', 'PaginationUtil', function ($stateParams, PaginationUtil) {
@@ -69,7 +72,7 @@
                             sort: $stateParams.sort,
                             predicate: PaginationUtil.parsePredicate($stateParams.sort),
                             ascending: PaginationUtil.parseAscending($stateParams.sort),
-                            search: $stateParams.search
+                            search:$stateParams.search
                         };
                     }]
                 }
