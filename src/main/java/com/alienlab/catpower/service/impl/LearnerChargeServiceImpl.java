@@ -136,7 +136,6 @@ public class LearnerChargeServiceImpl implements LearnerChargeService{
         if(sche==null){
             throw new Exception("未找到编码为："+scheId+" 的排课信息");
         }
-
         return chargeCourse(learner,sche);
     }
 
@@ -158,6 +157,9 @@ public class LearnerChargeServiceImpl implements LearnerChargeService{
             remain=remain-1;
             LearnerCharge charge=new LearnerCharge();
             charge.setLearner(learner);
+            Long count = sche.getSignInCount();
+            count = count +1;
+            sche.setSignInCount(count);
             charge.setCourseScheduling(sche);
             charge.setCourse(sche.getCourse());
             charge.setChargeTime(ZonedDateTime.now());
