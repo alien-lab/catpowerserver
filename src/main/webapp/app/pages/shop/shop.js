@@ -5,13 +5,18 @@
     'use strict';
     var app=angular.module('catpowerserverApp');
 
-    app.controller("shopOpController",["$http","CourseScheduling","$scope","$filter","shopopService","BuyCourse","buyCourseTodayService","AlertService","qrService","ticket","pagingParams","ParseLinks","$state",function($http,CourseScheduling,$scope,$filter,shopopService,BuyCourse,buyCourseTodayService,AlertService,qrService,ticket,pagingParams,ParseLinks,$state){
+    app.controller("shopOpController",["$http","CourseScheduling","$scope","$filter","shopopService","BuyCourse","buyCourseTodayService","AlertService","qrService","ticket","pagingParams","ParseLinks","$state","$window",function($http,CourseScheduling,$scope,$filter,shopopService,BuyCourse,buyCourseTodayService,AlertService,qrService,ticket,pagingParams,ParseLinks,$state,$window){
         var vm = this;
 
         $scope.outCourse = null;
         $scope.buyCourseCountToday = null;
         $scope.haveBuyCourse=false;
         $scope.noneBuyCourse = false;
+
+        //刷新界面
+        $scope.reloadshopop = function () {
+            $window.location.reload();
+        };
 
         loadSche();
         function loadSche(date){

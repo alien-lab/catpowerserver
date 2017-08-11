@@ -17,58 +17,27 @@
         vm.transition = transition;
         vm.itemsPerPage = 10;
 
+        $scope.searchContent = null;
+
         loadAll();
         function loadAll () {
             BuyCourse.query({
                 page: pagingParams.page - 1,
                 size: vm.itemsPerPage
-            }, onSuccess, onError);
+            }, onAllSuccess, onAllError);
 
-            function onSuccess(data, headers) {
-                vm.links = ParseLinks.parse(headers('link'));
-                vm.totalItems = headers('X-Total-Count');
-                vm.queryCount = vm.totalItems;
-                $scope.buyCourses = data;
-                console.log(vm.buyCourses);
-                vm.page = pagingParams.page;
-            }
-            function onError(error) {
-                AlertService.error(error.data.message);
-            }
         }
-
-        //模糊成查询
-        /*$scope.searchContent = null;
-        $scope.search = function () {
-            buyCoursesResource.likeCourses({
-                keyword:$scope.searchContent,
-                page: pagingParams.page - 1,
-                size: vm.itemsPerPage
-            }, onSuccess, onError);
-             function onSuccess(data,headers) {
-                 vm.links = ParseLinks.parse(headers('link'));
-                 vm.totalItems = headers('X-Total-Count');
-                 vm.queryCount = vm.totalItems;
-                 $scope.buyCourses = data;
-                 console.log($scope.buyCourses);
-                 vm.page = pagingParams.page;
-
-             }
-             function onError(error) {
-             AlertService.error(error.data.message);
-             }
-            function loadPage(page) {
-                vm.page = page;
-                vm.transition();
-            }
-            function transition() {
-                $state.transitionTo($state.$current, {
-                    page: vm.page,
-                    search: vm.currentSearch
-                });
-            }
-        };*/
-
+        function onAllSuccess(data, headers) {
+            vm.links = ParseLinks.parse(headers('link'));
+            vm.totalItems = headers('X-Total-Count');
+            vm.queryCount = vm.totalItems;
+            $scope.buyCourses = data;
+            console.log(vm.buyCourses);
+            vm.page = pagingParams.page;
+        }
+        function onAllError(error) {
+            AlertService.error(error.data.message);
+        }
         function loadPage(page) {
             vm.page = page;
             vm.transition();
@@ -79,7 +48,29 @@
                 search: vm.currentSearch
             });
         }
+       /* //模糊成查询
+        $scope.searchContent = null;
+        $scope.search = function () {
+         BuyCourse.likeCourses({
+                keyword:$scope.searchContent,
+                page: pagingParams.page - 1,
+                size: vm.itemsPerPage
+            }, onSuccess, onError);
 
+        };
+        function onSuccess(data,headers) {
+            vm.links = ParseLinks.parse(headers('link'));
+            vm.totalItems = headers('X-Total-Count');
+            vm.queryCount = vm.totalItems;
+            $scope.buyCourses = data;
+            console.log($scope.buyCourses);
+            vm.page = pagingParams.page;
+
+        }
+        function onError(error) {
+            AlertService.error(error.data.message);
+        }
+*/
         //根据时间查询
         $scope.open1 = function() {
             $scope.popup1.opened = true;
@@ -94,13 +85,13 @@
             opened: false
         };
 
-        $scope.startTime = null;
+        /*$scope.startTime = null;
         $scope.endTime = null;
-        $scope.currentTime = function (time) {
+        $scope.currentTime = function () {
             if($scope.startTime != null && $scope.endTime != null){
                 console.log($scope.startTime);
                 console.log($scope.endTime);
-                buyCoursesResource.getCourseByTime({
+                    BuyCourse.getCourseByTime({
                     butTime1:$filter('date')($scope.startTime,'yyyy-MM-dd'),
                     butTime2:$filter('date')($scope.endTime,'yyyy-MM-dd'),
                     page: pagingParams.page - 1,
@@ -114,8 +105,7 @@
                     vm.page = pagingParams.page;
                 });
             }
-        };
-
+        };*/
 
     }
 })();

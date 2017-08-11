@@ -22,7 +22,9 @@
                     return data;
                 }
             },
-            'update': { method:'PUT' }
+            'update': { method:'PUT' },
+            'likeCourses': { url:'api/buy-courses/like/keyword',method: 'GET',isArray:true},
+            'getCourseByTime':{url:'api/buy-courses/time',method: 'GET',isArray:true}
         });
     }
 })();
