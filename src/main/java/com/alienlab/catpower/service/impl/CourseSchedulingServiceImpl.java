@@ -130,7 +130,7 @@ public class CourseSchedulingServiceImpl implements CourseSchedulingService{
 
     @Override
     public int updateCourseScheduling(Long id,String status) throws Exception {
-        int n = 0;
+        /*int n = 0;
         String sql = "UPDATE `course_scheduling` SET STATUS=? WHERE id=?";
         Object[] args = {status,id};
         n = jdbcTemplate.update(sql,args);
@@ -139,7 +139,8 @@ public class CourseSchedulingServiceImpl implements CourseSchedulingService{
             wechatMessageService.sendEvalCoachMsg(id);
             wechatMessageService.sendOverClassMsg(id);
         }
-        return n;
+        return n;*/
+        return 0;
     }
 
     @Override
@@ -202,6 +203,11 @@ public class CourseSchedulingServiceImpl implements CourseSchedulingService{
         courseScheduling.setEndTime(endTime);
         courseScheduling.setStatus("已下课");
         CourseScheduling result = courseSchedulingRepository.save(courseScheduling);
+        if(scheId != null){
+            //下课时发送消息推送
+            wechatMessageService.sendEvalCoachMsg(scheId);
+            wechatMessageService.sendOverClassMsg(scheId);
+        }
         return result;
     }
 

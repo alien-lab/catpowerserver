@@ -238,9 +238,9 @@
                     });
                 });
         };
-        $scope.deleteCoach=false;
+        $scope.deleteschework=false;
         $scope.deleteSche = function () {
-          $scope.deleteCoach=!$scope.deleteCoach;
+          $scope.deleteschework=!$scope.deleteschework;
         };
         //添加教练排班
         $scope.saveCoachWork = function () {
