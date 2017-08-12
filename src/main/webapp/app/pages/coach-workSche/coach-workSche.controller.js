@@ -173,6 +173,7 @@
             console.log($scope.workSches);
         });
         //获取今日教练排班
+        $scope.todayListSche = [];
         $scope.nowToday = $scope.year + '-' + $scope.nowMonthOrder + '-' + $scope.day ;
         coachScheService.loadCoachScheList($scope.nowToday,function (data) {
             $scope.todayListSche = data;
@@ -187,12 +188,19 @@
         $scope.getTheDay=function(workSche){
             $scope.selectDay = workSche;
             $scope.addScheTime = $filter('date')($scope.selectDay.workDate,'yyyy-MM-dd');
+            $scope.addSwwwwwwwwwwwwcheTime = $filter('date')($scope.selectDay.workDate,'yyyy-MM-dd');
             console.log($scope.addScheTime);
+            console.log($scope.addSwwwwwwwwwwwwcheTime);
             var currentDayOfDate = cal.getCurrentDayOfDate($scope.addScheTime);
             $scope.addScheWeekData = currentDayOfDate;
             console.log(currentDayOfDate);
             $scope.addScheWeek = $scope.weeks[currentDayOfDate];
             console.log($scope.addScheWeek);
+            //教练排班记录
+            coachScheService.loadCoachScheList($scope.addScheTime,function (data) {
+                $scope.schworkCoaches = data;
+                console.log($scope.schworkCoaches)
+            });
             /*$scope.selectDay=theDay;
             comm();
             $scope.addScheTime=$scope.year + '-'+ $scope.nowMonth + '-'+$scope.selectDay;
@@ -205,6 +213,34 @@
                 $scope.coacheListSche = data;
                 console.log($scope.coacheListSche);
             });*/
+        };
+        //删除教练排班
+        $scope.deleteCoach = function (sche) {
+            console.log(sche.id);
+            /*coachScheService.deleteScheWork(sche.id,function () {});*/
+            swal({
+                    title: "您确定要删除"+sche.coach.coachName+"教练排班吗",
+                    text: "",
+                    type: "error",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "确定",
+                    closeOnConfirm: false
+                },
+                function(){
+                    coachScheService.deleteScheWork(sche.id,function () {});
+                    swal({
+                        title:"删除成功",
+                        text:"",
+                        type:"success",
+                    },function () {
+                        $state.go('coach-workSche', null, { reload: true });
+                    });
+                });
+        };
+        $scope.deleteCoach=false;
+        $scope.deleteSche = function () {
+          $scope.deleteCoach=!$scope.deleteCoach;
         };
         //添加教练排班
         $scope.saveCoachWork = function () {
@@ -236,7 +272,6 @@
             }else{
                 swal("", "请填写完整教练排课的信息", "warning")
             }
-
         };
         console.log($scope.addScheTime);
         //获取所有的排班记录
@@ -262,7 +297,6 @@
                     $state.go('coach-workSche', null, { reload: true });
                 });
         };
-
         //获取所有的教练
         loadAll();
         function loadAll() {
@@ -331,8 +365,6 @@
             return days;
         };
 
-
-
         // 设定当前是第几个月
         cals.setMonthOrder=function(n){
             cals.thisMonth=n;
@@ -375,7 +407,8 @@
         return $resource(resourceUrl,{},{
             'getCoahSche':{method: 'GET',isArray:true},
             'getAllWorkSche':{url:'api/coachworksches',method: 'GET',isArray:true},
-            'getMonthWorkSche':{url:'api/courseworksche/coach',method: 'GET',isArray:true}
+            'getMonthWorkSche':{url:'api/courseworksche/coach',method: 'GET',isArray:true},
+            'delete':{url:'api/courseworksche/id',method:'DELETE'}
         });
     }]);
     app.service("coachScheService",["coachScheResource","$http",function (coachScheResource,$http) {
@@ -408,7 +441,6 @@
                 }
             })
         };
-
         //添加教练排班
         this.saveCoachWorkSche = function (param,callback) {
             $http({
@@ -437,6 +469,21 @@
                 }
             },function(error){
                 console.log("coachScheResource.getMonthWorkSche()",error);
+                if(callback){
+                    callback(error,false);
+                }
+            });
+        };
+        //删除教练排班记录
+        this.deleteScheWork = function (id,callback) {
+            coachScheResource.delete({
+                id:id
+            },function (data) {
+                if(callback){
+                    callback(data,true);
+                }
+            },function (error) {
+                console.log("coachScheResource.delete()",error);
                 if(callback){
                     callback(error,false);
                 }

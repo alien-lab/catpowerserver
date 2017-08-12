@@ -126,9 +126,9 @@ public class CoachWorkScheResource {
      * @param id the id of the course to delete
      * @return the ResponseEntity with status 200 (OK)
      */
-    @DeleteMapping("/courseworksche/{id}")
+    @DeleteMapping("/courseworksche/id")
     @Timed
-    public ResponseEntity<Void> deleteCourse(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteCourse(@RequestParam Long id) {
         log.debug("REST request to delete Course : {}", id);
         coachWorkScheService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
