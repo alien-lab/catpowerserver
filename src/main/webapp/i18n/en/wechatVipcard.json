@@ -1,0 +1,27 @@
+{
+    "catpowerserverApp": {
+        "wechatVipcard" : {
+            "home": {
+                "title": "Wechat Vipcards",
+                "createLabel": "Create a new Wechat Vipcard",
+                "createOrEditLabel": "Create or edit a Wechat Vipcard"
+            },
+            "created": "A new Wechat Vipcard is created with identifier {{ param }}",
+            "updated": "A Wechat Vipcard is updated with identifier {{ param }}",
+            "deleted": "A Wechat Vipcard is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Wechat Vipcard {{ id }}?"
+            },
+            "detail": {
+                "title": "Wechat Vipcard"
+            },
+            "openid": "Openid",
+            "cardJson": "Card Json",
+            "getTime": "Get Time",
+            "activeTime": "Active Time",
+            "cardId": "Card Id",
+            "cardCode": "Card Code",
+            "cardStatus": "Card Status"
+        }
+    }
+}

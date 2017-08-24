@@ -1,0 +1,76 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myWechatShopCardInfoLabel" data-translate="catpowerserverApp.wechatShopCardInfo.home.createOrEditLabel">Create or edit a Wechat Shop Card Info</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.wechatShopCardInfo.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.wechatShopCardInfo.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.wechatShopCardInfo.openid" for="field_openid">Openid</label>
+            <input type="text" class="form-control" name="openid" id="field_openid"
+                    ng-model="vm.wechatShopCardInfo.openid"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.wechatShopCardInfo.cardId" for="field_cardId">Card Id</label>
+            <input type="text" class="form-control" name="cardId" id="field_cardId"
+                    ng-model="vm.wechatShopCardInfo.cardId"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.wechatShopCardInfo.cardCode" for="field_cardCode">Card Code</label>
+            <input type="text" class="form-control" name="cardCode" id="field_cardCode"
+                    ng-model="vm.wechatShopCardInfo.cardCode"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.wechatShopCardInfo.getTime" for="field_getTime">Get Time</label>
+                <div class="input-group">
+                    <input id="field_getTime" type="text" class="form-control" name="getTime" datetime-picker="{{dateformat}}" ng-model="vm.wechatShopCardInfo.getTime" is-open="vm.datePickerOpenStatus.getTime"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('getTime')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.wechatShopCardInfo.rechargeTime" for="field_rechargeTime">Recharge Time</label>
+                <div class="input-group">
+                    <input id="field_rechargeTime" type="text" class="form-control" name="rechargeTime" datetime-picker="{{dateformat}}" ng-model="vm.wechatShopCardInfo.rechargeTime" is-open="vm.datePickerOpenStatus.rechargeTime"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('rechargeTime')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.wechatShopCardInfo.outStr" for="field_outStr">Out Str</label>
+            <input type="text" class="form-control" name="outStr" id="field_outStr"
+                    ng-model="vm.wechatShopCardInfo.outStr"
+                    />
+        </div>
+
+        <div class="form-group">
+            <label data-translate="catpowerserverApp.wechatShopCardInfo.wechatShopCard" for="field_wechatShopCard">Wechat Shop Card</label>
+            <select class="form-control" id="field_wechatShopCard" name="wechatShopCard" ng-model="vm.wechatShopCardInfo.wechatShopCard" ng-options="wechatShopCard as wechatShopCard.title for wechatShopCard in vm.wechatshopcards track by wechatShopCard.id">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

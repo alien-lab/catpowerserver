@@ -1,0 +1,27 @@
+{
+    "catpowerserverApp": {
+        "wechatShopCardInfo" : {
+            "home": {
+                "title": "Wechat Shop Card Infos",
+                "createLabel": "Create a new Wechat Shop Card Info",
+                "createOrEditLabel": "Create or edit a Wechat Shop Card Info"
+            },
+            "created": "A new Wechat Shop Card Info is created with identifier {{ param }}",
+            "updated": "A Wechat Shop Card Info is updated with identifier {{ param }}",
+            "deleted": "A Wechat Shop Card Info is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Wechat Shop Card Info {{ id }}?"
+            },
+            "detail": {
+                "title": "Wechat Shop Card Info"
+            },
+            "openid": "Openid",
+            "cardId": "Card Id",
+            "cardCode": "Card Code",
+            "getTime": "Get Time",
+            "rechargeTime": "Recharge Time",
+            "outStr": "Out Str",
+            "wechatShopCard": "Wechat Shop Card"
+        }
+    }
+}

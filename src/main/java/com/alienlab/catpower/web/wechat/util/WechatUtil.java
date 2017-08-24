@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.awt.print.Pageable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.time.ZonedDateTime;
@@ -411,6 +412,39 @@ public class WechatUtil {
         baseurl=baseurl.replace("$(URL)",url);
         return baseurl;
     }
+
+    public JSONObject getVipCard(String cardid,String usercode){
+        String baseurl="https://api.weixin.qq.com/card/membercard/userinfo/get?access_token=ACCESS_TOKEN";
+        AccessToken at=getAccessToken();
+        baseurl=baseurl.replace("ACCESS_TOKEN",at.getToken());
+        JSONObject param=new JSONObject();
+        param.put("card_id",cardid);
+        param.put("code",usercode);
+        JSONObject jsonObject = HttpsInvoker.httpRequest(baseurl, "POST", param.toJSONString());
+        return jsonObject;
+    }
+
+    public JSONObject getShopCard(String cardid){
+        String baseurl="https://api.weixin.qq.com/card/get?access_token=ACCESS_TOKEN";
+        AccessToken at=getAccessToken();
+        baseurl=baseurl.replace("ACCESS_TOKEN",at.getToken());
+        JSONObject param=new JSONObject();
+        param.put("card_id",cardid);
+        JSONObject jsonObject = HttpsInvoker.httpRequest(baseurl, "POST", param.toJSONString());
+        return jsonObject;
+    }
+
+    public JSONObject getShopCardIdList(int offset,int size){
+        String baseurl="https://api.weixin.qq.com/card/batchget?access_token=ACCESS_TOKEN";
+        AccessToken at=getAccessToken();
+        baseurl=baseurl.replace("ACCESS_TOKEN",at.getToken());
+        JSONObject param=new JSONObject();
+        param.put("offset",offset);
+        param.put("count",size);
+        JSONObject jsonObject = HttpsInvoker.httpRequest(baseurl, "POST", param.toJSONString());
+        return jsonObject;
+    }
+
 /*  public static void main(String [] args){
         WechatUtil w=new WechatUtil();
         w.createMenu();

@@ -15,6 +15,7 @@ import com.alienlab.catpower.web.wechat.bean.TextMessageResponse;
 import com.alienlab.catpower.web.wechat.bean.entity.WechatUser;
 import com.alienlab.catpower.web.wechat.util.MessageProcessor;
 import com.alienlab.catpower.web.wechat.util.WechatUtil;
+import groovy.lang.Singleton;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -66,6 +67,8 @@ public class ResponseService {
     private String domain;
 
 
+
+
     public MessageResponse doResponse(String msg){
         JSONObject json_msg=messageProcessor.xml2JSON(msg);
         switch (json_msg.getString("MsgType")){
@@ -103,6 +106,17 @@ public class ResponseService {
             }
             case "event":{
                 String event=json_msg.getString("Event");
+                String fromuser=json_msg.getString("FromUserName");
+                Long eventTime=json_msg.getLong("CreateTime");
+                String eventKey=fromuser+"$"+event;
+                if(MessageKey.msgMap.containsKey(eventKey)){
+                    Long lasttime=MessageKey.msgMap.get(eventKey);
+                    if(eventTime-lasttime<5){
+                        return null;
+                    }
+                }else{
+                    MessageKey.msgMap.put(eventKey,eventTime);
+                }
                 switch (event){
                     case "subscribe":{ //用户关注或者未扫码关注事件
                         String from=json_msg.getString("ToUserName");
@@ -153,14 +167,36 @@ public class ResponseService {
                     case "LOCATION":{ //用户提交位置
                         break;
                     }
+                    case "submit_membercard_user_info":{//会员卡激活
+                        String cardid=json_msg.getString("CardId");
+                        String openid=json_msg.getString("FromUserName");
+                        String userCardCode=json_msg.getString("UserCardCode");
+
+                        break;
+                    }
+
+                    case "user_get_card":{//领取优惠卡
+                        String cardid=json_msg.getString("CardId");
+                        String openid=json_msg.getString("FromUserName");
+                        String userCardCode=json_msg.getString("UserCardCode");
+                        String outerStr=json_msg.getString("OuterStr");
+
+                        break;
+                    }
                 }
+
+                MessageKey.msgMap.remove(eventKey);
                 break;
+
             }
+
         }
 
         return null;
 
     }
+
+
 
     public MessageResponse qrscan(JSONObject json_msg){
         //课程签到

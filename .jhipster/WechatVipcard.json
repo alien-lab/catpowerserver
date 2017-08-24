@@ -1,0 +1,39 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "openid",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "cardJson",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "getTime",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "activeTime",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "cardId",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "cardCode",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "cardStatus",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20170822060425",
+    "dto": "no",
+    "service": "serviceImpl",
+    "entityTableName": "wechat_vipcard",
+    "pagination": "pagination"
+}

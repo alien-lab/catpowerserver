@@ -1,0 +1,42 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "course",
+            "otherEntityName": "course",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "cardId",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "title",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "cardJson",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "ctTime",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "cardStatus",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "cardRemainCount",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20170822084027",
+    "dto": "no",
+    "service": "serviceImpl",
+    "entityTableName": "wechat_shop_card",
+    "pagination": "pagination"
+}

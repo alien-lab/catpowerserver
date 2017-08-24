@@ -1,0 +1,42 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "wechatShopCard",
+            "otherEntityName": "wechatShopCard",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "title"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "openid",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "cardId",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "cardCode",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "getTime",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "rechargeTime",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "outStr",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20170823023544",
+    "dto": "no",
+    "service": "serviceImpl",
+    "entityTableName": "wechat_shop_card_info",
+    "pagination": "pagination"
+}

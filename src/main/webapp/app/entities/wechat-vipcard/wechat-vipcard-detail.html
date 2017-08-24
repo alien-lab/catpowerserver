@@ -1,0 +1,47 @@
+
+<div>
+    <h2><span data-translate="catpowerserverApp.wechatVipcard.detail.title">Wechat Vipcard</span> {{vm.wechatVipcard.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="catpowerserverApp.wechatVipcard.openid">Openid</span></dt>
+        <dd>
+            <span>{{vm.wechatVipcard.openid}}</span>
+        </dd>
+        <dt><span data-translate="catpowerserverApp.wechatVipcard.cardJson">Card Json</span></dt>
+        <dd>
+            <span>{{vm.wechatVipcard.cardJson}}</span>
+        </dd>
+        <dt><span data-translate="catpowerserverApp.wechatVipcard.getTime">Get Time</span></dt>
+        <dd>
+            <span>{{vm.wechatVipcard.getTime | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="catpowerserverApp.wechatVipcard.activeTime">Active Time</span></dt>
+        <dd>
+            <span>{{vm.wechatVipcard.activeTime | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="catpowerserverApp.wechatVipcard.cardId">Card Id</span></dt>
+        <dd>
+            <span>{{vm.wechatVipcard.cardId}}</span>
+        </dd>
+        <dt><span data-translate="catpowerserverApp.wechatVipcard.cardCode">Card Code</span></dt>
+        <dd>
+            <span>{{vm.wechatVipcard.cardCode}}</span>
+        </dd>
+        <dt><span data-translate="catpowerserverApp.wechatVipcard.cardStatus">Card Status</span></dt>
+        <dd>
+            <span>{{vm.wechatVipcard.cardStatus}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="wechat-vipcard-detail.edit({id:vm.wechatVipcard.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

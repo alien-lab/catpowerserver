@@ -1,0 +1,76 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myWechatVipcardLabel" data-translate="catpowerserverApp.wechatVipcard.home.createOrEditLabel">Create or edit a Wechat Vipcard</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.wechatVipcard.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.wechatVipcard.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.wechatVipcard.openid" for="field_openid">Openid</label>
+            <input type="text" class="form-control" name="openid" id="field_openid"
+                    ng-model="vm.wechatVipcard.openid"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.wechatVipcard.cardJson" for="field_cardJson">Card Json</label>
+            <input type="text" class="form-control" name="cardJson" id="field_cardJson"
+                    ng-model="vm.wechatVipcard.cardJson"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.wechatVipcard.getTime" for="field_getTime">Get Time</label>
+                <div class="input-group">
+                    <input id="field_getTime" type="text" class="form-control" name="getTime" datetime-picker="{{dateformat}}" ng-model="vm.wechatVipcard.getTime" is-open="vm.datePickerOpenStatus.getTime"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('getTime')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.wechatVipcard.activeTime" for="field_activeTime">Active Time</label>
+                <div class="input-group">
+                    <input id="field_activeTime" type="text" class="form-control" name="activeTime" datetime-picker="{{dateformat}}" ng-model="vm.wechatVipcard.activeTime" is-open="vm.datePickerOpenStatus.activeTime"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('activeTime')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.wechatVipcard.cardId" for="field_cardId">Card Id</label>
+            <input type="text" class="form-control" name="cardId" id="field_cardId"
+                    ng-model="vm.wechatVipcard.cardId"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.wechatVipcard.cardCode" for="field_cardCode">Card Code</label>
+            <input type="text" class="form-control" name="cardCode" id="field_cardCode"
+                    ng-model="vm.wechatVipcard.cardCode"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.wechatVipcard.cardStatus" for="field_cardStatus">Card Status</label>
+            <input type="text" class="form-control" name="cardStatus" id="field_cardStatus"
+                    ng-model="vm.wechatVipcard.cardStatus"
+                    />
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

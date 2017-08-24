@@ -14,6 +14,8 @@
     <include file="classpath:config/liquibase/changelog/20170528115804_added_entity_Coach.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170528115805_added_entity_Course.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170528115806_added_entity_CourseAtlas.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20170822060425_added_entity_WechatVipcard.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20170822084027_added_entity_WechatShopCard.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="classpath:config/liquibase/changelog/20170528115758_added_entity_constraints_CoachEvaluate.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170528115759_added_entity_constraints_CourseScheduling.xml" relativeToChangelogFile="false"/>
@@ -21,5 +23,11 @@
     <include file="classpath:config/liquibase/changelog/20170528115802_added_entity_constraints_BuyCourse.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170528115803_added_entity_constraints_LearnerCharge.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170528115806_added_entity_constraints_CourseAtlas.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170822060425_added_entity_WechatVipcard.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170822084027_added_entity_WechatShopCard.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170822084027_added_entity_constraints_WechatShopCard.xml" relativeToChangelogFile="false"/>
+
+    <include file="classpath:config/liquibase/changelog/20170823023544_added_entity_WechatShopCardInfo.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170823023544_added_entity_constraints_WechatShopCardInfo.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>
