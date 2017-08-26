@@ -5,10 +5,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.alienlab.catpower.domain.Coach;
 import com.alienlab.catpower.domain.CourseScheduling;
 import com.alienlab.catpower.domain.Learner;
-import com.alienlab.catpower.service.CoachService;
-import com.alienlab.catpower.service.CourseSchedulingService;
-import com.alienlab.catpower.service.LearnerChargeService;
-import com.alienlab.catpower.service.LearnerService;
+import com.alienlab.catpower.domain.WechatVipcard;
+import com.alienlab.catpower.service.*;
 import com.alienlab.catpower.web.wechat.bean.MessageResponse;
 import com.alienlab.catpower.web.wechat.bean.NewsMessageResponse;
 import com.alienlab.catpower.web.wechat.bean.TextMessageResponse;
@@ -51,6 +49,12 @@ public class ResponseService {
 
     @Autowired
     WechatUserService wechatUserService;
+
+    @Autowired
+    WechatShopCardInfoService wechatShopCardInfoService;
+
+    @Autowired
+    WechatVipcardService wechatVipcardService;
 
     @Value("${wechat.response.defaultText}")
     private String defaultText;
@@ -171,16 +175,36 @@ public class ResponseService {
                         String cardid=json_msg.getString("CardId");
                         String openid=json_msg.getString("FromUserName");
                         String userCardCode=json_msg.getString("UserCardCode");
-
+                        try {
+                            wechatVipcardService.activeVipCard(userCardCode);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         break;
                     }
 
-                    case "user_get_card":{//领取优惠卡
+                    case "user_get_card":{//领取卡券
                         String cardid=json_msg.getString("CardId");
                         String openid=json_msg.getString("FromUserName");
                         String userCardCode=json_msg.getString("UserCardCode");
                         String outerStr=json_msg.getString("OuterStr");
+                        try {
+                            wechatShopCardInfoService.userGetCard(openid,userCardCode,outerStr,cardid);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    }
 
+                    case "user_consume_card":{
+                        String cardid=json_msg.getString("CardId");
+                        String openid=json_msg.getString("FromUserName");
+                        String userCardCode=json_msg.getString("UserCardCode");
+                        try {
+                            wechatShopCardInfoService.activeCard(userCardCode);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         break;
                     }
                 }

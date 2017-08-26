@@ -30,7 +30,7 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="card_json" type="varchar(255)">
+            <column name="card_json" type="varchar(5000)">
                 <constraints nullable="true" />
             </column>
 
@@ -46,6 +46,10 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="card_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
             <column name="course_id" type="bigint">
                 <constraints nullable="true" />
             </column>
@@ -53,6 +57,6 @@
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
         <dropDefaultValue tableName="wechat_shop_card" columnName="ct_time" columnDataType="datetime"/>
-        
+
     </changeSet>
 </databaseChangeLog>

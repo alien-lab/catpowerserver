@@ -2,7 +2,7 @@
     "catpowerserverApp": {
         "wechatVipcard" : {
             "home": {
-                "title": "Wechat Vipcards",
+                "title": "微信会员卡",
                 "createLabel": "Create a new Wechat Vipcard",
                 "createOrEditLabel": "Create or edit a Wechat Vipcard"
             },
@@ -15,13 +15,13 @@
             "detail": {
                 "title": "Wechat Vipcard"
             },
-            "openid": "Openid",
-            "cardJson": "Card Json",
-            "getTime": "Get Time",
-            "activeTime": "Active Time",
-            "cardId": "Card Id",
-            "cardCode": "Card Code",
-            "cardStatus": "Card Status"
+            "openid": "身份码",
+            "cardJson": "卡片配置",
+            "getTime": "获取时间",
+            "activeTime": "激活时间",
+            "cardId": "卡片编码",
+            "cardCode": "会员卡号",
+            "cardStatus": "卡片状态"
         }
     }
 }

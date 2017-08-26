@@ -2,7 +2,7 @@
     "catpowerserverApp": {
         "wechatShopCardInfo" : {
             "home": {
-                "title": "Wechat Shop Card Infos",
+                "title": "微信卡券领取记录",
                 "createLabel": "Create a new Wechat Shop Card Info",
                 "createOrEditLabel": "Create or edit a Wechat Shop Card Info"
             },
@@ -15,13 +15,13 @@
             "detail": {
                 "title": "Wechat Shop Card Info"
             },
-            "openid": "Openid",
-            "cardId": "Card Id",
-            "cardCode": "Card Code",
-            "getTime": "Get Time",
-            "rechargeTime": "Recharge Time",
-            "outStr": "Out Str",
-            "wechatShopCard": "Wechat Shop Card"
+            "openid": "身份码",
+            "cardId": "卡券编码",
+            "cardCode": "卡片卡号",
+            "getTime": "领取时间",
+            "rechargeTime": "核销时间",
+            "outStr": "领取来源",
+            "wechatShopCard": "微信卡券"
         }
     }
 }

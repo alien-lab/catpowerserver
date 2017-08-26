@@ -90,10 +90,11 @@ public class WechatShopCardServiceImpl implements WechatShopCardService{
     @Override
     public WechatShopCard findByCardId(String cardid) {
         WechatShopCard card=wechatShopCardRepository.findByCardId(cardid);
+        JSONObject cardJson=wechatUtil.getShopCard(cardid);
         if(card==null){
             log.debug("Find by cardid null.Cardid is "+cardid);
             log.debug("get card from wechat...");
-            JSONObject cardJson=wechatUtil.getShopCard(cardid);
+
             cardJson.put("cardid",cardid);
 
             log.debug("get card from wechat,"+cardJson.toJSONString());
@@ -102,6 +103,10 @@ public class WechatShopCardServiceImpl implements WechatShopCardService{
             card=wechatShopCardRepository.save(card);
             return card;
         }else{
+            WechatShopCard tempCard=JsonToShopCard(cardJson);
+            //更新剩余库存
+            card.setCardRemainCount(tempCard.getCardRemainCount());
+            card=wechatShopCardRepository.save(card);
             return card;
         }
 
@@ -127,6 +132,7 @@ public class WechatShopCardServiceImpl implements WechatShopCardService{
         card.setCardStatus(status);
         card.setCtTime(ZonedDateTime.now());
         card.setTitle(title);
+        card.setCardType(cardType);
         return card;
     }
 

@@ -15,26 +15,26 @@
         </div>
         <div class="form-group">
             <label class="control-label" data-translate="catpowerserverApp.wechatShopCard.cardId" for="field_cardId">Card Id</label>
-            <input type="text" class="form-control" name="cardId" id="field_cardId"
+            <input type="text" class="form-control" readonly name="cardId" id="field_cardId"
                     ng-model="vm.wechatShopCard.cardId"
                     />
         </div>
         <div class="form-group">
             <label class="control-label" data-translate="catpowerserverApp.wechatShopCard.title" for="field_title">Title</label>
             <input type="text" class="form-control" name="title" id="field_title"
-                    ng-model="vm.wechatShopCard.title"
+                    ng-model="vm.wechatShopCard.title" readonly
                     />
         </div>
         <div class="form-group">
             <label class="control-label" data-translate="catpowerserverApp.wechatShopCard.cardJson" for="field_cardJson">Card Json</label>
             <input type="text" class="form-control" name="cardJson" id="field_cardJson"
-                    ng-model="vm.wechatShopCard.cardJson"
+                    ng-model="vm.wechatShopCard.cardJson" readonly
                     />
         </div>
         <div class="form-group">
             <label class="control-label" data-translate="catpowerserverApp.wechatShopCard.ctTime" for="field_ctTime">Ct Time</label>
                 <div class="input-group">
-                    <input id="field_ctTime" type="text" class="form-control" name="ctTime" datetime-picker="{{dateformat}}" ng-model="vm.wechatShopCard.ctTime" is-open="vm.datePickerOpenStatus.ctTime"
+                    <input id="field_ctTime" type="text" class="form-control" name="ctTime" datetime-picker="{{dateformat}}" readonly ng-model="vm.wechatShopCard.ctTime" is-open="vm.datePickerOpenStatus.ctTime"
                     />
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="vm.openCalendar('ctTime')"><i class="glyphicon glyphicon-calendar"></i></button>
@@ -43,20 +43,26 @@
         </div>
         <div class="form-group">
             <label class="control-label" data-translate="catpowerserverApp.wechatShopCard.cardStatus" for="field_cardStatus">Card Status</label>
-            <input type="text" class="form-control" name="cardStatus" id="field_cardStatus"
+            <input type="text" class="form-control" readonly name="cardStatus" id="field_cardStatus"
                     ng-model="vm.wechatShopCard.cardStatus"
                     />
         </div>
         <div class="form-group">
             <label class="control-label" data-translate="catpowerserverApp.wechatShopCard.cardRemainCount" for="field_cardRemainCount">Card Remain Count</label>
-            <input type="number" class="form-control" name="cardRemainCount" id="field_cardRemainCount"
+            <input type="number" class="form-control" readonly name="cardRemainCount" id="field_cardRemainCount"
                     ng-model="vm.wechatShopCard.cardRemainCount"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.wechatShopCard.cardType" for="field_cardType">Card Type</label>
+            <input type="text" class="form-control" readonly name="cardType" id="field_cardType"
+                    ng-model="vm.wechatShopCard.cardType"
                     />
         </div>
 
         <div class="form-group">
             <label data-translate="catpowerserverApp.wechatShopCard.course" for="field_course">Course</label>
-            <select class="form-control" id="field_course" name="course" ng-model="vm.wechatShopCard.course" ng-options="course as course.id for course in vm.courses track by course.id">
+            <select class="form-control" id="field_course" name="course" ng-model="vm.wechatShopCard.course" ng-options="course as course.courseName for course in vm.courses track by course.id">
                 <option value=""></option>
             </select>
         </div>

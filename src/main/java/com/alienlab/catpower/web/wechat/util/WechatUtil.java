@@ -445,6 +445,18 @@ public class WechatUtil {
         return jsonObject;
     }
 
+    public JSONObject cardRecharge(String cardid,String code){
+        String baseurl="https://api.weixin.qq.com/card/code/get?access_token=ACCESS_TOKEN";
+        AccessToken at=getAccessToken();
+        baseurl=baseurl.replace("ACCESS_TOKEN",at.getToken());
+        JSONObject param=new JSONObject();
+        param.put("card_id",cardid);
+        param.put("code",code);
+        param.put("check_consume",true);
+        JSONObject jsonObject = HttpsInvoker.httpRequest(baseurl, "POST", param.toJSONString());
+        return jsonObject;
+    }
+
 /*  public static void main(String [] args){
         WechatUtil w=new WechatUtil();
         w.createMenu();

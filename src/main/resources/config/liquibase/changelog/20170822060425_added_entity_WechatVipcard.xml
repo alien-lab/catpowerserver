@@ -26,7 +26,7 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="card_json" type="varchar(255)">
+            <column name="card_json" type="varchar(5000)">
                 <constraints nullable="true" />
             </column>
 
@@ -54,6 +54,6 @@
         </createTable>
         <dropDefaultValue tableName="wechat_vipcard" columnName="get_time" columnDataType="datetime"/>
         <dropDefaultValue tableName="wechat_vipcard" columnName="active_time" columnDataType="datetime"/>
-        
+
     </changeSet>
 </databaseChangeLog>

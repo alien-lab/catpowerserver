@@ -41,5 +41,9 @@ public interface WechatShopCardInfoService {
      */
     void delete(Long id);
 
-    WechatShopCardInfo userGetCard(String openid,String code, String outerStr, WechatShopCard card);
+    WechatShopCardInfo userGetCard(String openid, String code, String outerStr, String cardId) throws Exception;
+
+    WechatShopCardInfo userGetCard(String openid, String code, String outerStr, WechatShopCard card);
+
+    WechatShopCardInfo activeCard(String code) throws Exception;
 }

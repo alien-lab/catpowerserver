@@ -21,7 +21,13 @@
                     </a>
                 </li>-->
                 <!--门店运行-->
-                <li ui-sref-active="active" ng-switch-when="true" uib-dropdown class="dropdown pointer">
+                <li ui-sref-active="active" ng-class="{active: vm.$state.includes('shopop')
+                ||vm.$state.includes('coach-arrangement')
+                ||vm.$state.includes('coach-workSche')
+                ||vm.$state.includes('student-registration')
+                ||vm.$state.includes('student-filing')
+                ||vm.$state.includes('student-withdrawal')
+                }" ng-switch-when="true" uib-dropdown class="dropdown pointer">
                     <a class="dropdown-toggle" uib-dropdown-toggle href="">
                         <span>
                             <span class="glyphicon glyphicon-home"></span>
@@ -78,7 +84,7 @@
                     </ul>
                 </li>
                 <!--数据维护-->
-                <li ng-class="{active: vm.$state.includes('data-maintain')}" ng-switch-when="true" uib-dropdown class="dropdown pointer">
+                <li ng-class="{active: vm.$state.includes('coach-maintain')||vm.$state.includes('course-maintain')}" ng-switch-when="true" uib-dropdown class="dropdown pointer">
                     <a class="dropdown-toggle" uib-dropdown-toggle href="" >
                         <span>
                             <span class="glyphicon glyphicon-th-list"></span>
@@ -103,52 +109,83 @@
                         </li>
                     </ul>
                 </li>
-                <!--系统设置-->
-                <!--<li ng-switch-when="true" uib-dropdown class="dropdown pointer">
+                <li ng-class="{active: vm.$state.includes('wechat-')}" ng-switch-when="true" uib-dropdown class="dropdown pointer">
                     <a class="dropdown-toggle" uib-dropdown-toggle href="" >
                         <span>
-                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                            <span class="glyphicon glyphicon-th-list"></span>
                             <span class="hidden-sm">
-                                系统设置
+                                微信卡券
                             </span>
                             <b class="caret"></b>
                         </span>
                     </a>
                     <ul class="dropdown-menu" uib-dropdown-menu>
                         <li ui-sref-active="active">
-                            <a ui-sref="settings" ng-click="vm.collapseNavbar()">
-                                <span class="glyphicon glyphicon-wrench"></span>&nbsp;
-                                <span>用户设置</span>
+                            <a ui-sref="wechat-shop-card" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                <span>卡券设置</span>
                             </a>
                         </li>
                         <li ui-sref-active="active">
-                            <a ui-sref="password" ng-click="vm.collapseNavbar()">
-                                <span class="glyphicon glyphicon-lock"></span>&nbsp;
-                                <span data-translate="global.menu.account.password">重置密码</span>
+                            <a ui-sref="wechat-shop-card-info" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                <span >卡券领取查询</span>
                             </a>
                         </li>
                         <li ui-sref-active="active">
-                            <a href="" ng-click="vm.logout()" id="logout">
-                                <span class="glyphicon glyphicon-log-out"></span>&nbsp;
-                                <span data-translate="global.menu.account.logout">退出</span>
-                            </a>
-                        </li>
-                        <li ui-sref-active="active">
-                            <a href="" ng-click="vm.login()" id="login">
-                                <span class="glyphicon glyphicon-log-in"></span>&nbsp;
-                                <span data-translate="global.menu.account.login">登录</span>
-                            </a>
-                        </li>
-                        <li ui-sref-active="active">
-                            <a ui-sref="register" ng-click="vm.collapseNavbar()">
-                                <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;
-                                <span data-translate="global.menu.account.register">注册</span>
+                            <a ui-sref="wechat-vipcard" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                <span >会员卡激活查询</span>
                             </a>
                         </li>
                     </ul>
-                </li>-->
+                </li>
+                <!--系统设置-->
+                <!--<li ng-switch-when="true" uib-dropdown class="dropdown pointer">-->
+                    <!--<a class="dropdown-toggle" uib-dropdown-toggle href="" >-->
+                        <!--<span>-->
+                            <!--<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>-->
+                            <!--<span class="hidden-sm">-->
+                                <!--系统设置-->
+                            <!--</span>-->
+                            <!--<b class="caret"></b>-->
+                        <!--</span>-->
+                    <!--</a>-->
+                    <!--<ul class="dropdown-menu" uib-dropdown-menu>-->
+                        <!--<li ui-sref-active="active">-->
+                            <!--<a ui-sref="settings" ng-click="vm.collapseNavbar()">-->
+                                <!--<span class="glyphicon glyphicon-wrench"></span>&nbsp;-->
+                                <!--<span>用户设置</span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li ui-sref-active="active">-->
+                            <!--<a ui-sref="password" ng-click="vm.collapseNavbar()">-->
+                                <!--<span class="glyphicon glyphicon-lock"></span>&nbsp;-->
+                                <!--<span data-translate="global.menu.account.password">重置密码</span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li ui-sref-active="active">-->
+                            <!--<a href="" ng-click="vm.logout()" id="logout">-->
+                                <!--<span class="glyphicon glyphicon-log-out"></span>&nbsp;-->
+                                <!--<span data-translate="global.menu.account.logout">退出</span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li ui-sref-active="active">-->
+                            <!--<a href="" ng-click="vm.login()" id="login">-->
+                                <!--<span class="glyphicon glyphicon-log-in"></span>&nbsp;-->
+                                <!--<span data-translate="global.menu.account.login">登录</span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li ui-sref-active="active">-->
+                            <!--<a ui-sref="register" ng-click="vm.collapseNavbar()">-->
+                                <!--<span class="glyphicon glyphicon-plus-sign"></span>&nbsp;-->
+                                <!--<span data-translate="global.menu.account.register">注册</span>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</li>-->
                 <!-- 自动生成的数据模块jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
-                <li ng-class="{active: vm.$state.includes('entity')}" ng-switch-when="true" uib-dropdown class="dropdown pointer">
+                <li ng-class="{active: vm.$state.includes('entity')&&!vm.$state.includes('wechat-')}" ng-switch-when="true" uib-dropdown class="dropdown pointer">
                     <a class="dropdown-toggle" uib-dropdown-toggle href="" id="entity-menu">
                         <span>
                             <span class="glyphicon glyphicon-th-list"></span>

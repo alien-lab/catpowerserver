@@ -28,9 +28,13 @@
         <dd>
             <span>{{vm.wechatShopCard.cardRemainCount}}</span>
         </dd>
+        <dt><span data-translate="catpowerserverApp.wechatShopCard.cardType">Card Type</span></dt>
+        <dd>
+            <span>{{vm.wechatShopCard.cardType}}</span>
+        </dd>
         <dt><span data-translate="catpowerserverApp.wechatShopCard.course">Course</span></dt>
         <dd>
-            <a ui-sref="course-detail({id:vm.wechatShopCard.course.id})">{{vm.wechatShopCard.course.id}}</a>
+            <a ui-sref="course-detail({id:vm.wechatShopCard.course.id})">{{vm.wechatShopCard.course.courseName}}</a>
         </dd>
     </dl>
 

@@ -2,7 +2,7 @@
     "catpowerserverApp": {
         "wechatShopCard" : {
             "home": {
-                "title": "Wechat Shop Cards",
+                "title": "微信卡券",
                 "createLabel": "Create a new Wechat Shop Card",
                 "createOrEditLabel": "Create or edit a Wechat Shop Card"
             },
@@ -15,13 +15,14 @@
             "detail": {
                 "title": "Wechat Shop Card"
             },
-            "cardId": "Card Id",
-            "title": "Title",
-            "cardJson": "Card Json",
-            "ctTime": "Ct Time",
-            "cardStatus": "Card Status",
-            "cardRemainCount": "Card Remain Count",
-            "course": "Course"
+            "cardId": "编号",
+            "title": "卡券标题",
+            "cardJson": "信息",
+            "ctTime": "创建时间",
+            "cardStatus": "状态",
+            "cardRemainCount": "库存量",
+            "cardType": "类型",
+            "course": "关联课程"
         }
     }
 }

@@ -56,5 +56,15 @@
                 search: vm.currentSearch
             });
         }
+
+        vm.refreshcard=function(){
+            WechatShopCard.refresh({},function(){
+                loadAll ();
+            },function(){
+
+            })
+        }
+
+
     }
 })();

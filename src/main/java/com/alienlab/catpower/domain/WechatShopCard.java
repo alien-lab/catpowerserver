@@ -37,6 +37,9 @@ public class WechatShopCard implements Serializable {
     @Column(name = "card_remain_count")
     private Integer cardRemainCount;
 
+    @Column(name = "card_type")
+    private String cardType;
+
     @ManyToOne
     private Course course;
 
@@ -126,6 +129,19 @@ public class WechatShopCard implements Serializable {
         this.cardRemainCount = cardRemainCount;
     }
 
+    public String getCardType() {
+        return cardType;
+    }
+
+    public WechatShopCard cardType(String cardType) {
+        this.cardType = cardType;
+        return this;
+    }
+
+    public void setCardType(String cardType) {
+        this.cardType = cardType;
+    }
+
     public Course getCourse() {
         return course;
     }
@@ -169,6 +185,7 @@ public class WechatShopCard implements Serializable {
             ", ctTime='" + getCtTime() + "'" +
             ", cardStatus='" + getCardStatus() + "'" +
             ", cardRemainCount='" + getCardRemainCount() + "'" +
+            ", cardType='" + getCardType() + "'" +
             "}";
     }
 }

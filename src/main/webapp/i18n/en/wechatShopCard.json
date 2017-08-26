@@ -21,6 +21,7 @@
             "ctTime": "Ct Time",
             "cardStatus": "Card Status",
             "cardRemainCount": "Card Remain Count",
+            "cardType": "Card Type",
             "course": "Course"
         }
     }

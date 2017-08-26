@@ -39,4 +39,6 @@ public interface WechatVipcardService {
      *  @param id the id of the entity
      */
     void delete(Long id);
+
+    WechatVipcard activeVipCard(String code) throws Exception;
 }

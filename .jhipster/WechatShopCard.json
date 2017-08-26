@@ -32,6 +32,10 @@
         {
             "fieldName": "cardRemainCount",
             "fieldType": "Integer"
+        },
+        {
+            "fieldName": "cardType",
+            "fieldType": "String"
         }
     ],
     "changelogDate": "20170822084027",

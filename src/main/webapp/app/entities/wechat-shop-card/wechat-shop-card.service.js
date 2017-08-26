@@ -21,7 +21,11 @@
                     return data;
                 }
             },
-            'update': { method:'PUT' }
+            'update': { method:'PUT' },
+            'refresh':{
+                method:"GET",
+                url:"api/wechat-shop-cards/refresh"
+            }
         });
     }
 })();

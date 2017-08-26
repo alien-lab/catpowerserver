@@ -130,6 +130,7 @@
                                 ctTime: null,
                                 cardStatus: null,
                                 cardRemainCount: null,
+                                cardType: null,
                                 id: null
                             };
                         }
