@@ -169,7 +169,7 @@ public class WechatShopCardInfoServiceImpl implements WechatShopCardInfoService{
                 buyCourse.setCourse(course);
                 buyCourse.setBuyTime(ZonedDateTime.now());
                 buyCourse.setOperateTime(ZonedDateTime.now());
-                buyCourse.setPaymentWay("卡券核销");
+                buyCourse.setPaymentWay("卡券兑换");
                 buyCourse.setPaymentAccount(0f);
                 buyCourse=buyCourseService.save(buyCourse);
             }else{
