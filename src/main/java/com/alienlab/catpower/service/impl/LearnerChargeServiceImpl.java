@@ -164,6 +164,9 @@ public class LearnerChargeServiceImpl implements LearnerChargeService{
             charge.setCourse(sche.getCourse());
             charge.setChargeTime(ZonedDateTime.now());
             charge.setCoach(sche.getCoach());
+            if(buyCourse.getCoach()==null){//卡券兑换的课程没有绑定教练，在签到时，绑定当前教练。
+                buyCourse.setCoach(sche.getCoach());
+            }
             charge.setRemainNumber(remain);
             charge=learnerChargeRepository.save(charge);
             buyCourse.setRemainClass(remain);
