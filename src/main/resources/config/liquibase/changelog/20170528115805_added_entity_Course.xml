@@ -56,6 +56,13 @@
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
-        
+
+    </changeSet>
+    <changeSet id="20170829001" author="juhuiguang">
+        <addColumn tableName="course">
+            <column name="course_expireday" type="integer">
+                <constraints nullable="true" />
+            </column>
+        </addColumn>
     </changeSet>
 </databaseChangeLog>

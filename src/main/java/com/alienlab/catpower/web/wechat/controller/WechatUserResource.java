@@ -123,4 +123,11 @@ public class WechatUserResource {
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 
+    @GetMapping("/wechat-users/openid/{openid}")
+    @Timed
+    public ResponseEntity<WechatUser> getWechatUser(@PathVariable String openid) {
+        WechatUser wechatUser = wechatUserService.findUserByOpenid(openid);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(wechatUser));
+    }
+
 }

@@ -325,14 +325,6 @@ public class ResponseService {
                 String link="";
                 String state=data.getString(namefield);
                 link=wechatUtil.getPageAuthUrl(typeurl,data.getString(idfield));
-//                //如果是业务员推荐企业注册
-//                if(typeurl.indexOf("enterpriseRegistration")>0&&namefield.equals("stuff_name")){
-//                    link=wechatUtil.getPageAuthUrl(typeurl,"0and"+data.getString(idfield));
-//                } else if(qrkey.startsWith("6")){
-//                    link=wechatUtil.getPageAuthUrl(typeurl,"6and"+data.getString(idfield));
-//                }else{
-//                    link=wechatUtil.getPageAuthUrl(typeurl,data.getString(idfield));
-//                }
 
                 System.out.println(qrjson);
                 return messageProcessor.getSingleNews(from,to,

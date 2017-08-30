@@ -179,6 +179,7 @@ public class LearnerChargeServiceImpl implements LearnerChargeService{
             exp+=sche.getCourse().getCoursePrices()/sche.getCourse().getTotalClassHour();
             learner.setExperience(exp);
             learnerService.save(learner);
+            courseSchedulingService.save(sche);
             return charge;
         }else{
             throw new Exception("课程课时已用完");

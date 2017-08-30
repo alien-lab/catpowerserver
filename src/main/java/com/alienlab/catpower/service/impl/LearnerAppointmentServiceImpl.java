@@ -63,8 +63,8 @@ public class LearnerAppointmentServiceImpl implements LearnerAppointmentService 
 
     @Override
     public Map getAppointment(Long learnerId) throws Exception{
-        List<LearnerAppointment> allAppointment=learnerAppointmentRepository.findAppointmentByLearner(learnerId);
-        List<LearnerAppointment> appointing=learnerAppointmentRepository.findAppointingByLearner(learnerId);
+        List<LearnerAppointment> allAppointment=learnerAppointmentRepository.findAppointmentByLearner(learnerId,ZonedDateTime.now());
+        List<LearnerAppointment> appointing=learnerAppointmentRepository.findAppointingByLearner(learnerId,ZonedDateTime.now());
         List<LearnerAppointment> appointed=learnerAppointmentRepository.findAppointedByLearner(learnerId);
         Map map=new HashMap();
         map.put("allAppointment",allAppointment);
