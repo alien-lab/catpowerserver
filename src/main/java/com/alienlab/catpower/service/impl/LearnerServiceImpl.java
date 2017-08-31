@@ -210,7 +210,7 @@ public class LearnerServiceImpl implements LearnerService{
         }
         Learner l=learnerRepository.findLearnerByOpenid(wechatUser.getOpenId());
         if(l!=null){
-            throw new Exception("您已经绑定了"+l.getLearneName()+"学院账户。");
+            throw new Exception("您已经绑定了"+l.getLearneName()+"学员账户。");
         }
         learner.setWechatUser(wechatUser);
         return learnerRepository.save(learner);
