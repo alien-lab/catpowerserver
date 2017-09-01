@@ -126,26 +126,14 @@
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-sm-4">
                                     <!--弹出框:签到二维码-->
-                                    <button ng-click="signQr(arrangement.sche.id)" ng-if="arrangement.sche.status != '已下课'" type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#myModal" style="float: right;">
-                                        获取签到码
+                                    <button ng-click="signQr(arrangement)" ng-if="arrangement.sche.status!='已下课'" class="btn btn-info btn-md" style="float: right;">
+                                        <span ng-if="!arrangement.showQr">显示签到码</span>
+                                        <span ng-if="arrangement.showQr">隐藏签到码</span>
                                     </button>
-                                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                    <h4 class="modal-title" id="myModalLabel"><strong style="color: #ff0000;">{{scheCourseName}}</strong>课程的二维码</h4>
-                                                </div>
-                                                <div class="modal-body" style="text-align: center;">
-                                                    <img ng-src="{{arrangementCourseQr}}"/>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="reloadshopop()" >关闭</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
+                            </div>
+                            <div class="col-md-12" ng-if="arrangement.showQr">
+                                <img ng-src="{{arrangement.arrangementCourseQr}}" style="width:50%;"/>
                             </div>
                             <!--第三部分：签到学员数，添加学员按钮-->
                             <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 0;" >

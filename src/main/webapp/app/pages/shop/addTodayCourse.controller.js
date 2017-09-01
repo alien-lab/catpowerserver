@@ -18,10 +18,6 @@
             vm.courses = Course.query();
             vm.coaches = Coach.query();
 
-            $timeout(function (){
-                angular.element('.form-group:eq(1)>select').focus();
-            });
-
             //上课状态
             $scope.statusList = [{
                 id:'1',
@@ -33,8 +29,6 @@
                 id:'3',
                 status:'已下课'
             }];
-            //默认上课状态
-            vm.courseScheduling.status = '未开始';
             $scope.getCoachStatus = function () {
                 vm.courseScheduling.status = this.sta.status;
             };

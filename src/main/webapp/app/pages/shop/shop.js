@@ -5,7 +5,8 @@
     'use strict';
     var app=angular.module('catpowerserverApp');
 
-    app.controller("shopOpController",["$http","CourseScheduling","$scope","$filter","shopopService","BuyCourse","buyCourseTodayService","AlertService","qrService","ticket","pagingParams","ParseLinks","$state","$window",function($http,CourseScheduling,$scope,$filter,shopopService,BuyCourse,buyCourseTodayService,AlertService,qrService,ticket,pagingParams,ParseLinks,$state,$window){
+    app.controller("shopOpController",["$http","CourseScheduling","$scope","$filter","shopopService","BuyCourse","buyCourseTodayService","AlertService","qrService","ticket","pagingParams","ParseLinks","$state","$window",
+        function($http,CourseScheduling,$scope,$filter,shopopService,BuyCourse,buyCourseTodayService,AlertService,qrService,ticket,pagingParams,ParseLinks,$state,$window){
         var vm = this;
 
         $scope.outCourse = null;
@@ -13,10 +14,70 @@
         $scope.haveBuyCourse=false;
         $scope.noneBuyCourse = false;
 
-        //刷新界面
-        $scope.reloadshopop = function () {
-            $window.location.reload();
+        $scope.$on('catpowerserverApp:courseSchedulingUpdate', function(e, msg) {
+            loadSche();
+        });
+
+        //获取签到二维码
+        $scope.signQr = function (arrangment) {
+            var scheCourseName=arrangment.sche.course.courseName;
+            qrService.loadSignQr(arrangment.sche.id,function (data) {
+                if(arrangment.showQr==null)arrangment.showQr=false;
+                arrangment.showQr=!arrangment.showQr;
+                arrangment.arrangementCourseQr = ticket+data.qrTicker;
+            })
         };
+
+        //下课
+        $scope.getOutClass = function (id) {
+            this.outCourse = true;
+            //插入排课结束时间
+            var scheId = id;
+            shopopService.addEndCourseTime(scheId,function (data,flag) {
+                if(!flag){
+                    // alert(data);
+                }
+            });
+            var index = -1;
+            if(this.arrangement.sche.status == '已下课' ){
+                //alert(1);
+            }
+            angular.forEach($scope.coachArrangements,function (item,key) {
+                if(item.sche.id == id ){
+                    index = key;
+                }
+            });
+            if(index != -1){
+                $scope.coachArrangements[index].sche.status = '已下课';
+            }
+
+        };
+        //取消教练排课
+        $scope.removeCoachArrangement = function (id) {
+            var index = -1;
+            angular.forEach($scope.coachArrangements,function (item,key) {
+                if(item.id == id ){
+                    index = key;
+                }
+            });
+            if(index != -1){
+                $scope.coachArrangements.splice(index,1);
+            }
+            return $scope.coachArrangements;
+        };
+        //添加学员
+        $scope.addStu = function (scheId) {
+            var index = -1;
+            angular.forEach($scope.coachArrangements,function (item,key) {
+                if(item.sche.id == scheId ){
+                    index = key;
+                }
+            });
+            if(index != -1){
+                console.log($scope.coachArrangements[index]);
+            }
+        }
+
 
         loadSche();
         function loadSche(date){
@@ -49,77 +110,6 @@
                 }
                 $scope.coachArrangements = data;
                 console.log($scope.coachArrangements);
-                //获取签到二维码
-                $scope.signQr = function (scheId) {
-                    var index = -1;
-                    var scheCourseName;
-                    angular.forEach($scope.coachArrangements,function (item,key) {
-                        if(item.sche.id == scheId){
-                            index = key;
-                            scheCourseName = item.sche.course.courseName;
-                        }
-                    });
-                    if(index != -1){
-                        qrService.loadSignQr(scheId,function (data) {
-                            $scope.qr=data;
-                            console.log($scope.qr);
-                            console.log($scope.qr.qrTicker);
-                            $scope.arrangementCourseQr = ticket+$scope.qr.qrTicker;
-                            console.log($scope.arrangementCourseQr);
-                            $scope.scheCourseName = scheCourseName;
-                        })
-                    }
-                };
-
-                //下课
-                $scope.getOutClass = function (id) {
-                    this.outCourse = true;
-                    //插入排课结束时间
-                    var scheId = id;
-                    shopopService.addEndCourseTime(scheId,function (data,flag) {
-                        if(!flag){
-                            // alert(data);
-                        }
-                    });
-                    var index = -1;
-                    if(this.arrangement.sche.status == '已下课' ){
-                        //alert(1);
-                    }
-                    angular.forEach($scope.coachArrangements,function (item,key) {
-                        if(item.sche.id == id ){
-                            index = key;
-                        }
-                    });
-                    if(index != -1){
-                        $scope.coachArrangements[index].sche.status = '已下课';
-                    }
-
-                };
-                //取消教练排课
-                $scope.removeCoachArrangement = function (id) {
-                    var index = -1;
-                    angular.forEach($scope.coachArrangements,function (item,key) {
-                        if(item.id == id ){
-                            index = key;
-                        }
-                    });
-                    if(index != -1){
-                        $scope.coachArrangements.splice(index,1);
-                    }
-                    return $scope.coachArrangements;
-                };
-                //添加学员
-                $scope.addStu = function (scheId) {
-                    var index = -1;
-                    angular.forEach($scope.coachArrangements,function (item,key) {
-                        if(item.sche.id == scheId ){
-                            index = key;
-                        }
-                    });
-                    if(index != -1){
-                        console.log($scope.coachArrangements[index]);
-                    }
-                }
             });
         }
 

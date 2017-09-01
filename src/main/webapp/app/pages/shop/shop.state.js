@@ -121,11 +121,11 @@
                         resolve: {
                             addArrangement: function () {
                                 return {
-                                    startTime: null,
+                                    startTime: new Date(),
                                     endTime: null,
-                                    status: null,
+                                    status: "进行中",
                                     qrCode: null,
-                                    signInCount: null,
+                                    signInCount: 0,
                                     id: null
                                 };
                             }
