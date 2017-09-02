@@ -150,4 +150,5 @@ wechat:
     paycallback:    http://test.moistmedia.net/catpowerserver/wxpay
     host:
         basepath:   test.moistmedia.net/catpowerwechat/
+        server: test.moistmedia.net/catpowerserver/
         allowed:    116.62.47.176,test.moistmedia.net,www.bigercat.com

@@ -97,7 +97,7 @@ public class Wechat {
     }
 
     @GetMapping(value="/snsapi")
-    public String dispatch(@RequestParam String code,@RequestParam String router){
+    public String dispatch(@RequestParam String code,@RequestParam String router,@RequestParam(required = false) String state){
         logger.info("wechat dispatch>>code="+code+",router="+router);
         if(StringUtils.isEmpty(router))router="/";
         if(code==null){
@@ -133,7 +133,7 @@ public class Wechat {
                     "timestamp="+timestamp+"&" +
                     "nonce="+nonce+"&" +
                     "signature="+signature+"&" +
-                    "openid="+openid;
+                    "openid="+openid+"&state="+((state==null)?"":state);
                 logger.info(result);
                 return result;
             } catch (Exception e) {

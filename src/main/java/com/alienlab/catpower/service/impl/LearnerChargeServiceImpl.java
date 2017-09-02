@@ -1,5 +1,6 @@
 package com.alienlab.catpower.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.alienlab.catpower.domain.*;
 import com.alienlab.catpower.repository.BuyCourseRepository;
 import com.alienlab.catpower.repository.CourseSchedulingRepository;
@@ -164,10 +165,12 @@ public class LearnerChargeServiceImpl implements LearnerChargeService{
             charge.setCourse(sche.getCourse());
             charge.setChargeTime(ZonedDateTime.now());
             charge.setCoach(sche.getCoach());
+            charge.setBuyCourseId(String.valueOf(buyCourse.getId()));
             if(buyCourse.getCoach()==null){//卡券兑换的课程没有绑定教练，在签到时，绑定当前教练。
                 buyCourse.setCoach(sche.getCoach());
             }
             charge.setRemainNumber(remain);
+            System.out.println("charge course??>>>>>"+JSON.toJSONString(charge));
             charge=learnerChargeRepository.save(charge);
             buyCourse.setRemainClass(remain);
             buyCourse=buyCourseRepository.save(buyCourse);
@@ -175,8 +178,9 @@ public class LearnerChargeServiceImpl implements LearnerChargeService{
             if(learner.getFirstTotime()==null){
                 learner.setFirstTotime(ZonedDateTime.now());
             }
-            long exp=learner.getExperience();
-            exp+=sche.getCourse().getCoursePrices()/sche.getCourse().getTotalClassHour();
+            Long exp=learner.getExperience();
+            if(exp==null)exp=0L;
+            exp+=(long)(sche.getCourse().getCoursePrices()/sche.getCourse().getTotalClassHour()*1L);
             learner.setExperience(exp);
             learnerService.save(learner);
             courseSchedulingService.save(sche);

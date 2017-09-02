@@ -69,7 +69,8 @@ public class ResponseService {
 
     @Value("${wechat.host.basepath}")
     private String domain;
-
+    @Value("${wechat.host.server}")
+    private String serverPath;
 
 
 
@@ -113,9 +114,15 @@ public class ResponseService {
                 String fromuser=json_msg.getString("FromUserName");
                 Long eventTime=json_msg.getLong("CreateTime");
                 String eventKey=fromuser+"$"+event;
+                System.out.println("eventKey>>>"+eventKey);
+
                 if(MessageKey.msgMap.containsKey(eventKey)){
+
                     Long lasttime=MessageKey.msgMap.get(eventKey);
-                    if(eventTime-lasttime<5){
+
+                    System.out.println("lasttime>>>"+lasttime);
+                    if(eventTime-lasttime<50){
+                        System.out.println("fast request!!");
                         return null;
                     }
                 }else{
@@ -226,7 +233,7 @@ public class ResponseService {
         //课程签到
         if(json_msg.getString("EventKey").startsWith("1and")){
             String title="课程签到成功！";
-            String url="http://"+domain+"/#!/stusign";
+            String url="http://"+serverPath+"/wechat/snsapi?router=stusign";
             String from=json_msg.getString("ToUserName");
             String to=json_msg.getString("FromUserName");
             String state=json_msg.getString("EventKey").substring(4);
@@ -250,7 +257,7 @@ public class ResponseService {
 
         }else if(json_msg.getString("EventKey").startsWith("2and")){//人员绑定
             String title="学员账户绑定成功！";
-            String url="http://"+domain+"/#!/stuindex";
+            String url="http://"+serverPath+"/wechat/snsapi?router=stuindex";
             String from=json_msg.getString("ToUserName");
             String to=json_msg.getString("FromUserName");
             String state=json_msg.getString("EventKey").substring(4);
@@ -266,13 +273,13 @@ public class ResponseService {
             }
             return messageProcessor.getSingleNews(from,to,
                 title,
-                url,
+                link,
                 "http://"+domain+"/img/logo.jpg",
                 desc
             );
         }else if (json_msg.getString("EventKey").startsWith("3and")){
             String title="教练账户绑定成功！";
-            String url="http://"+domain+"/#!/coachindex";
+            String url="http://"+domain+"/wechat/snsapi?router=coachindex";
             String from=json_msg.getString("ToUserName");
             String to=json_msg.getString("FromUserName");
             String state=json_msg.getString("EventKey").substring(4);
@@ -288,7 +295,7 @@ public class ResponseService {
             }
             return messageProcessor.getSingleNews(from,to,
                 title,
-                url,
+                link,
                 "http://"+domain+"/img/logo.jpg",
                 desc
             );
