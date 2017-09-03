@@ -138,7 +138,7 @@ public class CoachServiceImpl implements CoachService{
 
     @Override
     public Coach bindWechatUser(WechatUser wechatUser, Coach coach) throws Exception {
-        Coach coach1 = coachRepository.findCoachBycoachWechatopenid(coach.getCoachWechatopenid());
+        Coach coach1 = coachRepository.findCoachBycoachWechatopenid(wechatUser.getOpenId());
         System.out.println(coach1);
         if (coach1 != null){
             throw new Exception("教练账户" + coach.getCoachName() + "已被" + coach.getCoachWechatname() + "绑定");
