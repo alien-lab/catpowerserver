@@ -279,7 +279,7 @@ public class ResponseService {
             );
         }else if (json_msg.getString("EventKey").startsWith("3and")){
             String title="教练账户绑定成功！";
-            String url="http://"+domain+"/wechat/snsapi?router=coachindex";
+            String url="http://"+serverPath+"/wechat/snsapi?router=coachindex";
             String from=json_msg.getString("ToUserName");
             String to=json_msg.getString("FromUserName");
             String state=json_msg.getString("EventKey").substring(4);

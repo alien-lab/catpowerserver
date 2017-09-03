@@ -127,7 +127,7 @@ public class Wechat {
                     new UsernamePasswordAuthenticationToken("wechat", "wechat123!");
                 Authentication authentication = this.authenticationManager.authenticate(authenticationToken);
                 String jwt = tokenProvider.createToken(authentication, true);
-                String result="redirect:http://"+basePath+"index.html#!/"+router+"?" +
+                String result="redirect:http://"+basePath+"index.html#!/"+router+((router.indexOf("?")>=0)?"&":"?" )+
                     "token="+jwt+"&" +
                     "appid="+appid+"&" +
                     "timestamp="+timestamp+"&" +
