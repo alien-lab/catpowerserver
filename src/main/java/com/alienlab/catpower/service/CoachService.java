@@ -54,4 +54,6 @@ public interface CoachService {
     Coach bindWechatUser(WechatUser wechatUser, Coach coach)throws Exception;
 
     Coach bindWechatUser(String openid, Long coachId)throws Exception;
+
+    Coach findCoachByOpenId(String openid) throws Exception;
 }

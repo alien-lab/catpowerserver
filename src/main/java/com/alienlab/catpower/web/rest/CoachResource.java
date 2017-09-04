@@ -156,4 +156,18 @@ public class CoachResource {
         }
     }
 
+    @ApiOperation(value = "根据openID获取教练信息")
+    @GetMapping("/coaches/info")
+    public ResponseEntity getCoachInfoByOpenId(@RequestParam String openid){
+        try {
+            Coach coach = coachService.findCoachByOpenId(openid);
+            return ResponseEntity.ok(coach);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
+
+        }
+    }
+
 }

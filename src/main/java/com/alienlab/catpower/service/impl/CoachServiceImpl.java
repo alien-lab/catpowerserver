@@ -143,9 +143,6 @@ public class CoachServiceImpl implements CoachService{
         if (coach1 != null){
             throw new Exception("教练账户" + coach.getCoachName() + "已被" + coach.getCoachWechatname() + "绑定");
         }
-       /*if(coach.getWechatUser() != null){
-            throw new Exception("教练账户" + coach.getCoachName() + "已被" + coach.getWechatUser().getNickName() + "绑定");
-        }*/
         coach.setCoachWechatopenid(wechatUser.getOpenId());
         coach.setCoachWechatname(wechatUser.getNickName());
         coach.setCoachWechatpicture(wechatUser.getIcon());
@@ -163,5 +160,10 @@ public class CoachServiceImpl implements CoachService{
             throw new Exception("未找到已注册的教练信息，教练编码：" + coachId);
         }
         return bindWechatUser(user,coach);
+    }
+
+    @Override
+    public Coach findCoachByOpenId(String openid) throws Exception {
+        return coachRepository.findCoachByCoachWechatopenid(openid);
     }
 }
