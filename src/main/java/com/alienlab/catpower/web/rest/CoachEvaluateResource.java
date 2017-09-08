@@ -160,4 +160,17 @@ public class CoachEvaluateResource {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
         }
     }
+
+    @ApiOperation(value = "根据排课和学员的ID获取教练评价")
+    @GetMapping("/coach-evaluates-learner/coach-evaluates")
+    public ResponseEntity getCoachEvaluateByLearnerId(@RequestParam Long scheId,@RequestParam Long learnerId){
+        try {
+            CoachEvaluate result = coachEvaluateService.getCoachEvaluateByLearnerId(scheId,learnerId);
+            return ResponseEntity.ok().body(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
+    }
 }

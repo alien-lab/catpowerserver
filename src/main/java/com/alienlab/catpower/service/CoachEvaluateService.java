@@ -59,4 +59,6 @@ public interface CoachEvaluateService {
      * 根据教练ID获取此教练的评价
      */
     List<CoachEvaluate> getCoachEvaluateByCoachId(Long coachId) throws Exception;
+
+    CoachEvaluate getCoachEvaluateByLearnerId(Long scheId,Long learnerId) throws Exception;
 }

@@ -127,5 +127,18 @@ public class CoachEvaluateServiceImpl implements CoachEvaluateService{
         return list;
     }
 
+    @Override
+    public CoachEvaluate getCoachEvaluateByLearnerId(Long scheId, Long learnerId) throws Exception {
+        LearnerCharge learnerCharge=learnerChargeRepository.findLearnerChargeByLearnerIdAndScheId(learnerId,scheId);
+        if (learnerCharge==null){
+            throw new Exception("没有找到对应的核销记录！");
+        }
+        CoachEvaluate coachEvaluate=coachEvaluateRepository.findCoachEvaluateByLearnerIdAndlearnChargeId(learnerId,learnerCharge.getId());
+        if (coachEvaluate==null){
+            throw new Exception("您还没有填写教练建议哦！");
+        }
+        return coachEvaluate;
+    }
+
 
 }
