@@ -2,6 +2,7 @@ package com.alienlab.catpower.repository;
 
 import com.alienlab.catpower.domain.Coach;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 
@@ -11,6 +12,9 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface CoachRepository extends JpaRepository<Coach,Long> {
+    //根据openID查找教练信息
+    @Query("select a from Coach a where a.coachWechatopenid = ?1")
+    Coach findCoachByCoachWechatopenid(String coachWechatopenid);
 
     Coach findCoachBycoachWechatopenid(String coachWechatopenid);
 }
