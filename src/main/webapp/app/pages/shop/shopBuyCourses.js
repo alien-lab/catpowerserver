@@ -120,7 +120,6 @@
             'getCourseByTime':{url:'api/buy-courses/time',method: 'GET',isArray:true}
         });
     }]);
-
 })();
 
 

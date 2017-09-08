@@ -1,7 +1,7 @@
 <div>
     <h2 data-translate="catpowerserverApp.buyCourse.home.title">Buy Courses</h2>
     <jhi-alert></jhi-alert>
-    <div class="container-fluid">
+    <!--<div class="container-fluid">
         <div class="row">
             <div class="col-xs-4 no-padding-left">
                 <button class="btn btn-primary" ui-sref="buy-course.new" >
@@ -12,47 +12,52 @@
                 </button>
             </div>
         </div>
-    </div>
+    </div>-->
     <br/>
     <div class="table-responsive">
         <table class="jh-table table table-striped">
             <thead>
                 <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
-                    <th jh-sort-by="id"><span data-translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="paymentWay"><span data-translate="catpowerserverApp.buyCourse.paymentWay">Payment Way</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="paymentAccount"><span data-translate="catpowerserverApp.buyCourse.paymentAccount">Payment Account</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="buyTime"><span data-translate="catpowerserverApp.buyCourse.buyTime">Buy Time</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="status"><span data-translate="catpowerserverApp.buyCourse.status">Status</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="operator"><span data-translate="catpowerserverApp.buyCourse.operator">Operator</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="operateContent"><span data-translate="catpowerserverApp.buyCourse.operateContent">Operate Content</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="operateTime"><span data-translate="catpowerserverApp.buyCourse.operateTime">Operate Time</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="remainClass"><span data-translate="catpowerserverApp.buyCourse.remainClass">Remain Class</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="learner.id"><span data-translate="catpowerserverApp.buyCourse.learner">Learner</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <!--<th jh-sort-by="id"><span data-translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>-->
                     <th jh-sort-by="course.id"><span data-translate="catpowerserverApp.buyCourse.course">Course</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="status"><span data-translate="catpowerserverApp.buyCourse.status">Status</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="paymentAccount"><span data-translate="catpowerserverApp.buyCourse.paymentAccount">Payment Account</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="paymentWay"><span data-translate="catpowerserverApp.buyCourse.paymentWay">Payment Way</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="buyTime"><span data-translate="catpowerserverApp.buyCourse.buyTime">Buy Time</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="learner.id"><span data-translate="catpowerserverApp.buyCourse.learner">Learner</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="remainClass"><span data-translate="catpowerserverApp.buyCourse.remainClass">Remain Class</span> <span class="glyphicon glyphicon-sort"></span></th>
+
                     <th jh-sort-by="coach.id"><span data-translate="catpowerserverApp.buyCourse.coach">Coach</span> <span class="glyphicon glyphicon-sort"></span></th>
+
+
+                    <!--<th jh-sort-by="operator"><span data-translate="catpowerserverApp.buyCourse.operator">Operator</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="operateContent"><span data-translate="catpowerserverApp.buyCourse.operateContent">Operate Content</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="operateTime"><span data-translate="catpowerserverApp.buyCourse.operateTime">Operate Time</span> <span class="glyphicon glyphicon-sort"></span></th>-->
+
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="buyCourse in vm.buyCourses track by buyCourse.id">
-                    <td><a ui-sref="buy-course-detail({id:buyCourse.id})">{{buyCourse.id}}</a></td>
-                    <td>{{buyCourse.paymentWay}}</td>
-                    <td>{{buyCourse.paymentAccount}}</td>
-                    <td>{{buyCourse.buyTime | date:'medium'}}</td>
+                    <!--<td><a ui-sref="buy-course-detail({id:buyCourse.id})">{{buyCourse.id}}</a></td>-->
+                    <td>
+                        <a ui-sref="course-detail({id:buyCourse.course.id})">{{buyCourse.course.courseName}}</a>
+                    </td>
                     <td>{{buyCourse.status}}</td>
-                    <td>{{buyCourse.operator}}</td>
-                    <td>{{buyCourse.operateContent}}</td>
-                    <td>{{buyCourse.operateTime | date:'medium'}}</td>
+                    <td>{{buyCourse.paymentAccount}}</td>
+                    <td>{{buyCourse.paymentWay}}</td>
+                    <td>{{buyCourse.buyTime | date:'medium'}}</td>
+                    <td>
+                        <a ui-sref="learner-detail({id:buyCourse.learner.id})">{{buyCourse.learner.learneName}}</a>
+                    </td>
                     <td>{{buyCourse.remainClass}}</td>
                     <td>
-                        <a ui-sref="learner-detail({id:buyCourse.learner.id})">{{buyCourse.learner.id}}</a>
+                        <a ui-sref="coach-detail({id:buyCourse.coach.id})">{{buyCourse.coach.coachName}}</a>
                     </td>
-                    <td>
-                        <a ui-sref="course-detail({id:buyCourse.course.id})">{{buyCourse.course.id}}</a>
-                    </td>
-                    <td>
-                        <a ui-sref="coach-detail({id:buyCourse.coach.id})">{{buyCourse.coach.id}}</a>
-                    </td>
+
+                    <!--<td>{{buyCourse.operator}}</td>
+                    <td>{{buyCourse.operateContent}}</td>
+                    <td>{{buyCourse.operateTime | date:'medium'}}</td>-->
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"
@@ -67,12 +72,12 @@
                                 <span class="glyphicon glyphicon-pencil"></span>
                                 <span class="hidden-sm-down" data-translate="entity.action.edit"></span>
                             </button>
-                            <button type="submit"
+                            <!--<button type="submit"
                                     ui-sref="buy-course.delete({id:buyCourse.id})"
                                     class="btn btn-danger btn-sm">
                                 <span class="glyphicon glyphicon-remove-circle"></span>
                                 <span class="hidden-sm-down" data-translate="entity.action.delete"></span>
-                            </button>
+                            </button>-->
                         </div>
                     </td>
                 </tr>
