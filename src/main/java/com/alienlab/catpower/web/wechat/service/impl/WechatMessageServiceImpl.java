@@ -129,7 +129,14 @@ public class WechatMessageServiceImpl implements WechatMessageService {
 
     @Override
     public void sendAppointMsg(Long appointmentId) throws Exception {
+
         LearnerAppointment learnerAppointment=learnerAppointmentRepository.findOne(appointmentId);
+
+       // learnerAppointment.getAppointmentDate()
+        //获取时间
+        ZonedDateTime zonedDateTime =learnerAppointment.getAppointmentDate();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:ss");
+        String time = zonedDateTime.format(dtf);
         if(learnerAppointment==null){
             throw new Exception("未找到预约信息，预约编号为："+appointmentId);
         }
@@ -158,7 +165,7 @@ public class WechatMessageServiceImpl implements WechatMessageService {
 
         //上课时间
         JSONObject keyword3 =new JSONObject();
-        keyword3.put("value",learnerAppointment.getAppointmentDate());
+        keyword3.put("value",time);
         keyword3.put("color","#173177");
         param.put("keyword3",keyword3);
 
