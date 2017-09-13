@@ -22,10 +22,10 @@
             "operator": "操作人：",
             "operateContent": "操作的内容：",
             "operateTime": "操作的时间：",
-            "remainClass": "剩余的课次：",
+            "remainClass": "剩余课次：",
             "learner": "学员：",
-            "course": "你想选择的课程：",
-            "coach": "你想选择的教练："
+            "course": "课程：",
+            "coach": "教练："
         }
     }
 }

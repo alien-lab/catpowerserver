@@ -306,5 +306,28 @@ public class BuyCourseResource {
         }
 
     }
+    /**
+     *
+     * @param page
+     * @param size
+     * @return
+     */
+    @ApiOperation(value="查询退课情况")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name="page",value="分页页码",required = true,paramType = "query"),
+        @ApiImplicitParam(name="size",value="分页长度",required = true,paramType = "query")
+    })
+    @GetMapping("/buy-courses/status")
+    public ResponseEntity getBackClass(@RequestParam String status,@RequestParam int page,@RequestParam int size){
+        try {
+            Page<BuyCourse> result = buyCourseService.getBackCoursesByStatus(status,new PageRequest(page, size));
+            HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(result, "/api/buy-courses/status");
+            return new ResponseEntity<>(result.getContent(), headers, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er = new ExecResult(false, e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
+    }
 }
 

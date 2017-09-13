@@ -313,5 +313,13 @@ public class BuyCourseServiceImpl implements BuyCourseService{
         return buyCourseRepository.findBuyCourseByBuyTimeBetweenOrderByBuyTimeDesc(butTime1,butTime2,pageable);
     }
 
+    @Override
+    public Page<BuyCourse> getBackCoursesByStatus(String status, Pageable pageable) throws Exception {
+        if(status == null){
+            throw new Exception("请输入买课状态");
+        }
+        return buyCourseRepository.findBuyCoursesByStatus(status,pageable);
+    }
+
 
 }

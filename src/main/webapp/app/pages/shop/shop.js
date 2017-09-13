@@ -9,10 +9,13 @@
         function($http,CourseScheduling,$scope,$filter,shopopService,BuyCourse,buyCourseTodayService,AlertService,qrService,ticket,pagingParams,ParseLinks,$state,$window){
         var vm = this;
 
-        $scope.outCourse = null;
+
         $scope.buyCourseCountToday = null;
         $scope.haveBuyCourse=false;
         $scope.noneBuyCourse = false;
+        $scope.coachArrangements = [];
+        $scope.registerCount = '';
+            $scope.buyCourseCountToday = '';
 
         $scope.$on('catpowerserverApp:courseSchedulingUpdate', function(e, msg) {
             loadSche();
@@ -29,6 +32,7 @@
         };
 
         //下课
+            $scope.outCourse = null;
         $scope.getOutClass = function (id) {
             this.outCourse = true;
             //插入排课结束时间
@@ -52,7 +56,33 @@
             }
 
         };
-        //取消教练排课
+        //下课事件
+            /*$scope.outCourse = false;
+            $scope.getOutClass = function(sche){
+                this.outCourse = true;
+                console.log(sche);
+                console.log(sche.status);
+                sche.status = "已下课";
+                shopopService.addEndCourseTime(sche.id,function (data,flag) {
+                    if(!flag){
+                        // alert(data);
+                    }
+                });
+                console.log(sche.status);
+                console.log($scope.coachArrangements);
+                angular.forEach($scope.coachArrangements,function (item  ) {
+                    if(item.sche.status && item.sche.status == "已下课"){
+                        console.log("++++++++++++++++++++++++++",item.sche.status);
+                        $scope.outCourse = true;
+                        console.log($scope.coachArrangements);
+                    }else{
+                        console.log("******************************",item.sche.status);
+                        $scope .outCourse = false;
+                        console.log($scope.coachArrangements);
+                    }
+
+                });
+            };*/
         $scope.removeCoachArrangement = function (id) {
             var index = -1;
             angular.forEach($scope.coachArrangements,function (item,key) {
@@ -76,7 +106,7 @@
             if(index != -1){
                 console.log($scope.coachArrangements[index]);
             }
-        }
+        };
 
 
         loadSche();
@@ -112,7 +142,6 @@
                 console.log($scope.coachArrangements);
             });
         }
-
         /**
          * 今日售课
          */

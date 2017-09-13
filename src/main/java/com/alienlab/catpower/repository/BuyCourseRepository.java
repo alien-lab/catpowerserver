@@ -1,9 +1,6 @@
 package com.alienlab.catpower.repository;
 
-import com.alienlab.catpower.domain.BuyCourse;
-import com.alienlab.catpower.domain.Coach;
-import com.alienlab.catpower.domain.Course;
-import com.alienlab.catpower.domain.Learner;
+import com.alienlab.catpower.domain.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -45,6 +42,9 @@ public interface BuyCourseRepository extends JpaRepository<BuyCourse,Long> {
     //查询支付方式
     @Query("select a from BuyCourse a group by a.paymentWay")
     List<BuyCourse> findBuyCourse();
+
+    //查询退课情况
+    Page<BuyCourse> findBuyCoursesByStatus(String status, Pageable pageable);
 
     @Query("select a from BuyCourse a where a.coach.id=?1 group by a.learner.id")
     List<BuyCourse> getBuyCourseByCoachId(Long coachId);

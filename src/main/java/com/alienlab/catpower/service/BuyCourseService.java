@@ -87,4 +87,6 @@ public interface BuyCourseService {
     //根据时间查询售课情况
     Page<BuyCourse> getBuyCourseByTime(ZonedDateTime butTime1,ZonedDateTime butTime2,Pageable pageable) throws Exception;
 
+    //查询退课情况
+    Page<BuyCourse> getBackCoursesByStatus(String status,Pageable pageable)throws Exception;
 }
