@@ -70,6 +70,45 @@
         </createTable>
         <dropDefaultValue tableName="buy_course" columnName="buy_time" columnDataType="datetime"/>
         <dropDefaultValue tableName="buy_course" columnName="operate_time" columnDataType="datetime"/>
-        
+
+    </changeSet>
+
+    <changeSet id="201709180002" author="juhuiguang">
+        <createTable tableName="online_order">
+            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="openid" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="order_time" type="timestamp">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="order_status" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="order_paytime" type="timestamp">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="order_wechatjson" type="varchar(2000)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="course_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
+        </createTable>
+    </changeSet>
+    <changeSet id="201709180003" author="juhuiguang">
+        <addForeignKeyConstraint baseColumnNames="course_id"
+                                 baseTableName="online_order"
+                                 constraintName="fk_online_order_course_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="course"/>
     </changeSet>
 </databaseChangeLog>

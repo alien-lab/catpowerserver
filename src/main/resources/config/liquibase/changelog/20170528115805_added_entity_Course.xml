@@ -65,4 +65,11 @@
             </column>
         </addColumn>
     </changeSet>
+    <changeSet id="20170918001" author="juhuiguang">
+        <addColumn tableName="course">
+            <column name="course_saleonline" type="varchar(10)">
+                <constraints nullable="true" />
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
