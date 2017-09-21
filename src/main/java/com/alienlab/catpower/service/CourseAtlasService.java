@@ -11,7 +11,7 @@ public interface CourseAtlasService {
 
     /**
      * Save a courseAtlas.
-     *
+     * 保存一个课程图册表
      * @param courseAtlas the entity to save
      * @return the persisted entity
      */
@@ -19,7 +19,7 @@ public interface CourseAtlasService {
 
     /**
      *  Get all the courseAtlases.
-     *  
+     *  得到所有的课程图册表
      *  @param pageable the pagination information
      *  @return the list of entities
      */
@@ -27,7 +27,7 @@ public interface CourseAtlasService {
 
     /**
      *  Get the "id" courseAtlas.
-     *
+     *  得到指定id的课程图册表
      *  @param id the id of the entity
      *  @return the entity
      */
@@ -35,7 +35,7 @@ public interface CourseAtlasService {
 
     /**
      *  Delete the "id" courseAtlas.
-     *
+     *  删除指定id的课程图册表
      *  @param id the id of the entity
      */
     void delete(Long id);

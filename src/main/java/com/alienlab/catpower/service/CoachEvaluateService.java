@@ -13,7 +13,7 @@ public interface CoachEvaluateService {
 
     /**
      * Save a coachEvaluate.
-     *
+     * 保存对教练的评价
      * @param coachEvaluate the entity to save
      * @return the persisted entity
      */
@@ -21,7 +21,7 @@ public interface CoachEvaluateService {
 
     /**
      *  Get all the coachEvaluates.
-     *
+     *  得到所有的对教练的评价
      *  @param pageable the pagination information
      *  @return the list of entities
      */
@@ -29,7 +29,7 @@ public interface CoachEvaluateService {
 
     /**
      *  Get the "id" coachEvaluate.
-     *
+     *  根据id获取对教练的评价
      *  @param id the id of the entity
      *  @return the entity
      */
@@ -37,7 +37,7 @@ public interface CoachEvaluateService {
 
     /**
      *  Delete the "id" coachEvaluate.
-     *
+     *  根据id删除对教练的评价
      *  @param id the id of the entity
      */
     void delete(Long id);
@@ -50,7 +50,7 @@ public interface CoachEvaluateService {
 
     /**
      * Save a coachEvaluate.
-     *
+     * 插入一条对教练的评价
      * @return the persisted entity
      */
     CoachEvaluate insert(Long serviceAttitude,Long speciality,Long like,String complain,Long evaluation,Long learnerId,Long scheId) throws Exception;

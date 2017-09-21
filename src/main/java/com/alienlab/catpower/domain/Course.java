@@ -48,6 +48,16 @@ public class Course implements Serializable {
     @Column(name = "course_type")
     private String courseType;
 
+
+    //课程到期的时间
+    @Column(name = "course_expireday")
+    private String course_expireday;
+    //是否在线上售卖
+    @Column(name = "course_saleonline")
+    private String course_saleonline;
+
+
+
     @OneToMany(mappedBy = "course")
     @JsonIgnore
     private Set<CourseAtlas> pictures = new HashSet<>();
@@ -186,6 +196,22 @@ public class Course implements Serializable {
         return this;
     }
 
+    public String getCourse_expireday() {
+        return course_expireday;
+    }
+
+    public void setCourse_expireday(String course_expireday) {
+        this.course_expireday = course_expireday;
+    }
+
+    public String getCourse_saleonline() {
+        return course_saleonline;
+    }
+
+    public void setCourse_saleonline(String course_saleonline) {
+        this.course_saleonline = course_saleonline;
+    }
+
     public Course addPictures(CourseAtlas courseAtlas) {
         this.pictures.add(courseAtlas);
         courseAtlas.setCourse(this);
@@ -225,16 +251,19 @@ public class Course implements Serializable {
     @Override
     public String toString() {
         return "Course{" +
-            "id=" + getId() +
-            ", courseName='" + getCourseName() + "'" +
-            ", courseIntroductions='" + getCourseIntroductions() + "'" +
-            ", totalClassHour='" + getTotalClassHour() + "'" +
-            ", coursePrices='" + getCoursePrices() + "'" +
-            ", courseVipprices='" + getCourseVipprices() + "'" +
-            ", classNumber='" + getClassNumber() + "'" +
-            ", courseOtherInfo='" + getCourseOtherInfo() + "'" +
-            ", courseThumbnail='" + getCourseThumbnail() + "'" +
-            ", courseType='" + getCourseType() + "'" +
-            "}";
+            "id=" + id +
+            ", courseName='" + courseName + '\'' +
+            ", courseIntroductions='" + courseIntroductions + '\'' +
+            ", totalClassHour=" + totalClassHour +
+            ", coursePrices=" + coursePrices +
+            ", courseVipprices=" + courseVipprices +
+            ", classNumber=" + classNumber +
+            ", courseOtherInfo='" + courseOtherInfo + '\'' +
+            ", courseThumbnail='" + courseThumbnail + '\'' +
+            ", courseType='" + courseType + '\'' +
+            ", course_expireday='" + course_expireday + '\'' +
+            ", course_saleonline='" + course_saleonline + '\'' +
+            ", pictures=" + pictures +
+            '}';
     }
 }

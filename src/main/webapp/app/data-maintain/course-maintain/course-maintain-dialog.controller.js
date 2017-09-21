@@ -24,6 +24,7 @@
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();
         });
+
         function clear () {
             $uibModalInstance.dismiss('cancel');
         }
@@ -45,5 +46,17 @@
         function onSaveError () {
             vm.isSaving = false;
         }
+
+        //下拉选择是否售卖
+        $scope.engineer = {
+            name: "Dani",
+            currentActivity: "选择是否在线售卖"
+        };
+
+        $scope.activities =
+            [
+                "在线售卖",
+                "不在线售卖"
+            ];
     }]);
 })();

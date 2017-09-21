@@ -14,7 +14,7 @@ public interface CourseService {
 
     /**
      * Save a course.
-     *
+     * 保存一门课程
      * @param course the entity to save
      * @return the persisted entity
      */
@@ -22,7 +22,7 @@ public interface CourseService {
 
     /**
      *  Get all the courses.
-     *
+     *  得到所有的课程
      *  @param pageable the pagination information
      *  @return the list of entities
      */
@@ -30,7 +30,7 @@ public interface CourseService {
 
     /**
      *  Get the "id" course.
-     *
+     *  根据id获取指定的课程
      *  @param id the id of the entity
      *  @return the entity
      */
@@ -38,7 +38,7 @@ public interface CourseService {
 
     /**
      *  Delete the "id" course.
-     *
+     *  删除指定id的课程
      *  @param id the id of the entity
      */
     void delete(Long id);

@@ -7,11 +7,18 @@
     </div>
     <div class="modal-body row">
         <jhi-alert-error></jhi-alert-error>
+
+
+
         <div class="col-md-12 col-lg-12 col-sm-12 form-group" ng-show="vm.course.id">
             <label for="id" data-translate="global.field.id">课程ID</label>
             <input type="text" class="form-control" id="id" name="id"
                    ng-model="vm.course.id" readonly />
         </div>
+
+
+
+
         <div class="col-md-6 col-lg-6 col-sm-6 form-group">
             <label class="control-label" for="field_courseName">课程名称</label>
             <input type="text" class="form-control" name="coachName" id="field_courseName"
@@ -45,6 +52,12 @@
                 {{courseType.course_type}}
             </a>
         </div>
+
+        <!--是否在线售卖的选项-->
+        <select ng-model="engineer.currentActivity" class="form-control" ng-options="act for act in activities"></select>
+
+
+
         <div class="col-md-12 col-lg-12 col-sm-12 form-group">
             <label class="control-label"  for="field_courseIntroductions">课程说明</label>
             <textarea  class="form-control" name="courseIntroductions" id="field_courseIntroductions"

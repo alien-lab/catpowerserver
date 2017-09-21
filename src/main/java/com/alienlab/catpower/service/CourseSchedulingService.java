@@ -15,7 +15,7 @@ public interface CourseSchedulingService {
 
     /**
      * Save a courseScheduling.
-     *
+     * 保存一个教练排课表
      * @param courseScheduling the entity to save
      * @return the persisted entity
      */
@@ -23,7 +23,7 @@ public interface CourseSchedulingService {
 
     /**
      *  Get all the courseSchedulings.
-     *
+     *  得到所有的教练排课表
      *  @param pageable the pagination information
      *  @return the list of entities
      */
@@ -31,7 +31,7 @@ public interface CourseSchedulingService {
 
     /**
      *  Get the "id" courseScheduling.
-     *
+     *  根据id获取指定的教练排课表
      *  @param id the id of the entity
      *  @return the entity
      */
@@ -39,7 +39,7 @@ public interface CourseSchedulingService {
 
     /**
      *  Delete the "id" courseScheduling.
-     *
+     *  删除指定的教练排课表
      *  @param id the id of the entity
      */
     void delete(Long id);

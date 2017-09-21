@@ -14,7 +14,7 @@ public interface LearnerChargeService {
 
     /**
      * Save a learnerCharge.
-     *
+     *  保存一条学员核销信息
      * @param learnerCharge the entity to save
      * @return the persisted entity
      */
@@ -22,7 +22,7 @@ public interface LearnerChargeService {
 
     /**
      *  Get all the learnerCharges.
-     *
+     *  得到所有的学员核销信息
      *  @param pageable the pagination information
      *  @return the list of entities
      */
@@ -30,7 +30,7 @@ public interface LearnerChargeService {
 
     /**
      *  Get the "id" learnerCharge.
-     *
+     *  得到指定id的学员核销信息
      *  @param id the id of the entity
      *  @return the entity
      */
@@ -38,7 +38,7 @@ public interface LearnerChargeService {
 
     /**
      *  Delete the "id" learnerCharge.
-     *
+     *  删除指定id的学员核销信息
      *  @param id the id of the entity
      */
     void delete(Long id);

@@ -18,7 +18,7 @@ public interface LearnerService {
 
     /**
      * Save a learner.
-     *
+     * 保存一名学员
      * @param learner the entity to save
      * @return the persisted entity
      */
@@ -26,7 +26,7 @@ public interface LearnerService {
 
     /**
      *  Get all the learners.
-     *
+     *  得到所有的学员
      *  @param pageable the pagination information
      *  @return the list of entities
      */
@@ -34,7 +34,7 @@ public interface LearnerService {
 
     /**
      *  Get the "id" learner.
-     *
+     *  得到指定id的学员
      *  @param id the id of the entity
      *  @return the entity
      */
@@ -42,7 +42,7 @@ public interface LearnerService {
 
     /**
      *  Delete the "id" learner.
-     *
+     *  删除指定id的学员
      *  @param id the id of the entity
      */
     void delete(Long id);

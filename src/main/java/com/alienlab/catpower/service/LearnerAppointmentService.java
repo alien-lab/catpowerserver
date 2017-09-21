@@ -16,6 +16,7 @@ public interface LearnerAppointmentService {
 
     /**
      * Save a learnerAppointment
+     * 保存一条学员的预约信息
      * @return the persisted entity
      */
     LearnerAppointment save(Long buyCourseId, ZonedDateTime appointmentDate,String appointmentResult, String appointmentMemo) throws Exception;
@@ -30,7 +31,7 @@ public interface LearnerAppointmentService {
 
     /**
      *  Delete the "id" course.
-     *
+     *  删除指定id的学员预约信息
      *  @param id the id of the entity
      */
     void delete(Long id);

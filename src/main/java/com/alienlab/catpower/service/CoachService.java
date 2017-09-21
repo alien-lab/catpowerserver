@@ -15,7 +15,7 @@ public interface CoachService {
 
     /**
      * Save a coach.
-     *
+     * 加入一个教练
      * @param coach the entity to save
      * @return the persisted entity
      */
@@ -23,7 +23,7 @@ public interface CoachService {
 
     /**
      *  Get all the coaches.
-     *
+     *  得到所有的教练
      *  @param pageable the pagination information
      *  @return the list of entities
      */
@@ -31,7 +31,7 @@ public interface CoachService {
 
     /**
      *  Get the "id" coach.
-     *
+     *  根据id获取对应的教练
      *  @param id the id of the entity
      *  @return the entity
      */
@@ -39,7 +39,7 @@ public interface CoachService {
 
     /**
      *  Delete the "id" coach.
-     *
+     *  根据id删除指定的教练
      *  @param id the id of the entity
      */
     void delete(Long id);
