@@ -79,7 +79,7 @@ public class WechatMessageServiceImpl implements WechatMessageService {
                 //String url=wechathost+"#!/stuevaluate/"+scheId;
                 String url="http://"+serverPath+"/wechat/snsapi?router=stuevaluate/"+scheId;
                 String link=wechatUtil.getPageAuthUrl(url,"0");
-                wechatUtil.sendTemplateMsg(openid,link,"_95GX9FsmJS4HmC4MYqHFAeXMrjHPg3iy67yARtXU0U",param);
+                wechatUtil.sendTemplateMsg(openid,link,"tsDzYlaIlmC4qTdzCwpa_ddNrjEMFuF0uUMltz-u9rc",param);
             }catch (Exception e){
                 e.getMessage();
             }
@@ -120,7 +120,7 @@ public class WechatMessageServiceImpl implements WechatMessageService {
                 String openid=learnerCharge.getCoach().getCoachWechatopenid();
                 String url="http://"+serverPath+"/wechat/snsapi?router=coachwriteinfo/"+scheId+"/"+learnerCharge.getLearner().getId();
                 String link=wechatUtil.getPageAuthUrl(url,"0");
-                wechatUtil.sendTemplateMsg(openid,link,"_95GX9FsmJS4HmC4MYqHFAeXMrjHPg3iy67yARtXU0U",param);
+                wechatUtil.sendTemplateMsg(openid,link,"tsDzYlaIlmC4qTdzCwpa_ddNrjEMFuF0uUMltz-u9rc",param);
             }catch (Exception e){
                 e.getMessage();
             }
@@ -174,7 +174,7 @@ public class WechatMessageServiceImpl implements WechatMessageService {
             //String url=wechathost+"#!/coachappoint/"+appointmentId;
             String url="http://"+serverPath+"/wechat/snsapi?router=coachappoint/"+appointmentId;
             String link=wechatUtil.getPageAuthUrl(url,"0");
-            wechatUtil.sendTemplateMsg(openid,link,"wqQCKNMvTx5klxHuHCOti6Jti1-ugWaUaVRq_Z0yc4M",param);
+            wechatUtil.sendTemplateMsg(openid,link,"JBvVYvsrz8QDMZDU7EuopSM6J3TsbvyxmSTY_8OpOSM",param);
         }catch (Exception e){
             e.getMessage();
         }
@@ -225,7 +225,7 @@ public class WechatMessageServiceImpl implements WechatMessageService {
             //String url=wechathost+"#!/coachappoint?appointId="+appointmentId;
             String url="http://"+serverPath+"/wechat/snsapi?router=coachappoint/"+appointmentId;
             String link=wechatUtil.getPageAuthUrl(url,"0");
-            wechatUtil.sendTemplateMsg(openid,link,"4Gapth7XFtB1n9MQ0-_MKcbuV_NvKrEHShACGnQ3bz4",param);
+            wechatUtil.sendTemplateMsg(openid,link,"bvjXHy-ozredYc3bq-fQwMxbUz7EfiPOuyFZAzvYiU0",param);
         }catch (Exception e){
             e.getMessage();
         }
@@ -287,7 +287,7 @@ public class WechatMessageServiceImpl implements WechatMessageService {
             //String url=wechathost+"#!/stucourse";
             String url="http://"+serverPath+"/wechat/snsapi?router=stucourse";
             String link=wechatUtil.getPageAuthUrl(url,"0");
-            wechatUtil.sendTemplateMsg(openid,link,"fsHSuGzowoSVyPyth_2v_39OR6ysm7ItDjv3Wk3_WMg",param);
+            wechatUtil.sendTemplateMsg(openid,link,"JysTZpNW93ATzGFO046k94Owpa4IeOz5jYX0dCPwRv4",param);
         }catch (Exception e){
             e.getMessage();
         }
