@@ -17,9 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class OnlineOrderServiceImpl implements OnlineOrderService {
-    @Autowired
-    private final Logger log = LoggerFactory.getLogger(LearnerServiceImpl.class);
-
 
     @Override
     @Transactional(readOnly = true)
