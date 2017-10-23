@@ -149,6 +149,7 @@ public class ResponseService {
                             json_msg.put("EventKey",qrkey.substring(8));
                             return qrscan(json_msg);
                         }else{
+
                             return messageProcessor.getTextMsg(json_msg.getString("ToUserName"),json_msg.getString("FromUserName"),defaultText);
                         }
                     }
