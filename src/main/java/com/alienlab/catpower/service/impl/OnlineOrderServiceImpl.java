@@ -1,7 +1,10 @@
 package com.alienlab.catpower.service.impl;
 
 import com.alienlab.catpower.domain.OnlineOrder;
+import com.alienlab.catpower.repository.LearnerRepository;
 import com.alienlab.catpower.service.OnlineOrderService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,13 +18,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class OnlineOrderServiceImpl implements OnlineOrderService {
     @Autowired
+    private final Logger log = LoggerFactory.getLogger(LearnerServiceImpl.class);
 
 
     @Override
     @Transactional(readOnly = true)
     public Page<OnlineOrder> findAll(Pageable pageable) {
-        log.debug("Request to get all OnlineOrders");
-        Page<OnlineOrder> result = onlineOrderRepository.findAll(pageable);
-        return result;
+//        log.debug("Request to get all OnlineOrders");
+//        Page<OnlineOrder> result = onlineOrderRepository.findAll(pageable);
+//        return result;
+        return null;
     }
 }
