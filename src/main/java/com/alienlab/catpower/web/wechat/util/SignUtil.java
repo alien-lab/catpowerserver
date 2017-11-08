@@ -21,7 +21,7 @@ public class SignUtil {
     private String token;
 
     public String genSign(String signature, String timestamp){
-
+        return null;
     }
 
     /**
