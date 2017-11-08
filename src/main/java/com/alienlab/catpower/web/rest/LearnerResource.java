@@ -6,6 +6,8 @@ import com.alienlab.catpower.web.rest.util.ExecResult;
 import com.alienlab.catpower.web.rest.util.HeaderUtil;
 import com.alienlab.catpower.web.rest.util.PaginationUtil;
 import com.alienlab.catpower.web.wechat.bean.entity.QrInfo;
+import com.alienlab.catpower.web.wechat.bean.entity.WechatUser;
+import com.alienlab.catpower.web.wechat.service.WechatUserService;
 import com.codahale.metrics.annotation.Timed;
 import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.ApiOperation;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.ParseException;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -40,8 +43,15 @@ public class LearnerResource {
 
     private final LearnerService learnerService;
 
-    public LearnerResource(LearnerService learnerService) {
+    private final WechatUserService wechatUserService;
+
+    public LearnerResource(
+        LearnerService learnerService,
+        WechatUserService wechatUserService)
+    {
+
         this.learnerService = learnerService;
+        this.wechatUserService=wechatUserService;
     }
 
     /**
@@ -59,6 +69,25 @@ public class LearnerResource {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new learner cannot already have an ID")).body(null);
         }
         Learner result = learnerService.save(learner);
+        return ResponseEntity.created(new URI("/api/learners/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+            .body(result);
+    }
+
+    @PostMapping("/learners/wechat/{openid}")
+    @Timed
+    public ResponseEntity<Learner> regLearnerFromWechat(@RequestBody Learner learner,@PathVariable String openid) throws URISyntaxException {
+        log.debug("REST request to save Learner : {}", learner);
+        if (learner.getId() != null) {
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new learner cannot already have an ID")).body(null);
+        }
+        learner.setRegistTime(ZonedDateTime.now());
+
+        WechatUser wuser=wechatUserService.findUserByOpenid(openid);
+        learner.setWechatUser(wuser);
+
+        Learner result = learnerService.save(learner);
+
         return ResponseEntity.created(new URI("/api/learners/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);

@@ -196,6 +196,56 @@ public class WechatUtil {
         return jt;
     }
 
+    public JSApiTicket cardTicket=null;
+    public  JSApiTicket getCardTicket(String appid,String secret){
+        logger.info("获取微信cardticket");
+        if(cardTicket== null){
+            logger.info("系统中cardticket不存在！");
+            cardTicket=genCardTicket(wxappid,wxappsecret);
+        }else{
+            Calendar c=Calendar.getInstance();
+            long now=c.getTimeInMillis();
+            if(now-cardTicket.getTicketTime()>=7000*1000){
+                logger.info("系统中cardticket已超时！gettoken时间："+jsticket.getTicketTime()+",当前时间:"+now);
+                cardTicket=getJsApiTicket(wxappid,wxappsecret);
+            }else{
+                logger.info("系统中cardticket未过期可使用");
+            }
+        }
+        return cardTicket;
+    }
+
+    private  JSApiTicket genCardTicket(String appid,String secret){
+        logger.info("微信服务号获取新CardTicket");
+        HttpsInvoker invoker=new HttpsInvoker();
+        JSApiTicket jt=null;
+        AccessToken at=getAccessToken();
+        if(at==null){
+            return jt;
+        }
+        String requestUrl = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=ACCESS_TOKEN&type=wx_card"
+            .replace("ACCESS_TOKEN", at.getToken());
+        JSONObject jsonObject = HttpsInvoker.httpRequest(requestUrl, "GET", null);
+        // 如果请求成功
+        if (null != jsonObject) {
+            try {
+                jt = new JSApiTicket();
+                jt.setErrcode(jsonObject.getString("errcode"));
+                jt.setErrmsg(jsonObject.getString("errmsg"));
+                jt.setExpires_in(jsonObject.getString("expires_in"));
+                jt.setTicket(jsonObject.getString("ticket"));
+                Calendar c=Calendar.getInstance();
+                jt.setTicketTime(c.getTimeInMillis());
+            } catch (JSONException e) {
+                jt = null;
+                // 获取token失败
+                logger.error("获取CardTicket失败 errcode:"+jsonObject.getString("errcode")+"errmsg:"+jsonObject.getString("errmsg"));
+            }
+        }
+        return jt;
+    }
+
+
     private  AccessToken accessToken = null;
     public  AccessToken getAccessToken() {
         logger.info("获取微信AccessToken");

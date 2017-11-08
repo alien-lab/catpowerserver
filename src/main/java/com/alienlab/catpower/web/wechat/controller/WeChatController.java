@@ -42,6 +42,11 @@ public class WeChatController {
         return wechatService.getJsApiTicket(url);
     }
 
+    @RequestMapping(value="/cardticket",method = RequestMethod.GET)
+    public ResponseEntity getCardTicket(){
+        return ResponseEntity.ok(wechatService.getCardTicket());
+    }
+
     @RequestMapping(value="/getmediainfotest",method = RequestMethod.GET)
     public JSONObject getmediainfotest(@RequestParam("media_id") String media_id){
         return wechatService.getmediainfotest(media_id);

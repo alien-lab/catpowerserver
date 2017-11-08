@@ -20,6 +20,10 @@ public class SignUtil {
     @Value("${wechat.token}")
     private String token;
 
+    public String genSign(String signature, String timestamp){
+
+    }
+
     /**
      * 验证签名
      *

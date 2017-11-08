@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 import com.alienlab.catpower.web.rest.util.ExecResult;
+import com.alienlab.catpower.web.wechat.bean.JSApiTicket;
 import com.alienlab.catpower.web.wechat.bean.entity.WechatMaterial;
 import com.alienlab.catpower.web.wechat.bean.entity.WechatUser;
 import com.alienlab.catpower.web.wechat.util.*;
@@ -50,6 +51,10 @@ public class WechatService {
 
     public Map<String,String> getJsApiTicket(String url){
         return wechatUtil.getJsapiSignature(url);
+    }
+
+    public JSApiTicket getCardTicket(){
+        return wechatUtil.getCardTicket(wechatappid,wechatsecret);
     }
 
     public ResponseEntity responseOptions(String code){
