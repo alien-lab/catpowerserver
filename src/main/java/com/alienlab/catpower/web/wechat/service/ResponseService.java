@@ -149,8 +149,15 @@ public class ResponseService {
                             json_msg.put("EventKey",qrkey.substring(8));
                             return qrscan(json_msg);
                         }else{
-
-                            return messageProcessor.getTextMsg(json_msg.getString("ToUserName"),json_msg.getString("FromUserName"),defaultText);
+                            String url="http://"+serverPath+"/wechat/snsapi?router=stureg";
+                            String link=wechatUtil.getPageAuthUrl(url,"0");
+                            NewsMessageResponse result= messageProcessor.getSingleNews(from,to,
+                                "欢迎注册猫力健身",
+                                link,
+                                "http://"+domain+"/img/logo.jpg",
+                                "注册成为猫力健身会员，免费领取课程体验卡。"
+                            );
+                            return result;
                         }
                     }
                     case "unsubscribe":{ //用户取消关注

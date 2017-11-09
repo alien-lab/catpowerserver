@@ -42,6 +42,11 @@ public class WeChatController {
         return wechatService.getJsApiTicket(url);
     }
 
+    @GetMapping("/cardapi/ext/{cardid}")
+    public ResponseEntity getCardExtParam(@PathVariable String cardid){
+        return ResponseEntity.ok(wechatService.getCardExt(cardid));
+    }
+
     @RequestMapping(value="/cardticket",method = RequestMethod.GET)
     public ResponseEntity getCardTicket(){
         return ResponseEntity.ok(wechatService.getCardTicket());

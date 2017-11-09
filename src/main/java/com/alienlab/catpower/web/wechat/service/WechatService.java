@@ -1,5 +1,6 @@
 package com.alienlab.catpower.web.wechat.service;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
@@ -276,6 +277,18 @@ public class WechatService {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public Map<String,String> getCardExt(String cardid){
+        Map<String,String> result=new HashMap<String,String>();
+        String timestamp=Long.toString(System.currentTimeMillis() / 1000);
+        JSApiTicket apiTicket=wechatUtil.getCardTicket(wechatappid,wechatsecret);
+        result.put("timestamp",timestamp);
+        System.out.println("get Api_ticket>>"+apiTicket.getTicket());
+        result.put("signature",signUtil.genSign(apiTicket.getTicket(),timestamp,cardid));
+        System.out.println("get Api_ticket map>>"+ JSON.toJSONString(result));
+
+        return result;
     }
 
 

@@ -207,7 +207,7 @@ public class WechatUtil {
             long now=c.getTimeInMillis();
             if(now-cardTicket.getTicketTime()>=7000*1000){
                 logger.info("系统中cardticket已超时！gettoken时间："+jsticket.getTicketTime()+",当前时间:"+now);
-                cardTicket=getJsApiTicket(wxappid,wxappsecret);
+                cardTicket=genCardTicket(wxappid,wxappsecret);
             }else{
                 logger.info("系统中cardticket未过期可使用");
             }

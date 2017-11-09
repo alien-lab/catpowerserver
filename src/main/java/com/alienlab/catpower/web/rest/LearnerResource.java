@@ -76,7 +76,7 @@ public class LearnerResource {
 
     @PostMapping("/learners/wechat/{openid}")
     @Timed
-    public ResponseEntity<Learner> regLearnerFromWechat(@RequestBody Learner learner,@PathVariable String openid) throws URISyntaxException {
+    public ResponseEntity regLearnerFromWechat(@RequestBody Learner learner,@PathVariable String openid) throws URISyntaxException {
         log.debug("REST request to save Learner : {}", learner);
         if (learner.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new learner cannot already have an ID")).body(null);
@@ -84,13 +84,23 @@ public class LearnerResource {
         learner.setRegistTime(ZonedDateTime.now());
 
         WechatUser wuser=wechatUserService.findUserByOpenid(openid);
-        learner.setWechatUser(wuser);
+        try {
+            Learner existLearner=learnerService.findByOpenid(openid);
+            if(existLearner!=null){
+                return ResponseEntity.ok(existLearner);
+            }else{
+                learner.setWechatUser(wuser);
+                Learner result = learnerService.save(learner);
+                return ResponseEntity.created(new URI("/api/learners/" + result.getId()))
+                    .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+                    .body(result);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
 
-        Learner result = learnerService.save(learner);
-
-        return ResponseEntity.created(new URI("/api/learners/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
     }
 
     /**

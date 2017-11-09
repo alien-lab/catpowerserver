@@ -20,8 +20,24 @@ public class SignUtil {
     @Value("${wechat.token}")
     private String token;
 
-    public String genSign(String signature, String timestamp){
-        return null;
+    public String genSign(String api_ticket, String timestamp,String cardid){
+        String[] arr = new String[] { api_ticket, timestamp,cardid };
+        Arrays.sort(arr);
+        StringBuilder content = new StringBuilder();
+        for (int i = 0; i < arr.length; i++) {
+            content.append(arr[i]);
+        }
+        MessageDigest md = null;
+        String tmpStr = null;
+        try {
+            md = MessageDigest.getInstance("SHA-1");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        // 将参数字符串拼接成一个字符串进行sha1加密
+        byte[] digest = md.digest(content.toString().getBytes());
+        tmpStr = byteToStr(digest);
+        return tmpStr;
     }
 
     /**
@@ -125,11 +141,11 @@ public class SignUtil {
 
         return ret;
     }
-    private static String create_nonce_str() {
+    public static String create_nonce_str() {
         return UUID.randomUUID().toString();
     }
 
-    private static String create_timestamp() {
+    public static String create_timestamp() {
         return Long.toString(System.currentTimeMillis() / 1000);
     }
     private static String byteToHex(final byte[] hash) {
