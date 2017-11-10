@@ -1,0 +1,28 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "scanTime",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "openid",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "qrkey",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "reply",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20171110034527",
+    "dto": "no",
+    "service": "serviceImpl",
+    "entityTableName": "qr_scan_log",
+    "jpaMetamodelFiltering": false,
+    "pagination": "pagination"
+}

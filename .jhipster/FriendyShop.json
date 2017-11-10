@@ -1,0 +1,39 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "qrInfo",
+            "otherEntityName": "qrInfo",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "shopName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "shopDesc",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "shopPosition",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "createTime",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "endTime",
+            "fieldType": "ZonedDateTime"
+        }
+    ],
+    "changelogDate": "20171110041315",
+    "dto": "no",
+    "service": "serviceImpl",
+    "entityTableName": "friendy_shop",
+    "jpaMetamodelFiltering": false,
+    "pagination": "pagination"
+}

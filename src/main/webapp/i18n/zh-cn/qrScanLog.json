@@ -1,0 +1,24 @@
+{
+    "catpowerserverApp": {
+        "qrScanLog" : {
+            "home": {
+                "title": "Qr Scan Logs",
+                "createLabel": "Create a new Qr Scan Log",
+                "createOrEditLabel": "Create or edit a Qr Scan Log"
+            },
+            "created": "A new Qr Scan Log is created with identifier {{ param }}",
+            "updated": "A Qr Scan Log is updated with identifier {{ param }}",
+            "deleted": "A Qr Scan Log is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Qr Scan Log {{ id }}?"
+            },
+            "detail": {
+                "title": "Qr Scan Log"
+            },
+            "scanTime": "Scan Time",
+            "openid": "Openid",
+            "qrkey": "Qrkey",
+            "reply": "Reply"
+        }
+    }
+}

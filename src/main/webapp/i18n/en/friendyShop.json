@@ -1,0 +1,26 @@
+{
+    "catpowerserverApp": {
+        "friendyShop" : {
+            "home": {
+                "title": "Friendy Shops",
+                "createLabel": "Create a new Friendy Shop",
+                "createOrEditLabel": "Create or edit a Friendy Shop"
+            },
+            "created": "A new Friendy Shop is created with identifier {{ param }}",
+            "updated": "A Friendy Shop is updated with identifier {{ param }}",
+            "deleted": "A Friendy Shop is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Friendy Shop {{ id }}?"
+            },
+            "detail": {
+                "title": "Friendy Shop"
+            },
+            "shopName": "Shop Name",
+            "shopDesc": "Shop Desc",
+            "shopPosition": "Shop Position",
+            "createTime": "Create Time",
+            "endTime": "End Time",
+            "qrInfo": "Qr Info"
+        }
+    }
+}

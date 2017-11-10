@@ -1,0 +1,70 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myFriendyShopLabel" data-translate="catpowerserverApp.friendyShop.home.createOrEditLabel">Create or edit a Friendy Shop</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.friendyShop.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.friendyShop.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.friendyShop.shopName" for="field_shopName">Shop Name</label>
+            <input type="text" class="form-control" name="shopName" id="field_shopName"
+                    ng-model="vm.friendyShop.shopName"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.friendyShop.shopDesc" for="field_shopDesc">Shop Desc</label>
+            <input type="text" class="form-control" name="shopDesc" id="field_shopDesc"
+                    ng-model="vm.friendyShop.shopDesc"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.friendyShop.shopPosition" for="field_shopPosition">Shop Position</label>
+            <input type="text" class="form-control" name="shopPosition" id="field_shopPosition"
+                    ng-model="vm.friendyShop.shopPosition"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.friendyShop.createTime" for="field_createTime">Create Time</label>
+                <div class="input-group">
+                    <input id="field_createTime" type="text" class="form-control" name="createTime" datetime-picker="{{dateformat}}" ng-model="vm.friendyShop.createTime" is-open="vm.datePickerOpenStatus.createTime"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('createTime')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.friendyShop.endTime" for="field_endTime">End Time</label>
+                <div class="input-group">
+                    <input id="field_endTime" type="text" class="form-control" name="endTime" datetime-picker="{{dateformat}}" ng-model="vm.friendyShop.endTime" is-open="vm.datePickerOpenStatus.endTime"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('endTime')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+
+        <!--<div class="form-group">-->
+            <!--<label data-translate="catpowerserverApp.friendyShop.qrInfo" for="field_qrInfo">Qr Info</label>-->
+            <!--<select class="form-control" id="field_qrInfo" name="qrInfo" ng-model="vm.friendyShop.qrInfo" ng-options="qrInfo as qrInfo.id for qrInfo in vm.qrinfos track by qrInfo.id">-->
+                <!--<option value=""></option>-->
+            <!--</select>-->
+        <!--</div>-->
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>
