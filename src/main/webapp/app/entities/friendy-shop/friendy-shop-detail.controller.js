@@ -5,9 +5,9 @@
         .module('catpowerserverApp')
         .controller('FriendyShopDetailController', FriendyShopDetailController);
 
-    FriendyShopDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'FriendyShop', 'QrInfo'];
+    FriendyShopDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'FriendyShop'];
 
-    function FriendyShopDetailController($scope, $rootScope, $stateParams, previousState, entity, FriendyShop, QrInfo) {
+    function FriendyShopDetailController($scope, $rootScope, $stateParams, previousState, entity, FriendyShop) {
         var vm = this;
 
         vm.friendyShop = entity;

@@ -5,9 +5,9 @@
         .module('catpowerserverApp')
         .controller('FriendyShopDialogController', FriendyShopDialogController);
 
-    FriendyShopDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'FriendyShop', 'QrInfo'];
+    FriendyShopDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'FriendyShop'];
 
-    function FriendyShopDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, FriendyShop, QrInfo) {
+    function FriendyShopDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, FriendyShop) {
         var vm = this;
 
         vm.friendyShop = entity;
@@ -15,7 +15,6 @@
         vm.datePickerOpenStatus = {};
         vm.openCalendar = openCalendar;
         vm.save = save;
-        vm.qrinfos = QrInfo.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

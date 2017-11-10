@@ -10,6 +10,8 @@
     function FriendyShopController($state, FriendyShop, ParseLinks, AlertService, paginationConstants, pagingParams) {
 
         var vm = this;
+        vm.qrvisible=false;
+        vm.qrticket="";
 
         vm.loadPage = loadPage;
         vm.predicate = pagingParams.predicate;
@@ -59,9 +61,15 @@
 
         vm.showqr=function(fshop){
             var id=fshop.id;
-            FriendyShop.qr(id,function(result){
+            FriendyShop.qr({id:id},function(result){
                 console.log("qr",result);
+                vm.qrticket=result.qrTicker;
+                vm.qrvisible=true;
             },function(error){})
+        }
+
+        vm.hideqr=function(){
+            vm.qrvisible=false;
         }
     }
 })();

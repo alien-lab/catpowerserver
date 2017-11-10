@@ -6,8 +6,8 @@
             <div class="col-xs-4 no-padding-left">
                 <button class="btn btn-primary" ui-sref="friendy-shop.new" >
                     <span class="glyphicon glyphicon-plus"></span>
-                    <span  data-translate="catpowerserverApp.friendyShop.home.createLabel">
-                        Create new Friendy Shop
+                    <span>
+                        创建合作门店
                     </span>
                 </button>
             </div>
@@ -37,7 +37,7 @@
                     <td>{{friendyShop.createTime | date:'medium'}}</td>
                     <td>{{friendyShop.endTime | date:'medium'}}</td>
                     <td>
-                        <a ng-click="showqr(friendyShop)">推广二维码</a>
+                        <a ng-click="vm.showqr(friendyShop)">推广二维码</a>
                     </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
@@ -64,6 +64,12 @@
                 </tr>
             </tbody>
         </table>
+    </div>
+    <div ng-if="vm.qrvisible" style="position:fixed;top:15%;left:40%;width:30%;background-color:#fff;">
+        <img ng-src="https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket={{vm.qrticket}}" style="width:100%;"/>
+        <button class="btn btn-default btn-sm" ng-click="vm.hideqr()" style="width:100%;">
+            <span>关闭</span>
+        </button>
     </div>
     <div class="text-center">
         <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
