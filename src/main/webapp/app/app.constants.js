@@ -5,6 +5,5 @@
         .module('catpowerserverApp')
         .constant('VERSION', "0.0.1-SNAPSHOT")
         .constant('DEBUG_INFO_ENABLED', true)
-        .constant('ticket','https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=')
 ;
 })();
