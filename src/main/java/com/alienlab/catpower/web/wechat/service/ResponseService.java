@@ -1,11 +1,9 @@
 package com.alienlab.catpower.web.wechat.service;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.alienlab.catpower.domain.Coach;
-import com.alienlab.catpower.domain.CourseScheduling;
-import com.alienlab.catpower.domain.Learner;
-import com.alienlab.catpower.domain.WechatVipcard;
+import com.alienlab.catpower.domain.*;
 import com.alienlab.catpower.service.*;
 import com.alienlab.catpower.web.wechat.bean.MessageResponse;
 import com.alienlab.catpower.web.wechat.bean.NewsMessageResponse;
@@ -18,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,6 +36,9 @@ public class ResponseService {
     QrTypeService qrTypeService;
     @Autowired
     CourseSchedulingService courseSchedulingService;
+
+    @Autowired
+    QrScanLogService qrScanLogService;
 
     @Autowired
     LearnerService learnerService;
@@ -238,6 +240,11 @@ public class ResponseService {
 
 
     public MessageResponse qrscan(JSONObject json_msg){
+        String openid=json_msg.getString("FromUserName");
+        QrScanLog log=new QrScanLog();
+        log.setOpenid(openid);
+        log.setQrkey(json_msg.getString("EventKey"));
+        log.setScanTime(ZonedDateTime.now());
         //课程签到
         if(json_msg.getString("EventKey").startsWith("1and")){
             String title="课程签到成功！";
@@ -257,9 +264,13 @@ public class ResponseService {
                     "http://"+domain+"/img/logo.jpg",
                     desc
                 );
+                log.reply(JSON.toJSONString(result));
+                qrScanLogService.save(log);
                 return result;
             }catch(Exception e){
                 TextMessageResponse result=messageProcessor.getTextMsg(from,to,e.getMessage());
+                log.reply(JSON.toJSONString(result));
+                qrScanLogService.save(log);
                 return result;
             }
 
@@ -279,12 +290,16 @@ public class ResponseService {
                 title="学员账户绑定出错";
                 desc="您绑定学员账户："+learner.getLearneName()+" 时出错了。错误原因："+e.getMessage();
             }
-            return messageProcessor.getSingleNews(from,to,
+
+            NewsMessageResponse result=messageProcessor.getSingleNews(from,to,
                 title,
                 link,
                 "http://"+domain+"/img/logo.jpg",
                 desc
             );
+            log.reply(JSON.toJSONString(result));
+            qrScanLogService.save(log);
+            return result;
         }else if (json_msg.getString("EventKey").startsWith("3and")){
             String title="教练账户绑定成功！";
             String url="http://"+serverPath+"/wechat/snsapi?router=coachindex";
@@ -301,14 +316,35 @@ public class ResponseService {
                 title="教练账户绑定出错";
                 desc="您绑定教练账户："+coach.getCoachName()+" 时出错了。错误原因："+e.getMessage();
             }
-            return messageProcessor.getSingleNews(from,to,
+            NewsMessageResponse result= messageProcessor.getSingleNews(from,to,
                 title,
                 link,
                 "http://"+domain+"/img/logo.jpg",
                 desc
             );
+            log.reply(JSON.toJSONString(result));
+            qrScanLogService.save(log);
+            return result;
+        }else if(json_msg.getString("EventKey").startsWith("18and")){//店铺推广二维码扫描
+            String from=json_msg.getString("ToUserName");
+            String to=json_msg.getString("FromUserName");
+            String url="http://"+serverPath+"/wechat/snsapi?router=stureg";
+            String link=wechatUtil.getPageAuthUrl(url,"0");
+            String state=json_msg.getString("EventKey").substring(5);
+            NewsMessageResponse result= messageProcessor.getSingleNews(from,to,
+                "欢迎注册猫力健身",
+                link,
+                "http://"+domain+"/img/logo.jpg",
+                "注册成为猫力健身会员，免费领取课程体验卡。"
+            );
+            log.reply(JSON.toJSONString(result));
+            qrScanLogService.save(log);
+            return result;
         }else{
-            return getMessage(json_msg);
+            MessageResponse result=getMessage(json_msg);
+            log.reply(JSON.toJSONString(result));
+            qrScanLogService.save(log);
+            return result;
         }
     }
 
