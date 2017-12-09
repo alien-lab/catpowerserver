@@ -7,6 +7,7 @@ import com.alienlab.catpower.web.rest.util.HeaderUtil;
 import com.alienlab.catpower.web.rest.util.PaginationUtil;
 import com.codahale.metrics.annotation.Timed;
 import io.github.jhipster.web.util.ResponseUtil;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;

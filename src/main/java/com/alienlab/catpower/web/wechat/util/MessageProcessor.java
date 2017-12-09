@@ -1,11 +1,9 @@
 package com.alienlab.catpower.web.wechat.util;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.alienlab.catpower.web.wechat.bean.Article;
-import com.alienlab.catpower.web.wechat.bean.NewsMessageResponse;
-import com.alienlab.catpower.web.wechat.bean.TextMessageResponse;
-import com.alienlab.catpower.web.wechat.bean.TransferMessageResponse;
+import com.alienlab.catpower.web.wechat.bean.*;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.core.util.QuickWriter;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
@@ -134,6 +132,18 @@ public class MessageProcessor {
 		tmr.setContent(text);
 		return tmr;
 	}
+
+	public ImageResponse getImageMsg(String from,String to,String image){
+        ImageResponse ir=new ImageResponse();
+        ir.setCreateTime(new Date().getTime());
+        ir.setFromUserName(from);
+        ir.setMsgType("image");
+        ir.setToUserName(to);
+        ir.setMediaId(image);
+
+        System.out.println(JSON.toJSONString(ir));
+        return ir;
+    }
 
 	public TransferMessageResponse transToCustomMsg(String from, String to){
 		TransferMessageResponse tmr=new TransferMessageResponse();

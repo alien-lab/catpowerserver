@@ -11,7 +11,8 @@ import java.io.Serializable;
  */
 @XmlSeeAlso({
         TextMessageResponse.class,
-        NewsMessageResponse.class
+        NewsMessageResponse.class,
+        ImageResponse.class
 })
 @XmlAccessorType(XmlAccessType.NONE)
 public abstract  class MessageResponse implements Serializable {

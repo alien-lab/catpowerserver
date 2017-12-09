@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -84,8 +85,8 @@ public class ResponseService {
 
                     if(json_msg.getString("Content").equals("")){
 
-                    }else if(json_msg.getString("Content").equals("业务员绑定")){
-
+                    }else if(json_msg.getString("Content").equals("冠军")){
+                        return messageProcessor.getImageMsg(json_msg.getString("ToUserName"),json_msg.getString("FromUserName"),"wuWdT4MMdsIYxrc6LYQB0vyOvqABsSv44DrZjb2PROY");
                     }else{
                         return messageProcessor.transToCustomMsg(json_msg.getString("ToUserName"),json_msg.getString("FromUserName"));
                     }
@@ -146,6 +147,21 @@ public class ResponseService {
                             user.setNickName(wechatUser.getString("nickname"));
                             user.setIcon(wechatUser.getString("headimgurl"));
                             user=wechatUserService.save(user);
+
+                            //如果根据openid没有找到Learner，直接产生一条learner记录，直接绑定
+                            try {
+                                Learner learner=learnerService.findByOpenid(user.getOpenId());
+                                if(learner==null){//新用户关注如果没有绑定学员信息，自动创建
+                                    learner=new Learner();
+                                    learner.setWechatUser(user);
+                                    learner.setLearneName(user.getNickName());
+                                    learner.setFirstTotime(ZonedDateTime.now());
+                                    learnerService.save(learner);
+                                }
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+
                         }
                         if(qrkey.startsWith("qrscene_")){
                             json_msg.put("EventKey",qrkey.substring(8));

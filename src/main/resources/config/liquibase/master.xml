@@ -29,5 +29,11 @@
 
     <include file="classpath:config/liquibase/changelog/20170823023544_added_entity_WechatShopCardInfo.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170823023544_added_entity_constraints_WechatShopCardInfo.xml" relativeToChangelogFile="false"/>
+
+    <include file="classpath:config/liquibase/changelog/20171208101329_added_entity_WechatGoodsList.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20171208101329_added_entity_constraints_WechatGoodsList.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20171208112446_added_entity_WechatOrder.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20171208112446_added_entity_constraints_WechatOrder.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
+
 </databaseChangeLog>

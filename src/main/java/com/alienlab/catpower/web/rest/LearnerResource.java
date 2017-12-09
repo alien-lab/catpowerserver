@@ -87,6 +87,8 @@ public class LearnerResource {
         try {
             Learner existLearner=learnerService.findByOpenid(openid);
             if(existLearner!=null){
+                learner.setWechatUser(wuser);
+                Learner result = learnerService.save(learner);
                 return ResponseEntity.ok(existLearner);
             }else{
                 learner.setWechatUser(wuser);
