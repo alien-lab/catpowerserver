@@ -1,0 +1,57 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "wechatShopCard",
+            "otherEntityName": "wechatShopCard",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "title"
+        },
+        {
+            "relationshipName": "course",
+            "otherEntityName": "course",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "courseName"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "goodsName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "goodsMemo",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "goodsPic",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "buyButtonText",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "limitCount",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "goodsPrice",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "sellStatus",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "goodsField1",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20171208101329",
+    "dto": "no",
+    "service": "serviceImpl",
+    "entityTableName": "wechat_goods_list",
+    "jpaMetamodelFiltering": false,
+    "pagination": "pager"
+}

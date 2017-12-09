@@ -1,0 +1,86 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myWechatGoodsListLabel" data-translate="catpowerserverApp.wechatGoodsList.home.createOrEditLabel">Create or edit a Wechat Goods List</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.wechatGoodsList.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.wechatGoodsList.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.wechatGoodsList.goodsName" for="field_goodsName">Goods Name</label>
+            <input type="text" class="form-control" name="goodsName" id="field_goodsName"
+                    ng-model="vm.wechatGoodsList.goodsName"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.wechatGoodsList.goodsMemo" for="field_goodsMemo">Goods Memo</label>
+            <input type="text" class="form-control" name="goodsMemo" id="field_goodsMemo"
+                    ng-model="vm.wechatGoodsList.goodsMemo"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.wechatGoodsList.goodsPic" for="field_goodsPic">Goods Pic</label>
+            <input type="text" class="form-control" name="goodsPic" id="field_goodsPic"
+                    ng-model="vm.wechatGoodsList.goodsPic"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.wechatGoodsList.buyButtonText" for="field_buyButtonText">Buy Button Text</label>
+            <input type="text" class="form-control" name="buyButtonText" id="field_buyButtonText"
+                    ng-model="vm.wechatGoodsList.buyButtonText"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.wechatGoodsList.limitCount" for="field_limitCount">Limit Count</label>
+            <input type="number" class="form-control" name="limitCount" id="field_limitCount"
+                    ng-model="vm.wechatGoodsList.limitCount"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.wechatGoodsList.goodsPrice" for="field_goodsPrice">Goods Price</label>
+            <input type="number" class="form-control" name="goodsPrice" id="field_goodsPrice"
+                    ng-model="vm.wechatGoodsList.goodsPrice"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.wechatGoodsList.sellStatus" for="field_sellStatus">Sell Status</label>
+            <input type="text" class="form-control" name="sellStatus" id="field_sellStatus"
+                    ng-model="vm.wechatGoodsList.sellStatus"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.wechatGoodsList.goodsField1" for="field_goodsField1">Goods Field 1</label>
+            <input type="text" class="form-control" name="goodsField1" id="field_goodsField1"
+                    ng-model="vm.wechatGoodsList.goodsField1"
+                    />
+        </div>
+
+        <div class="form-group">
+            <label data-translate="catpowerserverApp.wechatGoodsList.wechatShopCard" for="field_wechatShopCard">Wechat Shop Card</label>
+            <select class="form-control" id="field_wechatShopCard" name="wechatShopCard" ng-model="vm.wechatGoodsList.wechatShopCard" ng-options="wechatShopCard as wechatShopCard.title for wechatShopCard in vm.wechatshopcards track by wechatShopCard.id">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label data-translate="catpowerserverApp.wechatGoodsList.course" for="field_course">Course</label>
+            <select class="form-control" id="field_course" name="course" ng-model="vm.wechatGoodsList.course" ng-options="course as course.courseName for course in vm.courses track by course.id">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

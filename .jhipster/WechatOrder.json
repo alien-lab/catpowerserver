@@ -1,0 +1,40 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "wechatUser",
+            "otherEntityName": "wechatUser",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "openId"
+        },
+        {
+            "relationshipName": "wechatGoodsList",
+            "otherEntityName": "wechatGoodsList",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "goodsName"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "orderNo",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "orderTime",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "payTime",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "orderStatus",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20171208112446",
+    "dto": "no",
+    "service": "serviceImpl",
+    "entityTableName": "wechat_order",
+    "pagination": "pager"
+}

@@ -1,0 +1,70 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myWechatOrderLabel" data-translate="catpowerserverApp.wechatOrder.home.createOrEditLabel">Create or edit a Wechat Order</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.wechatOrder.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.wechatOrder.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.wechatOrder.orderNo" for="field_orderNo">Order No</label>
+            <input type="text" class="form-control" name="orderNo" id="field_orderNo"
+                    ng-model="vm.wechatOrder.orderNo"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.wechatOrder.orderTime" for="field_orderTime">Order Time</label>
+                <div class="input-group">
+                    <input id="field_orderTime" type="text" class="form-control" name="orderTime" datetime-picker="{{dateformat}}" ng-model="vm.wechatOrder.orderTime" is-open="vm.datePickerOpenStatus.orderTime"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('orderTime')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.wechatOrder.payTime" for="field_payTime">Pay Time</label>
+                <div class="input-group">
+                    <input id="field_payTime" type="text" class="form-control" name="payTime" datetime-picker="{{dateformat}}" ng-model="vm.wechatOrder.payTime" is-open="vm.datePickerOpenStatus.payTime"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('payTime')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="catpowerserverApp.wechatOrder.orderStatus" for="field_orderStatus">Order Status</label>
+            <input type="text" class="form-control" name="orderStatus" id="field_orderStatus"
+                    ng-model="vm.wechatOrder.orderStatus"
+                    />
+        </div>
+
+        <div class="form-group">
+            <label data-translate="catpowerserverApp.wechatOrder.wechatUser" for="field_wechatUser">Wechat User</label>
+            <select class="form-control" id="field_wechatUser" name="wechatUser" ng-model="vm.wechatOrder.wechatUser" ng-options="wechatUser as wechatUser.openId for wechatUser in vm.wechatusers track by wechatUser.id">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label data-translate="catpowerserverApp.wechatOrder.wechatGoodsList" for="field_wechatGoodsList">Wechat Goods List</label>
+            <select class="form-control" id="field_wechatGoodsList" name="wechatGoodsList" ng-model="vm.wechatOrder.wechatGoodsList" ng-options="wechatGoodsList as wechatGoodsList.goodsName for wechatGoodsList in vm.wechatgoodslists track by wechatGoodsList.id">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

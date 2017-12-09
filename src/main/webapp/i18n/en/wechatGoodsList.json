@@ -1,0 +1,30 @@
+{
+    "catpowerserverApp": {
+        "wechatGoodsList" : {
+            "home": {
+                "title": "Wechat Goods Lists",
+                "createLabel": "Create a new Wechat Goods List",
+                "createOrEditLabel": "Create or edit a Wechat Goods List"
+            },
+            "created": "A new Wechat Goods List is created with identifier {{ param }}",
+            "updated": "A Wechat Goods List is updated with identifier {{ param }}",
+            "deleted": "A Wechat Goods List is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Wechat Goods List {{ id }}?"
+            },
+            "detail": {
+                "title": "Wechat Goods List"
+            },
+            "goodsName": "Goods Name",
+            "goodsMemo": "Goods Memo",
+            "goodsPic": "Goods Pic",
+            "buyButtonText": "Buy Button Text",
+            "limitCount": "Limit Count",
+            "goodsPrice": "Goods Price",
+            "sellStatus": "Sell Status",
+            "goodsField1": "Goods Field 1",
+            "wechatShopCard": "Wechat Shop Card",
+            "course": "Course"
+        }
+    }
+}

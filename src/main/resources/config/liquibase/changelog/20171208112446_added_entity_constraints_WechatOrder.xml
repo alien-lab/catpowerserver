@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <!--
+        Added the constraints for entity WechatOrder.
+    -->
+    <changeSet id="20171208112446-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="wechat_user_id"
+                                 baseTableName="wechat_order"
+                                 constraintName="fk_wechat_order_wechat_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="wechat_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="wechat_goods_list_id"
+                                 baseTableName="wechat_order"
+                                 constraintName="fk_wechat_order_wechat_goods_list_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="wechat_goods_list"/>
+
+    </changeSet>
+</databaseChangeLog>

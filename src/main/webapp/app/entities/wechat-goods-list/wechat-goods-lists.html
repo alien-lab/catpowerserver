@@ -1,0 +1,82 @@
+<div>
+    <h2 data-translate="catpowerserverApp.wechatGoodsList.home.title">Wechat Goods Lists</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="wechat-goods-list.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  data-translate="catpowerserverApp.wechatGoodsList.home.createLabel">
+                        Create new Wechat Goods List
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                    <th jh-sort-by="id"><span data-translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="goodsName"><span data-translate="catpowerserverApp.wechatGoodsList.goodsName">Goods Name</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="goodsMemo"><span data-translate="catpowerserverApp.wechatGoodsList.goodsMemo">Goods Memo</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="goodsPic"><span data-translate="catpowerserverApp.wechatGoodsList.goodsPic">Goods Pic</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="buyButtonText"><span data-translate="catpowerserverApp.wechatGoodsList.buyButtonText">Buy Button Text</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="limitCount"><span data-translate="catpowerserverApp.wechatGoodsList.limitCount">Limit Count</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="goodsPrice"><span data-translate="catpowerserverApp.wechatGoodsList.goodsPrice">Goods Price</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="sellStatus"><span data-translate="catpowerserverApp.wechatGoodsList.sellStatus">Sell Status</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="goodsField1"><span data-translate="catpowerserverApp.wechatGoodsList.goodsField1">Goods Field 1</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="wechatShopCard.title"><span data-translate="catpowerserverApp.wechatGoodsList.wechatShopCard">Wechat Shop Card</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="course.courseName"><span data-translate="catpowerserverApp.wechatGoodsList.course">Course</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="wechatGoodsList in vm.wechatGoodsLists track by wechatGoodsList.id">
+                    <td><a ui-sref="wechat-goods-list-detail({id:wechatGoodsList.id})">{{wechatGoodsList.id}}</a></td>
+                    <td>{{wechatGoodsList.goodsName}}</td>
+                    <td>{{wechatGoodsList.goodsMemo}}</td>
+                    <td>{{wechatGoodsList.goodsPic}}</td>
+                    <td>{{wechatGoodsList.buyButtonText}}</td>
+                    <td>{{wechatGoodsList.limitCount}}</td>
+                    <td>{{wechatGoodsList.goodsPrice}}</td>
+                    <td>{{wechatGoodsList.sellStatus}}</td>
+                    <td>{{wechatGoodsList.goodsField1}}</td>
+                    <td>
+                        <a ui-sref="wechat-shop-card-detail({id:wechatGoodsList.wechatShopCard.id})">{{wechatGoodsList.wechatShopCard.title}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="course-detail({id:wechatGoodsList.course.id})">{{wechatGoodsList.course.courseName}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="wechat-goods-list-detail({id:wechatGoodsList.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="wechat-goods-list.edit({id:wechatGoodsList.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="wechat-goods-list.delete({id:wechatGoodsList.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+    </div>
+    <uib-pager total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pager>
+</div>
