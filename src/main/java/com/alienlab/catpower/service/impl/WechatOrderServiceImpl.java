@@ -100,6 +100,6 @@ public class WechatOrderServiceImpl implements WechatOrderService{
         if(goods==null){
             throw new Exception("未找到售卖商品.");
         }
-        return wechatOrderRepository.findWechatOrderByWechatUserAAndWechatGoodsListAndOrderStatus(wechatUser,goods,"已支付");
+        return wechatOrderRepository.findWechatOrderByWechatUserAndWechatGoodsListAndOrderStatus(wechatUser,goods,"已支付");
     }
 }

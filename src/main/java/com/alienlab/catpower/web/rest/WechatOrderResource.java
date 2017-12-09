@@ -262,6 +262,7 @@ public class WechatOrderResource {
             if(tradestatus.equalsIgnoreCase("SUCCESS")){
                 order.setPayTime(ZonedDateTime.now());
                 order.setOrderStatus("已支付");
+                order=wechatOrderService.save(order);
 
                 //完成支付逻辑（如果商品关联卡券，如果商品关联卡券，由前台显示领取卡券按钮，如果关联课程，此处需直接发放课程到学员账户）
 

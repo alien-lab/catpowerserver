@@ -16,6 +16,6 @@ import java.util.List;
 @SuppressWarnings("unused")
 @Repository
 public interface WechatOrderRepository extends JpaRepository<WechatOrder,Long> {
-    List<WechatOrder> findWechatOrderByWechatUserAAndWechatGoodsListAndOrderStatus(WechatUser wu, WechatGoodsList goods,String status);
+    List<WechatOrder> findWechatOrderByWechatUserAndWechatGoodsListAndOrderStatus(WechatUser wu, WechatGoodsList goods,String status);
 
 }
