@@ -83,8 +83,10 @@ public class ResponseService {
             case "text":{
                 try{
 
-                    if(json_msg.getString("Content").equals("")){
-
+                    if(json_msg.getString("Content").equals("测试体验券")){
+                        String url="http://"+serverPath+"/wechat/snsapi?router=onsell";
+                        String link=wechatUtil.getPageAuthUrl(url,"1");
+                        return messageProcessor.getTextMsg(json_msg.getString("ToUserName"),json_msg.getString("FromUserName"),link);
                     }else if(json_msg.getString("Content").equals("冠军")){
                         return messageProcessor.getImageMsg(json_msg.getString("ToUserName"),json_msg.getString("FromUserName"),"wuWdT4MMdsIYxrc6LYQB0vyOvqABsSv44DrZjb2PROY");
                     }else{
