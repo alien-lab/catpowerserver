@@ -1,5 +1,7 @@
 package com.alienlab.catpower.service.impl;
 
+import com.alienlab.catpower.domain.WechatGoodsList;
+import com.alienlab.catpower.service.WechatGoodsListService;
 import com.alienlab.catpower.service.WechatOrderService;
 import com.alienlab.catpower.domain.WechatOrder;
 import com.alienlab.catpower.repository.WechatOrderRepository;
@@ -28,6 +30,9 @@ public class WechatOrderServiceImpl implements WechatOrderService{
     private final WechatOrderRepository wechatOrderRepository;
     @Autowired
     WechatUserService wechatUserService;
+
+    @Autowired
+    WechatGoodsListService wechatGoodsListService;
 
     public WechatOrderServiceImpl(WechatOrderRepository wechatOrderRepository) {
         this.wechatOrderRepository = wechatOrderRepository;
@@ -86,11 +91,15 @@ public class WechatOrderServiceImpl implements WechatOrderService{
     }
 
     @Override
-    public List<WechatOrder> findBuyRecordsByOpenid(String openid) throws Exception {
+    public List<WechatOrder> findBuyRecordsByOpenid(Long goodsId,String openid) throws Exception {
         WechatUser wechatUser=wechatUserService.findUserByOpenid(openid);
         if(wechatUser==null){
             throw new Exception("未找到微信用户.");
         }
-        return wechatOrderRepository.findWechatOrderByWechatUserAndOrderStatus(wechatUser,"已支付");
+        WechatGoodsList goods=wechatGoodsListService.findOne(goodsId);
+        if(goods==null){
+            throw new Exception("未找到售卖商品.");
+        }
+        return wechatOrderRepository.findWechatOrderByWechatUserAAndWechatGoodsListAndOrderStatus(wechatUser,goods,"已支付");
     }
 }

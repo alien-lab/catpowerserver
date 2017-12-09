@@ -42,5 +42,5 @@ public interface WechatOrderService {
      */
     void delete(Long id);
 
-    List<WechatOrder> findBuyRecordsByOpenid(String openid) throws Exception;
+    List<WechatOrder> findBuyRecordsByOpenid(Long goodsId,String openid) throws Exception;
 }

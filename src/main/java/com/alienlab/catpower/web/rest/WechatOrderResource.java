@@ -153,6 +153,18 @@ public class WechatOrderResource {
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 
+    @GetMapping("/wechat-orders/record/{goodsId}/{openid}")
+    public ResponseEntity getBuyRecords(@PathVariable Long goodsId,@PathVariable String openid){
+        try {
+            List result=wechatOrderService.findBuyRecordsByOpenid(goodsId,openid);
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+        }
+    }
+
 
 
     @ApiOperation("微信售卖商品下单")
@@ -176,7 +188,7 @@ public class WechatOrderResource {
 
         try {
             //获取该用户已经完成的订单
-            List<WechatOrder> orders=wechatOrderService.findBuyRecordsByOpenid(openid);
+            List<WechatOrder> orders=wechatOrderService.findBuyRecordsByOpenid(goods.getId(),openid);
             if(orders.size()>=goods.getLimitCount()){
                 ExecResult er=new ExecResult(false,"已超出限制的购买次数.");
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
