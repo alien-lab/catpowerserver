@@ -79,6 +79,9 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Column(name = "reset_date")
     private Instant resetDate = null;
 
+    @Column(name = "openid")
+    private String openid = null;
+
     @JsonIgnore
     @ManyToMany
     @JoinTable(
@@ -204,6 +207,14 @@ public class User extends AbstractAuditingEntity implements Serializable {
         User user = (User) o;
 
         return login.equals(user.login);
+    }
+
+    public String getOpenid() {
+        return openid;
+    }
+
+    public void setOpenid(String openid) {
+        this.openid = openid;
     }
 
     @Override

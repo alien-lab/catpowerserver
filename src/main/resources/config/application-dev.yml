@@ -26,9 +26,9 @@ spring:
         serialization.indent_output: true
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:mysql://test.moistmedia.net:3360/catpower?useUnicode=true&characterEncoding=utf8&useSSL=false
-        username: wechat
-        password: wechat123!
+        url: jdbc:mysql://116.62.213.91:3306/catpower?useUnicode=true&characterEncoding=utf8&useSSL=false
+        username: root
+        password: hythzx@163.com
 
         hikari:
             data-source-properties:
@@ -145,10 +145,13 @@ alienlab:
 wechat:
     appid:  wx5153537a8daab1b6
     secret: 8359a432daac20d568240152eeb81af9
+    liteprogram:
+        appid:  wx22e287ac3c80ca3c
+        secret:
     token:  alienlab
     payid:  1492035802
     paycallback:    http://test.moistmedia.net/catpowerserver/wxpay
     host:
         basepath:   test.moistmedia.net/catpowerwechat/
         server: test.moistmedia.net/catpowerserver/
-        allowed:    116.62.47.176,test.moistmedia.net,www.bigercat.com
+        allowed:    test.moistmedia.net,www.bigercat.com

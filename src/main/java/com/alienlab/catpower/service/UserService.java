@@ -1,15 +1,14 @@
 package com.alienlab.catpower.service;
 
+import com.alienlab.catpower.config.Constants;
 import com.alienlab.catpower.domain.Authority;
 import com.alienlab.catpower.domain.User;
 import com.alienlab.catpower.repository.AuthorityRepository;
-import com.alienlab.catpower.config.Constants;
 import com.alienlab.catpower.repository.UserRepository;
 import com.alienlab.catpower.security.AuthoritiesConstants;
 import com.alienlab.catpower.security.SecurityUtils;
-import com.alienlab.catpower.service.util.RandomUtil;
 import com.alienlab.catpower.service.dto.UserDTO;
-
+import com.alienlab.catpower.service.util.RandomUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -21,7 +20,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -46,7 +48,7 @@ public class UserService {
     }
 
     public Optional<User> activateRegistration(String key) {
-        log.debug("Activating user for activation key {}", key);
+        log.debug("【激活用户】 for activation key {}", key);
         return userRepository.findOneByActivationKey(key)
             .map(user -> {
                 // activate given user for the registration key.
@@ -58,7 +60,7 @@ public class UserService {
     }
 
     public Optional<User> completePasswordReset(String newPassword, String key) {
-       log.debug("Reset user password for reset key {}", key);
+       log.debug("【重置用户密码】 reset key {}", key);
 
        return userRepository.findOneByResetKey(key)
            .filter(user -> user.getResetDate().isAfter(Instant.now().minusSeconds(86400)))
@@ -80,20 +82,24 @@ public class UserService {
             });
     }
 
-    public User createUser(String login, String password, String firstName, String lastName, String email,
-        String imageUrl, String langKey) {
+    public User getUserByLogin(String login){
+        return userRepository.findUserByLogin(login) ;
+    }
+
+    public User registerUser(UserDTO userDTO, String password) {
+        log.debug("【registerUser】");
         User newUser = new User();
         Authority authority = authorityRepository.findOne(AuthoritiesConstants.USER);
         Set<Authority> authorities = new HashSet<>();
         String encryptedPassword = passwordEncoder.encode(password);
-        newUser.setLogin(login);
+        newUser.setLogin(userDTO.getLogin());
         // new user gets initially a generated password
         newUser.setPassword(encryptedPassword);
-        newUser.setFirstName(firstName);
-        newUser.setLastName(lastName);
-        newUser.setEmail(email);
-        newUser.setImageUrl(imageUrl);
-        newUser.setLangKey(langKey);
+        newUser.setFirstName(userDTO.getFirstName());
+        newUser.setLastName(userDTO.getLastName());
+        newUser.setEmail(userDTO.getEmail());
+        newUser.setImageUrl(userDTO.getImageUrl());
+        newUser.setLangKey(userDTO.getLangKey());
         // new user is not active
         newUser.setActivated(false);
         // new user gets registration key
@@ -113,15 +119,14 @@ public class UserService {
         user.setEmail(userDTO.getEmail());
         user.setImageUrl(userDTO.getImageUrl());
         if (userDTO.getLangKey() == null) {
-            user.setLangKey("zh-cn"); // default language
+            user.setLangKey(Constants.DEFAULT_LANGUAGE); // default language
         } else {
             user.setLangKey(userDTO.getLangKey());
         }
         if (userDTO.getAuthorities() != null) {
-            Set<Authority> authorities = new HashSet<>();
-            userDTO.getAuthorities().forEach(
-                authority -> authorities.add(authorityRepository.findOne(authority))
-            );
+            Set<Authority> authorities = userDTO.getAuthorities().stream()
+                .map(authorityRepository::findOne)
+                .collect(Collectors.toSet());
             user.setAuthorities(authorities);
         }
         String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
@@ -135,8 +140,7 @@ public class UserService {
     }
 
     /**
-     * Update basic information (first name, last name, email, language) for the current user.
-     *
+     * 更新当前用户的基本信息（姓名、姓氏、电子邮件、语言）
      * @param firstName first name of user
      * @param lastName last name of user
      * @param email email id of user
@@ -144,23 +148,30 @@ public class UserService {
      * @param imageUrl image URL of user
      */
     public void updateUser(String firstName, String lastName, String email, String langKey, String imageUrl) {
-        userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).ifPresent(user -> {
-            user.setFirstName(firstName);
-            user.setLastName(lastName);
-            user.setEmail(email);
-            user.setLangKey(langKey);
-            user.setImageUrl(imageUrl);
-            log.debug("Changed Information for User: {}", user);
-        });
+        log.info("【更新当前用户的基本信息】");
+        SecurityUtils.getCurrentUserLogin()
+            .flatMap(userRepository::findOneByLogin)
+            .ifPresent(user -> {
+                user.setFirstName(firstName);
+                user.setLastName(lastName);
+                user.setEmail(email);
+                user.setLangKey(langKey);
+                user.setImageUrl(imageUrl);
+                log.debug("Changed Information for User: {}", user);
+            });
+    }
+
+    public User updateUser(User user) {
+        return userRepository.save(user);
     }
 
     /**
-     * Update all information for a specific user, and return the modified user.
-     *
+     * 为特定用户更新所有信息，并返回修改后的用户。
      * @param userDTO user to update
      * @return updated user
      */
     public Optional<UserDTO> updateUser(UserDTO userDTO) {
+        log.info("【为特定用户更新所有信息，并返回修改后的用户】UserDTO：{}",userDTO);
         return Optional.of(userRepository
             .findOne(userDTO.getId()))
             .map(user -> {
@@ -190,15 +201,18 @@ public class UserService {
     }
 
     public void changePassword(String password) {
-        userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).ifPresent(user -> {
-            String encryptedPassword = passwordEncoder.encode(password);
-            user.setPassword(encryptedPassword);
-            log.debug("Changed password for User: {}", user);
-        });
+        SecurityUtils.getCurrentUserLogin()
+            .flatMap(userRepository::findOneByLogin)
+            .ifPresent(user -> {
+                String encryptedPassword = passwordEncoder.encode(password);
+                user.setPassword(encryptedPassword);
+                log.debug("Changed password for User: {}", user);
+            });
     }
 
     @Transactional(readOnly = true)
     public Page<UserDTO> getAllManagedUsers(Pageable pageable) {
+        log.info("【根据所有用户】");
         return userRepository.findAllByLoginNot(pageable, Constants.ANONYMOUS_USER).map(UserDTO::new);
     }
 
@@ -208,35 +222,41 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public User getUserWithAuthorities(Long id) {
+    public Optional<User> getUserWithAuthorities(Long id) {
+        log.info("【根据Id获取用户的所有权限】");
         return userRepository.findOneWithAuthoritiesById(id);
     }
 
     @Transactional(readOnly = true)
-    public User getUserWithAuthorities() {
-        return userRepository.findOneWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin()).orElse(null);
+    public Optional<User> getUserWithAuthorities() {
+        log.info("【获取当前用户的所有权限】");
+        return SecurityUtils.getCurrentUserLogin().flatMap(userRepository::findOneWithAuthoritiesByLogin);
     }
 
-
     /**
-     * Not activated users should be automatically deleted after 3 days.
-     * <p>
-     * This is scheduled to get fired everyday, at 01:00 (am).
-     * </p>
+     * 未激活的用户应该在3天后自动删除。
+     * 这个计划每天都会被执行，01:00 (am).
      */
     @Scheduled(cron = "0 0 1 * * ?")
     public void removeNotActivatedUsers() {
         List<User> users = userRepository.findAllByActivatedIsFalseAndCreatedDateBefore(Instant.now().minus(3, ChronoUnit.DAYS));
         for (User user : users) {
-            log.debug("Deleting not activated user {}", user.getLogin());
+            log.info("删除未激活的用户 {}", user.getLogin());
             userRepository.delete(user);
         }
     }
 
     /**
-     * @return a list of all the authorities
+     * @return 当前用户所有的权限
      */
     public List<String> getAuthorities() {
+        log.info("当前用户所有的权限");
         return authorityRepository.findAll().stream().map(Authority::getName).collect(Collectors.toList());
     }
+
+    public User getUserByOpenid(String openid){
+        log.info("通过微信openid获取用户信息");
+        return userRepository.findUserByOpenid(openid);
+    }
+
 }

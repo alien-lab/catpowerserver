@@ -56,12 +56,19 @@ public class WechatUtil {
     public final static String get_all_media = "https://api.weixin.qq.com/cgi-bin/material/batchget_material?access_token=ACCESS_TOKEN";
 
     public final static String get_btn_info = "https://api.weixin.qq.com/cgi-bin/get_current_selfmenu_info?access_token=ACCESS_TOKEN";
+
+    public final static String lite_program_openid="https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=CODE&grant_type=authorization_code";
     @Autowired
     SignUtil sign;
     @Value("${wechat.appid}")
     private String wxappid;
     @Value("${wechat.secret}")
     private String wxappsecret;
+
+    @Value("${wechat.liteprogram.appid}")
+    private String lpwxappid;
+    @Value("${wechat.liteprogram.secret}")
+    private String lpwxappsecret;
 
     @Value("${wechat.host.basepath}")
     private String wechathost;
@@ -504,6 +511,12 @@ public class WechatUtil {
         param.put("code",code);
         param.put("check_consume",true);
         JSONObject jsonObject = HttpsInvoker.httpRequest(baseurl, "POST", param.toJSONString());
+        return jsonObject;
+    }
+
+    public JSONObject getLiteProgramOpenid(String code){
+        String url = lite_program_openid.replaceAll("APPID",lpwxappid).replaceAll("SECRET",lpwxappsecret).replaceAll("CODE",code);
+        JSONObject jsonObject = HttpsInvoker.httpRequest(url,"GET","");
         return jsonObject;
     }
 
