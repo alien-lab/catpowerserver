@@ -19,7 +19,7 @@ public interface CourseSchedulingService {
      * @param courseScheduling the entity to save
      * @return the persisted entity
      */
-    CourseScheduling save(CourseScheduling courseScheduling);
+    CourseScheduling save(CourseScheduling courseScheduling) throws Exception;
 
     /**
      *  Get all the courseSchedulings.
@@ -78,4 +78,8 @@ public interface CourseSchedulingService {
     Page<CourseScheduling> LikeSche(String keyword,Pageable pageable)throws Exception;
     //根据时间查询教练排课情况
     Page<CourseScheduling> getScheByTime(ZonedDateTime startDate, ZonedDateTime endDate, Pageable pageable)throws Exception;
+
+    //改变预约状态
+    CourseScheduling changeStatus(Long scheId,String status) throws Exception;
+
 }

@@ -1,10 +1,15 @@
 package com.alienlab.catpower.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.util.TypeUtils;
+import com.alienlab.catpower.domain.Coach;
+import com.alienlab.catpower.domain.CourseScheduling;
 import com.alienlab.catpower.domain.Learner;
 import com.alienlab.catpower.repository.BuyCourseRepository;
+import com.alienlab.catpower.repository.CourseSchedulingRepository;
 import com.alienlab.catpower.repository.LearnerAppointmentRepository;
 import com.alienlab.catpower.repository.LearnerRepository;
+import com.alienlab.catpower.service.CoachService;
 import com.alienlab.catpower.service.LearnerService;
 import com.alienlab.catpower.web.wechat.bean.entity.QrInfo;
 import com.alienlab.catpower.web.wechat.bean.entity.WechatUser;
@@ -23,10 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.ZonedDateTime;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Service Implementation for managing Learner.
@@ -56,6 +58,12 @@ public class LearnerServiceImpl implements LearnerService{
 
     @Autowired
     BuyCourseRepository buyCourseRepository;
+
+    @Autowired
+    CourseSchedulingRepository courseSchedulingRepository;
+
+    @Autowired
+    CoachService coachService;
 
     public LearnerServiceImpl(LearnerRepository learnerRepository) {
         this.learnerRepository = learnerRepository;
@@ -144,8 +152,18 @@ public class LearnerServiceImpl implements LearnerService{
     }
 
     @Override
+    public Learner findByPhone(String phone) {
+
+        Learner learner=learnerRepository.findLearnerByLearnerPhone(phone);
+        return learner;
+    }
+
+    @Override
     public QrInfo getLearnerBindQr(Long learnerId) throws Exception {
         Learner learner=learnerRepository.findOne(learnerId);
+        if(learner!=null){
+            return learner.getQrInfo();
+        }
         return null;
     }
 
@@ -163,6 +181,26 @@ public class LearnerServiceImpl implements LearnerService{
         List<Learner> learner = learnerRepository.findLearnerByLearneName(learneName);
         return learner;
     }
+
+    @Override
+    public CourseScheduling getLearnerAppoint(Learner learner) {
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
+        String nowdate=sdf.format(new Date());
+        return courseSchedulingRepository.findAppointByLearner(learner,nowdate);
+    }
+
+    @Override
+    public List<Coach> findTeachers(Learner learner) {
+        String sql="select distinct coach_id from buy_course where learner_id="+learner.getId()+" and remain_class>0";
+        List<Map<String,Object>> teacherList=jdbcTemplate.queryForList(sql);
+        List<Coach> result=new ArrayList<>();
+        for (Map<String, Object> stringObjectMap : teacherList) {
+            Coach coach=coachService.findOne(TypeUtils.castToLong(stringObjectMap.get("coach_id")));
+            result.add(coach);
+        }
+        return result;
+    }
+
 
     @Override
     public QrInfo getLearnerBindQr(Learner learner) throws Exception {

@@ -37,6 +37,18 @@ public class CourseScheduling implements Serializable {
     @Column(name = "sign_in_count")
     private Long signInCount;
 
+    @Column(name = "appointdate")
+    private String appointDate;
+    @Column(name = "appointtime")
+    private String appointTime;
+    @Column(name = "appointtype")
+    private String appointType;
+
+
+
+    @ManyToOne
+    private Learner learner;
+
     @ManyToOne
     private Course course;
 
@@ -140,6 +152,38 @@ public class CourseScheduling implements Serializable {
 
     public void setCoach(Coach coach) {
         this.coach = coach;
+    }
+
+    public String getAppointDate() {
+        return appointDate;
+    }
+
+    public void setAppointDate(String appointDate) {
+        this.appointDate = appointDate;
+    }
+
+    public String getAppointTime() {
+        return appointTime;
+    }
+
+    public void setAppointTime(String appointTime) {
+        this.appointTime = appointTime;
+    }
+
+    public String getAppointType() {
+        return appointType;
+    }
+
+    public void setAppointType(String appointType) {
+        this.appointType = appointType;
+    }
+
+    public Learner getLearner() {
+        return learner;
+    }
+
+    public void setLearner(Learner learner) {
+        this.learner = learner;
     }
 
     @Override

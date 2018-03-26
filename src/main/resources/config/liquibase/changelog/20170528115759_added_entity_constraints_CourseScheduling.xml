@@ -7,7 +7,7 @@
         Added the constraints for entity CourseScheduling.
     -->
     <changeSet id="20170528115759-2" author="jhipster">
-        
+
         <addForeignKeyConstraint baseColumnNames="course_id"
                                  baseTableName="course_scheduling"
                                  constraintName="fk_course_scheduling_course_id"
@@ -20,5 +20,12 @@
                                  referencedColumnNames="id"
                                  referencedTableName="coach"/>
 
+    </changeSet>
+    <changeSet id="20180326002" author="juhuiguang">
+        <addForeignKeyConstraint baseTableName="course_scheduling"
+                                 baseColumnNames="learner_id"
+                                 constraintName="fk_course_scheduling_learner_id"
+                                 referencedTableName="learner"
+                                 referencedColumnNames="id"/>
     </changeSet>
 </databaseChangeLog>

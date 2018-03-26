@@ -16,5 +16,5 @@ public interface CoachRepository extends JpaRepository<Coach,Long> {
     @Query("select a from Coach a where a.coachWechatopenid = ?1")
     Coach findCoachByCoachWechatopenid(String coachWechatopenid);
 
-    Coach findCoachBycoachWechatopenid(String coachWechatopenid);
+    Coach findCoachByCoachPhone(String phone);
 }

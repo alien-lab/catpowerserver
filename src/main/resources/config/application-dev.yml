@@ -147,7 +147,7 @@ wechat:
     secret: 8359a432daac20d568240152eeb81af9
     liteprogram:
         appid:  wx22e287ac3c80ca3c
-        secret:
+        secret: a36531958a97303090437e4876d387bc
     token:  alienlab
     payid:  1492035802
     paycallback:    http://test.moistmedia.net/catpowerserver/wxpay

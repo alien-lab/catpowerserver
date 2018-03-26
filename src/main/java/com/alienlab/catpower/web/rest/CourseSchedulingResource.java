@@ -73,7 +73,12 @@ public class CourseSchedulingResource {
         if (courseScheduling.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new courseScheduling cannot already have an ID")).body(null);
         }
-        CourseScheduling result = courseSchedulingService.save(courseScheduling);
+        CourseScheduling result = null;
+        try {
+            result = courseSchedulingService.save(courseScheduling);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return ResponseEntity.created(new URI("/api/course-schedulings/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -95,7 +100,12 @@ public class CourseSchedulingResource {
         if (courseScheduling.getId() == null) {
             return createCourseScheduling(courseScheduling);
         }
-        CourseScheduling result = courseSchedulingService.save(courseScheduling);
+        CourseScheduling result = null;
+        try {
+            result = courseSchedulingService.save(courseScheduling);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, courseScheduling.getId().toString()))
             .body(result);

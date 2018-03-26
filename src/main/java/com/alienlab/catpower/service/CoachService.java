@@ -6,6 +6,7 @@ import com.alienlab.catpower.web.wechat.bean.entity.WechatUser;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -55,5 +56,12 @@ public interface CoachService {
 
     Coach bindWechatUser(String openid, Long coachId)throws Exception;
 
+    //此处openid是微信服务号的openid，不是小程序的openid
     Coach findCoachByOpenId(String openid) throws Exception;
+
+    Coach findCoachByPhone(String phone);
+
+    List<String> getWorkDates(Coach coach);
+
+    List<String> getFreeTimes(Coach coach,String date);
 }

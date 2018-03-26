@@ -17,6 +17,8 @@ public interface LearnerRepository extends JpaRepository<Learner,Long> {
     Learner findLearnerByOpenid(String openid);
     //根据学员名字查询
     List<Learner> findLearnerByLearneName(String learneName);
+
+    Learner findLearnerByLearnerPhone(String phone);
    /* List<Course> findCourseByLearnerId()*/
 
 }

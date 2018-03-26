@@ -3,6 +3,7 @@ package com.alienlab.catpower.repository;
 import com.alienlab.catpower.domain.BuyCourse;
 import com.alienlab.catpower.domain.Coach;
 import com.alienlab.catpower.domain.CourseScheduling;
+import com.alienlab.catpower.domain.Learner;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -32,5 +33,14 @@ public interface CourseSchedulingRepository extends JpaRepository<CourseScheduli
     //模糊查询
     @Query("select a from CourseScheduling a where (a.course.courseName like CONCAT('%',?1,'%')) or (a.coach.coachName like CONCAT('%',?1,'%')) or (a.status like CONCAT('%',?1,'%')) ")
     Page<CourseScheduling> findCourseSchedulingByCourseNameLike(String keyword,Pageable pageable);
+
+    @Query("select a from CourseScheduling a where a.status in ('预约中','已预约') and a.learner=?1 and a.appointDate>=?2")
+    CourseScheduling findAppointByLearner(Learner learner,String appointdate);
+
+    @Query("select a from CourseScheduling a where a.appointDate=?1 and a.coach=?2 and a.status in ('预约中','已预约')")
+    List<CourseScheduling> findByAppointDateAndCoach(String date,Coach coach);
+
+
+    List<CourseScheduling> findByAppointDateAndCoachAndAppointTime(String date,Coach coach,String time);
 
 }

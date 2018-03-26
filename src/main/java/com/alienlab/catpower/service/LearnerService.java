@@ -1,5 +1,7 @@
 package com.alienlab.catpower.service;
 
+import com.alienlab.catpower.domain.Coach;
+import com.alienlab.catpower.domain.CourseScheduling;
 import com.alienlab.catpower.domain.Learner;
 import com.alienlab.catpower.web.wechat.bean.entity.QrInfo;
 import com.alienlab.catpower.web.wechat.bean.entity.WechatUser;
@@ -50,6 +52,8 @@ public interface LearnerService {
 
     Learner findByOpenid(String openid) throws ParseException;
 
+    Learner findByPhone(String phone);
+
     QrInfo getLearnerBindQr(Long learnerId) throws Exception;
     QrInfo getLearnerBindQr(Learner learner) throws Exception;
 
@@ -63,4 +67,10 @@ public interface LearnerService {
 
     //根据学员名字查询
     List<Learner> getLearnerBylearnerName(String learneName) throws Exception;
+
+    //获取学员预约，一个学员只能存在一个有效预约
+    CourseScheduling getLearnerAppoint(Learner learner);
+
+    List<Coach> findTeachers(Learner learner);
+
 }

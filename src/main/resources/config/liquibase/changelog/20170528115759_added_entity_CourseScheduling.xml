@@ -54,6 +54,22 @@
         </createTable>
         <dropDefaultValue tableName="course_scheduling" columnName="start_time" columnDataType="datetime"/>
         <dropDefaultValue tableName="course_scheduling" columnName="end_time" columnDataType="datetime"/>
-        
+
+    </changeSet>
+    <changeSet id="20180326001" author="juhuiguang">
+        <addColumn tableName="course_scheduling">
+            <column name="learner_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="appointdate" type="varchar(20)">
+                <constraints nullable="true" />
+            </column>
+            <column name="appointtime" type="varchar(20)">
+                <constraints nullable="true" />
+            </column>
+            <column name="appointtype" type="varchar(20)">
+                <constraints nullable="true" />
+            </column>
+        </addColumn>
     </changeSet>
 </databaseChangeLog>

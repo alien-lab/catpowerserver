@@ -1,12 +1,15 @@
 package com.alienlab.catpower.web.rest;
 
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.util.TypeUtils;
+import com.alienlab.catpower.domain.Learner;
 import com.alienlab.catpower.domain.User;
 import com.alienlab.catpower.security.SecurityUtils;
 import com.alienlab.catpower.security.jwt.JWTConfigurer;
 import com.alienlab.catpower.security.jwt.TokenProvider;
 import com.alienlab.catpower.service.LearnerService;
 import com.alienlab.catpower.service.UserService;
+import com.alienlab.catpower.service.dto.UserDTO;
 import com.alienlab.catpower.web.rest.util.ExecResult;
 import com.alienlab.catpower.web.rest.vm.LoginVM;
 import com.alienlab.catpower.web.wechat.util.WechatUtil;
@@ -25,9 +28,12 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.text.ParseException;
+import java.util.Map;
 
 /**
  * Controller to authenticate users.
@@ -127,56 +133,60 @@ public class UserJWTController {
 
 
     @ApiOperation(value="小程序端绑定用户")
-    @ApiImplicitParams({
-        @ApiImplicitParam(name="openid",paramType = "query",value="微信身份编码"),
-        @ApiImplicitParam(name="phone",paramType = "query",value="需绑定的手机号码"),
-        @ApiImplicitParam(name="randomcode",paramType = "query",value="手机短信验证码")
-    })
     @PostMapping("/authenticate/wechat/bind")
     @Timed
-    public ResponseEntity authorize(@RequestParam String openid, @RequestParam String phone, @RequestParam String randomcode, @RequestParam String account){
-        log.info("wechat authorize>>>openid="+openid+",phone="+phone+",randomcode="+randomcode+",account="+account);
-        User u=userService.getUserByLogin(account);
-        if(u==null){
-            log.error("login {} 找不到系统用户。",account);
-            ExecResult er=new ExecResult(false,"平台账户不存在。");
+    public ResponseEntity authorize(@RequestBody Map<String,Object> param){
+        if(param.containsKey("openid")
+            &&param.containsKey("userName")
+            &&param.containsKey("phone"))
+        {
+            String openid= TypeUtils.castToString(param.get("openid"));
+            String phone=TypeUtils.castToString(param.get("phone"));
+            String userName=TypeUtils.castToString(param.get("userName"));
+            log.info("wechat authorize>>>openid="+openid+",phone="+phone+",userName="+userName);
+            if(openid==null||openid.equals("null")){
+                log.error("Openid {} 错误。",openid);
+                ExecResult er=new ExecResult(false,"获取用户信息出错。");
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+            }
+            User u=userService.getUserByLogin(phone);
+            if(u==null){
+                u=new User();
+                u.setLogin(phone);
+                u.setFirstName(userName);
+                u.setPassword(new BCryptPasswordEncoder().encode(phone));
+                u.setOpenid(openid);
+                UserDTO userDTO=new UserDTO(u);
+                u=userService.registerUser(userDTO,phone);
+            }else{
+                //验证账户是否被其他人绑定
+                String tempopenid=u.getOpenid();
+                if(tempopenid!=null && tempopenid.length()>0){
+                    if(!tempopenid.equals(openid)){
+                        ExecResult er=new ExecResult(false,"学员已经被绑定。");
+                        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
+                    }
+                }
+                u.setFirstName(userName);
+                u.setOpenid(openid);
+                u=userService.updateUser(u);
+            }
+            //如果找不到学员，则添加新学员，找到就更新学员信息
+            Learner learner=learnerService.findByPhone(phone);
+            if(learner==null){
+                learner=new Learner();
+            }
+            learner.setLearneName(userName);
+            learner.setLearnerPhone(phone);
+            learnerService.save(learner);
+
+            return ResponseEntity.ok(u);
+
+        }else{
+            ExecResult er=new ExecResult(false,"参数格式错误。");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
         }
-        if(openid==null||openid.equals("null")){
-            log.error("Openid {} 错误。",openid);
-            ExecResult er=new ExecResult(false,"获取用户信息出错。");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
-        }
-//        User openidu=userService.getUserByOpenid(openid);
-//        if(openidu!=null){
-//            log.error("Openid {} 您已绑定系统用户。",openid);
-//            ExecResult er=new ExecResult(false,"已经绑定过用户。");
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
-//        }
 
-//        BsUsers bsUsers=bsUsersService.findByUserName(u.getLogin());
-//        if(bsUsers==null){
-//            log.error("login {} 找不到业务用户。",account);
-//            ExecResult er=new ExecResult(false,"账户名下不存在业务用户。");
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
-//        }
-//        if(!phone.equals(bsUsers.getMobile())){
-//            log.error("login {} 平台账户手机号码错误。",account);
-//            ExecResult er=new ExecResult(false,"账户关联的手机号码错误。");
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
-//        }
-//
-//
-//        if(!UtilsResource.validatMobileCode(phone,randomcode)) { //调用验证码验证
-//            log.error("手机验证码错误");
-//            ExecResult er = new ExecResult(false, "手机验证码错误");
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(er);
-//        }
-
-
-        u.setOpenid(openid);
-        u=userService.updateUser(u);
-        return ResponseEntity.ok(u);
     }
 
     @ApiOperation(value="小程序端用户解除绑定")

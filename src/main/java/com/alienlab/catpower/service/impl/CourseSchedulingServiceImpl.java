@@ -64,9 +64,18 @@ public class CourseSchedulingServiceImpl implements CourseSchedulingService{
      * @return the persisted entity
      */
     @Override
-    public CourseScheduling save(CourseScheduling courseScheduling) {
+    public CourseScheduling save(CourseScheduling courseScheduling) throws Exception {
         log.debug("Request to save CourseScheduling : {}", courseScheduling);
+        //保存之前做时间验证
+
+        List<CourseScheduling> existsResult=courseSchedulingRepository.findByAppointDateAndCoachAndAppointTime(
+            courseScheduling.getAppointDate(),courseScheduling.getCoach(),courseScheduling.getAppointTime()
+        );
+        if(existsResult!=null&&existsResult.size()>0){
+            throw new Exception("时间段"+courseScheduling.getAppointTime()+"已经被预约。");
+        }
         courseScheduling.setSignInCount(0l);
+
         CourseScheduling result = courseSchedulingRepository.save(courseScheduling);
         return result;
     }
@@ -242,6 +251,18 @@ public class CourseSchedulingServiceImpl implements CourseSchedulingService{
             throw new Exception("未选择结束时间时间");
         }
         return courseSchedulingRepository.findCourseSchedulingsByStartTimeBetween(startDate,endDate,pageable);
+    }
+
+    @Override
+    public CourseScheduling changeStatus(Long scheId, String status) throws Exception {
+        CourseScheduling sche=courseSchedulingRepository.findOne(scheId);
+        if(sche==null){
+            throw new Exception("没有找到课程预约");
+        }
+
+        sche.setStatus(status);
+        sche=courseSchedulingRepository.save(sche);
+        return sche;
     }
 
 

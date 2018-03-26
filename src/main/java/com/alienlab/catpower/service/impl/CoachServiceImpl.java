@@ -2,7 +2,11 @@ package com.alienlab.catpower.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alienlab.catpower.domain.Coach;
+import com.alienlab.catpower.domain.CoachWorkSche;
+import com.alienlab.catpower.domain.CourseScheduling;
 import com.alienlab.catpower.repository.CoachRepository;
+import com.alienlab.catpower.repository.CoachWorkScheRespository;
+import com.alienlab.catpower.repository.CourseSchedulingRepository;
 import com.alienlab.catpower.service.CoachService;
 import com.alienlab.catpower.web.wechat.bean.entity.QrInfo;
 import com.alienlab.catpower.web.wechat.bean.entity.WechatUser;
@@ -18,7 +22,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -43,6 +51,11 @@ public class CoachServiceImpl implements CoachService{
     @Autowired
     WechatUserService wechatUserService;
 
+    @Autowired
+    CourseSchedulingRepository courseSchedulingRepository;
+
+    @Autowired
+    CoachWorkScheRespository coachWorkScheRespository;
     public CoachServiceImpl(CoachRepository coachRepository) {
         this.coachRepository = coachRepository;
     }
@@ -138,7 +151,7 @@ public class CoachServiceImpl implements CoachService{
 
     @Override
     public Coach bindWechatUser(WechatUser wechatUser, Coach coach) throws Exception {
-        Coach coach1 = coachRepository.findCoachBycoachWechatopenid(wechatUser.getOpenId());
+        Coach coach1 = coachRepository.findCoachByCoachWechatopenid(wechatUser.getOpenId());
         System.out.println(coach1);
         if (coach1 != null){
             throw new Exception("教练账户" + coach.getCoachName() + "已被" + coach.getCoachWechatname() + "绑定");
@@ -165,5 +178,45 @@ public class CoachServiceImpl implements CoachService{
     @Override
     public Coach findCoachByOpenId(String openid) throws Exception {
         return coachRepository.findCoachByCoachWechatopenid(openid);
+    }
+
+    @Override
+    public Coach findCoachByPhone(String phone) {
+
+        return coachRepository.findCoachByCoachPhone(phone);
+    }
+
+    @Override
+    public List<String> getWorkDates(Coach coach) {
+        ZonedDateTime now=ZonedDateTime.now();
+        List<CoachWorkSche> result=coachWorkScheRespository.findCoachWorkSchesByCoachAndWorkDate(coach,now);
+        List<String> dates=new ArrayList<>();
+        for(int i=0;i<result.size()&&i<7;i++){
+            CoachWorkSche coachWorkSche=result.get(i);
+            dates.add(coachWorkSche.getWorkDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
+        }
+        return dates;
+    }
+
+    @Override
+    public List<String> getFreeTimes(Coach coach, String date) {
+        List<CourseScheduling> sches=courseSchedulingRepository.findByAppointDateAndCoach(date,coach);
+        List<String> result=new ArrayList<>();
+        for(int i=10;i<22;i++){
+            if(i==12 || i==18)continue;
+            String timestr=i+":00~"+(i+1)+":00";
+            boolean isexist=false;
+            for(int j=0;sches!=null&&j<sches.size();j++){
+                CourseScheduling existSche=sches.get(j);
+                if(timestr.equals(existSche.getAppointTime())){
+                    isexist=true;
+                    break;
+                }
+            }
+            if(!isexist){
+                result.add(timestr);
+            }
+        }
+        return result;
     }
 }
