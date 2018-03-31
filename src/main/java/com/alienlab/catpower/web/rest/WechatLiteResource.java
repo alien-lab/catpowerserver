@@ -102,7 +102,7 @@ public class WechatLiteResource {
         List<String> result=coachService.getWorkDates(coach);
         return ResponseEntity.ok(result);
     }
-    @ApiOperation(value = "通过教练查询教练排班，用于预约选择日期")
+    @ApiOperation(value = "通过教练查询教练排班，用于预约选择时间")
     @GetMapping("/wechat/teacher/freetime/{teacherId}")
     public ResponseEntity getFreeTime(@PathVariable Long teacherId, @RequestParam String date){
         Coach coach=coachService.findOne(teacherId);
@@ -113,6 +113,57 @@ public class WechatLiteResource {
         List<String> result=coachService.getFreeTimes(coach,date);
         return ResponseEntity.ok(result);
     }
+
+    @ApiOperation(value = "当前用户取消预约")
+    @PutMapping("/wechat/learner/cancelappoint")
+    public ResponseEntity cancelAppoint(){
+        String phone=SecurityUtils.getCurrentUserLogin().get();
+        //根据手机号码获取学员信息
+        Learner learner=learnerService.findByPhone(phone);
+        if(learner==null){
+            ExecResult er=new ExecResult(false,"未找到学员。");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(er);
+        }
+        CourseScheduling appoint=learnerService.getLearnerAppoint(learner);
+        if(appoint==null){
+            ExecResult er=new ExecResult(false,"未找到预约信息。");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(er);
+        }
+        try {
+            appoint=courseSchedulingService.changeStatus(appoint.getId(),"已取消");
+            return ResponseEntity.ok(appoint);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,"取消预约发生错误。");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(er);
+        }
+    }
+
+    @ApiOperation(value = "当前用户确认预约")
+    @PutMapping("/wechat/learner/confirmappoint")
+    public ResponseEntity confirmAppoint(){
+        String phone=SecurityUtils.getCurrentUserLogin().get();
+        //根据手机号码获取学员信息
+        Learner learner=learnerService.findByPhone(phone);
+        if(learner==null){
+            ExecResult er=new ExecResult(false,"未找到学员。");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(er);
+        }
+        CourseScheduling appoint=learnerService.getLearnerAppoint(learner);
+        if(appoint==null){
+            ExecResult er=new ExecResult(false,"未找到预约信息。");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(er);
+        }
+        try {
+            appoint=courseSchedulingService.changeStatus(appoint.getId(),"已预约");
+            return ResponseEntity.ok(appoint);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ExecResult er=new ExecResult(false,"确认预约发生错误。");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(er);
+        }
+    }
+
 
 
 
