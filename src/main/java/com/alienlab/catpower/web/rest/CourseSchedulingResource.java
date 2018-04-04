@@ -3,10 +3,10 @@ package com.alienlab.catpower.web.rest;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.util.TypeUtils;
-import com.alienlab.catpower.domain.CourseScheduling;
-import com.alienlab.catpower.domain.LearnerCharge;
+import com.alienlab.catpower.domain.*;
 import com.alienlab.catpower.service.CourseSchedulingService;
 import com.alienlab.catpower.service.LearnerChargeService;
+import com.alienlab.catpower.service.LearnerService;
 import com.alienlab.catpower.web.rest.util.ExecResult;
 import com.alienlab.catpower.web.rest.util.HeaderUtil;
 import com.alienlab.catpower.web.rest.util.PaginationUtil;
@@ -52,11 +52,14 @@ public class CourseSchedulingResource {
 
     private final CourseSchedulingService courseSchedulingService;
 
+    private final LearnerService learnerService;
+
     @Autowired
     LearnerChargeService learnerChargeService;
 
-    public CourseSchedulingResource(CourseSchedulingService courseSchedulingService) {
+    public CourseSchedulingResource(CourseSchedulingService courseSchedulingService,LearnerService learnerService) {
         this.courseSchedulingService = courseSchedulingService;
+        this.learnerService=learnerService;
     }
 
     /**
@@ -68,13 +71,23 @@ public class CourseSchedulingResource {
      */
     @PostMapping("/course-schedulings")
     @Timed
-    public ResponseEntity<CourseScheduling> createCourseScheduling(@RequestBody CourseScheduling courseScheduling) throws URISyntaxException {
+    public ResponseEntity createCourseScheduling(@RequestBody CourseScheduling courseScheduling) throws URISyntaxException {
         log.debug("REST request to save CourseScheduling : {}", courseScheduling);
         if (courseScheduling.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new courseScheduling cannot already have an ID")).body(null);
         }
         CourseScheduling result = null;
         try {
+
+            Learner learner=courseScheduling.getLearner();
+            Coach coach=courseScheduling.getCoach();
+            BuyCourse buyCourse=learnerService.getBuyCourseByCoachAndLearner(learner,coach);
+            if(buyCourse==null){
+                ExecResult er=new ExecResult(false,"账户下未找到有效课程。");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(er);
+            }
+            courseScheduling.setBuyCourse(buyCourse);
+            courseScheduling.setCourse(buyCourse.getCourse());
             result = courseSchedulingService.save(courseScheduling);
         } catch (Exception e) {
             e.printStackTrace();

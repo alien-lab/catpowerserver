@@ -1,5 +1,6 @@
 package com.alienlab.catpower.service;
 
+import com.alienlab.catpower.domain.BuyCourse;
 import com.alienlab.catpower.domain.Coach;
 import com.alienlab.catpower.domain.CourseScheduling;
 import com.alienlab.catpower.domain.Learner;
@@ -72,5 +73,9 @@ public interface LearnerService {
     CourseScheduling getLearnerAppoint(Learner learner);
 
     List<Coach> findTeachers(Learner learner);
+
+
+    //根据教练和学员，找到学员账户下的课程
+    BuyCourse getBuyCourseByCoachAndLearner(Learner learner, Coach coach);
 
 }

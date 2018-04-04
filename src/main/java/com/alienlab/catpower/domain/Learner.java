@@ -50,6 +50,17 @@ public class Learner implements Serializable {
     @Column(name = "experience")
     private Long experience;
 
+    @Column(name = "birthday")
+    private String birthday;
+    @Column(name = "constellation")
+    private String  constellation;
+    @Column(name = "job")
+    private String job;
+    @Column(name = "email")
+    private String email;
+    @Column(name = "address")
+    private String address;
+
     @ManyToOne
     @JoinColumn(name="qr_code")
     private QrInfo qrInfo;
@@ -173,6 +184,46 @@ public class Learner implements Serializable {
 
     public void setWechatUser(WechatUser wechatUser) {
         this.wechatUser = wechatUser;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getConstellation() {
+        return constellation;
+    }
+
+    public void setConstellation(String constellation) {
+        this.constellation = constellation;
+    }
+
+    public String getJob() {
+        return job;
+    }
+
+    public void setJob(String job) {
+        this.job = job;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     @Override

@@ -40,7 +40,16 @@ public interface CourseSchedulingRepository extends JpaRepository<CourseScheduli
     @Query("select a from CourseScheduling a where a.appointDate=?1 and a.coach=?2 and a.status in ('预约中','已预约')")
     List<CourseScheduling> findByAppointDateAndCoach(String date,Coach coach);
 
-
+    @Query("select a from CourseScheduling a where a.appointDate=?1 and a.coach=?2 and a.appointTime=?3 and a.status in ('预约中','已预约')")
     List<CourseScheduling> findByAppointDateAndCoachAndAppointTime(String date,Coach coach,String time);
+
+    @Query("select a from CourseScheduling a where a.appointDate>=?2 and a.coach=?1 and a.status='已预约' order by a.appointDate,a.appointTime")
+    List<CourseScheduling> findAllByCoach(Coach coach,String date);
+
+    @Query("select a from CourseScheduling a where a.status='上课中' and a.learner=?1 order by a.startTime")
+    List<CourseScheduling> findLearnerOnLineCourse(Learner learner);
+
+    @Query("select a from CourseScheduling a where a.status='上课中' and a.coach=?1 order by a.startTime")
+    List<CourseScheduling> findTeacherOnLineCourse(Coach coach);
 
 }

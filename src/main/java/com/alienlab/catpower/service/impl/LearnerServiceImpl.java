@@ -2,6 +2,7 @@ package com.alienlab.catpower.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.util.TypeUtils;
+import com.alienlab.catpower.domain.BuyCourse;
 import com.alienlab.catpower.domain.Coach;
 import com.alienlab.catpower.domain.CourseScheduling;
 import com.alienlab.catpower.domain.Learner;
@@ -20,6 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -198,7 +200,24 @@ public class LearnerServiceImpl implements LearnerService{
             Coach coach=coachService.findOne(TypeUtils.castToLong(stringObjectMap.get("coach_id")));
             result.add(coach);
         }
+        if(result.size()==0){//如果没有找到课程对应的教练,如第一次购买或领取体验课，直接显示所有教练
+            Page<Coach> coachPage=coachService.findAll(new PageRequest(0,20));
+            List<Coach> coaches=coachPage.getContent();
+            for (Coach coach : coaches) {
+                result.add(coach);
+            }
+        }
         return result;
+    }
+
+    @Override
+    public BuyCourse getBuyCourseByCoachAndLearner(Learner learner, Coach coach) {
+       List<BuyCourse> courses= buyCourseRepository.findByLearnerAndCoach(learner,coach);
+       if(courses.size()>0){
+           return courses.get(0);
+       }else{
+           return null;
+       }
     }
 
 

@@ -229,4 +229,44 @@ public class LearnerChargeServiceImpl implements LearnerChargeService{
         }
         return learnerChargeRepository.findLearnerChargeByCourseAndLearner(course,learner);
     }
+
+    @Override
+    public LearnerCharge learnSign(Learner learner, CourseScheduling scheduling) throws Exception {
+        BuyCourse buyCourse=scheduling.getBuyCourse();
+        Coach coach=scheduling.getCoach();
+        if(buyCourse.getLearner().getId()!=learner.getId()){//不是本人预约的课程
+            buyCourse=learnerService.getBuyCourseByCoachAndLearner(learner,coach);
+        }
+        if(buyCourse==null){
+            throw new Exception("签到失败：您的账户下未找到该课程。");
+        }
+        if(buyCourse.getRemainClass()==0){
+            throw new Exception("签到失败：您已没有课时。");
+        }
+        Long remaincount=buyCourse.getRemainClass();
+        remaincount=remaincount-1;
+        LearnerCharge sign=new LearnerCharge();
+        sign.setChargeTime(ZonedDateTime.now());
+        sign.setBuyCourseId(buyCourse.getId().toString());
+        sign.setCoach(coach);
+        sign.setCourse(scheduling.getCourse());
+        sign.setCourseScheduling(scheduling);
+        sign.setLearner(learner);
+        sign.setRemainNumber(remaincount);
+        sign=learnerChargeRepository.save(sign);
+
+        if(sign.getId()>0){
+            //更新预约状态
+            scheduling.setStatus("上课中");
+            scheduling.setSignInCount(scheduling.getSignInCount()+1);
+            scheduling.setStartTime(ZonedDateTime.now());
+            scheduling=courseSchedulingService.save(scheduling);
+
+            //更新账户剩余课时
+            buyCourse.setRemainClass(remaincount);
+            buyCourseService.save(buyCourse);
+        }
+        return sign;
+
+    }
 }

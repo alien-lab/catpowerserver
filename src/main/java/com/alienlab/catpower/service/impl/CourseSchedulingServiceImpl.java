@@ -2,11 +2,14 @@ package com.alienlab.catpower.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alienlab.catpower.domain.Coach;
+import com.alienlab.catpower.domain.Course;
 import com.alienlab.catpower.domain.CourseScheduling;
+import com.alienlab.catpower.domain.Learner;
 import com.alienlab.catpower.repository.CoachRepository;
 import com.alienlab.catpower.repository.CourseSchedulingRepository;
 import com.alienlab.catpower.service.CoachService;
 import com.alienlab.catpower.service.CourseSchedulingService;
+import com.alienlab.catpower.service.LearnerService;
 import com.alienlab.catpower.web.wechat.bean.entity.QrInfo;
 import com.alienlab.catpower.web.wechat.service.QrInfoService;
 import com.alienlab.catpower.web.wechat.service.WechatMessageService;
@@ -21,11 +24,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Service Implementation for managing CourseScheduling.
@@ -53,6 +54,9 @@ public class CourseSchedulingServiceImpl implements CourseSchedulingService{
     @Autowired
     CoachRepository coachRepository;
 
+    @Autowired
+    LearnerService learnerService;
+
     public CourseSchedulingServiceImpl(CourseSchedulingRepository courseSchedulingRepository) {
         this.courseSchedulingRepository = courseSchedulingRepository;
     }
@@ -71,10 +75,12 @@ public class CourseSchedulingServiceImpl implements CourseSchedulingService{
         List<CourseScheduling> existsResult=courseSchedulingRepository.findByAppointDateAndCoachAndAppointTime(
             courseScheduling.getAppointDate(),courseScheduling.getCoach(),courseScheduling.getAppointTime()
         );
-        if(existsResult!=null&&existsResult.size()>0){
-            throw new Exception("时间段"+courseScheduling.getAppointTime()+"已经被预约。");
+        if(courseScheduling.getStatus().equals("已预约")||courseScheduling.getStatus().equals("预约中")){
+            if(existsResult!=null&&existsResult.size()>0){
+                throw new Exception("时间段"+courseScheduling.getAppointTime()+"已经被预约。");
+            }
+            courseScheduling.setSignInCount(0l);
         }
-        courseScheduling.setSignInCount(0l);
 
         CourseScheduling result = courseSchedulingRepository.save(courseScheduling);
         return result;
@@ -265,5 +271,37 @@ public class CourseSchedulingServiceImpl implements CourseSchedulingService{
         return sche;
     }
 
+    @Override
+    public List<CourseScheduling> getCoachScheByDate(Long coachId, String date) {
+        Coach coach=coachService.findOne(coachId);
+        return courseSchedulingRepository.findByAppointDateAndCoach(date,coach);
+    }
+
+    @Override
+    public List<CourseScheduling> getAllAppointByCoach(Coach coach) {
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
+        String d=sdf.format(new Date());
+        return courseSchedulingRepository.findAllByCoach(coach,d);
+    }
+
+    @Override
+    public CourseScheduling getLearnerOnlineCourse(Learner learner) {
+        List<CourseScheduling> results=courseSchedulingRepository.findLearnerOnLineCourse(learner);
+        if(results!=null&&results.size()>0){
+            return results.get(0);
+        }else{
+            return null;
+        }
+    }
+
+    @Override
+    public CourseScheduling getTeacherOnlineCourse(Coach coach) {
+        List<CourseScheduling> results=courseSchedulingRepository.findTeacherOnLineCourse(coach);
+        if(results!=null&&results.size()>0){
+            return results.get(0);
+        }else{
+            return null;
+        }
+    }
 
 }

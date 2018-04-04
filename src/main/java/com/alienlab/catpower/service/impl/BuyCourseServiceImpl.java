@@ -72,13 +72,13 @@ public class BuyCourseServiceImpl implements BuyCourseService{
         buyCourse.setBuyTime(dateTime);
         buyCourse.setOperateTime(dateTime);
         BuyCourse result = buyCourseRepository.save(buyCourse);
-        if (result!=null){
-            try {
-                wechatMessageService.sendBuyClassSuccess(result);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+//        if (result!=null){
+//            try {
+//                wechatMessageService.sendBuyClassSuccess(result);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
         return result;
     }
 
@@ -319,6 +319,13 @@ public class BuyCourseServiceImpl implements BuyCourseService{
             throw new Exception("请输入买课状态");
         }
         return buyCourseRepository.findBuyCoursesByStatus(status,pageable);
+    }
+
+    @Override
+    public List<BuyCourse> getHasClassLearnerByCoach(Coach coach) {
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyyMMdd");
+        String date=simpleDateFormat.format(new Date());
+        return buyCourseRepository.findHasCourseLearners(coach,date);
     }
 
 

@@ -72,4 +72,24 @@
             </column>
         </addColumn>
     </changeSet>
+
+    <changeSet id="201804010001" author="juhuiguang">
+        <addColumn tableName="course_scheduling">
+            <column name="buy_course_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+        </addColumn>
+        <addForeignKeyConstraint baseColumnNames="buy_course_id"
+                                 baseTableName="course_scheduling"
+                                 constraintName="fk_course_sche_buy_course_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="buy_course"/>
+    </changeSet>
+    <changeSet id="201804050001" author="juhuiguang">
+        <addColumn tableName="course_scheduling">
+            <column name="wechat_lite_formid" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

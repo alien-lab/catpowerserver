@@ -62,4 +62,8 @@ public interface LearnerChargeService {
     //查询学员对应的签到记录
     List<LearnerCharge> findLearnerChargeByCourseIdAndLearnerId(Long courseId,Long learnerId);
 
+    //学员小程序签到上课
+    LearnerCharge learnSign(Learner learner,CourseScheduling scheduling) throws Exception;
+
+
 }

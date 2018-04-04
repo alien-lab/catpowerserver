@@ -1,6 +1,7 @@
 package com.alienlab.catpower.service;
 
 import com.alienlab.catpower.domain.BuyCourse;
+import com.alienlab.catpower.domain.Coach;
 import com.alienlab.catpower.domain.Learner;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -89,4 +90,7 @@ public interface BuyCourseService {
 
     //查询退课情况
     Page<BuyCourse> getBackCoursesByStatus(String status,Pageable pageable)throws Exception;
+
+    //教练获取所有有课且未预约的学员
+    List<BuyCourse> getHasClassLearnerByCoach(Coach coach);
 }

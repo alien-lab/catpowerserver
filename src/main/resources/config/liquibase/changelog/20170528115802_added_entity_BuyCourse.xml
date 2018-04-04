@@ -111,4 +111,5 @@
                                  referencedColumnNames="id"
                                  referencedTableName="course"/>
     </changeSet>
+
 </databaseChangeLog>

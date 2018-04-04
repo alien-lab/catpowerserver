@@ -92,6 +92,7 @@ public class WechatUtil {
     }
 
 
+
     public  JSONObject  get_media_info(String media_id){
         JSONObject jo = new JSONObject();
         jo.put("media_id",media_id);
@@ -276,6 +277,48 @@ public class WechatUtil {
         logger.info("微信服务号获取新token");
         AccessToken at=null;
         String requestUrl = access_token_url.replace("APPID", wxappid).replace("APPSECRET", wxappsecret);
+        HttpsInvoker invoker=new HttpsInvoker();
+        JSONObject jsonObject = HttpsInvoker.httpRequest(requestUrl, "GET", null);
+        // 如果请求成功
+        if (null != jsonObject) {
+            try {
+                at = new AccessToken();
+                at.setToken(jsonObject.getString("access_token"));
+                at.setExpiresIn(jsonObject.getIntValue("expires_in"));
+                Calendar c=Calendar.getInstance();
+                at.setTokenTime(c.getTimeInMillis());
+            } catch (JSONException e) {
+                at = null;
+                // 获取token失败
+                logger.error("获取token失败 errcode:"+jsonObject.getString("errcode")+"errmsg:"+jsonObject.getString("errmsg"));
+            }
+        }
+        return at;
+    }
+
+
+    private  AccessToken lpaccessToken = null;
+    public  AccessToken getLpAccessToken() {
+        logger.info("获取微信小程序AccessToken");
+        if(lpaccessToken== null){
+            logger.info("系统中token不存在！");
+            lpaccessToken=getLiteProgramAT();
+        }else{
+            Calendar c=Calendar.getInstance();
+            long now=c.getTimeInMillis();
+            if(now-lpaccessToken.getTokenTime()>=7000*1000){
+                logger.info("系统中token已超时！gettoken时间："+lpaccessToken.getTokenTime()+",当前时间:"+now);
+                lpaccessToken=getLiteProgramAT();
+            }else{
+                logger.info("系统中token未过期可使用");
+            }
+        }
+        return lpaccessToken;
+    }
+    public AccessToken getLiteProgramAT(){
+        logger.info("微信小程序获取新accesstoken");
+        AccessToken at=null;
+        String requestUrl = access_token_url.replace("APPID", lpwxappid).replace("APPSECRET", lpwxappsecret);
         HttpsInvoker invoker=new HttpsInvoker();
         JSONObject jsonObject = HttpsInvoker.httpRequest(requestUrl, "GET", null);
         // 如果请求成功
@@ -517,6 +560,17 @@ public class WechatUtil {
     public JSONObject getLiteProgramOpenid(String code){
         String url = lite_program_openid.replaceAll("APPID",lpwxappid).replaceAll("SECRET",lpwxappsecret).replaceAll("CODE",code);
         JSONObject jsonObject = HttpsInvoker.httpRequest(url,"GET","");
+        return jsonObject;
+    }
+
+    public JSONObject getLiteProgramQrcode(String page,String params){
+        String url="https://api.weixin.qq.com/wxa/getwxacode?access_token=ACCESS_TOKEN";
+        AccessToken accessToken=getLpAccessToken();
+        url=url.replace("ACCESS_TOKEN",accessToken.getToken());
+        JSONObject param=new JSONObject();
+        param.put("path",page+"?"+params);
+        JSONObject jsonObject = HttpsInvoker.httpRequest(url, "POST", param.toJSONString());
+        logger.info("get liteprogram qrcode>>>"+jsonObject.toJSONString());
         return jsonObject;
     }
 

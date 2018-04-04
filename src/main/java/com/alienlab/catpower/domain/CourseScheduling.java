@@ -44,7 +44,8 @@ public class CourseScheduling implements Serializable {
     @Column(name = "appointtype")
     private String appointType;
 
-
+    @Column(name="wechat_lite_formid")
+    private String wechatLiteFormid;
 
     @ManyToOne
     private Learner learner;
@@ -54,6 +55,9 @@ public class CourseScheduling implements Serializable {
 
     @ManyToOne
     private Coach coach;
+
+    @ManyToOne
+    private BuyCourse buyCourse;
 
     public Long getId() {
         return id;
@@ -184,6 +188,23 @@ public class CourseScheduling implements Serializable {
 
     public void setLearner(Learner learner) {
         this.learner = learner;
+    }
+
+    public BuyCourse getBuyCourse() {
+        return buyCourse;
+    }
+
+    public void setBuyCourse(BuyCourse buyCourse) {
+        this.buyCourse = buyCourse;
+    }
+
+
+    public String getWechatLiteFormid() {
+        return wechatLiteFormid;
+    }
+
+    public void setWechatLiteFormid(String wechatLiteFormid) {
+        this.wechatLiteFormid = wechatLiteFormid;
     }
 
     @Override

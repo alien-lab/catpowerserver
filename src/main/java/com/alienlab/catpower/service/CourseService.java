@@ -1,6 +1,8 @@
 package com.alienlab.catpower.service;
 
+import com.alienlab.catpower.domain.Coach;
 import com.alienlab.catpower.domain.Course;
+import com.alienlab.catpower.domain.CourseScheduling;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -74,4 +76,6 @@ public interface CourseService {
 
     //
     List<Course> likeCourse(String keyword)throws Exception;
+
+
 }

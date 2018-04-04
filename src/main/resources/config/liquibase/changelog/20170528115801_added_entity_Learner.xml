@@ -72,6 +72,25 @@
         <dropDefaultValue tableName="learner" columnName="first_totime" columnDataType="datetime"/>
         <dropDefaultValue tableName="learner" columnName="first_buyclass" columnDataType="datetime"/>
         <dropDefaultValue tableName="learner" columnName="recently_signin" columnDataType="datetime"/>
-        
+
+    </changeSet>
+    <changeSet id="201804030001" author="juhuiguang">
+        <addColumn tableName="learner">
+            <column name="birthday" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="constellation" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="email" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="address" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="job" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+        </addColumn>
     </changeSet>
 </databaseChangeLog>

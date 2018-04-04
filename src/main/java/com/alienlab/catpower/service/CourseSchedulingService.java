@@ -1,6 +1,8 @@
 package com.alienlab.catpower.service;
 
+import com.alienlab.catpower.domain.Coach;
 import com.alienlab.catpower.domain.CourseScheduling;
+import com.alienlab.catpower.domain.Learner;
 import com.alienlab.catpower.web.wechat.bean.entity.QrInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -81,5 +83,15 @@ public interface CourseSchedulingService {
 
     //改变预约状态
     CourseScheduling changeStatus(Long scheId,String status) throws Exception;
+
+
+    //获取教练预约
+    List<CourseScheduling> getCoachScheByDate(Long coachId,String date);
+
+    List<CourseScheduling> getAllAppointByCoach(Coach coach);
+
+    CourseScheduling getLearnerOnlineCourse(Learner learner);
+
+    CourseScheduling getTeacherOnlineCourse(Coach coach);
 
 }

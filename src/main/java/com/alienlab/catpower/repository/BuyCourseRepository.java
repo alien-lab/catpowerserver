@@ -56,6 +56,12 @@ public interface BuyCourseRepository extends JpaRepository<BuyCourse,Long> {
     @Query("select a from BuyCourse a where (a.course.courseName like CONCAT('%',?1,'%')) or (a.learner.learneName like CONCAT('%',?1,'%')) or (a.coach.coachName like CONCAT('%',?1,'%')) ")
     Page<BuyCourse> findBuyCourseByCourseNameLike(String keyword,Pageable pageable);
 
+    @Query("select a from BuyCourse a where a.coach=?2 and a.learner=?1 and a.remainClass>0 order by a.buyTime asc")
+    List<BuyCourse> findByLearnerAndCoach(Learner learner,Coach coach);
+
+    @Query("select a from BuyCourse a where a.coach=?1 and a.remainClass>0 and a.learner not in(select b.learner from CourseScheduling b where b.status in ('已预约','预约中') and b.appointDate>=?2)")
+    List<BuyCourse> findHasCourseLearners(Coach coach,String date);
+
 
 
 }

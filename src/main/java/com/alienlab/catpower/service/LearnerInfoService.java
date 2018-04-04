@@ -1,5 +1,8 @@
 package com.alienlab.catpower.service;
 
+import com.alienlab.catpower.domain.Coach;
+import com.alienlab.catpower.domain.Course;
+import com.alienlab.catpower.domain.Learner;
 import com.alienlab.catpower.domain.LearnerInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -57,4 +60,5 @@ public interface LearnerInfoService {
 
     //根据教练ID查找当天教练下面所有未填写和已填写教练建议的学员
     List<LearnerInfo> getLearnerInfoBySche(Long coachId, ZonedDateTime startTime) throws Exception;
+
 }

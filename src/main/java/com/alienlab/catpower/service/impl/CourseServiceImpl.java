@@ -1,7 +1,10 @@
 package com.alienlab.catpower.service.impl;
 
+import com.alienlab.catpower.domain.Coach;
 import com.alienlab.catpower.domain.Course;
+import com.alienlab.catpower.domain.CourseScheduling;
 import com.alienlab.catpower.repository.CourseRepository;
+import com.alienlab.catpower.service.CourseSchedulingService;
 import com.alienlab.catpower.service.CourseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,8 +32,14 @@ public class CourseServiceImpl implements CourseService{
 
     private final CourseRepository courseRepository;
 
-    public CourseServiceImpl(CourseRepository courseRepository) {
+    private final CourseSchedulingService courseSchedulingService;
+
+    public CourseServiceImpl(
+        CourseRepository courseRepository,
+        CourseSchedulingService courseSchedulingService
+    ) {
         this.courseRepository = courseRepository;
+        this.courseSchedulingService=courseSchedulingService;
     }
 
     /**
@@ -150,4 +159,5 @@ public class CourseServiceImpl implements CourseService{
         List<Course> list = courseRepository.findByCoursekeyword(keyword);
         return list;
     }
+
 }
